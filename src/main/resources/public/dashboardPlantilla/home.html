@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost/csuite.mvc/pos1/ -->
+<html style="height: auto; min-height: 100%;" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8 ">
+
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>CashSuite App</title>
+
+
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="icon" href="img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;">
+
+  <div class="wrapper" style="height: auto; min-height: 100%;"> <header class="main-header">
+
+	<!--=====================================
+	LOGOTIPO
+	======================================-->
+	<a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+
+		<!-- logo mini -->
+		<span class="logo-mini">
+			
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+		<!-- logo normal -->
+
+		<span class="logo-lg">
+			
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+	</a>
+
+	<!--=====================================
+	BARRA DE NAVEGACIÓN
+	======================================-->
+	<nav class="navbar navbar-static-top" role="navigation">
+
+		<!-- Botón de navegación -->
+
+	 	<a href="http://localhost/csuite.mvc/pos1/#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+
+        	<span class="sr-only">Toggle navigation</span>
+
+      	</a>
+
+
+	</nav>
+
+ </header><aside class="main-sidebar">
+
+	  <section class="sidebar">
+
+		  <ul class="sidebar-menu tree">
+
+
+
+			  <li class="active">
+
+				  <a href="/dashboard/home">
+
+					  <i class="fa fa-home"></i>
+					  <span>Inicio</span>
+
+				  </a>
+
+			  </li>
+
+			  <li>
+
+				  <a href="/dashboard/empleado">
+
+					  <i class="fa fa-users"></i>
+					  <span>Empleados</span>
+
+				  </a>
+
+			  </li>
+
+
+
+			  <li>
+				  <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+					  <i class="fa fa-user"></i>
+					  <span>Perfil</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+
+
+
+			  <li class="treeview ">
+
+				  <a href="">
+
+					  <i class="fa fa-th "></i>
+
+					  <span>Categorias</span>
+
+					  <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="/dashboard/categoria">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Categorias</span>
+
+						  </a>
+
+					  </li>
+
+					  <li class="">
+
+						  <a href="/dashboard/impuesto">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Impuesto</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			  <li>
+
+
+				  <a href="/dashboard/inventario">
+
+					  <i class="fa fa-product-hunt"></i>
+					  <span>Inventario</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+			  <li>
+
+				  <a href="/dashboard/cliente">
+
+					  <i class="fa fa-users"></i>
+					  <span>Clientes</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+			  <li class="treeview">
+
+				  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+					  <i class="fa fa-list-ul"></i>
+
+					  <span>Ventas</span>
+
+					  <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Administrar ventas</span>
+
+						  </a>
+
+					  </li>
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Crear venta</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+			  <li class="treeview">
+
+				  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+					  <i class="fa fa-list-ul"></i>
+
+					  <span>Reportes</span>
+
+					  <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Reporte de ventas</span>
+
+						  </a>
+
+					  </li>
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Reporte de compras</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+
+			  <li>
+
+				  <a href="http://localhost/csuite.mvc/pos1/salir">
+
+					  <i class="fa fa-power-off"></i>
+
+					  <span>Log Out</span>
+
+				  </a>
+
+			  </li>
+
+
+
+			  ?&gt;
+
+		  </ul>
+
+	  </section>
+
+  </aside>
+
+
+
+	  <div class="content-wrapper" style="min-height: 764px;">
+
+<div class="container-fluid">
+
+  <section class="content-header">
+
+    <h1>
+
+      Dashboard
+
+      <small>Panel de Control</small>
+
+    </h1>
+
+    <ol class="breadcrumb">
+
+      <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+      <li class="active">Dashboard</li>
+
+    </ol>
+
+  </section>
+
+  <section class="content">
+
+    <div class="row">
+
+
+
+<div class="col-12 col-sm-6 col-lg-3">
+
+  <div class="small-box bg-aqua">
+
+    <div class="inner">
+
+      <h3>$334,228.00</h3>
+
+      <p>Ventas</p>
+
+    </div>
+
+    <div class="icon">
+
+      <i class="ion ion-social-usd"></i>
+
+    </div>
+
+    <a href="http://localhost/csuite.mvc/pos1/ventas" class="small-box-footer">
+
+      Más info <i class="fa fa-arrow-circle-right"></i>
+
+    </a>
+
+  </div>
+
+</div>
+
+<div class="col-12 col-sm-6 col-lg-3">
+
+  <div class="small-box bg-green">
+
+    <div class="inner">
+
+      <h3>7</h3>
+
+      <p>Categorías</p>
+
+    </div>
+
+    <div class="icon">
+
+      <i class="ion ion-clipboard"></i>
+
+    </div>
+
+    <a href="http://localhost/csuite.mvc/pos1/categorias" class="small-box-footer">
+
+      Más info <i class="fa fa-arrow-circle-right"></i>
+
+    </a>
+
+  </div>
+
+</div>
+
+<div class="col-12 col-sm-6 col-lg-3">
+
+  <div class="small-box bg-yellow">
+
+    <div class="inner">
+
+      <h3>11</h3>
+
+      <p>Clientes</p>
+
+    </div>
+
+    <div class="icon">
+
+      <i class="ion ion-person-add"></i>
+
+    </div>
+
+    <a href="http://localhost/csuite.mvc/pos1/clientes" class="small-box-footer">
+
+      Más info <i class="fa fa-arrow-circle-right"></i>
+
+    </a>
+
+  </div>
+
+</div>
+
+<div class="col-12 col-sm-6 col-lg-3">
+
+  <div class="small-box bg-red">
+
+    <div class="inner">
+
+      <h3>61</h3>
+
+      <p>Productos</p>
+
+    </div>
+
+    <div class="icon">
+
+      <i class="ion ion-ios-cart"></i>
+
+    </div>
+
+    <a href="http://localhost/csuite.mvc/pos1/productos" class="small-box-footer">
+
+      Más info <i class="fa fa-arrow-circle-right"></i>
+
+    </a>
+
+  </div>
+
+</div>
+
+    </div>
+<!--=====================================
+GRÁFICO DE VENTAS
+======================================-->
+
+
+<div class="box box-solid bg-teal-gradient">
+
+	<div class="box-header">
+
+ 		<i class="fa fa-th"></i>
+
+  		<h3 class="box-title">Gráfico de Ventas</h3>
+
+	</div>
+
+	<div class="box-body border-radius-none nuevoGraficoVentas">
+
+		<div class="chart" id="line-chart-ventas" style="height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="250" version="1.1" width="1773" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="50" y="214" text-anchor="end" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">$0</tspan></text><path fill="none" stroke="#efefef" d="M62.5,214H1748" stroke-width="0.4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="50" y="166.75" text-anchor="end" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">$25,000</tspan></text><path fill="none" stroke="#efefef" d="M62.5,166.75H1748" stroke-width="0.4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="50" y="119.5" text-anchor="end" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">$50,000</tspan></text><path fill="none" stroke="#efefef" d="M62.5,119.5H1748" stroke-width="0.4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="50" y="72.25" text-anchor="end" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">$75,000</tspan></text><path fill="none" stroke="#efefef" d="M62.5,72.25H1748" stroke-width="0.4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="50" y="25" text-anchor="end" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">$100,000</tspan></text><path fill="none" stroke="#efefef" d="M62.5,25H1748" stroke-width="0.4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="1748" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07</tspan></text><text x="1651.4596244131455" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-05</tspan></text><text x="1554.919248826291" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-03</tspan></text><text x="1459.9615023474178" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-01</tspan></text><text x="1363.4211267605633" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-11</tspan></text><text x="1266.8807511737089" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-09</tspan></text><text x="1168.7577464788733" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-07</tspan></text><text x="1072.2173708920186" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-05</tspan></text><text x="975.6769953051643" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-03</tspan></text><text x="882.3018779342723" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2019-01</tspan></text><text x="785.7615023474178" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-11</tspan></text><text x="689.2211267605634" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-09</tspan></text><text x="591.0981220657277" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-07</tspan></text><text x="494.55774647887324" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-05</tspan></text><text x="398.01737089201873" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-03</tspan></text><text x="304.64225352112675" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2018-01</tspan></text><text x="208.1018779342723" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2017-11</tspan></text><text x="111.56150234741784" y="226.5" text-anchor="middle" font-family="Open Sans" font-size="10px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Open Sans&quot;; font-size: 10px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,5.5)"><tspan dy="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2017-09</tspan></text><path fill="none" stroke="#efefef" d="M62.5,195.3909466C98.90046948356807,188.6447617,171.7014084507042,199.28011888688525,208.1018779342723,168.406207C219.97159624413143,158.33862703688524,243.71103286384977,49.04625869180329,255.5807511737089,31.624979200000013C267.8461267605634,13.622990391803288,292.3768779342723,13.529103325000012,304.64225352112675,26.71313380000001C316.9076291079812,39.89716427500001,341.4383802816901,136.4242941300235,353.7037558685446,137.09722299999999C678.1427230046949,154.8972769800235,1327.0206572769953,102.3491365454759,1651.4596244131455,100.6050652C1663.725,100.53913079547591,1688.2557511737089,119.41729762786889,1700.5211267605632,129.8572C1712.3908450704225,139.9603313278689,1736.1302816901407,169.5472,1748,182.7772" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="62.5" cy="195.3909466" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="208.1018779342723" cy="168.406207" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="255.5807511737089" cy="31.624979200000013" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="304.64225352112675" cy="26.71313380000001" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="353.7037558685446" cy="137.09722299999999" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="1651.4596244131455" cy="100.6050652" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="1700.5211267605632" cy="129.8572" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="1748" cy="182.7772" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="1748" cy="182.7772" r="4" fill="#efefef" stroke="#efefef" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="left: 297.993px; top: 67px; display: none;"><div class="morris-hover-row-label">2018-02</div><div class="morris-hover-point" style="color: #efefef">
+  ventas:
+  $40,689.3
+</div></div></div>
+
+  </div>
+
+</div>
+
+<script>
+
+ var line = new Morris.Line({
+    element          : 'line-chart-ventas',
+    resize           : true,
+    data             : [
+
+    { y: '2018-02', ventas: 40689.3 },{ y: '2018-01', ventas: 99093.58 },{ y: '2017-11', ventas: 24123.7 },{ y: '2017-12', ventas: 96494.72 },{ y: '2017-08', ventas: 9846.06 },{ y: '2020-05', ventas: 59997.32 },{ y: '2020-06', ventas: 44520 },{ y: '2020-07', ventas: 16520 },{y: '2020-07', ventas: 16520 }
+    ],
+    xkey             : 'y',
+    ykeys            : ['ventas'],
+    labels           : ['ventas'],
+    lineColors       : ['#efefef'],
+    lineWidth        : 2,
+    hideHover        : 'auto',
+    gridTextColor    : '#fff',
+    gridStrokeWidth  : 0.4,
+    pointSize        : 4,
+    pointStrokeColors: ['#efefef'],
+    gridLineColor    : '#efefef',
+    gridTextFamily   : 'Open Sans',
+    preUnits         : '$',
+    gridTextSize     : 10
+  });
+
+</script>
+<!--=====================================
+PRODUCTOS MÁS VENDIDOS
+======================================-->
+
+<div class="box box-default">
+
+	<div class="box-header with-border">
+
+      <h3 class="box-title">Productos más vendidos</h3>
+
+    </div>
+
+	<div class="box-body">
+
+      	<div class="row">
+
+	        <div class="col-md-7">
+
+	 			<div class="chart-responsive">
+
+	            	<canvas id="pieChart" height="156" width="1022" style="width: 1022px; height: 156px;"></canvas>
+
+	          	</div>
+
+	        </div>
+
+		    <div class="col-md-5">
+
+		  	 	<ul class="chart-legend clearfix">
+
+		  	 	 <li><i class="fa fa-circle-o text-red"></i> Cizalla de Palanca</li> <li><i class="fa fa-circle-o text-green"></i> Cizalla de Tijera</li> <li><i class="fa fa-circle-o text-yellow"></i> Compresor de Aire para pintura</li> <li><i class="fa fa-circle-o text-aqua"></i> Cortadora de Baldosin</li> <li><i class="fa fa-circle-o text-purple"></i> Bomba Hidrostatica</li> <li><i class="fa fa-circle-o text-blue"></i> Extractor de Aire </li> <li><i class="fa fa-circle-o text-cyan"></i> Bascula </li> <li><i class="fa fa-circle-o text-magenta"></i> Guadañadora </li> <li><i class="fa fa-circle-o text-orange"></i> Cortadora de Piso sin Disco </li> <li><i class="fa fa-circle-o text-gold"></i> Disco Punta Diamante </li>
+
+		  	 	</ul>
+
+		    </div>
+
+		</div>
+
+    </div>
+
+    <div class="box-footer no-padding">
+
+		<ul class="nav nav-pills nav-stacked">
+
+			 <li>
+
+						 <a>
+
+						 <img src="./CashSuite App_files/445.jpg" class="img-thumbnail" width="60px" style="margin-right:10px">
+						 Cizalla de Palanca
+
+						 <span class="pull-right text-red">
+						 13%
+						 </span>
+
+						 </a>
+
+      				</li><li>
+
+						 <a>
+
+						 <img src="./CashSuite App_files/249.jpg" class="img-thumbnail" width="60px" style="margin-right:10px">
+						 Cizalla de Tijera
+
+						 <span class="pull-right text-green">
+						 10%
+						 </span>
+
+						 </a>
+
+      				</li><li>
+
+						 <a>
+
+						 <img src="./CashSuite App_files/763.jpg" class="img-thumbnail" width="60px" style="margin-right:10px">
+						 Compresor de Aire para pintura
+
+						 <span class="pull-right text-yellow">
+						 9%
+						 </span>
+
+						 </a>
+
+      				</li><li>
+
+						 <a>
+
+						 <img src="./CashSuite App_files/746.jpg" class="img-thumbnail" width="60px" style="margin-right:10px">
+						 Cortadora de Baldosin
+
+						 <span class="pull-right text-aqua">
+						 9%
+						 </span>
+
+						 </a>
+
+      				</li><li>
+
+						 <a>
+
+						 <img src="./CashSuite App_files/870.jpg" class="img-thumbnail" width="60px" style="margin-right:10px">
+						 Bomba Hidrostatica
+
+						 <span class="pull-right text-purple">
+						 9%
+						 </span>
+
+						 </a>
+
+      				</li>
+
+		</ul>
+
+    </div>
+
+</div>
+
+<script>
+
+
+  // -------------
+  // - PIE CHART -
+  // -------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+  var pieChart       = new Chart(pieChartCanvas);
+  var PieData        = [
+
+  {
+      value    : 19,
+      color    : 'red',
+      highlight: 'red',
+      label    : 'Cizalla de Palanca'
+    },{
+      value    : 14,
+      color    : 'green',
+      highlight: 'green',
+      label    : 'Cizalla de Tijera'
+    },{
+      value    : 12,
+      color    : 'yellow',
+      highlight: 'yellow',
+      label    : 'Compresor de Aire para pintura'
+    },{
+      value    : 12,
+      color    : 'aqua',
+      highlight: 'aqua',
+      label    : 'Cortadora de Baldosin'
+    },{
+      value    : 12,
+      color    : 'purple',
+      highlight: 'purple',
+      label    : 'Bomba Hidrostatica'
+    },{
+      value    : 8,
+      color    : 'blue',
+      highlight: 'blue',
+      label    : 'Extractor de Aire '
+    },{
+      value    : 8,
+      color    : 'cyan',
+      highlight: 'cyan',
+      label    : 'Bascula '
+    },{
+      value    : 7,
+      color    : 'magenta',
+      highlight: 'magenta',
+      label    : 'Guadañadora '
+    },{
+      value    : 7,
+      color    : 'orange',
+      highlight: 'orange',
+      label    : 'Cortadora de Piso sin Disco '
+    },{
+      value    : 5,
+      color    : 'gold',
+      highlight: 'gold',
+      label    : 'Disco Punta Diamante '
+    },  ];
+  var pieOptions     = {
+    // Boolean - Whether we should show a stroke on each segment
+    segmentShowStroke    : true,
+    // String - The colour of each segment stroke
+    segmentStrokeColor   : '#fff',
+    // Number - The width of each segment stroke
+    segmentStrokeWidth   : 1,
+    // Number - The percentage of the chart that we cut out of the middle
+    percentageInnerCutout: 50, // This is 0 for Pie charts
+    // Number - Amount of animation steps
+    animationSteps       : 100,
+    // String - Animation easing effect
+    animationEasing      : 'easeOutBounce',
+    // Boolean - Whether we animate the rotation of the Doughnut
+    animateRotate        : true,
+    // Boolean - Whether we animate scaling the Doughnut from the centre
+    animateScale         : false,
+    // Boolean - whether to make the chart responsive to window resizing
+    responsive           : true,
+    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio  : false,
+    // String - A legend template
+    legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+    // String - A tooltip template
+    tooltipTemplate      : '<%=value %> <%=label%>'
+  };
+  // Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  pieChart.Doughnut(PieData, pieOptions);
+  // -----------------
+  // - END PIE CHART -
+  // -----------------
+
+
+</script>
+
+<div class="box box-primary">
+
+  <div class="box-header with-border">
+
+    <h3 class="box-title">Recently Added Products</h3>
+
+    <div class="box-tools pull-right">
+
+      <button type="button" class="btn btn-box-tool" data-widget="collapse">
+
+        <i class="fa fa-minus"></i>
+
+      </button>
+
+      <button type="button" class="btn btn-box-tool" data-widget="remove">
+
+        <i class="fa fa-times"></i>
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="box-body">
+
+    <ul class="products-list product-list-in-box">
+
+        <th:block th:each="aux : ${listaProducto}">
+
+            <li class="item">
+
+                <div class="product-img">
+
+                    <img src="../dashboardPlantilla/img/productos/default/anonymous.png" alt="Product Image">
+
+                </div>
+
+                <div class="product-info">
+
+                    <a href="http://localhost/csuite.mvc/pos1/" class="product-title" >
+                        <a th:text="${aux.nombre}"></a>
+
+
+
+                        <span class="label label-warning pull-right" th:text="${aux.productoEnVenta.totalString}">$14000</span>
+
+                    </a>
+
+                </div>
+
+            </li>
+
+<!--            <div class="card mb-4 shadow-sm">-->
+<!--                <div class="card-header">-->
+<!--                    <h4 class="my-0 font-weight-normal" th:text="${aux.nombrePaquete}">Free</h4>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <h1 class="card-title pricing-card-title"><a th:text="'$'+${aux.total}">$0</a> <small-->
+<!--                            class="text-muted">/ mo</small></h1>-->
+<!--                    <ul class="list-unstyled mt-3 mb-4">-->
+<!--                        <th:block th:each="produ : ${aux.productoList}">-->
+<!--                            <li th:text="${produ.nombre}+'-'+${produ.descripcion}">10 users included</li>-->
+<!--                        </th:block>-->
+<!--                    </ul>-->
+<!--                    <form action="/checkout" method="post">-->
+<!--                        <input type="hidden" name="id" th:value="${aux.id}">-->
+
+<!--                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Seleccionar</button>-->
+<!--                    </form>-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+        </th:block>
+
+
+
+
+
+    </ul>
+
+  </div>
+
+  <div class="box-footer text-center">
+
+    <a href="/dashboard/inventario" class="uppercase">Ver todos los productos</a>
+
+  </div>
+
+</div>
+
+        </section></div>
+
+
+     </div>
+
+
+
+</div>
+        <footer class="main-footer">
+
+	<strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+	Todos los derechos reservados.
+
+
+</footer>
+
+<script src="../dashboardPlantilla/js/plantilla.js"></script>
+<script src="../dashboardPlantilla/js/usuarios.js"></script>
+<script src="../dashboardPlantilla/js/categorias.js"></script>
+<script src="../dashboardPlantilla/js/productos.js"></script>
+<script src="../dashboardPlantilla/js/clientes.js"></script>
+<script src="../dashboardPlantilla/js/ventas.js"></script>
+<script src="../dashboardPlantilla/js/reportes.js"></script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async="" defer="" src="./CashSuite App_files/7875273.js(2).download"></script>
+<!-- End of HubSpot Embed Code -->
+
+
+
+<!--<iframe owner="archetype" style="display: none; visibility: hidden;" src="./CashSuite App_files/saved_resource.html"></iframe>-->
+<!--  <div id="hubspot-messages-iframe-container" class="widget-align-right" style="width: 276px; height: 246px;">-->
+<!--      <div class="shadow-container"></div><iframe src="./CashSuite App_files/4f1df493457e46ef9240689f5bcc7c38.html" title="chat widget"></iframe></div>-->
+
+</body></html>

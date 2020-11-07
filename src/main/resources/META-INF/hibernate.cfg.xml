@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:tcp://localhost/~/csuite</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"/>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+
+        <property name="hibernate.archive.autodetection">class,hbm</property>
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">100</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Disable the second-level cache  -->
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <mapping class="csuite.mvc.entidades.Producto"/>
+        <mapping class="csuite.mvc.entidades.CarroCompra"/>
+        <mapping class="csuite.mvc.entidades.ProductoComprado"/>
+        <mapping class="csuite.mvc.entidades.Usuario"/>
+        <mapping class="csuite.mvc.entidades.VentasProductos"/>
+        <mapping class="csuite.mvc.entidades.CarroCompra_Producto"/>
+        <mapping class="csuite.mvc.entidades.CarrocompraProductoId"/>
+        <mapping class="csuite.mvc.entidades.Foto"/>
+        <mapping class="csuite.mvc.entidades.Comentario"/>
+        <mapping class="csuite.mvc.entidades.Vendedor"/>
+        <mapping class="csuite.mvc.entidades.ProductoEnVenta"/>
+        <mapping class="csuite.mvc.entidades.Almacen"/>
+        <mapping class="csuite.mvc.entidades.Categoria"/>
+        <mapping class="csuite.mvc.entidades.Empleado"/>
+        <mapping class="csuite.mvc.entidades.Cliente"/>
+        <mapping class="csuite.mvc.entidades.FacturaCliente"/>
+        <mapping class="csuite.mvc.entidades.FacturaClienteProductoVendido"/>
+        <mapping class="csuite.mvc.entidades.Impuesto"/>
+
+    </session-factory>
+
+</hibernate-configuration>

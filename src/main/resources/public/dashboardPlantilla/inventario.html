@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://localhost/csuite.mvc/pos1/productos -->
+<html style="height: auto; min-height: 100%;" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8 ">
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CashSuite App</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="icon" href="img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="dashboard/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;">
+
+
+<div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header ">
+
+        <!--=====================================
+        LOGOTIPO
+        ======================================-->
+        <a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+
+            <!-- logo mini -->
+            <span class="logo-mini">
+			
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+            <!-- logo normal -->
+
+            <span class="logo-lg">
+			
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+        </a>
+
+        <!--=====================================
+        BARRA DE NAVEGACIÓN
+        ======================================-->
+        <nav class="navbar navbar-static-top" role="navigation">
+
+            <!-- Botón de navegación -->
+
+            <a href="http://localhost/csuite.mvc/pos1/productos#" class="sidebar-toggle" data-toggle="push-menu"
+               role="button">
+
+                <span class="sr-only">Toggle navigation</span>
+
+            </a>
+
+
+        </nav>
+
+    </header>
+    <aside class="main-sidebar">
+
+        <section class="sidebar">
+
+            <ul class="sidebar-menu tree">
+
+
+
+                <li class="">
+
+                    <a href="/dashboard/home">
+
+                        <i class="fa fa-home"></i>
+                        <span>Inicio</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="/dashboard/empleado">
+
+                        <i class="fa fa-users"></i>
+                        <span>Empleados</span>
+
+                    </a>
+
+                </li>
+
+
+
+                <li>
+                    <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+                        <i class="fa fa-user"></i>
+                        <span>Perfil</span>
+
+                    </a>
+
+                </li>
+
+
+
+
+
+
+
+
+                <li class="treeview ">
+
+                    <a href="">
+
+                        <i class="fa fa-th "></i>
+
+                        <span>Categorias</span>
+
+                        <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="/dashboard/categoria">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Categorias</span>
+
+                            </a>
+
+                        </li>
+
+                        <li class="">
+
+                            <a href="/dashboard/impuesto">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Impuesto</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <li class="active">
+
+
+                    <a href="/dashboard/inventario">
+
+                        <i class="fa fa-product-hunt"></i>
+                        <span>Inventario</span>
+
+                    </a>
+
+                </li>
+
+
+
+
+
+                <li class="">
+
+                    <a href="/dashboard/cliente">
+
+                        <i class="fa fa-users"></i>
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+
+
+
+
+                <li class="treeview">
+
+                    <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                        <i class="fa fa-list-ul"></i>
+
+                        <span>Ventas</span>
+
+                        <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Administrar ventas</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Crear venta</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+
+
+                <li class="treeview">
+
+                    <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                        <i class="fa fa-list-ul"></i>
+
+                        <span>Reportes</span>
+
+                        <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Reporte de ventas</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Reporte de compras</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+
+
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/salir">
+
+                        <i class="fa fa-power-off"></i>
+
+                        <span>Log Out</span>
+
+                    </a>
+
+                </li>
+
+
+
+                ?&gt;
+
+            </ul>
+
+        </section>
+
+    </aside>
+
+    <div class="content-wrapper">
+
+        <section class="content-header">
+
+            <h1>
+
+                Administrar inventario
+
+            </h1>
+
+            <ol class="breadcrumb">
+
+                <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+                <li class="active">Administrar inventario</li>
+
+            </ol>
+
+        </section>
+
+        <section class="content">
+
+            <div class="box">
+
+                <div class="box-header with-border">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+
+                        Agregar producto
+
+                    </button>
+                    <div id="ale">
+
+                    </div>
+
+                </div>
+
+                <div class="box-body">
+
+                    <table class="table table-bordered table-striped dt-responsive tablaProductos" width="100%">
+
+                        <thead>
+
+                        <tr>
+
+                            <th style="width:10px">#</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Precio de compra</th>
+                            <th>Precio de venta</th>
+                            <th>Stock</th>
+                            <th>Disponible</th>
+                            <th>Acciones</th>
+
+                        </tr>
+
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+<!--    <div class="content-wrapper" style="min-height: 778px;">-->
+
+<!--        <section class="content-header">-->
+
+<!--            <h1>-->
+
+<!--                Administrar inventario-->
+
+<!--            </h1>-->
+
+<!--            <ol class="breadcrumb">-->
+
+<!--                <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>-->
+
+<!--                <li class="active">Administrar inventario</li>-->
+
+<!--            </ol>-->
+
+<!--        </section>-->
+
+<!--        <section class="content">-->
+
+<!--            <div class="box">-->
+
+<!--                <div class="box-header with-border">-->
+
+<!--                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">-->
+
+<!--                        Agregar producto-->
+
+<!--                    </button>-->
+
+<!--                </div>-->
+
+<!--                <div class="box-body">-->
+
+<!--                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-6">-->
+<!--                                <div class="dataTables_length" id="DataTables_Table_0_length">-->
+<!--                                    <label>Mostrar <select name="DataTables_Table_0_length"-->
+<!--                                                           aria-controls="DataTables_Table_0"-->
+<!--                                                           class="form-control input-sm">-->
+<!--                                        <option value="10">10</option>-->
+<!--                                        <option value="25">25</option>-->
+<!--                                        <option value="50">50</option>-->
+<!--                                        <option value="100">100</option>-->
+<!--                                    </select> registros</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-6">-->
+<!--                                <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Buscar:<input-->
+<!--                                        type="search" class="form-control input-sm" placeholder=""-->
+<!--                                        aria-controls="DataTables_Table_0"></label></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-12">-->
+
+
+<!--                                <table class="table table-bordered table-striped dt-responsive tablaProductos dataTable no-footer dtr-inline collapsed"-->
+<!--                                       width="100%" id="DataTables_Table_0" role="grid"-->
+<!--                                       aria-describedby="DataTables_Table_0_info" style="width: 100%;">-->
+
+<!--                                    <thead>-->
+
+<!--                                    <tr role="row">-->
+<!--                                        <th style="width: 14px;" class="sorting_asc" tabindex="0"-->
+<!--                                            aria-controls="DataTables_Table_0" rowspan="1" colspan="1"-->
+<!--                                            aria-label="#: Activar para ordenar la columna de manera descendente"-->
+<!--                                            aria-sort="ascending">#-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 47px;"-->
+<!--                                            aria-label="Imagen: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Imagen-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 43px;"-->
+<!--                                            aria-label="Código: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Código-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 121px;"-->
+<!--                                            aria-label="Descripción: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Descripción-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 75px;"-->
+<!--                                            aria-label="Categoría: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Categoría-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 35px;"-->
+<!--                                            aria-label="Stock: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Stock-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 51px;"-->
+<!--                                            aria-label="Precio de compra: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Precio de compra-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 45px;"-->
+<!--                                            aria-label="Precio de venta: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Precio de venta-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 59px;"-->
+<!--                                            aria-label="Agregado: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Agregado-->
+<!--                                        </th>-->
+<!--                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                                            colspan="1" style="width: 0px; display: none;"-->
+<!--                                            aria-label="Acciones: Activar para ordenar la columna de manera ascendente">-->
+<!--                                            Acciones-->
+<!--                                        </th>-->
+<!--                                    </tr>-->
+
+<!--                                    </thead>-->
+
+<!--                                    <tbody>-->
+<!--                                    <tr role="row" class="odd parent">-->
+<!--                                        <td class="sorting_1" tabindex="0" style="">1</td>-->
+<!--                                        <td><img src="./inventario_files/anonymous.png" width="40px"></td>-->
+<!--                                        <td>118</td>-->
+<!--                                        <td>panel</td>-->
+<!--                                        <td>Equipos Electromecánicos</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-warning">14</button>-->
+<!--                                        </td>-->
+<!--                                        <td>10000</td>-->
+<!--                                        <td>14000</td>-->
+<!--                                        <td>2020-10-06 00:45:49</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="61"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="61"-->
+<!--                                                        codigo="118"-->
+<!--                                                        imagen="vistas/img/productos/default/anonymous.png"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr class="child">-->
+<!--                                        <td class="child" colspan="9">-->
+<!--                                            <ul data-dtr-index="0">-->
+<!--                                                <li data-dtr-index="9" data-dt-row="0" data-dt-column="9"><span-->
+<!--                                                        class="dtr-title">Acciones</span> <span class="dtr-data"><div-->
+<!--                                                        class="btn-group"><button-->
+<!--                                                        class="btn btn-warning btnEditarProducto" idproducto="61"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button><button-->
+<!--                                                        class="btn btn-danger btnEliminarProducto" idproducto="61"-->
+<!--                                                        codigo="118"-->
+<!--                                                        imagen="vistas/img/productos/default/anonymous.png"><i-->
+<!--                                                        class="fa fa-times"></i></button></div></span></li>-->
+<!--                                            </ul>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="even">-->
+<!--                                        <td class="sorting_1" tabindex="0">2</td>-->
+<!--                                        <td><img src="./inventario_files/746.jpg" width="40px"></td>-->
+<!--                                        <td>517</td>-->
+<!--                                        <td>Cortadora de Baldosin</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-success">23</button>-->
+<!--                                        </td>-->
+<!--                                        <td>930</td>-->
+<!--                                        <td>1302</td>-->
+<!--                                        <td>2020-10-06 00:45:49</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="60"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="60"-->
+<!--                                                        codigo="517" imagen="vistas/img/productos/517/746.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="odd">-->
+<!--                                        <td class="sorting_1" tabindex="0">3</td>-->
+<!--                                        <td><img src="./inventario_files/228.jpg" width="40px"></td>-->
+<!--                                        <td>516</td>-->
+<!--                                        <td>Cono slump</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-warning">15</button>-->
+<!--                                        </td>-->
+<!--                                        <td>140</td>-->
+<!--                                        <td>196</td>-->
+<!--                                        <td>2018-02-06 18:47:02</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="59"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="59"-->
+<!--                                                        codigo="516" imagen="vistas/img/productos/516/228.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="even">-->
+<!--                                        <td class="sorting_1" tabindex="0">4</td>-->
+<!--                                        <td><img src="./inventario_files/174.jpg" width="40px"></td>-->
+<!--                                        <td>515</td>-->
+<!--                                        <td>Coche llanta neumatica</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-success">17</button>-->
+<!--                                        </td>-->
+<!--                                        <td>420</td>-->
+<!--                                        <td>588</td>-->
+<!--                                        <td>2017-12-26 20:30:12</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="58"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="58"-->
+<!--                                                        codigo="515" imagen="vistas/img/productos/515/174.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="odd">-->
+<!--                                        <td class="sorting_1" tabindex="0">5</td>-->
+<!--                                        <td><img src="./inventario_files/249.jpg" width="40px"></td>-->
+<!--                                        <td>514</td>-->
+<!--                                        <td>Cizalla de Tijera</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-success">19</button>-->
+<!--                                        </td>-->
+<!--                                        <td>580</td>-->
+<!--                                        <td>812</td>-->
+<!--                                        <td>2020-05-28 17:22:02</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="57"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="57"-->
+<!--                                                        codigo="514" imagen="vistas/img/productos/514/249.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="even">-->
+<!--                                        <td class="sorting_1" tabindex="0">6</td>-->
+<!--                                        <td><img src="./inventario_files/445.jpg" width="40px"></td>-->
+<!--                                        <td>513</td>-->
+<!--                                        <td>Cizalla de Palanca</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-danger">5</button>-->
+<!--                                        </td>-->
+<!--                                        <td>450</td>-->
+<!--                                        <td>585</td>-->
+<!--                                        <td>2020-06-10 19:50:01</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="56"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="56"-->
+<!--                                                        codigo="513" imagen="vistas/img/productos/513/445.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="odd">-->
+<!--                                        <td class="sorting_1" tabindex="0">7</td>-->
+<!--                                        <td><img src="./inventario_files/266.jpg" width="40px"></td>-->
+<!--                                        <td>512</td>-->
+<!--                                        <td>Cilindro muestra de concreto</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-warning">15</button>-->
+<!--                                        </td>-->
+<!--                                        <td>400</td>-->
+<!--                                        <td>560</td>-->
+<!--                                        <td>2020-05-28 17:22:02</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="55"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="55"-->
+<!--                                                        codigo="512" imagen="vistas/img/productos/512/266.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="even">-->
+<!--                                        <td class="sorting_1" tabindex="0">8</td>-->
+<!--                                        <td><img src="./inventario_files/239.jpg" width="40px"></td>-->
+<!--                                        <td>511</td>-->
+<!--                                        <td>Chapeta</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-success">16</button>-->
+<!--                                        </td>-->
+<!--                                        <td>660</td>-->
+<!--                                        <td>924</td>-->
+<!--                                        <td>2017-12-26 18:27:42</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="54"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="54"-->
+<!--                                                        codigo="511" imagen="vistas/img/productos/511/239.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="odd">-->
+<!--                                        <td class="sorting_1" tabindex="0">9</td>-->
+<!--                                        <td><img src="./inventario_files/870.jpg" width="40px"></td>-->
+<!--                                        <td>510</td>-->
+<!--                                        <td>Bomba Hidrostatica</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-danger">8</button>-->
+<!--                                        </td>-->
+<!--                                        <td>770</td>-->
+<!--                                        <td>1078</td>-->
+<!--                                        <td>2017-12-26 18:26:51</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="53"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="53"-->
+<!--                                                        codigo="510" imagen="vistas/img/productos/510/870.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr role="row" class="even">-->
+<!--                                        <td class="sorting_1" tabindex="0">10</td>-->
+<!--                                        <td><img src="./inventario_files/878.jpg" width="40px"></td>-->
+<!--                                        <td>509</td>-->
+<!--                                        <td>Bascula</td>-->
+<!--                                        <td>Equipos para construcción</td>-->
+<!--                                        <td>-->
+<!--                                            <button class="btn btn-warning">12</button>-->
+<!--                                        </td>-->
+<!--                                        <td>130</td>-->
+<!--                                        <td>182</td>-->
+<!--                                        <td>2017-12-26 18:26:51</td>-->
+<!--                                        <td style="display: none;">-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <button class="btn btn-warning btnEditarProducto" idproducto="52"-->
+<!--                                                        data-toggle="modal" data-target="#modalEditarProducto"><i-->
+<!--                                                        class="fa fa-pencil"></i></button>-->
+<!--                                                <button class="btn btn-danger btnEliminarProducto" idproducto="52"-->
+<!--                                                        codigo="509" imagen="vistas/img/productos/509/878.jpg"><i-->
+<!--                                                        class="fa fa-times"></i></button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    </tbody>-->
+<!--                                </table>-->
+
+
+<!--                                <div id="DataTables_Table_0_processing"-->
+<!--                                     class="dataTables_processing panel panel-default" style="display: none;">-->
+<!--                                    Procesando...-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-5">-->
+<!--                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status"-->
+<!--                                     aria-live="polite">Mostrando registros del 1 al 10 de un total de 61-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-7">-->
+<!--                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">-->
+<!--                                    <ul class="pagination">-->
+<!--                                        <li class="paginate_button previous disabled" id="DataTables_Table_0_previous">-->
+<!--                                            <a href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                               aria-controls="DataTables_Table_0" data-dt-idx="0"-->
+<!--                                               tabindex="0">Anterior</a></li>-->
+<!--                                        <li class="paginate_button active"><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">3</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">4</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">5</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">6</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button "><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">7</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="paginate_button next" id="DataTables_Table_0_next"><a-->
+<!--                                                href="http://localhost/csuite.mvc/pos1/productos#"-->
+<!--                                                aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0">Siguiente</a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--        </section>-->
+
+<!--    </div>-->
+
+    <!--=====================================
+    MODAL AGREGAR PRODUCTO
+    ======================================-->
+
+    <div id="modalAgregarProducto" class="modal fade" role="dialog" style="display: none;">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form role="form" method="post" enctype="multipart/form-data">
+
+                    <!--=====================================
+                    CABEZA DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        <h4 class="modal-title">Agregar producto</h4>
+
+                    </div>
+
+                    <!--=====================================
+                    CUERPO DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-body">
+
+                        <div class="box-body">
+
+
+                            <!-- ENTRADA PARA SELECCIONAR CATEGORÍA -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                                    <select class="form-control input-lg" id="nuevaCategoria" name="nuevaCategoria"
+                                            required>
+
+                                        <option selected disabled>Selecionar categoría</option>
+                                        <th:block th:each="aux : ${categoria}">
+                                        <option  th:value="${aux.descripcion}" th:text="${aux.descripcion}">Equipos Electromecánicos</option>
+                                        </th:block>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL CÓDIGO -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+
+                                    <input type="text" class="form-control input-lg" id="nuevoCodigo" name="nuevoCodigo"
+                                           placeholder="Ingresar código local(Opcional)" >
+
+                                </div>
+
+                            </div>
+                            <!-- ENTRADA PARA LA nombre -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-file-archive-o"></i></span>
+
+                                    <input type="text" class="form-control input-lg" name="nombre" id="nombreProducto"
+                                           placeholder="Ingresar Nombre del Producto">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span>
+
+                                    <input type="text" class="form-control input-lg" id="nuevaDescripcion" name="nuevaDescripcion"
+                                           placeholder="Ingresar descripción">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA STOCK -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-check"></i></span>
+
+                                    <input type="number" class="form-control input-lg" id="stock" name="nuevoStock" min="0"
+                                           placeholder="Stock" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA SUPLIDOR -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+
+                                    <input type="text" class="form-control input-lg" name="suplidor" id="suplidor" min="0"
+                                           placeholder="Suplidor" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA PRECIO COMPRA -->
+
+                            <div class="form-group row">
+
+                                <div class="col-xs-6">
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
+
+                                        <input type="number" class="form-control input-lg" id="nuevoPrecioCompra"
+                                               name="nuevoPrecioCompra" step="any" min="0"
+                                               placeholder="Precio de compra" required="">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- ENTRADA PARA PRECIO VENTA -->
+
+                                <div class="col-xs-6">
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+
+                                        <input type="number" class="form-control input-lg" id="nuevoPrecioVenta"
+                                               name="nuevoPrecioVenta" step="any" min="0" placeholder="Precio de venta"
+                                               required="" readonly="">
+
+                                    </div>
+
+                                    <br>
+
+                                    <!-- CHECKBOX PARA PORCENTAJE -->
+                                    <div class="col-xs-6">
+
+                                        <div class="form-group">
+
+                                            <label>
+
+                                                <input type="checkbox" class="minimal porcentaje" checked>
+                                                Utilizar procentaje
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA PORCENTAJE -->
+
+                                    <div class="col-xs-6" style="padding:0">
+
+                                        <div class="input-group">
+
+                                            <input type="number" class="form-control input-lg nuevoPorcentaje" min="0" value="40" required>
+
+                                            <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA SUBIR FOTO -->
+
+                            <div class="form-group">
+
+                                <div class="panel">SUBIR IMAGEN</div>
+
+                                <input type="file" class="nuevaImagen" name="nuevaImagen" id="imagen" accept="image/*" >
+
+                                <p class="help-block">Peso máximo de la imagen 2MB</p>
+
+                                <img src="../dashboardPlantilla/img/productos/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--=====================================
+                    PIE DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" id="salir" data-dismiss="modal">Salir</button>
+
+                        <button type="button" class="btn btn-primary" onclick="uploadPorduct()">Guardar producto</button>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--=====================================
+    MODAL EDITAR PRODUCTO
+    ======================================-->
+
+    <div id="modalEditarProducto" class="modal fade" role="dialog" style="display: none;">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form role="form" method="post" enctype="multipart/form-data">
+
+                    <!--=====================================
+                    CABEZA DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        <h4 class="modal-title">Editar producto</h4>
+
+                    </div>
+
+                    <!--=====================================
+                    CUERPO DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-body">
+
+                        <div class="box-body">
+
+
+                            <!-- ENTRADA PARA SELECCIONAR CATEGORÍA -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                                    <select class="form-control input-lg" name="editarCategoria" readonly=""
+                                            required="">
+
+                                        <option id="editarCategoria" value="1">Equipos Electromecánicos</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL CÓDIGO -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+
+                                    <input type="text" class="form-control input-lg" id="editarCodigo"
+                                           name="editarCodigo" readonly="" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span>
+
+                                    <input type="text" class="form-control input-lg" id="editarDescripcion"
+                                           name="editarDescripcion" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA STOCK -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-check"></i></span>
+
+                                    <input type="number" class="form-control input-lg" id="editarStock"
+                                           name="editarStock" min="0" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA PRECIO COMPRA -->
+
+                            <div class="form-group row">
+
+                                <div class="col-xs-6">
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
+
+                                        <input type="number" class="form-control input-lg" id="editarPrecioCompra"
+                                               name="editarPrecioCompra" step="any" min="0" required="">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- ENTRADA PARA PRECIO VENTA -->
+
+                                <div class="col-xs-6">
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+
+                                        <input type="number" class="form-control input-lg" id="editarPrecioVenta"
+                                               name="editarPrecioVenta" step="any" min="0" required="" readonly="">
+
+                                    </div>
+
+                                    <br>
+
+                                    <!-- CHECKBOX PARA PORCENTAJE -->
+
+                                    <div class="col-xs-6">
+
+                                        <div class="form-group">
+
+                                            <label class="">
+
+                                                <div class="icheckbox_minimal-blue checked" aria-checked="false"
+                                                     aria-disabled="false" style="position: relative;"><input
+                                                        type="checkbox" class="minimal porcentaje" checked=""
+                                                        style="position: absolute; opacity: 0;">
+                                                    <ins class="iCheck-helper"
+                                                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                </div>
+                                                Utilizar procentaje
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA PORCENTAJE -->
+
+                                    <div class="col-xs-6" style="padding:0">
+
+                                        <div class="input-group">
+
+                                            <input type="number" class="form-control input-lg nuevoPorcentaje" min="0"
+                                                   value="40" required="">
+
+                                            <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA SUBIR FOTO -->
+
+                            <div class="form-group">
+
+                                <div class="panel">SUBIR IMAGEN</div>
+
+                                <input type="file" class="nuevaImagen" name="editarImagen"  accept="image/*" >
+
+                                <p class="help-block">Peso máximo de la imagen 2MB</p>
+
+                                <img src="./inventario_files/anonymous.png" class="img-thumbnail previsualizar"
+                                     width="100px">
+
+                                <input type="hidden" name="imagenActual" id="imagenActual"
+                                       value="vistas/img/productos/default/anonymous.png">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--=====================================
+                    PIE DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer class="main-footer">
+
+        <strong>Copyright ? 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+        Todos los derechos reservados.
+
+
+    </footer>
+</div>
+
+<script src="../dashboardPlantilla/js/plantilla.js"></script>
+<script src="../dashboardPlantilla/js/usuarios.js"></script>
+<script src="../dashboardPlantilla/js/categorias.js"></script>
+<script src="../dashboardPlantilla/js/productos.js"></script>
+<script src="../dashboardPlantilla/js/clientes.js"></script>
+<script src="../dashboardPlantilla/js/ventas.js"></script>
+<script src="../dashboardPlantilla/js/reportes.js"></script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async="" defer="" src="./CashSuite App_files/7875273.js(2).download"></script>
+<!-- End of HubSpot Embed Code -->
+
+
+<!--<iframe owner="archetype" style="display: none; visibility: hidden;" src="./CashSuite App_files/saved_resource.html"></iframe>-->
+<!--  <div id="hubspot-messages-iframe-container" class="widget-align-right" style="width: 276px; height: 246px;">-->
+<!--      <div class="shadow-container"></div><iframe src="./CashSuite App_files/4f1df493457e46ef9240689f5bcc7c38.html" title="chat widget"></iframe></div>-->
+
+</body>
+</html>

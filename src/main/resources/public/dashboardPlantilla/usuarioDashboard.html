@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://localhost/csuite.mvc/pos1/usuarios -->
+<html style="height: auto; min-height: 100%;"  xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CashSuite App</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="icon" href="img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;">
+
+
+
+  <div class="wrapper" style="height: auto; min-height: 100%;"> <header class="main-header">
+ 	
+	<!--=====================================
+	LOGOTIPO
+	======================================-->
+	<a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+		
+		<!-- logo mini -->
+		<span class="logo-mini">
+			
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+		<!-- logo normal -->
+
+		<span class="logo-lg">
+			
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+	</a>
+
+	<!--=====================================
+	BARRA DE NAVEGACIÓN
+	======================================-->
+	<nav class="navbar navbar-static-top" role="navigation">
+		
+		<!-- Botón de navegación -->
+
+	 	<a href="http://localhost/csuite.mvc/pos1/usuarios#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        	
+        	<span class="sr-only">Toggle navigation</span>
+      	
+      	</a>
+
+
+	</nav>
+
+ </header><aside class="main-sidebar">
+
+	  <section class="sidebar">
+
+		  <ul class="sidebar-menu tree">
+
+
+
+			  <li class="">
+
+				  <a href="/dashboard/home">
+
+					  <i class="fa fa-home"></i>
+					  <span>Inicio</span>
+
+				  </a>
+
+			  </li>
+
+			  <li class="active">
+
+				  <a href="/dashboard/empleado">
+
+					  <i class="fa fa-users"></i>
+					  <span>Empleados</span>
+
+				  </a>
+
+			  </li>
+
+
+
+			  <li>
+				  <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+					  <i class="fa fa-user"></i>
+					  <span>Perfil</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+
+
+
+			  <li class="treeview ">
+
+				  <a href="">
+
+					  <i class="fa fa-th "></i>
+
+					  <span>Categorias</span>
+
+					  <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="/dashboard/categoria">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Categorias</span>
+
+						  </a>
+
+					  </li>
+
+					  <li class="">
+
+						  <a href="/dashboard/impuesto">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Impuesto</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			  <li>
+
+
+				  <a href="/dashboard/inventario">
+
+					  <i class="fa fa-product-hunt"></i>
+					  <span>Inventario</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+			  <li class="">
+
+				  <a href="/dashboard/cliente">
+
+					  <i class="fa fa-users"></i>
+					  <span>Clientes</span>
+
+				  </a>
+
+			  </li>
+
+
+
+
+
+			  <li class="treeview">
+
+				  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+					  <i class="fa fa-list-ul"></i>
+
+					  <span>Ventas</span>
+
+					  <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Administrar ventas</span>
+
+						  </a>
+
+					  </li>
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Crear venta</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+			  <li class="treeview">
+
+				  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+					  <i class="fa fa-list-ul"></i>
+
+					  <span>Reportes</span>
+
+					  <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+				  </a>
+
+				  <ul class="treeview-menu">
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Reporte de ventas</span>
+
+						  </a>
+
+					  </li>
+
+					  <li>
+
+						  <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+							  <i class="fa fa-circle-o"></i>
+							  <span>Reporte de compras</span>
+
+						  </a>
+
+					  </li>
+
+				  </ul>
+
+			  </li>
+
+
+
+
+
+			  <li>
+
+				  <a href="http://localhost/csuite.mvc/pos1/salir">
+
+					  <i class="fa fa-power-off"></i>
+
+					  <span>Log Out</span>
+
+				  </a>
+
+			  </li>
+
+
+
+			  ?&gt;
+
+		  </ul>
+
+	  </section>
+
+  </aside>
+
+
+
+<!--<div class="content-wrapper" style="min-height: 610px;">-->
+
+<!--  <section class="content-header">-->
+<!--    -->
+<!--    <h1>-->
+<!--      -->
+<!--      Administrar usuarios-->
+<!--    -->
+<!--    </h1>-->
+
+<!--    <ol class="breadcrumb">-->
+<!--      -->
+<!--      <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>-->
+<!--      -->
+<!--      <li class="active">Administrar usuarios</li>-->
+<!--    -->
+<!--    </ol>-->
+
+<!--  </section>-->
+
+<!--      <div class="card-body">-->
+<!--        -->
+<!--       <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="row"><div class="col-sm-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div></div><div class="col-sm-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Buscar:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-bordered table-striped dt-responsive tablas dataTable no-footer dtr-inline" width="100%" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 100%;">-->
+<!--         -->
+<!--        <thead>-->
+<!--         -->
+<!--         <tr role="row"><th style="width: 10px;" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: Activar para ordenar la columna de manera descendente">#</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Nombre: Activar para ordenar la columna de manera ascendente">Nombre</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;" aria-label="Email: Activar para ordenar la columna de manera ascendente">Email</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 28px;" aria-label="Foto: Activar para ordenar la columna de manera ascendente">Foto</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 34px;" aria-label="Perfil: Activar para ordenar la columna de manera ascendente">Perfil</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 26px;" aria-label="Pais: Activar para ordenar la columna de manera ascendente">Pais</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 73px;" aria-label="Suscripcion: Activar para ordenar la columna de manera ascendente">Suscripcion</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 83px;" aria-label="ID Suscripcion: Activar para ordenar la columna de manera ascendente">ID Suscripcion</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 75px;" aria-label="Ciclo de pago: Activar para ordenar la columna de manera ascendente">Ciclo de pago</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 137px;" aria-label="Email de Paypal: Activar para ordenar la columna de manera ascendente">Email de Paypal</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 117px;" aria-label="Última actualizacion: Activar para ordenar la columna de manera ascendente">Última actualizacion</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 125px;" aria-label="Fecha de vencimiento: Activar para ordenar la columna de manera ascendente">Fecha de vencimiento</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 52px;" aria-label="Estatus: Activar para ordenar la columna de manera ascendente">Estatus</th></tr> -->
+
+<!--        </thead>-->
+
+<!--        <tbody>-->
+
+<!--        -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--          -->
+
+<!--        -->
+<!--        <tr role="row" class="odd">-->
+<!--              <th tabindex="0" class="sorting_1">1</th>-->
+<!--              <th>CashSuite-Admin</th>-->
+<!--              <th>admin@cashsuite.com</th>-->
+<!--              <th><img src="./usuarioDashboard_files/1" class="img-fluid" width="30px"></th>-->
+<!--              <th>Admin</th>-->
+<!--              <th></th>-->
+<!--              <th>1</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>eliasmarte28@gmail.com</th>-->
+<!--              <th>2020-06-14 11:15:45</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-xs btnActivar btn-danger" idusuario="1" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="even">-->
+<!--              <th tabindex="0" class="sorting_1">2</th>-->
+<!--              <th>juan tolete</th>-->
+<!--              <th>tolete@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-17 13:49:53</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-xs btnActivar btn-danger" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="odd">-->
+<!--              <th tabindex="0" class="sorting_1">3</th>-->
+<!--              <th>Jose Gutierrez</th>-->
+<!--              <th>gutierrez@aol.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-20 21:53:21</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="even">-->
+<!--              <th tabindex="0" class="sorting_1">4</th>-->
+<!--              <th>Jose Gonzalez</th>-->
+<!--              <th>gmc@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-21 00:17:05</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="odd">-->
+<!--              <th tabindex="0" class="sorting_1">5</th>-->
+<!--              <th>Luis Meran</th>-->
+<!--              <th>lmeran@hotmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 10:10:56</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="even">-->
+<!--              <th tabindex="0" class="sorting_1">6</th>-->
+<!--              <th>josefa</th>-->
+<!--              <th>jo@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 12:49:39</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="odd">-->
+<!--              <th tabindex="0" class="sorting_1">7</th>-->
+<!--              <th>josefa</th>-->
+<!--              <th>josf@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 12:54:23</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="even">-->
+<!--              <th tabindex="0" class="sorting_1">8</th>-->
+<!--              <th>sgsbf</th>-->
+<!--              <th>ff@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 15:20:27</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="odd">-->
+<!--              <th tabindex="0" class="sorting_1">9</th>-->
+<!--              <th>jme</th>-->
+<!--              <th>jme@hotmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 15:34:18</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr><tr role="row" class="even">-->
+<!--              <th tabindex="0" class="sorting_1">10</th>-->
+<!--              <th>ede</th>-->
+<!--              <th>ede@gmail.com</th>-->
+<!--              <th><img src="http://localhost/csuite.mvc/pos1/usuarios" class="img-fluid" width="30px"></th>-->
+<!--              <th>usuario</th>-->
+<!--              <th></th>-->
+<!--              <th>0</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--              <th>2020-06-22 21:12:31</th>-->
+<!--              <th></th>-->
+<!--              <th><button class="btn btn-danger btn-xs btnActivar" idusuario="0" estadousuario="1">Desactivado</button></th>-->
+<!--        </tr></tbody>-->
+
+<!--       </table></div></div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Mostrando registros del 1 al 10 de un total de 11</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="DataTables_Table_0_previous"><a href="http://localhost/csuite.mvc/pos1/usuarios#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a></li><li class="paginate_button active"><a href="http://localhost/csuite.mvc/pos1/usuarios#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="http://localhost/csuite.mvc/pos1/usuarios#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button next" id="DataTables_Table_0_next"><a href="http://localhost/csuite.mvc/pos1/usuarios#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">Siguiente</a></li></ul></div></div></div></div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+      <div class="content-wrapper">
+
+          <section class="content-header">
+
+              <h1>
+
+                  Administrar usuarios
+
+              </h1>
+
+              <ol class="breadcrumb">
+
+                  <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+                  <li class="active">Administrar Empleados</li>
+
+              </ol>
+
+          </section>
+
+          <div class="card-body">
+
+              <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+
+                  <thead>
+
+                  <tr>
+
+					  <th style="width:10px">Usuario</th>
+					  <th>Nombre</th>
+					  <th>Documento ID</th>
+					  <th>Email</th>
+					  <th>Teléfono</th>
+
+					  <th>Ingreso al sistema</th>
+					  <th>Estado</th>
+					  <th>Acciones</th>
+
+                  </tr>
+
+                  </thead>
+
+                  <tbody>
+
+
+
+
+				  <th:block th:each="aux : ${empleado}">
+
+
+				  <tr>
+
+					  <td th:text="${aux.usuario}"></td>
+
+					  <td th:text="${aux.nombre} + ' '+ ${aux.apellido}">'.$value["nombre"].'</td>
+
+					  <td th:text="${aux.documento}">'.$value["documento"].'</td>
+
+					  <td th:text="${aux.email}">'.$value["email"].'</td>
+
+					  <td th:text="${aux.telefono}">'.$value["telefono"].'</td>
+
+
+
+					  <td th:text="${aux.fecha_registro}">'.$value["fecha"].'</td>
+					  <th>
+
+
+						  <div th:if="${aux.empleado.isValidacion}">
+							  <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.usuario}">Activado</button>
+						  </div>
+						  <!-- ELSE -->
+						  <div th:unless="${aux.empleado.isValidacion}">
+							  <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.usuario}">Desactivado</button>
+						  </div>
+					  </th>
+					  <td>
+
+						  <div class="btn-group">
+
+							  <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-eye"></i></button>
+
+
+
+							  <button th:id="${aux.usuario}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>
+
+						  </div>
+
+					  </td>
+				  </tr>
+				  </th:block>
+
+
+
+                  </tbody>
+
+              </table>
+
+          </div>
+
+      </div>
+
+      </section>
+
+  </div>
+
+  
+
+</div>
+
+<footer class="main-footer">
+	
+	<strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+	Todos los derechos reservados.
+
+
+</footer>
+
+  <script src="../dashboardPlantilla/js/plantilla.js"></script>
+  <script src="../dashboardPlantilla/js/usuarios.js"></script>
+  <script src="../dashboardPlantilla/js/categorias.js"></script>
+  <script src="../dashboardPlantilla/js/productos.js"></script>
+  <script src="../dashboardPlantilla/js/clientes.js"></script>
+  <script src="../dashboardPlantilla/js/ventas.js"></script>
+  <script src="../dashboardPlantilla/js/reportes.js"></script>
+  <!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="./Cliente_files/7875273.js(2).download"></script>
+  <!-- End of HubSpot Embed Code -->
+
+
+
+<!--<iframe owner="archetype" style="display: none; visibility: hidden;" src="./usuarioDashboard_files/saved_resource.html"></iframe><div id="hubspot-messages-iframe-container" class="widget-align-right" style="width: 100px; height: 96px;"><div class="shadow-container"></div><iframe src="./usuarioDashboard_files/e224cf86e0cf42ed9ea2fec94a3ecdbd.html" title="chat widget"></iframe>-->
+<!--  -->
+  </div></body></html>

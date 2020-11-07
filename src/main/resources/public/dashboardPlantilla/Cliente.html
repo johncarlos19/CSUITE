@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://localhost/csuite.mvc/pos1/clientes -->
+<html style="height: auto; min-height: 100%;"  xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <title>CashSuite App</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="icon" href="../dashboardPlantilla/img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;"><style type="text/css">html.hs-messages-widget-open.hs-messages-mobile,html.hs-messages-widget-open.hs-messages-mobile body{overflow:hidden!important;position:relative!important}html.hs-messages-widget-open.hs-messages-mobile body{height:100%!important;margin:0!important}#hubspot-messages-iframe-container{display:initial!important;z-index:2147483647;position:fixed!important;bottom:0!important}#hubspot-messages-iframe-container.widget-align-left{left:0!important}#hubspot-messages-iframe-container.widget-align-right{right:0!important}#hubspot-messages-iframe-container.internal{z-index:1016}#hubspot-messages-iframe-container.internal iframe{min-width:108px}#hubspot-messages-iframe-container .shadow-container{display:initial!important;z-index:-1;position:absolute;width:0;height:0;bottom:0;content:""}#hubspot-messages-iframe-container .shadow-container.internal{display:none!important}#hubspot-messages-iframe-container .shadow-container.active{width:400px;height:400px}#hubspot-messages-iframe-container iframe{display:initial!important;width:100%!important;height:100%!important;border:none!important;position:absolute!important;bottom:0!important;right:0!important;background:transparent!important}</style>
+ 
+  <div class="wrapper" style="height: auto; min-height: 100%;"> <header class="main-header">
+ 	
+	<!--=====================================
+	LOGOTIPO
+	======================================-->
+	<a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+		
+		<!-- logo mini -->
+		<span class="logo-mini">
+			
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+		<!-- logo normal -->
+
+		<span class="logo-lg">
+			
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+	</a>
+
+	<!--=====================================
+	BARRA DE NAVEGACIÓN
+	======================================-->
+	<nav class="navbar navbar-static-top" role="navigation">
+		
+		<!-- Botón de navegación -->
+
+	 	<a href="http://localhost/csuite.mvc/pos1/clientes#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        	
+        	<span class="sr-only">Toggle navigation</span>
+      	
+      	</a>
+
+
+	</nav>
+
+ </header><aside class="main-sidebar">
+
+      <section class="sidebar">
+
+          <ul class="sidebar-menu tree">
+
+
+
+              <li class="">
+
+                  <a href="/dashboard/home">
+
+                      <i class="fa fa-home"></i>
+                      <span>Inicio</span>
+
+                  </a>
+
+              </li>
+
+              <li>
+
+                  <a href="/dashboard/empleado">
+
+                      <i class="fa fa-users"></i>
+                      <span>Empleados</span>
+
+                  </a>
+
+              </li>
+
+
+
+              <li>
+                  <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+                      <i class="fa fa-user"></i>
+                      <span>Perfil</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+
+
+
+              <li class="treeview ">
+
+                  <a href="">
+
+                      <i class="fa fa-th "></i>
+
+                      <span>Categorias</span>
+
+                      <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li>
+
+                          <a href="/dashboard/categoria">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Categorias</span>
+
+                          </a>
+
+                      </li>
+
+                      <li class="">
+
+                          <a href="/dashboard/impuesto">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Impuesto</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <li>
+
+
+                  <a href="/dashboard/inventario">
+
+                      <i class="fa fa-product-hunt"></i>
+                      <span>Inventario</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+              <li class="active">
+
+                  <a href="/dashboard/cliente">
+
+                      <i class="fa fa-users"></i>
+                      <span>Clientes</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+              <li class="treeview">
+
+                  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                      <i class="fa fa-list-ul"></i>
+
+                      <span>Ventas</span>
+
+                      <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Administrar ventas</span>
+
+                          </a>
+
+                      </li>
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Crear venta</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+              <li class="treeview">
+
+                  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                      <i class="fa fa-list-ul"></i>
+
+                      <span>Reportes</span>
+
+                      <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Reporte de ventas</span>
+
+                          </a>
+
+                      </li>
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Reporte de compras</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+
+              <li>
+
+                  <a href="http://localhost/csuite.mvc/pos1/salir">
+
+                      <i class="fa fa-power-off"></i>
+
+                      <span>Log Out</span>
+
+                  </a>
+
+              </li>
+
+
+
+              ?&gt;
+
+          </ul>
+
+      </section>
+
+  </aside>
+
+
+<!--      <div class="content-wrapper" style="min-height: 661px;">-->
+
+<!--  <section class="content-header">-->
+<!--    -->
+<!--    <h1>-->
+<!--      -->
+<!--      Administrar clientes-->
+<!--    -->
+<!--    </h1>-->
+
+<!--    <ol class="breadcrumb">-->
+<!--      -->
+<!--      <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>-->
+<!--      -->
+<!--      <li class="active">Administrar clientes</li>-->
+<!--    -->
+<!--    </ol>-->
+
+<!--  </section>-->
+
+<!--  <section class="content">-->
+
+<!--    <div class="box">-->
+
+<!--      <div class="box-header with-border">-->
+<!--  -->
+<!--        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">-->
+<!--          -->
+<!--          Agregar cliente-->
+
+<!--        </button>-->
+
+<!--      </div>-->
+
+<!--      <div class="box-body">-->
+<!--        -->
+<!--       <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="row"><div class="col-sm-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div></div><div class="col-sm-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Buscar:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-bordered table-striped dt-responsive tablas dataTable no-footer dtr-inline" width="100%" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 100%;">-->
+<!--         -->
+<!--        <thead>-->
+<!--         -->
+<!--         <tr role="row"><th style="width: 10px;" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: Activar para ordenar la columna de manera descendente">#</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 114px;" aria-label="Nombre: Activar para ordenar la columna de manera ascendente">Nombre</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 113px;" aria-label="Documento ID: Activar para ordenar la columna de manera ascendente">Documento ID</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 153px;" aria-label="Email: Activar para ordenar la columna de manera ascendente">Email</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 84px;" aria-label="Teléfono: Activar para ordenar la columna de manera ascendente">Teléfono</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 115px;" aria-label="Dirección: Activar para ordenar la columna de manera ascendente">Dirección</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 112px;" aria-label="Total compras: Activar para ordenar la columna de manera ascendente">Total compras</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 121px;" aria-label="Última compra: Activar para ordenar la columna de manera ascendente">Última compra</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 142px;" aria-label="Ingreso al sistema: Activar para ordenar la columna de manera ascendente">Ingreso al sistema</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 74px;" aria-label="Acciones: Activar para ordenar la columna de manera ascendente">Acciones</th></tr> -->
+
+<!--        </thead>-->
+
+<!--        <tbody>-->
+
+<!--           -->
+<!--        <tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">1</td>-->
+
+<!--                    <td>Juan Villegas</td>-->
+
+<!--                    <td>2147483647</td>-->
+
+<!--                    <td>juan@hotmail.com</td>-->
+
+<!--                    <td>(300) 341-2345</td>-->
+
+<!--                    <td>Calle 23 # 45 - 56</td>      -->
+
+<!--                    <td>13</td>-->
+
+<!--                    <td>2020-07-13 21:16:33</td>-->
+
+<!--                    <td>2020-07-13 22:16:33</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="3"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="3"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">2</td>-->
+
+<!--                    <td>Pedro Pérez</td>-->
+
+<!--                    <td>2147483647</td>-->
+
+<!--                    <td>pedro@gmail.com</td>-->
+
+<!--                    <td>(399) 876-5432</td>-->
+
+<!--                    <td>Calle 34 N33 -56</td>      -->
+
+<!--                    <td>20</td>-->
+
+<!--                    <td>2020-10-05 23:45:49</td>-->
+
+<!--                    <td>2020-10-06 00:45:49</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="4"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="4"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">3</td>-->
+
+<!--                    <td>Miguel Murillo</td>-->
+
+<!--                    <td>325235235</td>-->
+
+<!--                    <td>miguel@hotmail.com</td>-->
+
+<!--                    <td>(254) 545-3446</td>-->
+
+<!--                    <td>calle 34 # 34 - 23</td>      -->
+
+<!--                    <td>32</td>-->
+
+<!--                    <td>2017-12-26 17:27:13</td>-->
+
+<!--                    <td>2017-12-27 00:38:13</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="5"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="5"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">4</td>-->
+
+<!--                    <td>Margarita Londoño</td>-->
+
+<!--                    <td>34565432</td>-->
+
+<!--                    <td>margarita@hotmail.com</td>-->
+
+<!--                    <td>(344) 345-6678</td>-->
+
+<!--                    <td>Calle 45 # 34 - 56</td>      -->
+
+<!--                    <td>14</td>-->
+
+<!--                    <td>2017-12-26 17:26:51</td>-->
+
+<!--                    <td>2017-12-26 18:26:51</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="6"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="6"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">5</td>-->
+
+<!--                    <td>Julian Ramirez</td>-->
+
+<!--                    <td>786786545</td>-->
+
+<!--                    <td>julian@hotmail.com</td>-->
+
+<!--                    <td>(675) 674-5453</td>-->
+
+<!--                    <td>Carrera 45 # 54 - 56</td>      -->
+
+<!--                    <td>14</td>-->
+
+<!--                    <td>2017-12-26 17:26:28</td>-->
+
+<!--                    <td>2017-12-26 18:26:28</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="7"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="7"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">6</td>-->
+
+<!--                    <td>Stella Jaramillo</td>-->
+
+<!--                    <td>65756735</td>-->
+
+<!--                    <td>stella@gmail.com</td>-->
+
+<!--                    <td>(435) 346-3463</td>-->
+
+<!--                    <td>Carrera 34 # 45- 56</td>      -->
+
+<!--                    <td>9</td>-->
+
+<!--                    <td>2017-12-26 17:25:55</td>-->
+
+<!--                    <td>2017-12-26 18:25:55</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="8"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="8"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">7</td>-->
+
+<!--                    <td>Eduardo López</td>-->
+
+<!--                    <td>2147483647</td>-->
+
+<!--                    <td>eduardo@gmail.com</td>-->
+
+<!--                    <td>(534) 634-6565</td>-->
+
+<!--                    <td>Carrera 67 # 45sur</td>      -->
+
+<!--                    <td>12</td>-->
+
+<!--                    <td>2017-12-26 17:25:33</td>-->
+
+<!--                    <td>2017-12-26 18:25:33</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="9"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="9"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">8</td>-->
+
+<!--                    <td>Ximena Restrepo</td>-->
+
+<!--                    <td>436346346</td>-->
+
+<!--                    <td>ximena@gmail.com</td>-->
+
+<!--                    <td>(543) 463-4634</td>-->
+
+<!--                    <td>calle 45 # 23 - 45</td>      -->
+
+<!--                    <td>18</td>-->
+
+<!--                    <td>2017-12-26 17:25:08</td>-->
+
+<!--                    <td>2017-12-26 18:25:08</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="10"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="10"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">9</td>-->
+
+<!--                    <td>David Guzman</td>-->
+
+<!--                    <td>43634643</td>-->
+
+<!--                    <td>david@hotmail.com</td>-->
+
+<!--                    <td>(354) 574-5634</td>-->
+
+<!--                    <td>carrera 45 # 45 </td>      -->
+
+<!--                    <td>10</td>-->
+
+<!--                    <td>2017-12-26 17:24:50</td>-->
+
+<!--                    <td>2017-12-26 18:24:50</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="11"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="11"><i class="fa fa-times"></i></button></div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">10</td>-->
+
+<!--                    <td>Gonzalo Pérez</td>-->
+
+<!--                    <td>436346346</td>-->
+
+<!--                    <td>gonzalo@yahoo.com</td>-->
+
+<!--                    <td>(235) 346-3464</td>-->
+
+<!--                    <td>Carrera 34 # 56 - 34</td>      -->
+
+<!--                    <td>25</td>-->
+
+<!--                    <td>2020-05-20 18:05:34</td>-->
+
+<!--                    <td>2020-05-20 19:05:34</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idcliente="12"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCliente" idcliente="12"><i class="fa fa-times"></i></button></div></td></tr></tbody>-->
+
+<!--       </table></div></div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Mostrando registros del 1 al 10 de un total de 11</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="DataTables_Table_0_previous"><a href="http://localhost/csuite.mvc/pos1/clientes#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a></li><li class="paginate_button active"><a href="http://localhost/csuite.mvc/pos1/clientes#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="http://localhost/csuite.mvc/pos1/clientes#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button next" id="DataTables_Table_0_next"><a href="http://localhost/csuite.mvc/pos1/clientes#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">Siguiente</a></li></ul></div></div></div></div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--  </section>-->
+
+<!--</div>-->
+
+      <div class="content-wrapper">
+
+          <section class="content-header">
+
+              <h1>
+
+                  Administrar clientes
+
+              </h1>
+
+              <ol class="breadcrumb">
+
+                  <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+                  <li class="active">Administrar clientes</li>
+
+              </ol>
+
+          </section>
+
+          <section class="content">
+
+              <div class="box">
+
+                  <div class="box-header with-border">
+
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
+
+                          Agregar cliente
+
+                      </button>
+
+                  </div>
+
+                  <div class="box-body">
+
+                      <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:10px">ID</th>
+                              <th>Nombre</th>
+                              <th>Documento</th>
+                              <th>Email</th>
+                              <th>Teléfono</th>
+                              <th>Total de Factura</th>
+                              <th>Última compra</th>
+                              <th>Ingreso al sistema</th>
+                              <th>Acciones</th>
+
+                          </tr>
+
+                          </thead>
+
+                          <tbody>
+
+                          <th:block th:each="aux : ${cliente}">
+
+                              <tr>
+
+                                  <td th:text="${aux.usuario}"></td>
+
+                                  <td th:text="${aux.nombre} + ' '+ ${aux.apellido}">'.$value["nombre"].'</td>
+
+                                  <td th:text="${aux.documento}">'.$value["documento"].'</td>
+
+                                  <td th:text="${aux.email}">'.$value["email"].'</td>
+
+                                  <td th:text="${aux.telefono}">'.$value["telefono"].'</td>
+
+
+
+                                  <td th:text="${aux.cliente.facturaTotal}">'.$value["compras"].'</td>
+
+                                  <td th:text="${aux.cliente.fechaUltimaCompra}">'.$value["ultima_compra"].'</td>
+
+                                  <td th:text="${aux.fecha_registro}">'.$value["fecha"].'</td>
+
+                                  <td>
+
+                                      <div class="btn-group">
+
+                                          <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-eye"></i></button>
+
+
+
+                                          <button th:id="${aux.usuario}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>
+
+                                      </div>
+
+                                  </td>
+
+
+
+
+
+                              </tr>
+
+
+
+                          </th:block>
+
+
+
+                          </tbody>
+
+                      </table>
+
+                  </div>
+
+              </div>
+
+          </section>
+
+      </div>
+
+      <!--=====================================
+      MODAL AGREGAR CLIENTE
+      ======================================-->
+
+      <div id="modalAgregarCliente" class="modal fade" role="dialog">
+
+          <div class="modal-dialog">
+
+              <div class="modal-content">
+
+
+
+                      <!--=====================================
+                      CABEZA DEL MODAL
+                      ======================================-->
+
+                      <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                          <h4 class="modal-title">Agregar cliente</h4>
+
+                      </div>
+
+                      <!--=====================================
+                      CUERPO DEL MODAL
+                      ======================================-->
+
+                      <div class="modal-body">
+
+                          <div class="box-body">
+                              <form role="form" method="post" action="/dashboard/cliente">
+                              <!-- ENTRADA PARA EL NOMBRE -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="nombre" placeholder="Ingresar nombre" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL APELLIDO -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="apellido" placeholder="Ingresar Apellido" required>
+
+                                  </div>
+
+                              </div>
+                              <!-- ENTRADA PARA EL DOCUMENTO ID -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-list"></i></span>
+
+<!--                                      <input type="number" min="0" class="form-control input-lg" name="tipoDocumento" placeholder="Ingresar El Tipo de Documento" required>-->
+                                      <select class="form-control  input-lg" name="tipoDocumento" required>
+                                          <option disabled selected>Seleccione El Tipo de Documento</option>
+                                          <option value="Pasaporte">Pasaporte</option>
+                                          <option value="Cedula">Cedula</option>
+                                      </select>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL DOCUMENTO ID -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-key "></i></span>
+
+                                      <input type="number" min="0" class="form-control input-lg" name="documentoID" placeholder="Ingresar documento" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL EMAIL -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
+                                      <input type="email" class="form-control input-lg" name="nuevoEmail" placeholder="Ingresar email" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL TELÉFONO -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA LA Pais -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="pais" placeholder="Ingresar Pais" required>
+
+                                  </div>
+
+                              </div>
+                              <!-- ENTRADA PARA LA Municipio -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="Municipio" placeholder="Ingresar Municipio" required>
+
+                                  </div>
+
+                              </div>
+
+
+                              <!-- ENTRADA PARA LA DIRECCIÓN -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar dirección" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!--=====================================
+                              PIE DEL MODAL
+                              ======================================-->
+
+                              <div class="modal-footer">
+
+                                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                                  <button type="submit" class="btn btn-primary">Guardar cliente</button>
+
+                              </div>
+
+                  </form>
+
+
+
+              </div>
+
+          </div>
+
+      </div>
+
+      <!--=====================================
+      MODAL EDITAR CLIENTE
+      ======================================-->
+
+      <div id="modalEditarCliente" class="modal fade" role="dialog">
+
+          <div class="modal-dialog">
+
+              <div class="modal-content">
+
+                  <form role="form" method="post">
+
+                      <!--=====================================
+                      CABEZA DEL MODAL
+                      ======================================-->
+
+                      <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                          <h4 class="modal-title">Editar cliente</h4>
+
+                      </div>
+
+                      <!--=====================================
+                      CUERPO DEL MODAL
+                      ======================================-->
+
+                      <div class="modal-body">
+
+                          <div class="box-body">
+
+                              <!-- ENTRADA PARA EL NOMBRE -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="editarCliente" id="editarCliente" required>
+                                      <input type="hidden" id="idCliente" name="idCliente">
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL DOCUMENTO ID -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                      <input type="number" min="0" class="form-control input-lg" name="editarDocumentoId" id="editarDocumentoId" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL EMAIL -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
+                                      <input type="email" class="form-control input-lg" name="editarEmail" id="editarEmail" required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA EL TELÉFONO -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="editarTelefono" id="editarTelefono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA LA DIRECCIÓN -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion"  required>
+
+                                  </div>
+
+                              </div>
+
+                              <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
+
+                              <div class="form-group">
+
+                                  <div class="input-group">
+
+                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                                      <input type="text" class="form-control input-lg" name="editarFechaNacimiento" id="editarFechaNacimiento"  data-inputmask="'alias': 'yyyy/mm/dd'" data-mask required>
+
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                      </div>
+
+                      <!--=====================================
+                      PIE DEL MODAL
+                      ======================================-->
+
+                      <div class="modal-footer">
+
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+                      </div>
+
+                  </form>
+
+                  <?php
+
+        $editarCliente = new ControladorClientes();
+        $editarCliente -> ctrEditarCliente();
+
+                  ?>
+
+
+
+              </div>
+
+          </div>
+
+      </div>
+
+      <?php
+
+  $eliminarCliente = new ControladorClientes();
+  $eliminarCliente -> ctrEliminarCliente();
+
+      ?>
+
+
+
+
+
+
+
+
+
+      <!--=====================================
+      MODAL AGREGAR CLIENTE
+      ======================================-->
+
+<div id="modalAgregarCliente" class="modal fade" role="dialog" style="display: none;">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">×</button>
+
+          <h4 class="modal-title">Agregar cliente</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="nuevoCliente" placeholder="Ingresar nombre" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL DOCUMENTO ID -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="number" min="0" class="form-control input-lg" name="nuevoDocumentoId" placeholder="Ingresar documento" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL EMAIL -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+
+                <input type="email" class="form-control input-lg" name="nuevoEmail" placeholder="Ingresar email" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TELÉFONO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="&#39;mask&#39;:&#39;(999) 999-9999&#39;" data-mask="" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA DIRECCIÓN -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar dirección" required="">
+
+              </div>
+
+            </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar cliente</button>
+
+        </div>
+
+      
+
+      
+    </div>
+
+  </div></form>
+
+</div>
+
+<!--=====================================
+MODAL EDITAR CLIENTE
+======================================-->
+
+<div id="modalEditarCliente" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">×</button>
+
+          <h4 class="modal-title">Editar cliente</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarCliente" id="editarCliente" required="">
+                <input type="hidden" id="idCliente" name="idCliente">
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL DOCUMENTO ID -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="number" min="0" class="form-control input-lg" name="editarDocumentoId" id="editarDocumentoId" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL EMAIL -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+
+                <input type="email" class="form-control input-lg" name="editarEmail" id="editarEmail" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TELÉFONO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarTelefono" id="editarTelefono" data-inputmask="&#39;mask&#39;:&#39;(999) 999-9999&#39;" data-mask="" required="">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA DIRECCIÓN -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion" required="">
+
+              </div>
+
+            </div>
+
+             <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarFechaNacimiento" id="editarFechaNacimiento" data-inputmask="&#39;alias&#39;: &#39;yyyy/mm/dd&#39;" data-mask="" required="">
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+
+      </form>
+
+      
+    
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<footer class="main-footer">
+	
+	<strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+	Todos los derechos reservados.
+
+
+</footer></div>
+
+    <script src="../dashboardPlantilla/js/plantilla.js"></script>
+    <script src="../dashboardPlantilla/js/usuarios.js"></script>
+    <script src="../dashboardPlantilla/js/categorias.js"></script>
+    <script src="../dashboardPlantilla/js/productos.js"></script>
+    <script src="../dashboardPlantilla/js/clientes.js"></script>
+    <script src="../dashboardPlantilla/js/ventas.js"></script>
+    <script src="../dashboardPlantilla/js/reportes.js"></script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async="" defer="" src="./Cliente_files/7875273.js(2).download"></script>
+<!-- End of HubSpot Embed Code -->
+
+
+
+</div></div>
+
+<!--<iframe owner="archetype" style="display: none; visibility: hidden;" src="./Cliente_files/saved_resource.html"></iframe><div id="hubspot-messages-iframe-container" class="widget-align-right" style="width: 100px; height: 96px;"><div class="shadow-container"></div><iframe src="./Cliente_files/8cb851e933ed49c1a5b93c697556799b.html" title="chat widget"></iframe>-->
+</div>
+</body></html>

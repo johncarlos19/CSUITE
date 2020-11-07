@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://localhost/csuite.mvc/pos1/categorias -->
+<html style="height: auto; min-height: 100%;"  xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>CashSuite App</title>
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+
+    <link rel="icon" href="../dashboardPlantilla/img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+
+
+
+
+
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;"><style type="text/css">html.hs-messages-widget-open.hs-messages-mobile,html.hs-messages-widget-open.hs-messages-mobile body{overflow:hidden!important;position:relative!important}html.hs-messages-widget-open.hs-messages-mobile body{height:100%!important;margin:0!important}#hubspot-messages-iframe-container{display:initial!important;z-index:2147483647;position:fixed!important;bottom:0!important}#hubspot-messages-iframe-container.widget-align-left{left:0!important}#hubspot-messages-iframe-container.widget-align-right{right:0!important}#hubspot-messages-iframe-container.internal{z-index:1016}#hubspot-messages-iframe-container.internal iframe{min-width:108px}#hubspot-messages-iframe-container .shadow-container{display:initial!important;z-index:-1;position:absolute;width:0;height:0;bottom:0;content:""}#hubspot-messages-iframe-container .shadow-container.internal{display:none!important}#hubspot-messages-iframe-container .shadow-container.active{width:400px;height:400px}#hubspot-messages-iframe-container iframe{display:initial!important;width:100%!important;height:100%!important;border:none!important;position:absolute!important;bottom:0!important;right:0!important;background:transparent!important}</style>
+ 
+  <div class="wrapper" style="height: auto; min-height: 100%;"> <header class="main-header">
+ 	
+	<!--=====================================
+	LOGOTIPO
+	======================================-->
+	<a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+		
+		<!-- logo mini -->
+		<span class="logo-mini">
+			
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+		<!-- logo normal -->
+
+		<span class="logo-lg">
+			
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+	</a>
+
+	<!--=====================================
+	BARRA DE NAVEGACIÓN
+	======================================-->
+	<nav class="navbar navbar-static-top" role="navigation">
+		
+		<!-- Botón de navegación -->
+
+	 	<a href="http://localhost/csuite.mvc/pos1/categorias#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        	
+        	<span class="sr-only">Toggle navigation</span>
+      	
+      	</a>
+
+
+	</nav>
+
+ </header><aside class="main-sidebar">
+
+      <section class="sidebar">
+
+          <ul class="sidebar-menu tree">
+
+
+
+              <li class="">
+
+                  <a href="/dashboard/home">
+
+                      <i class="fa fa-home"></i>
+                      <span>Inicio</span>
+
+                  </a>
+
+              </li>
+
+              <li>
+
+                  <a href="/dashboard/empleado">
+
+                      <i class="fa fa-users"></i>
+                      <span>Empleados</span>
+
+                  </a>
+
+              </li>
+
+
+
+              <li>
+                  <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+                      <i class="fa fa-user"></i>
+                      <span>Perfil</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+
+
+
+              <li class="treeview active">
+
+                  <a href="">
+
+                      <i class="fa fa-th active"></i>
+
+                      <span>Categorias</span>
+
+                      <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li class="active">
+
+                          <a href="/dashboard/categoria">
+
+                              <i class="fa fa-check-circle-o active "></i>
+                              <span>Categorias</span>
+
+                          </a>
+
+                      </li>
+
+                      <li >
+
+                          <a href="/dashboard/impuesto">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Impuesto</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <li>
+
+
+                  <a href="/dashboard/inventario">
+
+                      <i class="fa fa-product-hunt"></i>
+                      <span>Inventario</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+              <li>
+
+                  <a href="/dashboard/cliente">
+
+                      <i class="fa fa-users"></i>
+                      <span>Clientes</span>
+
+                  </a>
+
+              </li>
+
+
+
+
+
+              <li class="treeview">
+
+                  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                      <i class="fa fa-list-ul"></i>
+
+                      <span>Ventas</span>
+
+                      <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Administrar ventas</span>
+
+                          </a>
+
+                      </li>
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Crear venta</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+              <li class="treeview">
+
+                  <a href="http://localhost/csuite.mvc/pos1/categorias#">
+
+                      <i class="fa fa-list-ul"></i>
+
+                      <span>Reportes</span>
+
+                      <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                  </a>
+
+                  <ul class="treeview-menu">
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Reporte de ventas</span>
+
+                          </a>
+
+                      </li>
+
+                      <li>
+
+                          <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+                              <i class="fa fa-circle-o"></i>
+                              <span>Reporte de compras</span>
+
+                          </a>
+
+                      </li>
+
+                  </ul>
+
+              </li>
+
+
+
+
+
+              <li>
+
+                  <a href="http://localhost/csuite.mvc/pos1/salir">
+
+                      <i class="fa fa-power-off"></i>
+
+                      <span>Log Out</span>
+
+                  </a>
+
+              </li>
+
+
+
+              ?&gt;
+
+          </ul>
+
+      </section>
+
+  </aside>
+<div class="content-wrapper" style="min-height: 610px;">
+
+  <section class="content-header">
+    
+    <h1>
+      
+      Administrar categorías
+    
+    </h1>
+
+    <ol class="breadcrumb">
+      
+      <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+      
+      <li class="active">Administrar categorías</li>
+    
+    </ol>
+
+  </section>
+
+  <section class="content">
+
+    <div class="box">
+
+      <div class="box-header with-border">
+  
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCategoria">
+          
+          Agregar categoría
+
+        </button>
+
+      </div>
+
+        <div class="box-body">
+
+            <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+
+                <thead>
+
+                <tr>
+
+                    <th style="width:10px">#</th>
+                    <th>Categoria</th>
+                    <th>Acciones</th>
+
+                </tr>
+
+                </thead>
+
+<tbody>
+
+
+                <th:block th:each="aux : ${categoria}">
+
+                    <tr>
+
+                        <td th:text="${aux.id}"></td>
+
+                        <td class="text-uppercase" th:text="${aux.descripcion}">'.$value["categoria"].'</td>
+
+                        <td>
+
+                            <div class="btn-group">
+
+                                <button  class="btn btn-warning btnEditarCategoria" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button>
+                                <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>
+
+                                </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+                </th:block>
+
+
+
+
+
+           </tbody>
+
+
+<!--        <tbody>-->
+
+<!--         -->
+<!--        <tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">1</td>-->
+
+<!--                    <td class="text-uppercase">Equipos Electromecánicos</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="1" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="1"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">2</td>-->
+
+<!--                    <td class="text-uppercase">Taladros</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="2" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="2"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">3</td>-->
+
+<!--                    <td class="text-uppercase">Andamios</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="3" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="3"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">4</td>-->
+
+<!--                    <td class="text-uppercase">Generadores de energía</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="4" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="4"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">5</td>-->
+
+<!--                    <td class="text-uppercase">Equipos para construcción</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="5" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="5"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
+
+<!--                    <td tabindex="0" class="sorting_1">6</td>-->
+
+<!--                    <td class="text-uppercase">Martillos mecánicos</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="6" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="6"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
+
+<!--                    <td tabindex="0" class="sorting_1">7</td>-->
+
+<!--                    <td class="text-uppercase">PANELES</td>-->
+
+<!--                    <td>-->
+
+<!--                      <div class="btn-group">-->
+<!--                          -->
+<!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="7" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="7"><i class="fa fa-times"></i></button></div>  -->
+
+<!--                    </td>-->
+
+<!--                  </tr></tbody>-->
+
+       </table>
+       </div>
+       </div>
+
+
+
+<!--           <div class="row">-->
+<!--               <div class="col-sm-5">-->
+<!--                   <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Mostrando registros del 1 al 7 de un total de 7</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="DataTables_Table_0_previous"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a></li><li class="paginate_button active"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button next disabled" id="DataTables_Table_0_next"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">Siguiente</a></li></ul></div></div></div></div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+
+  </section>
+
+</div>
+
+<!--=====================================
+MODAL AGREGAR CATEGORÍA
+======================================-->
+
+<div id="modalAgregarCategoria" class="modal fade" role="dialog" style="display: none;">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" id="addCategoria" action="/dashboard/categoria">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">×</button>
+
+          <h4 class="modal-title">Agregar categoría</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+
+                      <input type="text" class="form-control input-lg" name="nuevaCategoria" placeholder="Ingresar categoría" for="addCategoria" required="">
+
+
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary" for="addCategoria">Guardar categoría</button>
+
+
+        </div>
+
+        
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL EDITAR CATEGORÍA
+======================================-->
+
+<div id="modalEditarCategoria" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">×</button>
+
+          <h4 class="modal-title">Editar categoría</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarCategoria" id="editarCategoria" required="">
+
+                 <input type="hidden" name="idCategoria" id="idCategoria" required="">
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+
+       
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<footer class="main-footer">
+	
+	<strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+	Todos los derechos reservados.
+
+
+</footer></div>
+
+
+<script src="../dashboardPlantilla/js/plantilla.js"></script>
+<script src="../dashboardPlantilla/js/usuarios.js"></script>
+<script src="../dashboardPlantilla/js/categorias.js"></script>
+<script src="../dashboardPlantilla/js/productos.js"></script>
+<script src="../dashboardPlantilla/js/clientes.js"></script>
+<script src="../dashboardPlantilla/js/ventas.js"></script>
+<script src="../dashboardPlantilla/js/reportes.js"></script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async="" defer="" src="./categoria_files/7875273.js(2).download"></script>
+<!-- End of HubSpot Embed Code -->
+
+
+</body></html>

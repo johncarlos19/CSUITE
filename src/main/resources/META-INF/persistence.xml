@@ -1,0 +1,85 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="csuite"
+                      transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>csuite.mvc.entidades.Producto</class>
+        <class>csuite.mvc.entidades.CarroCompra</class>
+        <class>csuite.mvc.entidades.ProductoComprado</class>
+        <class>csuite.mvc.entidades.Usuario</class>
+        <class>csuite.mvc.entidades.VentasProductos</class>
+        <class>csuite.mvc.entidades.CarroCompra_Producto</class>
+        <class>csuite.mvc.entidades.CarrocompraProductoId</class>
+        <class>csuite.mvc.entidades.Foto</class>
+        <class>csuite.mvc.entidades.Comentario</class>
+        <class>csuite.mvc.entidades.Vendedor</class>
+        <class>csuite.mvc.entidades.ProductoEnVenta</class>
+        <class>csuite.mvc.entidades.Almacen</class>
+        <class>csuite.mvc.entidades.Categoria</class>
+        <class>csuite.mvc.entidades.Empleado</class>
+        <class>csuite.mvc.entidades.Cliente</class>
+        <class>csuite.mvc.entidades.FacturaCliente</class>
+        <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
+        <class>csuite.mvc.entidades.Impuesto</class>
+
+        <properties>
+
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:h2:tcp://localhost/~/csuite" />
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="connection.pool_size" value="100"></property>
+            <property
+                    name="javax.persistence.schema-generation.database.action"
+                    value="create-drop" />
+
+
+
+        </properties>
+
+
+    </persistence-unit>
+    <!--Puedo tener varias unidades de persistencia en función a la conexión que necesito-->
+    <persistence-unit name="Heroku" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>csuite.mvc.entidades.Producto</class>
+        <class>csuite.mvc.entidades.CarroCompra</class>
+        <class>csuite.mvc.entidades.ProductoComprado</class>
+        <class>csuite.mvc.entidades.Usuario</class>
+        <class>csuite.mvc.entidades.VentasProductos</class>
+        <class>csuite.mvc.entidades.CarroCompra_Producto</class>
+        <class>csuite.mvc.entidades.CarrocompraProductoId</class>
+        <class>csuite.mvc.entidades.Foto</class>
+        <class>csuite.mvc.entidades.Comentario</class>
+        <class>csuite.mvc.entidades.Vendedor</class>
+        <class>csuite.mvc.entidades.ProductoEnVenta</class>
+
+        <class>csuite.mvc.entidades.Almacen</class>
+        <class>csuite.mvc.entidades.Categoria</class>
+        <class>csuite.mvc.entidades.Empleado</class>
+        <class>csuite.mvc.entidades.Cliente</class>
+        <class>csuite.mvc.entidades.FacturaCliente</class>
+        <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
+        <class>csuite.mvc.entidades.Impuesto</class>
+
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- Indica como será la generación de las tablas en el motor-->
+            <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
+            <property name="javax.persistence.schema-generation.database.action" value="update"/>
+            <!--<property name="eclipselink.logging.level" value="ALL" />-->
+        </properties>
+    </persistence-unit>
+</persistence>
