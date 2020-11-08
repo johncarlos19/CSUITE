@@ -650,6 +650,7 @@ public class RecibirDatosControlador extends JavalinControlador {
              ) {
             if (aux.getId().equals(user)){
                 if (isExpirate(aux.getJwt())==true){
+                    logins.remove(aux);
                     return true;
                 }else{
                     return false;
