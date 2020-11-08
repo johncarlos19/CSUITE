@@ -180,14 +180,14 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 ctx.redirect("/dashboard/home");
                             }else {
                                 Map<String, Object> contexto1 = new HashMap<>();
-                                contexto1.put("texto1",  "Â¡Esta cuenta ha iniciado sesiÃ³n, debe salir de la sesiÃ³n para poder entrar!");
+                                contexto1.put("texto1",  "¡Esta cuenta ha iniciado sesión, debe salir de la sesión para poder entrar!");
                                 ctx.render("/public/webPage/login_error.html",contexto1);
                             }
 
 
                         }else{
                             Map<String, Object> contexto2 = new HashMap<>();
-                            contexto2.put("texto1", "Â¡Email o contraseÃ±a no coinciden!");
+                            contexto2.put("texto1", "¡Email o contraseña no coinciden!");
                             ctx.render("/public/webPage/login_error.html",contexto2 );
                         }
 
