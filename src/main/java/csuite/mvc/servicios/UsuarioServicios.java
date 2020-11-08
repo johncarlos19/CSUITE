@@ -153,6 +153,6 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
             }
         }*/
 
-        return find(us);
+        return buscar(us);
     }
 }

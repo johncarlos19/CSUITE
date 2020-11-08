@@ -232,6 +232,18 @@ public class GestionadDB<T> {
      * @param id
      * @return
      */
+    public T buscar(Object id) throws PersistenceException {
+        final Session session = getHibernateSession();
+//        EntityManager em = getEntityManager();
+        session.getTransaction().begin();
+
+        try {
+            return session.find(claseEntidad, id);
+        } finally {
+            session.close();
+        }
+    }
+
     public T find(Object id) throws PersistenceException {
 //        final Session session = getHibernateSession();
         EntityManager em = getEntityManager();

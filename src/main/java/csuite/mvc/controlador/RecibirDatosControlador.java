@@ -6,6 +6,7 @@ import csuite.mvc.servicios.*;
 import io.javalin.Javalin;
 
 import io.jsonwebtoken.*;
+import org.hibernate.Session;
 import org.jasypt.util.text.AES256TextEncryptor;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -21,6 +22,8 @@ public class RecibirDatosControlador extends JavalinControlador {
     public final static String SECRET_KEY = "ghQaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w";
     AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
     AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
+    static ArrayList<Login>  logins = new ArrayList<Login>();
+
 
     public RecibirDatosControlador(Javalin app) {
         super(app);
@@ -124,10 +127,30 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
 
+
                 });
             });
 
+            path("/logout", () -> {
 
+
+                get(ctx -> {
+
+                    for (int i = 0; i < logins.size(); i++) {
+                        if (logins.get(i).getId().equalsIgnoreCase(decodeJWT(ctx.sessionAttribute("User")).getId())){
+                            logins.remove(i);
+                            break;
+                        }
+                    }
+
+
+                    ctx.removeCookie("User");
+                    ctx.req.getSession().invalidate();
+                    ctx.redirect("/login");
+
+                });
+
+            });
 
 
 
@@ -141,19 +164,31 @@ public class RecibirDatosControlador extends JavalinControlador {
                     post(ctx -> {
 
 
-                        Map<String, Object> contexto = new HashMap<>();
+
 
                         if (Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"))!=null){
-                            String user = ctx.formParam("ingresoEmail");
 
-                            String header = "Authorization";
-                            String jwt = createJWT(user);
+                            if (isSessionAvailable(ctx.formParam("ingresoEmail"))){
+                                String user = ctx.formParam("ingresoEmail");
 
-                            ctx.sessionAttribute("User",jwt);
-                            ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
-                            ctx.redirect("/dashboard/home");
+                                String header = "Authorization";
+                                String jwt = createJWT(user);
+                                logins.add(new Login(user,decodeJWT(jwt)));
+
+                                ctx.sessionAttribute("User",jwt);
+                                ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
+                                ctx.redirect("/dashboard/home");
+                            }else {
+                                Map<String, Object> contexto1 = new HashMap<>();
+                                contexto1.put("texto1",  "Â¡Esta cuenta ha iniciado sesiÃ³n, debe salir de la sesiÃ³n para poder entrar!");
+                                ctx.render("/public/webPage/login_error.html",contexto1);
+                            }
+
+
                         }else{
-                            ctx.render("/public/webPage/login_error.html");
+                            Map<String, Object> contexto2 = new HashMap<>();
+                            contexto2.put("texto1", "Â¡Email o contraseÃ±a no coinciden!");
+                            ctx.render("/public/webPage/login_error.html",contexto2 );
                         }
 
 
@@ -201,8 +236,14 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 try {
                                     if(isExpirate(decodeJWT(session))==false){
                                         String header = "Authorization";
+                                        String use = decodeJWT(session).getId();
                                         String jwt = createJWT(decodeJWT(session).getId());
                                         ctx.header(header,jwt);
+                                        for (int i = 0; i < logins.size(); i++) {
+                                            if (logins.get(i).getId().equalsIgnoreCase(use)){
+                                                logins.get(i).setJwt(decodeJWT(jwt));
+                                            }
+                                        }
 
                                         ctx.sessionAttribute("User",jwt);
                                         ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -295,7 +336,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         Mercado.getInstance().addCategoria(user,categoria);
 
 
-                        ctx.redirect("/categoria");
+                        ctx.redirect("/dashboard/categoria");
 
 
 
@@ -326,7 +367,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         Mercado.getInstance().addImpuesto(user,impuesto);
 
 
-                        ctx.redirect("/impuesto");
+                        ctx.redirect("/dashboard/impuesto");
 
 
 
@@ -388,7 +429,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         usuarioCliente.setEmail(nuevoEmail);
                         usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
                         System.out.println("\n\n\nusua"+usuarioCliente.getUsuario());
-                        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+                        usuarioCliente = UsuarioServicios.getInstancia().buscar(usuarioCliente.getUsuario());
                         Cliente cliente = new Cliente();
                         cliente = usuarioCliente.addCliente(cliente);
                         cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
@@ -398,7 +439,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
 
-                        ctx.redirect("/cliente");
+                        ctx.redirect("/dashboard/cliente");
 
 
 
@@ -466,7 +507,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         usuarioCliente.setEmail(nuevoEmail);
                         usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
                         System.out.println("\n\n\nusua"+usuarioCliente.getUsuario());
-                        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+                        usuarioCliente = UsuarioServicios.getInstancia().buscar(usuarioCliente.getUsuario());
                         Cliente cliente = new Cliente();
                         cliente = usuarioCliente.addCliente(cliente);
                         cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
@@ -476,7 +517,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
 
-                        ctx.redirect("/cliente");
+                        ctx.redirect("/dashboard/empleado");
 
 
 
@@ -601,6 +642,21 @@ public class RecibirDatosControlador extends JavalinControlador {
 
         });
 
+    }
+
+    public static boolean isSessionAvailable(String user){
+        boolean available = true;
+        for (Login aux: logins
+             ) {
+            if (aux.getId().equals(user)){
+                if (isExpirate(aux.getJwt())==true){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return available;
     }
 
     public static String createJWT(String username) {
