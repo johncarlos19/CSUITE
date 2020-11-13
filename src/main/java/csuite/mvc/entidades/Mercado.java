@@ -224,6 +224,29 @@ public class Mercado {
 
 
 
+
+
+
+            //usuario de elias
+
+
+
+
+
+
+            Usuario usuario10 = new Usuario("eliasmarte", "Elias");
+            usuario10.setApellido("Marte");
+            usuario10.setEmail("eliasMarte@cashsuite.com");
+            usuario10.setPerfil("Admin");
+            Usuario aux123 = new UsuarioServicios().crearUsuario(usuario10);
+
+            Vendedor vendedor123 = new Vendedor();
+            vendedor123.setEmail("eliasmarte@cashsuite.com");
+            vendedor123.setPassword(passwordEncryptor.encrypt("admin"));
+            Vendedor otro123 = aux123.addVendedor(vendedor123);
+            VendedorServicios.getInstancia().crear(otro123);
+            aux123 = (Usuario) UsuarioServicios.getInstancia().editar(aux123);
+
            /* Producto pp = new Producto("Pan", BigDecimal.valueOf(50.00).setScale(2));
             pp.setDescripcion("Bueno");
             new ProductoServicios().crearProducto(pp);
@@ -324,6 +347,29 @@ public class Mercado {
     }
 
 
+    public String getUserJefe(String user){
+        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
+        String se = null;
+        switch (aux.getPerfil()){
+            case "Admin":
+
+                se =  user;
+                break;
+
+            case "Empleado":
+
+                se =  EmpleadoServicios.getInstancia().getJefe(aux.getUsuario());
+                break;
+            case "Vendedor":
+                se =  user;
+                break;
+            default:
+se  = user;
+                break;
+        }
+        return se;
+    }
+
 
 
     public List<Producto> listaProductoOrdenada(String user){
@@ -374,8 +420,8 @@ public class Mercado {
                 break;
             case "Empleado":
 
-                System.out.println("Esto sale"+aux.getVendedor().getPassword());
-                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                System.out.println("Esto sale"+aux.getEmpleado().getPassword());
+                if (passwordEncryptor.decrypt(aux.getEmpleado().getPassword()).equals(password)) {
                     return "Empleado";
                 }
 

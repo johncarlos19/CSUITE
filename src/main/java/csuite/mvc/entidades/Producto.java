@@ -196,7 +196,15 @@ return null;
 //        this.categorias = categorias;
 //    }
 
+    public String getImgComplete() {
+        if (mimeType == null){
+            return "../dashboardPlantilla/img/productos/default/anonymous.png";
+        }else{
+            return fotoBase64;
+        }
 
+
+    }
     public String getCategoria() {
         return categoria;
     }

@@ -69,7 +69,7 @@ public class ApiControlador extends JavalinControlador {
                         producto.setCategoria(tmp.getCategorias());
 
 
-                        Vendedor otro = new VendedorServicios().find("admin");
+                        Vendedor otro = new VendedorServicios().find(Mercado.getInstance().getUserJefe(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId()));
 
                         producto.CrearProductoVenta();
                         producto = ProductoServicios.getInstancia().crearProducto(producto);

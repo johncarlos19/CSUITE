@@ -163,16 +163,18 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                     post(ctx -> {
 
+                        String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
 
 
 
-                        if (Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"))!=null){
+
+                        if (perfil!=null){
 
                             if (isSessionAvailable(ctx.formParam("ingresoEmail"))){
                                 String user = ctx.formParam("ingresoEmail");
 
                                 String header = "Authorization";
-                                String jwt = createJWT(user);
+                                String jwt = createJWT(user,perfil);
                                 logins.add(new Login(user,decodeJWT(jwt)));
 
                                 ctx.sessionAttribute("User",jwt);
@@ -237,7 +239,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                     if(isExpirate(decodeJWT(session))==false){
                                         String header = "Authorization";
                                         String use = decodeJWT(session).getId();
-                                        String jwt = createJWT(decodeJWT(session).getId());
+                                        String jwt = createJWT(decodeJWT(session).getId(),decodeJWT(session).getAudience());
                                         ctx.header(header,jwt);
                                         for (int i = 0; i < logins.size(); i++) {
                                             if (logins.get(i).getId().equalsIgnoreCase(use)){
@@ -283,6 +285,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                 path("/home", () -> {
 
                     get(ctx -> {
+
                         String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
@@ -660,7 +663,7 @@ public class RecibirDatosControlador extends JavalinControlador {
         return available;
     }
 
-    public static String createJWT(String username) {
+    public static String createJWT(String username, String perfil) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -677,6 +680,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                 .setIssuedAt(now)
                 .setSubject("CashSuite")
                 .setIssuer("JLC")
+                .setAudience(perfil)
                 .signWith(signatureAlgorithm, signingKey);
 
         // 5 minutes para expiracion
