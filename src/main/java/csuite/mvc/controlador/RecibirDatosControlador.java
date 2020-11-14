@@ -291,6 +291,9 @@ public class RecibirDatosControlador extends JavalinControlador {
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
                         contexto.put("listaProducto", Mercado.getInstance().listaProductoOrdenada(user));
+                        contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefe(user)));
+                        contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefe(user)));
+                        contexto.put("cliente", ClienteServicios.getInstancia().cantidadCliente(Mercado.getInstance().getUserJefe(user)));
 
                         ctx.render("/public/dashboardPlantilla/home.html", contexto);
 

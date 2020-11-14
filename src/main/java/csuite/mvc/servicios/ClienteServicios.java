@@ -60,4 +60,21 @@ public class ClienteServicios extends GestionadDB<Cliente>{
 
 
     }
+
+    public long cantidadCliente(String user){
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select count(*) from Vendedor v inner join v.clientes c where v.idVendedor.usuario = '"+user+"'   " );
+
+            //query.setParameter("nombre", apellido+"%");
+            long lista = (long)query.getSingleResult() ;
+            return lista;
+        } finally {
+            session.close();
+        }
+
+    }
 }

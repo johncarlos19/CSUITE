@@ -103,6 +103,23 @@ List<Foo> fooList = fooList = query.list();*/
 
 
     }
+
+    public long cantidadProductos(String user){
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select count(*) from Vendedor v inner join v.productoList p where v.idVendedor.usuario = '"+user+"'   " );
+
+            //query.setParameter("nombre", apellido+"%");
+            long lista = (long)query.getSingleResult() ;
+            return lista;
+        } finally {
+            session.close();
+        }
+
+    }
     public ArrayList<Producto> listaProductoRecienAgregado(int page) {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("select cp from Producto cp ");
