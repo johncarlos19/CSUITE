@@ -399,9 +399,14 @@ se  = user;
 
     public String verificar_user(String user, String password) {
         Usuario aux = new UsuarioServicios().getUsuario(user);
-        if(aux==null){
+        try {
+            if(aux.getPerfil()==null){
+                return null;
+            }
+        }catch (NullPointerException E){
             return null;
         }
+
 
         switch (aux.getPerfil()){
             case "Vendedor":

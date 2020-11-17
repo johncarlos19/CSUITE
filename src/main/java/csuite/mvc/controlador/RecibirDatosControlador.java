@@ -189,7 +189,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                         }else{
                             Map<String, Object> contexto2 = new HashMap<>();
-                            contexto2.put("texto1", "¡Email o contraseña no coinciden!");
+                            contexto2.put("texto1", "¡Usuario o contraseña no coinciden!");
                             ctx.render("/public/webPage/login_error.html",contexto2 );
                         }
 
