@@ -163,13 +163,12 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                     post(ctx -> {
 
-                        String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
 
 
 
 
-                        if (perfil!=null){
-
+                        if (UsuarioServicios.getInstancia().existe(ctx.formParam("ingresoEmail"))){
+                            String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
                             if (isSessionAvailable(ctx.formParam("ingresoEmail"))){
                                 String user = ctx.formParam("ingresoEmail");
 

@@ -398,46 +398,46 @@ se  = user;
 
 
     public String verificar_user(String user, String password) {
-        Usuario aux = new UsuarioServicios().getUsuario(user);
-        try {
-            if(aux.getPerfil()==null){
-                return null;
-            }
-        }catch (NullPointerException E){
-            return null;
-        }
 
 
-        switch (aux.getPerfil()){
-            case "Vendedor":
+
+
+
+
+
+            Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
+            switch (aux.getPerfil()){
+                case "Vendedor":
 
                     System.out.println("Esto sale"+aux.getVendedor().getPassword());
                     if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
                         return "Vendedor";
                     }
 
-                break;
+                    break;
 
-            case "Admin":
+                case "Admin":
 
-                System.out.println("Esto sale"+aux.getVendedor().getPassword());
-                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
-                    return "Admin";
-                }
+                    System.out.println("Esto sale"+aux.getVendedor().getPassword());
+                    if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                        return "Admin";
+                    }
 
-                break;
-            case "Empleado":
+                    break;
+                case "Empleado":
 
-                System.out.println("Esto sale"+aux.getEmpleado().getPassword());
-                if (passwordEncryptor.decrypt(aux.getEmpleado().getPassword()).equals(password)) {
-                    return "Empleado";
-                }
+                    System.out.println("Esto sale"+aux.getEmpleado().getPassword());
+                    if (passwordEncryptor.decrypt(aux.getEmpleado().getPassword()).equals(password)) {
+                        return "Empleado";
+                    }
 
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+
 
         }
+
 
 
 

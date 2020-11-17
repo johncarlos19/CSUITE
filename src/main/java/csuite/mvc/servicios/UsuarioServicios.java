@@ -1,9 +1,13 @@
 package csuite.mvc.servicios;
 
+import csuite.mvc.entidades.Categoria;
 import csuite.mvc.entidades.Usuario;
 import csuite.mvc.entidades.Vendedor;
+import org.hibernate.Session;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioServicios extends GestionadDB<Usuario> {
 
@@ -121,6 +125,32 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
         }
         return hh;
 
+
+    }
+    public boolean existe(String us){
+
+        final Session session = getHibernateSession();
+
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select count(*) from Usuario u where u.usuario = '"+us+"' " );
+
+            //query.setParameter("nombre", apellido+"%");
+           long lista = (long)query.getSingleResult() ;
+            System.out.println("\n\n\ncantidad totak"+lista);
+            if (lista == 0){
+                return false;
+            }else{
+                return true;
+            }
+
+
+        } finally {
+            session.close();
+
+        }
 
     }
 
