@@ -4,11 +4,19 @@ import  csuite.mvc.entidades.*;
 import csuite.mvc.servicios.*;
 import org.jasypt.util.text.AES256TextEncryptor;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.awt.*;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Mercado {
 //    private static ProductoServicios productoServicios = new ProductoServicios();
@@ -36,43 +44,43 @@ public class Mercado {
 
         try {
             if (verificar_user("admin", "admin") !=null) {
-                Usuario usuario = new Usuario("admin", "Admin");
-                usuario.setEmail("admin@cashsuite.com");
-                usuario.setPerfil("Admin");
-                Usuario aux = new UsuarioServicios().crearUsuario(usuario);
-
-                Producto producto = new Producto();
-                producto.setNombre("Huevo");
-                producto.setDescripcion("Son bueno");
-                producto.setCodigo_local("144533");
-                Producto producto1 = new Producto();
-                producto1.setNombre("Pan");
-                producto1.setDescripcion("Son malo");
-                producto1.setCodigo_local("1445833");
-
-
-                Vendedor vendedor = new Vendedor();
-                vendedor.setEmail("admin@cashsuite.com");
-                vendedor.setPassword(passwordEncryptor.encrypt("admin"));
-                Vendedor otro = aux.addVendedor(vendedor);
-                VendedorServicios.getInstancia().crear(otro);
-                UsuarioServicios.getInstancia().editar(aux);
-
-                producto.CrearProductoVenta();
-                producto1.CrearProductoVenta();
-                producto = ProductoServicios.getInstancia().crearProducto(producto);
-                producto1 = ProductoServicios.getInstancia().crearProducto(producto1);
-                otro.addProducto(producto);
-                otro.addProducto(producto1);
-//            VendedorServicios.getInstancia().editar(otro);
-                Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoList().get(0);
-
-                Almacen almacen = new Almacen("Don Lindo",10,10,200,500);
-                va.addAlmacen(almacen);
-                va = (Producto) new ProductoServicios().editar(va);
-                almacen = new Almacen("Endy",10,1,300,600);
-                va.addAlmacen(almacen);
-                va = (Producto) new ProductoServicios().editar(va);
+//                Usuario usuario = new Usuario("admin", "Admin");
+//                usuario.setEmail("admin@cashsuite.com");
+//                usuario.setPerfil("Admin");
+//                Usuario aux = new UsuarioServicios().crearUsuario(usuario);
+//
+//                Producto producto = new Producto();
+//                producto.setNombre("Huevo");
+//                producto.setDescripcion("Son bueno");
+//                producto.setCodigo_local("144533");
+//                Producto producto1 = new Producto();
+//                producto1.setNombre("Pan");
+//                producto1.setDescripcion("Son malo");
+//                producto1.setCodigo_local("1445833");
+//
+//
+//                Vendedor vendedor = new Vendedor();
+//                vendedor.setEmail("admin@cashsuite.com");
+//                vendedor.setPassword(passwordEncryptor.encrypt("admin"));
+//                Vendedor otro = aux.addVendedor(vendedor);
+//                VendedorServicios.getInstancia().crear(otro);
+//                UsuarioServicios.getInstancia().editar(aux);
+//
+//                producto.CrearProductoVenta();
+//                producto1.CrearProductoVenta();
+//                producto = ProductoServicios.getInstancia().crearProducto(producto);
+//                producto1 = ProductoServicios.getInstancia().crearProducto(producto1);
+//                otro.addProducto(producto);
+//                otro.addProducto(producto1);
+////            VendedorServicios.getInstancia().editar(otro);
+//                Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoList().get(0);
+//
+//                Almacen almacen = new Almacen("Don Lindo",10,10,200,500);
+//                va.addAlmacen(almacen);
+//                va = (Producto) new ProductoServicios().editar(va);
+//                almacen = new Almacen("Endy",10,1,300,600);
+//                va.addAlmacen(almacen);
+//                va = (Producto) new ProductoServicios().editar(va);
 
 
 
@@ -394,6 +402,48 @@ se  = user;
                 break;
         }
         return productoList;
+    }
+
+
+
+    public boolean send_correo_online(String correo, String mensaje, String asunto){
+        Properties propiedad = new Properties();
+        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+        propiedad.setProperty("mail.smtp.starttls.enable", "true");
+        propiedad.setProperty("mail.smtp.port", "587");
+        propiedad.setProperty("mail.smtp.auth", "true");
+
+
+
+        Session sesion = Session.getDefaultInstance(propiedad);
+        String correoEnvia = "goniometria.project@gmail.com";
+        String contrasena = "castillo30";
+        String receptor = correo;
+
+
+
+
+        MimeMessage mail = new MimeMessage(sesion);
+        try {
+            mail.setFrom(new InternetAddress(correoEnvia));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress (receptor));
+            mail.setSubject(asunto);
+            mail.setContent(mensaje,"text/html");
+
+            Transport transportar = sesion.getTransport("smtp");
+            transportar.connect(correoEnvia,contrasena);
+            transportar.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            transportar.close();
+
+            return true;
+
+        } catch (AddressException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
 

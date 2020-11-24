@@ -40,10 +40,10 @@ public class Main {
         System.out.println(mensaje);
         Mercado.getInstance().loadDataBase();
 
+        Javalin app = null;
 
 
-
-        Javalin app = Javalin.create(config ->{
+         app = Javalin.create(config ->{
             config.addStaticFiles("/public"); //desde la carpeta de resources
             config.registerPlugin(new RouteOverviewPlugin("/rutas")); //aplicando plugins de las rutas
         }).start(getHerokuAssignedPort());
@@ -64,7 +64,7 @@ public class Main {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
+        return 80; //Retorna el puerto por defecto en caso de no estar en Heroku.
     }
 
 
