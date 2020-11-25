@@ -45,8 +45,10 @@ public class ApiControlador extends JavalinControlador {
                     });
 
                     get("/", ctx -> {
+
+                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
                         System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
-                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId()));
+                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(Mercado.getInstance().getUserJefe(user)));
                     });
 
 //                    get("/:matricula", ctx -> {

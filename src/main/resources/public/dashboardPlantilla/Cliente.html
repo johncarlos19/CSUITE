@@ -732,7 +732,7 @@ CUERPO DOCUMENTO
 
               <div class="box">
 
-                  <div class="box-header with-border">
+                  <div class="box-header with-border" th:style="${clienteAdd}">
 
                       <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
 
@@ -790,7 +790,7 @@ CUERPO DOCUMENTO
 
                                   <td>
 
-                                      <div class="btn-group">
+                                      <div class="btn-group" th:style="${clienteEdit}">
 
                                           <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-eye"></i></button>
 

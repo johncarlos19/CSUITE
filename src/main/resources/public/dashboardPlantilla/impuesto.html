@@ -437,7 +437,7 @@ CUERPO DOCUMENTO
 
             <div class="box">
 
-                <div class="box-header with-border">
+                <div class="box-header with-border" th:style="${impuestoAdd}">
 
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCategoria">
 
@@ -491,7 +491,7 @@ CUERPO DOCUMENTO
                                 </th>
                                 <td>
 
-                                    <div class="btn-group">
+                                    <div class="btn-group" th:style="${impuestoEdit}">
 
                                         <button  class="btn btn-warning btnEditarCategoria" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button>
                                         <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>

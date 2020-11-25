@@ -1,10 +1,9 @@
 package csuite.mvc.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Empleado  implements Serializable {
@@ -15,6 +14,7 @@ public class Empleado  implements Serializable {
     private String password;
     private boolean validacion;
     private String email;
+
 
     public Empleado() {
 
@@ -51,4 +51,6 @@ public class Empleado  implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

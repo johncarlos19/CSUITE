@@ -1,6 +1,7 @@
 package csuite.mvc.servicios;
 
 import csuite.mvc.entidades.Categoria;
+import csuite.mvc.entidades.Mercado;
 import csuite.mvc.entidades.Usuario;
 import csuite.mvc.entidades.Vendedor;
 import org.hibernate.Session;
@@ -87,6 +88,45 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
         String id = user.getUsuario();
         user.setPais("RD");
         Usuario usuario = (Usuario) createAndReturnObjectWithUniqueId(user);
+        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), 1));
+        usuario = (Usuario) editar(usuario);
+        //usuario.setUsuario(id);
+
+        return  usuario;//editar(usuario);
+    }
+
+    public Usuario crearUsuariEmpleado(Usuario user, int accion) {
+        boolean subio = false;
+/*
+        Connection con = null;
+        try {
+
+            String query = "insert into USUARIO(NOMBRE, USER, PASSWORD) VALUES (?,?,?);";
+            con = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setString(1, user.getNombre());
+            prepareStatement.setString(2, user.getUsuario());
+            prepareStatement.setString(3, user.getPassword());
+            //
+            int fila = prepareStatement.executeUpdate();
+            subio = fila > 0 ;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioServicios.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioServicios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
+        String id = user.getUsuario();
+        user.setPais("RD");
+        Usuario usuario = (Usuario) createAndReturnObjectWithUniqueId(user);
+        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), accion));
+        usuario = (Usuario) editar(usuario);
         //usuario.setUsuario(id);
 
         return  usuario;//editar(usuario);

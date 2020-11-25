@@ -24,6 +24,8 @@
         <class>csuite.mvc.entidades.FacturaCliente</class>
         <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
         <class>csuite.mvc.entidades.Impuesto</class>
+        <class>csuite.mvc.entidades.Politica</class>
+
 
         <properties>
 
@@ -39,7 +41,10 @@
             <property name="connection.pool_size" value="100"></property>
             <property
                     name="javax.persistence.schema-generation.database.action"
-                    value="update" />
+                    value="create-drop" />
+<!--            <property-->
+<!--                    name="javax.persistence.schema-generation.database.action"-->
+<!--                    value="create-drop" />-->
 
 
 
@@ -69,6 +74,7 @@
         <class>csuite.mvc.entidades.FacturaCliente</class>
         <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
         <class>csuite.mvc.entidades.Impuesto</class>
+        <class>csuite.mvc.entidades.Politica</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

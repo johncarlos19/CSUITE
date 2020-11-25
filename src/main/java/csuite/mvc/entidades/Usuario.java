@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Usuario implements Identifiable<String> {
@@ -32,15 +34,32 @@ public class Usuario implements Identifiable<String> {
     private Empleado empleado;
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL , orphanRemoval = true,mappedBy = "idCliente")
     private Cliente cliente;
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL ,  orphanRemoval = true)
+    @JoinColumn(name="idUsuario")
+    @OrderBy(value = "id desc ")
+    private List<Politica> politicaList = new ArrayList<Politica>();
 
 
     public Usuario(){
 
     }
 
+    public List<Politica> getPoliticaList() {
+        return politicaList;
+    }
+
+    public void setPoliticaList(List<Politica> politicaList) {
+        this.politicaList = politicaList;
+    }
+
     public Usuario(String usuario, String nombre) {
         this.usuario = usuario;
         this.nombre = nombre;
+    }
+
+    public boolean addPolitica(Politica aux){
+        politicaList.add(aux);
+        return true;
     }
 
     public Vendedor addVendedor(Vendedor aux){

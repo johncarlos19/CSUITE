@@ -49,6 +49,7 @@
         <mapping class="csuite.mvc.entidades.FacturaCliente"/>
         <mapping class="csuite.mvc.entidades.FacturaClienteProductoVendido"/>
         <mapping class="csuite.mvc.entidades.Impuesto"/>
+        <mapping class="csuite.mvc.entidades.Politica"/>
 
     </session-factory>
 

@@ -50,7 +50,7 @@ worker.onmessage = function (e) { //recuperando la información
 				"Precio de venta":     obj[key].precioVenta,
 				"Stock":     sto,
 				"Disponible":     obj[key].disponible,
-				"Acciones":     "<div class='btn-group'><button class='btn btn-warning btnEditarProducto' idproducto='"+obj[key].id+"'  data-toggle='modal' data-target=''#modalEditarProducto'><i  class='fa fa-eye'></i></button> <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
+				"Acciones":     "<div class='btn-group'  "+document.getElementById("inventa").value+"><button class='btn btn-warning btnEditarProducto' idproducto='"+obj[key].id+"'  data-toggle='modal' data-target=''#modalEditarProducto'><i  class='fa fa-eye'></i></button> <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
 			}
 
 			// c = [];

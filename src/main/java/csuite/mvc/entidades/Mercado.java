@@ -226,7 +226,20 @@ public class Mercado {
             empleado.setTelefono("80955401221");
             empleado.setUsuario("lalameme");
             empleado.setEmail("pepe.puraz@cashsuite.com");
-            registrarEmpleado("admin",empleado,"admin");
+            registrarEmpleado("admin",empleado,"admin",1);
+
+
+            Usuario empleadoLectura = new Usuario();
+            empleadoLectura.setNombre("Empleado");
+            empleadoLectura.setApellido("Solo Lectura");
+            empleadoLectura.setPerfil("Empleado");
+            empleadoLectura.setPais("Republica Dominicana");
+            empleadoLectura.setMunicipio("La vega");
+            empleadoLectura.setDireccion("vegano");
+            empleadoLectura.setTelefono("80955401221");
+            empleadoLectura.setUsuario("empleadoLectura");
+            empleadoLectura.setEmail("pepe.puraz@cashsuite.com");
+            registrarEmpleado("admin",empleadoLectura,"admin",2);
 
             System.out.println("\n\nEl dueno del empleado:"+EmpleadoServicios.getInstancia().getJefe("lalameme"));
 
@@ -309,11 +322,11 @@ public class Mercado {
         this.passwordEncryptor = passwordEncryptor;
     }
 
-    public Empleado registrarEmpleado(String vendedor, Usuario usuarioEmpleado, String password){
+    public Empleado registrarEmpleado(String vendedor, Usuario usuarioEmpleado, String password, int acceso){
         Vendedor otro = VendedorServicios.getInstancia().getVendedor(vendedor);
 
 
-        usuarioEmpleado = (Usuario) new UsuarioServicios().crearUsuario(usuarioEmpleado);
+        usuarioEmpleado = (Usuario) new UsuarioServicios().crearUsuariEmpleado(usuarioEmpleado,acceso);
         System.out.println("\n\n\nusua"+usuarioEmpleado.getUsuario());
         usuarioEmpleado = UsuarioServicios.getInstancia().find(usuarioEmpleado.getUsuario());
         Empleado empleado = new Empleado();
@@ -352,6 +365,173 @@ public class Mercado {
     public String tipoUsuario(String user){
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         return aux.getPerfil();
+    }
+
+
+    public List<Politica> getListaPolitica(String perfil, int acceso){
+        List<Politica> politicaList = new ArrayList<Politica>();
+        Politica aux = null;
+        Politica aux1 = null;
+
+        Politica aux3 = null;
+        Politica aux4 = null;
+        Politica aux5 = null;
+        Politica aux6 = null;
+        Politica aux7 = null;
+        Politica aux8 = null;
+        Politica aux9 = null;
+        Politica aux10 = null;
+
+        switch (perfil){
+            case "Admin":
+                aux = new Politica("inventarioAdd",true);
+                aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
+                politicaList.add(aux);
+                aux1 = new Politica("inventarioEdit",true);
+                aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
+                politicaList.add(aux1);
+                aux3 = new Politica("clienteAdd",true);
+                aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
+                politicaList.add(aux3);
+                aux4 = new Politica("clienteEdit",true);
+                aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
+                politicaList.add(aux4);
+                aux5 = new Politica("impuestoAdd",true);
+                aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
+                politicaList.add(aux5);
+                aux6 = new Politica("impuestoEdit",true);
+                aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
+                politicaList.add(aux6);
+                aux7 = new Politica("categoriaAdd",true);
+                aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
+                politicaList.add(aux7);
+                aux8 = new Politica("categoriaEdit",true);
+                aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
+                politicaList.add(aux8);
+                aux9 = new Politica("empleadoAdd",true);
+                aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
+                politicaList.add(aux9);
+                aux10 = new Politica("empleadoEdit",true);
+                aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
+                politicaList.add(aux10);
+
+
+
+
+                break;
+
+            case "Empleado":
+                switch (acceso) {
+                    case 2:
+                        aux = new Politica("inventarioAdd",false);
+                        aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
+                        politicaList.add(aux);
+                        aux1 = new Politica("inventarioEdit",false);
+                        aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
+                        politicaList.add(aux1);
+                        aux3 = new Politica("clienteAdd",false);
+                        aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
+                        politicaList.add(aux3);
+                        aux4 = new Politica("clienteEdit",false);
+                        aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
+                        politicaList.add(aux4);
+                        aux5 = new Politica("impuestoAdd",false);
+                        aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
+                        politicaList.add(aux5);
+                        aux6 = new Politica("impuestoEdit",false);
+                        aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
+                        politicaList.add(aux6);
+                        aux7 = new Politica("categoriaAdd",false);
+                        aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
+                        politicaList.add(aux7);
+                        aux8 = new Politica("categoriaEdit",false);
+                        aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
+                        politicaList.add(aux8);
+                        aux9 = new Politica("empleadoAdd",false);
+                        aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
+                        politicaList.add(aux9);
+                        aux10 = new Politica("empleadoEdit",false);
+                        aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
+                        politicaList.add(aux10);
+                        break;
+                    case 1:
+                        aux = new Politica("inventarioAdd",true);
+                        aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
+                        politicaList.add(aux);
+                        aux1 = new Politica("inventarioEdit",true);
+                        aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
+                        politicaList.add(aux1);
+                        aux3 = new Politica("clienteAdd",true);
+                        aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
+                        politicaList.add(aux3);
+                        aux4 = new Politica("clienteEdit",true);
+                        aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
+                        politicaList.add(aux4);
+                        aux5 = new Politica("impuestoAdd",true);
+                        aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
+                        politicaList.add(aux5);
+                        aux6 = new Politica("impuestoEdit",true);
+                        aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
+                        politicaList.add(aux6);
+                        aux7 = new Politica("categoriaAdd",true);
+                        aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
+                        politicaList.add(aux7);
+                        aux8 = new Politica("categoriaEdit",true);
+                        aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
+                        politicaList.add(aux8);
+                        aux9 = new Politica("empleadoAdd",true);
+                        aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
+                        politicaList.add(aux9);
+                        aux10 = new Politica("empleadoEdit",true);
+                        aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
+                        politicaList.add(aux10);
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+
+                break;
+            case "Vendedor":
+                aux = new Politica("inventarioAdd",true);
+                aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
+                politicaList.add(aux);
+                aux1 = new Politica("inventarioEdit",true);
+                aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
+                politicaList.add(aux1);
+                aux3 = new Politica("clienteAdd",true);
+                aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
+                politicaList.add(aux3);
+                aux4 = new Politica("clienteEdit",true);
+                aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
+                politicaList.add(aux4);
+                aux5 = new Politica("impuestoAdd",true);
+                aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
+                politicaList.add(aux5);
+                aux6 = new Politica("impuestoEdit",true);
+                aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
+                politicaList.add(aux6);
+                aux7 = new Politica("categoriaAdd",true);
+                aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
+                politicaList.add(aux7);
+                aux8 = new Politica("categoriaEdit",true);
+                aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
+                politicaList.add(aux8);
+                aux9 = new Politica("empleadoAdd",true);
+                aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
+                politicaList.add(aux9);
+                aux10 = new Politica("empleadoEdit",true);
+                aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
+                politicaList.add(aux10);
+
+                break;
+            default:
+
+                break;
+        }
+        return politicaList;
     }
 
 
