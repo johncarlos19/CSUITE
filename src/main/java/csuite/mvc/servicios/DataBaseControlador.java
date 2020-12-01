@@ -5,21 +5,36 @@ import org.h2.tools.Server;
 import java.sql.SQLException;
 
 public class DataBaseControlador {
+
+
     /**
      * @throws SQLException
      */
     public static void startDb() throws SQLException {
-        Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
+
+
+
+        Server.createTcpServer("-tcp","-tcpPort", "9092","-tcpPassword","password", "-tcpAllowOthers", "-ifNotExists").start();
         String status = Server.createWebServer("-trace","-web","-webAllowOthers","-webDaemon", "-webPort", "0").start().getStatus();
+
         //
-        System.out.println("Status Web: " + status);
+//        System.out.println("Status Web: " + status);
     }
 
     /**
      * @throws SQLException
      */
     public static void stopDb() throws SQLException {
-        Server.shutdownTcpServer("tcp://localhost:9092", "", true, true);
+
+//        server.stop();
+//        DataBaseServices.getInstancia().getConexion().createStatement().execute("SHUTDOWN IMMEDIATELY");
+       Server.shutdownTcpServer("tcp://localhost:9092", "password", true, true);
+
+    }
+    public static void startd() throws SQLException {
+
+
+//        server.shutdownTcpServer("tcp://localhost:9092", "", true, true);
     }
 
 

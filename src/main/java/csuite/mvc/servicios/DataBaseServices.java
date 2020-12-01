@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DataBaseServices {
     private static DataBaseServices instancia;
-    private String URL = "jdbc:h2:tcp://localhost/~/csuite"; //Modo Server...
+    private String URL = "jdbc:h2:tcp://localhost:9092/~/csuite"; //Modo Server...
 
 
     private DataBaseServices() {

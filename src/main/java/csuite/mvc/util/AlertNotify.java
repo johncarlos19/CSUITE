@@ -18,6 +18,7 @@ public class AlertNotify extends Thread{
     private static AlertNotify instancia;
     private static int port;
     private static boolean error = false;
+    private static boolean parar = false;
 
 
 
@@ -27,6 +28,20 @@ public class AlertNotify extends Thread{
             instancia = new AlertNotify();
         }
         return instancia;
+    }
+    public static void StopProcess() {
+        AlertNotify.parar = true;
+    }
+    public static void StartProcess() {
+        AlertNotify.parar = false;
+    }
+
+    public static boolean isParar() {
+        return parar;
+    }
+
+    public static void setParar(boolean parar) {
+        AlertNotify.parar = parar;
     }
 
     public static void setInstancia(AlertNotify instancia) {
@@ -290,54 +305,58 @@ public class AlertNotify extends Thread{
         }
         URL u = null;
         while (true){
-            try {
-                u = new URL( "http://localhost:80/");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                JsonError jsonError = new JsonError(e.getClass().getName(),sw.toString());
-                List<JsonError> jsonErrors = new ArrayList<JsonError>();
-                jsonErrors.add(jsonError);
-                Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(new ArrayList<JsonError>(),jsonErrors),"Error del servidor");
-                Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(new ArrayList<JsonError>(),jsonErrors),"Error del servidor");
-            }
-            HttpURLConnection huc = null;
-            try {
-                huc = (HttpURLConnection)  u.openConnection ();
-                huc.setRequestMethod ("GET");  //OR  huc.setRequestMethod ("HEAD");
-                huc.connect () ;
-                int code = huc.getResponseCode() ;
-                if(code>399 && error == false){
-                    error = true;
-                    JsonError jsonError = new JsonError("Error code",Integer.toString(code));
+
+
+            if (parar==false){
+                try {
+                    u = new URL( "http://localhost:80/");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    JsonError jsonError = new JsonError(e.getClass().getName(),sw.toString());
                     List<JsonError> jsonErrors = new ArrayList<JsonError>();
                     jsonErrors.add(jsonError);
-                    Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(jsonErrors,new ArrayList<JsonError>()),"Error del servidor");
-                    Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(jsonErrors,new ArrayList<JsonError>()),"Error del servidor");
-                }else{
-                    error=false;
+                    Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(new ArrayList<JsonError>(),jsonErrors),"Error del servidor");
+                    Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(new ArrayList<JsonError>(),jsonErrors),"Error del servidor");
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                JsonError jsonError = new JsonError(e.getClass().getName(),sw.toString());
-                List<JsonError> jsonErrors = new ArrayList<JsonError>();
-                List<JsonError> jsonErrors12 = new ArrayList<JsonError>();
-                jsonErrors12.add(new JsonError("Type Error","404"));
+                HttpURLConnection huc = null;
+                try {
+                    huc = (HttpURLConnection)  u.openConnection ();
+                    huc.setRequestMethod ("GET");  //OR  huc.setRequestMethod ("HEAD");
+                    huc.connect () ;
+                    int code = huc.getResponseCode() ;
+                    if(code>399 && error == false){
+                        error = true;
+                        JsonError jsonError = new JsonError("Error code",Integer.toString(code));
+                        List<JsonError> jsonErrors = new ArrayList<JsonError>();
+                        jsonErrors.add(jsonError);
+                        Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(jsonErrors,new ArrayList<JsonError>()),"Error del servidor");
+                        Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(jsonErrors,new ArrayList<JsonError>()),"Error del servidor");
+                    }else{
+                        error=false;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    JsonError jsonError = new JsonError(e.getClass().getName(),sw.toString());
+                    List<JsonError> jsonErrors = new ArrayList<JsonError>();
+                    List<JsonError> jsonErrors12 = new ArrayList<JsonError>();
+                    jsonErrors12.add(new JsonError("Type Error","404"));
 
 
-                jsonErrors.add(jsonError);
-                Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(jsonErrors12,jsonErrors),"Error del servidor");
-                Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(jsonErrors12,jsonErrors),"Error del servidor");
-            }
-            try {
-                Thread.sleep(60000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                    jsonErrors.add(jsonError);
+                    Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com",getMensajeError(jsonErrors12,jsonErrors),"Error del servidor");
+                    Mercado.getInstance().send_correo_online("rm.dorville@gmail.com",getMensajeError(jsonErrors12,jsonErrors),"Error del servidor");
+                }
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
