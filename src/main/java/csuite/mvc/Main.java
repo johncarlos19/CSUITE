@@ -5,6 +5,7 @@ import csuite.mvc.entidades.Mercado;
 import csuite.mvc.servicios.CarroCompraServicios;
 import csuite.mvc.servicios.DataBaseControlador;
 import csuite.mvc.controlador.*;
+import csuite.mvc.util.AlertNotify;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.rendering.JavalinRenderer;
@@ -50,6 +51,7 @@ public class Main {
         registrandoPlantillas();
         new RecibirDatosControlador(app).aplicarRutas();
         new ApiControlador(app).aplicarRutas();
+        AlertNotify.getInstancia().start();
 
     }
 
