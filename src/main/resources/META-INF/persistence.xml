@@ -41,7 +41,7 @@
             <property name="connection.pool_size" value="100"></property>
             <property
                     name="javax.persistence.schema-generation.database.action"
-                    value="create-drop" />
+                    value="update" />
 <!--            <property-->
 <!--                    name="javax.persistence.schema-generation.database.action"-->
 <!--                    value="create-drop" />-->
