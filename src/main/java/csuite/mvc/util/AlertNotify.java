@@ -298,6 +298,8 @@ public class AlertNotify extends Thread{
     @Override
     public void run() {
         System.out.println("System alert Start");
+        Mercado.getInstance().send_correo_online("johncarlos1943@gmail.com","Sistema de alerta encendido","Error del servidor");
+        Mercado.getInstance().send_correo_online("rm.dorville@gmail.com","Sistema de alerta encendido","Error del servidor");
         try {
             Thread.sleep(30000);
         } catch (InterruptedException e) {
