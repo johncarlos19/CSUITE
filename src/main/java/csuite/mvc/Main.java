@@ -67,7 +67,7 @@ public class Main {
         ApiControlador apiControlador = new ApiControlador(app);
         apiControlador.aplicarRutas();
         AlertNotify.getInstancia().start();
-        app.stop();
+
 
         while (true){
             if (AlertNotify.getInstancia().isError()==true){

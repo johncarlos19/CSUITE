@@ -311,6 +311,7 @@ public class AlertNotify extends Thread{
                 try {
                     u = new URL( "http://localhost:80/");
                 } catch (MalformedURLException e) {
+                    error = true;
                     e.printStackTrace();
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
@@ -338,6 +339,7 @@ public class AlertNotify extends Thread{
                         error=false;
                     }
                 } catch (IOException e) {
+                    error = true;
                     e.printStackTrace();
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
