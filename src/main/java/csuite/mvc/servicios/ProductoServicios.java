@@ -44,7 +44,7 @@ public class ProductoServicios extends GestionadDB<Producto> {
 
     public List<ProductoJSON> getListaProductoJson(String user){
         List<ProductoJSON> productoJSONS = new ArrayList<ProductoJSON>();
-        for ( Producto aux : listaProducto(1,user)
+        for ( Producto aux : listaProducto(0,user)
         ) {
             System.out.println("\n\n\nIdddddd"+aux.getId());
             productoJSONS.add(aux.getProductoJSON());
@@ -92,8 +92,11 @@ List<Foo> fooList = fooList = query.list();*/
 
         Query query = session.createQuery("select p from Vendedor v inner join v.productoList p where v.idVendedor.usuario = '"+user+"' order by p.id desc " );
 
-        query.setFirstResult(0+10*(page-1));
-        query.setMaxResults(5);
+        if (page != 0){
+            query.setFirstResult(0+10*(page-1));
+            query.setMaxResults(5);
+        }
+
         //query.setParameter("nombre", apellido+"%");
         lista = query.getResultList();
 

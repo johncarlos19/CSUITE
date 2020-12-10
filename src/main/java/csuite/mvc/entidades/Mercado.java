@@ -536,6 +536,8 @@ public class Mercado {
     public String getUserJefeWithToken(Claims claims){
 //        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;
+        System.out.println("\n\nPerfil"+claims.getAudience()+"-"+claims.getIssuer());
+
         switch (claims.getAudience()){
             case "Admin":
 
@@ -587,15 +589,15 @@ se  = user;
             case "Admin":
 
 
-                productoList = new ProductoServicios().listaProducto(1,user);
+                productoList = new ProductoServicios().listaProducto(0,user);
             break;
 
             case "Empleado":
 
-                productoList =  new ProductoServicios().listaProducto(1,EmpleadoServicios.getInstancia().getJefe(aux.getUsuario()));
+                productoList =  new ProductoServicios().listaProducto(0,EmpleadoServicios.getInstancia().getJefe(aux.getUsuario()));
                 break;
             case "Vendedor":
-                productoList =  new ProductoServicios().listaProducto(1,user);
+                productoList =  new ProductoServicios().listaProducto(0,user);
                 break;
             default:
 

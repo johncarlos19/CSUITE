@@ -422,7 +422,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                                 String header = "Authorization";
                                 String dueno = user;
-                                if (perfil.equalsIgnoreCase("Admin"  )||perfil.equalsIgnoreCase("Vendedor"  )){
+                                if (perfil.equalsIgnoreCase("Admin") == false||perfil.equalsIgnoreCase("Vendedor"  ) == false){
                                     dueno = Mercado.getInstance().getUserJefe(user);
                                 }
                                 String jwt = createJWT(user,perfil,dueno);
@@ -546,6 +546,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                              ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
+                        contexto.put("listaProducto", ProductoServicios.getInstancia().listaProducto(1,Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("cliente", ClienteServicios.getInstancia().cantidadCliente(Mercado.getInstance().getUserJefeWithToken(user)));
