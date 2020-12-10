@@ -88,7 +88,9 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
         String id = user.getUsuario();
         user.setPais("RD");
         Usuario usuario = (Usuario) createAndReturnObjectWithUniqueId(user);
-        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), 1));
+        usuario = find(id);
+
+        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), 1,usuario));
         usuario = (Usuario) editar(usuario);
         //usuario.setUsuario(id);
 
@@ -125,7 +127,7 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
         String id = user.getUsuario();
         user.setPais("RD");
         Usuario usuario = (Usuario) createAndReturnObjectWithUniqueId(user);
-        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), accion));
+        usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), accion,usuario));
         usuario = (Usuario) editar(usuario);
         //usuario.setUsuario(id);
 

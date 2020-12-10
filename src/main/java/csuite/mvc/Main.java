@@ -24,19 +24,19 @@ public class Main {
             System.out.println("Modo de Operacion: "+modoConexion);
         }
         if(modoConexion.isEmpty()) {
-            DataBaseControlador.startDb();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            DataBaseControlador.stopDb();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            DataBaseControlador.startDb();
+//            DataBaseControlador.startDb();
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            DataBaseControlador.stopDb();
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            DataBaseControlador.startDb();
         }
 //        CarroCompraServicios carroCompraServicios = new CarroCompraServicios();
         //DataBaseControlador.crearTablas();
@@ -75,13 +75,13 @@ public class Main {
 
                 AlertNotify.getInstancia().StopProcess();
                 if(modoConexion.isEmpty()) {
-                    DataBaseControlador.stopDb();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    DataBaseControlador.startDb();
+//                    DataBaseControlador.stopDb();
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    DataBaseControlador.startDb();
                 }
                 app = Javalin.create(config ->{
                     config.addStaticFiles("/public"); //desde la carpeta de resources

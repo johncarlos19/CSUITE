@@ -15,6 +15,7 @@ public class Usuario implements Identifiable<String> {
     @GeneratedValue(generator = "cli-generator",strategy = GenerationType.AUTO)
     @GenericGenerator(name = "cli-generator", parameters = {@org.hibernate.annotations.Parameter(name = "prefix", value = "CLI"),@org.hibernate.annotations.Parameter(name = "longitud", value = "10")}
             , strategy = "csuite.mvc.entidades.MyGenerator")
+
     private String usuario;
     private String nombre;
     private String apellido;

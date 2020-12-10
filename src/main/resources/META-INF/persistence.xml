@@ -53,7 +53,7 @@
 
     </persistence-unit>
     <!--Puedo tener varias unidades de persistencia en función a la conexión que necesito-->
-    <persistence-unit name="Heroku" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="postgres" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>csuite.mvc.entidades.Producto</class>
         <class>csuite.mvc.entidades.CarroCompra</class>
@@ -66,7 +66,6 @@
         <class>csuite.mvc.entidades.Comentario</class>
         <class>csuite.mvc.entidades.Vendedor</class>
         <class>csuite.mvc.entidades.ProductoEnVenta</class>
-
         <class>csuite.mvc.entidades.Almacen</class>
         <class>csuite.mvc.entidades.Categoria</class>
         <class>csuite.mvc.entidades.Empleado</class>
@@ -77,14 +76,22 @@
         <class>csuite.mvc.entidades.Politica</class>
 
         <properties>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://csuite.cpaiyaspohoi.us-east-1.rds.amazonaws.com:5432/csuite" />
+            <property name="javax.persistence.jdbc.user" value="johncarlos1943" />
+            <property name="javax.persistence.jdbc.password" value="castillo30" />
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.show_sql" value="true"/>
             <!-- Indica como será la generación de las tablas en el motor-->
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
-            <property name="javax.persistence.schema-generation.database.action" value="update"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create-drop"/>
+
+<!--            <property name="hibernate.hbm2ddl.auto" value="create-drop" /> &lt;!&ndash; create / create-drop / update &ndash;&gt;-->
+
+
+<!--            <property name="hibernate.format_sql" value="true" /> &lt;!&ndash; Show SQL formatted &ndash;&gt;-->
             <!--<property name="eclipselink.logging.level" value="ALL" />-->
         </properties>
     </persistence-unit>

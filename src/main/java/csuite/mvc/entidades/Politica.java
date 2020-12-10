@@ -1,18 +1,19 @@
 package csuite.mvc.entidades;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Politica {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private String id;
+    private long id;
     private String key;
     private boolean permitido = true;
+//    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL )
+//    @JoinColumn(name = "idUsuario")
+//    private Usuario idUsuario;
+
 
 
     public Politica() {
@@ -26,13 +27,19 @@ public class Politica {
     }
 
 
+//    public Usuario getIdUsuario() {
+//        return idUsuario;
+//    }
+//
+//    public void setIdUsuario(Usuario idUsuario) {
+//        this.idUsuario = idUsuario;
+//    }
 
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

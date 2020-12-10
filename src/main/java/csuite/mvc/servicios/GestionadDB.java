@@ -36,7 +36,7 @@ public class GestionadDB<T> {
 //            }
 //        }
         if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("csuite");
+            emf = Persistence.createEntityManagerFactory("postgres");
         }
         this.claseEntidad = claseEntidad;
 
@@ -151,6 +151,7 @@ public class GestionadDB<T> {
         em.getTransaction().begin();
         boolean dd = false;
         try {
+
             em.merge(entidad);
             em.flush();
             try {
