@@ -2,6 +2,7 @@ package csuite.mvc.entidades;
 
 import  csuite.mvc.entidades.*;
 import csuite.mvc.servicios.*;
+import io.jsonwebtoken.Claims;
 import org.jasypt.util.text.AES256TextEncryptor;
 
 import javax.activation.DataHandler;
@@ -532,7 +533,28 @@ public class Mercado {
         return politicaList;
     }
 
+    public String getUserJefeWithToken(Claims claims){
+//        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
+        String se = null;
+        switch (claims.getAudience()){
+            case "Admin":
 
+                se =  claims.getIssuer();
+                break;
+
+            case "Empleado":
+
+                se =  claims.getIssuer();
+                break;
+            case "Vendedor":
+                se =  claims.getIssuer();
+                break;
+            default:
+                se =  claims.getIssuer();
+                break;
+        }
+        return se;
+    }
     public String getUserJefe(String user){
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;

@@ -421,7 +421,11 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 String user = ctx.formParam("ingresoEmail");
 
                                 String header = "Authorization";
-                                String jwt = createJWT(user,perfil);
+                                String dueno = user;
+                                if (perfil.equalsIgnoreCase("Admin"  )||perfil.equalsIgnoreCase("Vendedor"  )){
+                                    dueno = Mercado.getInstance().getUserJefe(user);
+                                }
+                                String jwt = createJWT(user,perfil,dueno);
                                 logins.add(new Login(user,decodeJWT(jwt)));
 
                                 ctx.sessionAttribute("User",jwt);
@@ -485,12 +489,13 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 try {
                                     if(isExpirate(decodeJWT(session))==false){
                                         String header = "Authorization";
-                                        String use = decodeJWT(session).getId();
-                                        String jwt = createJWT(decodeJWT(session).getId(),decodeJWT(session).getAudience());
+                                        Claims claims = decodeJWT(session);
+                                        String use = claims.getId();
+                                        String jwt = createJWT(use,claims.getAudience(), claims.getIssuer());
                                         ctx.header(header,jwt);
                                         for (int i = 0; i < logins.size(); i++) {
                                             if (logins.get(i).getId().equalsIgnoreCase(use)){
-                                                logins.get(i).setJwt(decodeJWT(jwt));
+                                                logins.get(i).setJwt(claims);
                                             }
                                         }
 
@@ -533,17 +538,17 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     get(ctx -> {
 
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                              ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
-                        contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefe(user)));
-                        contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefe(user)));
-                        contexto.put("cliente", ClienteServicios.getInstancia().cantidadCliente(Mercado.getInstance().getUserJefe(user)));
+                        contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+                        contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefeWithToken(user)));
+                        contexto.put("cliente", ClienteServicios.getInstancia().cantidadCliente(Mercado.getInstance().getUserJefeWithToken(user)));
 
                         ctx.render("/public/dashboardPlantilla/home.html", contexto);
 
@@ -557,15 +562,15 @@ public class RecibirDatosControlador extends JavalinControlador {
                 path("/inventario", () -> {
 
                     get(ctx -> {
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
-                        contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefe(user)));
+                        contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         ctx.render("/public/dashboardPlantilla/inventario.html",contexto);
 
 
@@ -576,12 +581,12 @@ public class RecibirDatosControlador extends JavalinControlador {
                 path("/categoria", () -> {
 
                     get(ctx -> {
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
-                        contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefe(user)));
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
@@ -611,12 +616,12 @@ public class RecibirDatosControlador extends JavalinControlador {
                 path("/impuesto", () -> {
 
                     get(ctx -> {
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
-                        contexto.put("impuesto", ImpuestoServicios.getInstancia().listaImpuesto(Mercado.getInstance().getUserJefe(user)));
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        contexto.put("impuesto", ImpuestoServicios.getInstancia().listaImpuesto(Mercado.getInstance().getUserJefeWithToken(user)));
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
@@ -647,11 +652,11 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     get(ctx -> {
 
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
@@ -661,7 +666,8 @@ public class RecibirDatosControlador extends JavalinControlador {
 //                        list.add(UsuarioServicios.getInstancia().find(aux.getIdCliente().getUsuario()));
 //
 //                    }
-                        contexto.put("cliente",ClienteServicios.getInstancia().listaCliente(Mercado.getInstance().getUserJefe(user)));
+
+                        contexto.put("cliente",ClienteServicios.getInstancia().listaCliente(Mercado.getInstance().getUserJefeWithToken(user)));
 
                         ctx.render("/public/dashboardPlantilla/Cliente.html",contexto);
 
@@ -936,7 +942,7 @@ public class RecibirDatosControlador extends JavalinControlador {
         return available;
     }
 
-    public static String createJWT(String username, String perfil) {
+    public static String createJWT(String username, String perfil, String dueno) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -952,7 +958,7 @@ public class RecibirDatosControlador extends JavalinControlador {
         JwtBuilder builder = Jwts.builder().setId(username)
                 .setIssuedAt(now)
                 .setSubject("CashSuite")
-                .setIssuer("JLC")
+                .setIssuer(dueno)
                 .setAudience(perfil)
                 .signWith(signatureAlgorithm, signingKey);
 

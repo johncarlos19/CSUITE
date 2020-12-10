@@ -12,6 +12,7 @@ package csuite.mvc.servicios;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,6 +26,7 @@ import java.util.StringTokenizer;
 public class GestionadDB<T> {
     private static EntityManagerFactory emf;
     private Class<T> claseEntidad;
+    private static SessionFactory sf;
 
 
     public GestionadDB(Class<T> claseEntidad) {
@@ -37,6 +39,8 @@ public class GestionadDB<T> {
 //        }
         if (emf == null) {
             emf = Persistence.createEntityManagerFactory("postgres");
+            sf = new Configuration()
+                    .configure("META-INF/hibernate.cfg.xml").buildSessionFactory();
         }
         this.claseEntidad = claseEntidad;
 
@@ -49,8 +53,6 @@ public class GestionadDB<T> {
     }
     public static Session getHibernateSession() {
 
-        final SessionFactory sf = new Configuration()
-                .configure("META-INF/hibernate.cfg.xml").buildSessionFactory();
 
         // factory = new Configuration().configure().buildSessionFactory();
         final Session session = sf.openSession();

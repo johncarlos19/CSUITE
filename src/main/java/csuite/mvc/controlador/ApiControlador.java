@@ -46,9 +46,9 @@ public class ApiControlador extends JavalinControlador {
 
                     get("/", ctx -> {
 
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
-                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(Mercado.getInstance().getUserJefe(user)));
+                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(Mercado.getInstance().getUserJefeWithToken(user)));
                     });
 
 //                    get("/:matricula", ctx -> {
@@ -71,7 +71,7 @@ public class ApiControlador extends JavalinControlador {
                         producto.setCategoria(tmp.getCategorias());
 
 
-                        Vendedor otro = new VendedorServicios().find(Mercado.getInstance().getUserJefe(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId()));
+                        Vendedor otro = new VendedorServicios().find(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
 
                         producto.CrearProductoVenta();
                         producto = ProductoServicios.getInstancia().crearProducto(producto);
