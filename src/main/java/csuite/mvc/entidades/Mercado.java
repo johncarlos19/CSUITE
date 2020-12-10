@@ -368,7 +368,7 @@ public class Mercado {
     }
 
 
-    public List<Politica> getListaPolitica(String perfil, int acceso){
+    public List<Politica> getListaPolitica(String perfil, int acceso, Usuario use){
         List<Politica> politicaList = new ArrayList<Politica>();
         Politica aux = null;
         Politica aux1 = null;
@@ -596,7 +596,7 @@ se  = user;
 
 
         Session sesion = Session.getDefaultInstance(propiedad);
-        String correoEnvia = "goniometria.project@gmail.com";
+        String correoEnvia = "csuite.prueba@gmail.com";
         String contrasena = "castillo30";
         String receptor = correo;
 
