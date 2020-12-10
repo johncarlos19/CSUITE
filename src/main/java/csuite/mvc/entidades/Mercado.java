@@ -4,13 +4,11 @@ import  csuite.mvc.entidades.*;
 import csuite.mvc.servicios.*;
 import org.jasypt.util.text.AES256TextEncryptor;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.*;
@@ -603,12 +601,37 @@ se  = user;
 
 
 
-        MimeMessage mail = new MimeMessage(sesion);
+        Message mail = new MimeMessage(sesion);
         try {
             mail.setFrom(new InternetAddress(correoEnvia));
             mail.addRecipient(Message.RecipientType.TO, new InternetAddress (receptor));
             mail.setSubject(asunto);
-            mail.setContent(mensaje,"text/html");
+
+            MimeMultipart multipart = new MimeMultipart("related");
+
+
+            // first part (the html)
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(mensaje, "text/html");
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+
+            // second part (the image)
+            if (asunto.equalsIgnoreCase("Error del servidor")){
+                messageBodyPart = new MimeBodyPart();
+                DataSource fds = new FileDataSource(
+                        "/home/ubuntu/CSUITE/build/libs/error.txt");
+                messageBodyPart.setDataHandler(new DataHandler(fds));
+                messageBodyPart.setFileName("error.txt");
+
+                multipart.addBodyPart(messageBodyPart);
+
+            }
+
+            // put everything together
+            mail.setContent(multipart);
+//            mail.setContent(mensaje,"text/html");
+
 
             Transport transportar = sesion.getTransport("smtp");
             transportar.connect(correoEnvia,contrasena);
