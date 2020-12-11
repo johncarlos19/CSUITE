@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0042)http://localhost/csuite.mvc/pos1/productos -->
-<html style="height: auto; min-height: 100%;" lang="en" xmlns:th="http://www.thymeleaf.org" manifest="/dashboardPlantilla/sinconexion.appcache">
+<html style="height: auto; min-height: 100%;" lang="en" xmlns:th="http://www.thymeleaf.org" manifest="http://csuite.goniometer-exoglove.me//dashboardPlantilla/sinconexion.appcache">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8 ">
@@ -433,19 +433,31 @@ CUERPO DOCUMENTO
         <section class="content">
 
             <div class="box">
-
-                <div class="box-header with-border" th:style="${inventarioAdd}">
-
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+                <div id="ale"></div>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group box-header "  role="group">
+                    <button class="btn btn-primary" th:style="${inventarioAdd}" data-toggle="modal" data-target="#modalAgregarProducto">
 
                         Agregar producto
 
                     </button>
-                    <div id="ale">
 
-                    </div>
+
 
                 </div>
+                <div class="btn-group box-header pull-right"  role="group">
+                    <button class="btn btn-primary " onclick="reloadTabla()" >
+
+                        Actualizar Tabla
+
+                    </button>
+                    <div id="loading" class="btn" ></div>
+
+                </div>
+                </div>
+
+
+
 
                 <div class="box-body">
 

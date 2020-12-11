@@ -4,60 +4,60 @@ CACHE MANIFEST
 
 #Trama que indica que 
 CACHE:
-/dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css
+../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css
 
-/dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css
+../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css
 
-/dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css
+../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css
 
-/dashboardPlantilla/dist/css/AdminLTE.css
-
-
-/dashboardPlantilla/dist/css/skins/_all-skins.min.css
+../dashboardPlantilla/dist/css/AdminLTE.css
 
 
-/dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css
-/dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css
+../dashboardPlantilla/dist/css/skins/_all-skins.min.css
 
 
-/dashboardPlantilla/plugins/iCheck/all.css
+../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css
+../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css
 
 
-/dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css
+../dashboardPlantilla/plugins/iCheck/all.css
 
 
-/dashboardPlantilla/bower_components/morris.js/morris.css
+../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css
 
-/dashboardPlantilla/bower_components/jquery/dist/jquery.min.js
 
-/dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js
+../dashboardPlantilla/bower_components/morris.js/morris.css
 
-/dashboardPlantilla/bower_components/fastclick/lib/fastclick.js
+../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js
 
-/dashboardPlantilla/dist/js/adminlte.min.js
+../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js
 
-/dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js
-/dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js
-/dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js
-/dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js
+../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js
 
-/dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js
+../dashboardPlantilla/dist/js/adminlte.min.js
 
-/dashboardPlantilla/plugins/iCheck/icheck.min.js
+../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js
+../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js
+../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js
+../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js
 
-/dashboardPlantilla/plugins/input-mask/jquery.inputmask.js
-/dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js
-/dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js
+../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js
 
-/dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js
+../dashboardPlantilla/plugins/iCheck/icheck.min.js
 
-/dashboardPlantilla/bower_components/moment/min/moment.min.js
-/dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js
+../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js
+../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js
+../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js
 
-/dashboardPlantilla/bower_components/raphael/raphael.min.js
-/dashboardPlantilla/bower_components/morris.js/morris.min.js
+../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js
 
-/dashboardPlantilla/bower_components/Chart.js/Chart.js
+../dashboardPlantilla/bower_components/moment/min/moment.min.js
+../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js
+
+../dashboardPlantilla/bower_components/raphael/raphael.min.js
+../dashboardPlantilla/bower_components/morris.js/morris.min.js
+
+../dashboardPlantilla/bower_components/Chart.js/Chart.js
 
 
 
