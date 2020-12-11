@@ -159,6 +159,7 @@ function uploadPorduct(){
 	var compra = document.getElementById("nuevoPrecioCompra").value;
 	var venta = document.getElementById("nuevoPrecioVenta").value;
 	var reader = new FileReader();
+	var categoria = document.getElementById("nuevaCategoria").value;
 	var file1 = document.getElementById("imagen").files[0]
 	if (document.getElementById("imagen").files.length == 0){
 		let temp = {
@@ -173,7 +174,7 @@ function uploadPorduct(){
 			base64: null,
 			mimetype: null,
 			nombreImg: null,
-			categorias: null
+			categorias: categoria
 		}
 		console.log(temp)
 		worker.postMessage({'cmd': 'uploadProducto', 'ProductoSaveJson': temp});
@@ -182,7 +183,7 @@ function uploadPorduct(){
 		var mimetype = file1.type
 		var nombreImg = file1.name
 
-		var categoria = document.getElementById("nuevaCategoria").value;
+
 		reader.readAsDataURL(file1);
 		reader.onload = function () {
 
