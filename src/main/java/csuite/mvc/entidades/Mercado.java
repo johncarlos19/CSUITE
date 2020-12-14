@@ -25,8 +25,10 @@ public class Mercado {
 //    private static CarroCompraServicios carroCompraServicios = new CarroCompraServicios();
 //    private static CarroCompra_ProductoServicios carroCompra_productoServicios = new CarroCompra_ProductoServicios();
     private static Mercado mercado;
-    AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
-    AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
+    private AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
+    private AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
+    private ArrayList<Login>  logins = new ArrayList<Login>();
+    private long timeSessionMinute = 5;
 
     public Mercado() {
     }
@@ -305,6 +307,22 @@ public class Mercado {
         }
 
 
+    }
+
+    public long getTimeSessionMinute() {
+        return timeSessionMinute;
+    }
+
+    public void setTimeSessionMinute(long timeSessionMinute) {
+        this.timeSessionMinute = timeSessionMinute;
+    }
+
+    public  ArrayList<Login> getLogins() {
+        return logins;
+    }
+
+    public void setLogins(ArrayList<Login> logins) {
+        this.logins = logins;
     }
 
     public AES256TextEncryptor getUserEncryptor() {

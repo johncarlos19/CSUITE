@@ -132,7 +132,7 @@ public class ApiControlador extends JavalinControlador {
             ctx.json(""+exception.getLocalizedMessage());
         });
     }
-    public static String createJWT(String username) {
+    public static String createJWT(String username, String perfil, String dueno) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -148,11 +148,12 @@ public class ApiControlador extends JavalinControlador {
         JwtBuilder builder = Jwts.builder().setId(username)
                 .setIssuedAt(now)
                 .setSubject("CashSuite")
-                .setIssuer("JLC")
+                .setIssuer(dueno)
+                .setAudience(perfil)
                 .signWith(signatureAlgorithm, signingKey);
 
         // 5 minutes para expiracion
-        long expMillis = nowMillis + 300000;
+        long expMillis = nowMillis + Mercado.getInstance().getTimeSessionMinute() * 1000 * 60;
         Date exp = new Date(expMillis);
         builder.setExpiration(exp);
         System.out.println("fecha" +now +exp);

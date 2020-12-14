@@ -26,7 +26,7 @@ public class RecibirDatosControlador extends JavalinControlador {
     public final static String SECRET_KEY = "ghQaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w";
     AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
     AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
-    static ArrayList<Login>  logins = new ArrayList<Login>();
+
 
 
     public RecibirDatosControlador(Javalin app) {
@@ -385,9 +385,9 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                 get(ctx -> {
 
-                    for (int i = 0; i < logins.size(); i++) {
-                        if (logins.get(i).getId().equalsIgnoreCase(decodeJWT(ctx.sessionAttribute("User")).getId())){
-                            logins.remove(i);
+                    for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+                        if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(decodeJWT(ctx.sessionAttribute("User")).getId())){
+                            Mercado.getInstance().getLogins().remove(i);
                             break;
                         }
                     }
@@ -418,7 +418,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                         if (UsuarioServicios.getInstancia().existe(ctx.formParam("ingresoEmail"))){
                             String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
-                            if (isSessionAvailable(ctx.formParam("ingresoEmail"))){
+                            if (isSessionAvailable(ctx.formParam("ingresoEmail"),ctx.req.getSession().getId())){
                                 String user = ctx.formParam("ingresoEmail");
 
                                 String header = "Authorization";
@@ -429,7 +429,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 String jwt = createJWT(user,perfil,dueno);
                                 Login login = new Login(user,decodeJWT(jwt));
                                 login.setSession(ctx.req.getSession());
-                                logins.add(login);
+                                Mercado.getInstance().getLogins().add(login);
 
                                 ctx.sessionAttribute("User",jwt);
                                 ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -497,13 +497,6 @@ public class RecibirDatosControlador extends JavalinControlador {
                                         String use = claims.getId();
                                         String jwt = createJWT(use,claims.getAudience(), claims.getIssuer());
                                         ctx.header(header,jwt);
-                                        for (int i = 0; i < logins.size(); i++) {
-                                            if (logins.get(i).getId().equalsIgnoreCase(use)){
-                                                logins.get(i).setJwt(claims);
-                                            }
-                                        }
-
-
                                         ctx.sessionAttribute("User",jwt);
                                         ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
                                         String mensaje = String.format("Manejador before aplicando a todas las llamadas: %s, Contexto: %s, Metodo: %s",
@@ -512,6 +505,16 @@ public class RecibirDatosControlador extends JavalinControlador {
                                                 ctx.req.getMethod());
                                         //
                                         System.out.println(mensaje);
+
+                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
+                                                Mercado.getInstance().getLogins().get(i).setJwt(claims);
+                                                Mercado.getInstance().getLogins().get(i).setSession(ctx.req.getSession());
+                                            }
+                                        }
+
+
+
 
                                     }else{
                                         ctx.req.getSession().invalidate();
@@ -930,13 +933,13 @@ public class RecibirDatosControlador extends JavalinControlador {
 
     }
 
-    public static boolean isSessionAvailable(String user){
+    public static boolean isSessionAvailable(String user, String sessionID){
         boolean available = true;
-        for (Login aux: logins
+        for (Login aux: Mercado.getInstance().getLogins()
              ) {
             if (aux.getId().equals(user)){
-                if (isExpirate(aux.getJwt())==true){
-                    logins.remove(aux);
+                if (isExpirate(aux.getJwt())==true || aux.getSession().getId().equals(sessionID)){
+                    Mercado.getInstance().getLogins().remove(aux);
                     return true;
                 }else{
                     return false;
@@ -967,7 +970,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                 .signWith(signatureAlgorithm, signingKey);
 
         // 5 minutes para expiracion
-        long expMillis = nowMillis + 300000;
+        long expMillis = nowMillis + Mercado.getInstance().getTimeSessionMinute() * 1000 * 60;
         Date exp = new Date(expMillis);
         builder.setExpiration(exp);
         System.out.println("fecha" +now +exp);
