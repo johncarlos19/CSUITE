@@ -3,6 +3,70 @@
 LISTADO DE PAISES
 =============================================*/
 
+var worker = new Worker('/js/webworker-ajax.js');
+
+
+
+
+worker.onmessage = function (e) { //recuperando la información
+
+	console.log("entro11")
+	if(e.data.cmd === 'verifyUser'){
+		console.log("entro")
+		var pw1 = document.getElementById("password").value;
+		var pw2 = document.getElementById("passwordRetry").value;
+		if (e.data.data === false){
+			if(pw1 !==pw2)
+			{
+
+				document.getElementById("alertPassword").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
+					'\t\t\t\t\t\t\t  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
+					'\t\t\t\t\t\t\t  <h4><i class="icon fa fa-ban"></i> Alerta!</h4>\n' +
+					'\t\t\t\t\t\t\t  La contraseña no coincide\n' +
+					'\t\t\t\t\t\t  </div>'
+
+			} else {
+				document.getElementById("RegisterEmpleado").submit()
+
+			}
+		}else{
+			document.getElementById("alertID").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
+				'\t\t\t\t\t\t\t  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
+				'\t\t\t\t\t\t\t  <h4><i class="icon fa fa-ban"></i> Alerta!</h4>\n' +
+				'\t\t\t\t\t\t\t  El usuario escrito ha sido registrado\n' +
+				'\t\t\t\t\t\t  </div>'
+			if(pw1 !== pw2)
+			{
+				document.getElementById("alertPassword").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
+					'\t\t\t\t\t\t\t  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
+					'\t\t\t\t\t\t\t  <h4><i class="icon fa fa-ban"></i> Alerta!</h4>\n' +
+					'\t\t\t\t\t\t\t  La contraseña no coincide\n' +
+					'\t\t\t\t\t\t  </div>'
+
+			}
+
+		}
+
+	}
+
+
+
+
+};
+
+
+function saveEmpleado(){
+	var user = document.getElementById("id").value;
+
+	worker.postMessage({'cmd': 'userAvailable', 'user': user});
+}
+
+
+
+
+
+
+
 $.ajax({
 
 	url:"vistas/js/plugins/paises.json",
@@ -29,6 +93,8 @@ $.ajax({
 	}
 
 })
+
+
 
 
 /*=============================================

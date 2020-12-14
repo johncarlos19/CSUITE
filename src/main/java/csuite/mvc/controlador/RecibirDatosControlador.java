@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.jasypt.util.text.AES256TextEncryptor;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -426,7 +427,9 @@ public class RecibirDatosControlador extends JavalinControlador {
                                     dueno = Mercado.getInstance().getUserJefe(user);
                                 }
                                 String jwt = createJWT(user,perfil,dueno);
-                                logins.add(new Login(user,decodeJWT(jwt)));
+                                Login login = new Login(user,decodeJWT(jwt));
+                                login.setSession(ctx.req.getSession());
+                                logins.add(login);
 
                                 ctx.sessionAttribute("User",jwt);
                                 ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -469,6 +472,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                     String user = ctx.cookie("User");
                     String session = ctx.sessionAttribute("User");
                     System.out.println("este es e; [add"+ctx.path());
+
 //                    if (ctx.path().contains("/dashboardPlantilla/")==true  || ctx.path().contains("/webPage")==true ||ctx.path().contains("/js")==true ||ctx.path().contains("/bd")==true || ctx.path().contains("/assets")==true ){
 
                     if (ctx.path().contains("/home")==true  || ctx.path().contains("/inventario")==true
@@ -498,6 +502,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                                 logins.get(i).setJwt(claims);
                                             }
                                         }
+
 
                                         ctx.sessionAttribute("User",jwt);
                                         ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -677,7 +682,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     });
                     post(ctx -> {
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
 
@@ -693,7 +698,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         String nuevaDireccion = ctx.formParam("nuevaDireccion");
 
 
-                        Vendedor otro = VendedorServicios.getInstancia().getVendedor(user);
+                        Vendedor otro = VendedorServicios.getInstancia().getVendedor(Mercado.getInstance().getUserJefeWithToken(user));
 
                         Usuario usuarioCliente = new Usuario();
                         usuarioCliente.setNombre(nombre);
@@ -761,7 +766,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                     post(ctx -> {
 
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         String nombre = ctx.formParam("nombre");
@@ -773,31 +778,29 @@ public class RecibirDatosControlador extends JavalinControlador {
                         String pais = ctx.formParam("pais");
                         String Municipio = ctx.formParam("Municipio");
                         String nuevaDireccion = ctx.formParam("nuevaDireccion");
+                        String idUsuario = ctx.formParam("id");
+                        String password = ctx.formParam("password");
+                        int privilegio = Integer.parseInt(ctx.formParam("privilegio"));
+                        if (privilegio>2){
+                            privilegio = 2;
+                        }
 
 
-                        Vendedor otro = VendedorServicios.getInstancia().getVendedor(user);
+                        Usuario empleado = new Usuario();
+                        empleado.setNombre(nombre);
+                        empleado.setApellido(apellido);
+                        empleado.setPerfil("Empleado");
+                        empleado.setPais(pais);
+                        empleado.setTipoDocumento(tipoDocumento);
+                        empleado.setDocumento(documentoID);
+                        empleado.setMunicipio(Municipio);
+                        empleado.setDireccion(nuevaDireccion);
+                        empleado.setTelefono(nuevoTelefono);
+                        empleado.setUsuario(idUsuario);
+                        empleado.setEmail(nuevoEmail);
+                        Mercado.getInstance().registrarEmpleado(Mercado.getInstance().getUserJefeWithToken(user),empleado,password,privilegio);
 
-                        Usuario usuarioCliente = new Usuario();
-                        usuarioCliente.setNombre(nombre);
-                        usuarioCliente.setApellido(apellido);
-                        usuarioCliente.setPerfil("Cliente");
-                        usuarioCliente.setPais(pais);
-                        usuarioCliente.setMunicipio(Municipio);
-                        usuarioCliente.setDireccion(nuevaDireccion);
-                        usuarioCliente.setTelefono(nuevoTelefono);
-                        usuarioCliente.setDocumento(documentoID);
-                        usuarioCliente.setTipoDocumento(tipoDocumento);
-                        usuarioCliente.setEmail(nuevoEmail);
-                        usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
-                        System.out.println("\n\n\nusua"+usuarioCliente.getUsuario());
-                        usuarioCliente = UsuarioServicios.getInstancia().buscar(usuarioCliente.getUsuario());
-                        Cliente cliente = new Cliente();
-                        cliente = usuarioCliente.addCliente(cliente);
-                        cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
-                        usuarioCliente = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente);
 
-                        otro.addCliente(cliente);
-                        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
 
                         ctx.redirect("/dashboard/empleado");

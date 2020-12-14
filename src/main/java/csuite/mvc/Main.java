@@ -11,12 +11,13 @@ import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 public class Main {
 
     private static String modoConexion = "";
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, UnsupportedEncodingException {
         String mensaje1 = "Software ORM - JPA";
         System.out.println(mensaje1);
         if(args.length >= 1){
@@ -66,7 +67,7 @@ public class Main {
 
         ApiControlador apiControlador = new ApiControlador(app);
         apiControlador.aplicarRutas();
-        AlertNotify.getInstancia().start();
+//        AlertNotify.getInstancia().start();
 
 
         while (true){

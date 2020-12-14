@@ -45,6 +45,28 @@ this.addEventListener('message', function(e) {
                     console.log(response);
                     //enviando la información a la venta principal
                     postMessage({'cmd': 'save', 'data': response.data});
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'userAvailable':
+            console.log("Buscando la fecha desde el servidor...");
+
+            axios.post('/api/Usuario', data.user)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    postMessage({'cmd': 'verifyUser', 'data': response.data});
+                    return response.data;
                 })
                 .catch(function (error) {
                     // handle error

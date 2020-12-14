@@ -39,6 +39,22 @@ public class ApiControlador extends JavalinControlador {
                  * Ejemplo de una API REST, implementando el CRUD
                  * ir a
                  */
+
+
+                path("/Usuario", () -> {
+                            after(ctx -> {
+                                ctx.header("Content-Type", "application/json");
+                            });
+
+                            post("/", ctx -> {
+
+                                Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+
+                                String tmp = ctx.body();
+                                ctx.json(UsuarioServicios.getInstancia().existe(tmp));
+                            });
+                        });
                 path("/Producto", () -> {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");

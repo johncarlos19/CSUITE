@@ -11,6 +11,7 @@ import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.List;
@@ -36,13 +37,14 @@ public class Mercado {
         return mercado;
     }
 
-    public void loadDataBase() {
+    public void loadDataBase() throws UnsupportedEncodingException {
         userEncryptor.setPassword("admin");
         passwordEncryptor.setPassword("admin");
 
 
         try {
             if (verificar_user("admin", "admin") !=null) {
+
 //                Usuario usuario = new Usuario("admin", "Admin");
 //                usuario.setEmail("admin@cashsuite.com");
 //                usuario.setPerfil("Admin");
@@ -319,6 +321,18 @@ public class Mercado {
 
     public void setPasswordEncryptor(AES256TextEncryptor passwordEncryptor) {
         this.passwordEncryptor = passwordEncryptor;
+    }
+
+    public Usuario RegistrarVendedor(Usuario usuario, String email, String password){
+
+        usuario = new UsuarioServicios().crearUsuario(usuario);
+        Vendedor vendedor = new Vendedor();
+        vendedor.setEmail(email);
+        vendedor.setPassword(passwordEncryptor.encrypt(password));
+        Vendedor otro = usuario.addVendedor(vendedor);
+        VendedorServicios.getInstancia().crear(otro);
+        usuario = (Usuario) UsuarioServicios.getInstancia().editar(usuario);
+        return usuario;
     }
 
     public Empleado registrarEmpleado(String vendedor, Usuario usuarioEmpleado, String password, int acceso){

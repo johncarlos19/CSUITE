@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +101,8 @@ public class Usuario implements Identifiable<String> {
         return pais;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setPais(String pais) throws UnsupportedEncodingException {
+        this.pais = new String(pais.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public String getMunicipio() {
@@ -130,6 +131,9 @@ public class Usuario implements Identifiable<String> {
 
     public Timestamp getFecha_registro() {
         return fecha_registro;
+    }
+    public String getFecha_registroString() {
+        return fecha_registro.toString();
     }
 
     public void setFecha_registro(Timestamp fecha_registro) {
