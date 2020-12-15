@@ -233,7 +233,7 @@ function uploadPorduct(){
 var perfilOculto = $("#perfilOculto").val();
 function reloadTabla() {
 	document.getElementById("loading").innerHTML = '<i class="fa fa-refresh fa-spin"></i>';
-	worker.postMessage({'cmd': 'fecha'});
+	worker.postMessage({'cmd': 'producto'});
 
 
 }

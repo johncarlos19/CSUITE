@@ -132,7 +132,7 @@ public class Usuario implements Identifiable<String> {
     public Timestamp getFecha_registro() {
         return fecha_registro;
     }
-    public String getFecha_registroString() {
+    public String getFechaRegistroString() {
         return fecha_registro.toString();
     }
 

@@ -9,10 +9,7 @@ import csuite.mvc.servicios.UsuarioServicios;
 import csuite.mvc.servicios.VendedorServicios;
 import csuite.mvc.util.NoExisteEstudianteException;
 import io.javalin.Javalin;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -39,7 +36,71 @@ public class ApiControlador extends JavalinControlador {
                  * Ejemplo de una API REST, implementando el CRUD
                  * ir a
                  */
+                path("/Login", () -> {
+                    after(ctx -> {
+                        ctx.header("Content-Type", "application/json");
+                    });
+                    get("/Extend", ctx -> {
+                        String headerAuth = ctx.req.getHeader("Authorization");
+                        System.out.println(headerAuth);
+                        String user = ctx.cookie("User");
+                        String session = ctx.sessionAttribute("User");
+                        if (user==null || session == null){
 
+                            System.out.println(Mercado.getInstance().getUserEncryptor().decrypt(user));
+                            ctx.redirect("/login");
+
+                        }else{
+                            System.out.println("\n\n\n\nverifico");
+
+                            if(Mercado.getInstance().getUserEncryptor().decrypt(user).equalsIgnoreCase(session)){
+                                try {
+                                    if(isExpirate(decodeJWT(session))==false){
+                                        String header = "Authorization";
+                                        Claims claims = decodeJWT(session);
+                                        String use = claims.getId();
+                                        String jwt = createJWT(use,claims.getAudience(), claims.getIssuer());
+                                        ctx.header(header,jwt);
+                                        ctx.sessionAttribute("User",jwt);
+                                        ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
+                                        String mensaje = String.format("Manejador before aplicando a todas las llamadas: %s, Contexto: %s, Metodo: %s",
+                                                ctx.req.getRemoteHost(),
+                                                ctx.req.getServletPath(),
+                                                ctx.req.getMethod());
+                                        //
+                                        System.out.println(mensaje);
+
+                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
+                                                Mercado.getInstance().getLogins().get(i).setJwt(claims);
+                                                Mercado.getInstance().getLogins().get(i).setSession(ctx.req.getSession());
+                                            }
+                                        }
+                                        String tmp = ctx.body();
+                                        ctx.json(Mercado.getInstance().getTimeSessionMinute()*60*1000);
+
+
+
+
+                                    }else{
+                                        ctx.json(1);
+                                    }
+
+                                }catch (ExpiredJwtException e){
+                                    ctx.json(1);
+                                }
+                            }else{
+                                ctx.json(1);
+                            }
+
+
+                        }
+
+
+
+                    });
+
+                });
 
                 path("/Usuario", () -> {
                             after(ctx -> {

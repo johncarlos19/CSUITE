@@ -14,7 +14,7 @@ this.addEventListener('message', function(e) {
 
     //
     switch (data.cmd) {
-        case 'fecha':
+        case 'producto':
             console.log("Buscando la fecha desde el servidor...");
             axios.get('/api/Producto')
                 .then(function (response) {
@@ -66,6 +66,27 @@ this.addEventListener('message', function(e) {
                     console.log(response);
                     //enviando la información a la venta principal
                     postMessage({'cmd': 'verifyUser', 'data': response.data});
+                    return response.data;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'extendSession':
+            console.log("Buscando la extencion desde el servidor...");
+
+            axios.get('/api/Login/Extend')
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    postMessage({'cmd': 'time', 'data': response.data});
                     return response.data;
                 })
                 .catch(function (error) {

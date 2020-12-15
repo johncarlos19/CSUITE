@@ -704,7 +704,7 @@ CUERPO DOCUMENTO
 
 
 
-					  <td >'.$value["fecha"].'</td>
+					  <td th:text="${aux.fecha_registro}">'.$value["fecha"].'</td>
 					  <th>
 
 
@@ -1226,6 +1226,40 @@ CUERPO DOCUMENTO
 	  </div>
 
   </div>
+  <div id="modalAlertaTime" class="modal fade" role="dialog" style="display: none;" >
+
+	  <div class="modal-dialog">
+
+		  <div class="modal-content">
+			  <div class="modal-header alert alert-danger alert-dismissible " >
+
+<!--				  <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+
+				  <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>
+
+			  </div>
+
+			  <!--=====================================
+              CUERPO DEL MODAL
+              ======================================-->
+
+			  <div class="modal-body">
+
+				  <div class="box-body">
+					  <div id="time"></div>
+					  <div class="modal-footer" id="timeButton">
+
+
+
+
+					  </div>
+				  </div>
+			  </div>
+
+
+		  </div>
+	  </div>
+  </div>
   
 
 </div>
@@ -1245,6 +1279,76 @@ CUERPO DOCUMENTO
   <script src="../dashboardPlantilla/js/clientes.js"></script>
   <script src="../dashboardPlantilla/js/ventas.js"></script>
   <script src="../dashboardPlantilla/js/reportes.js"></script>
+  <script>
+
+	  var timeSession = 300000-(1500*60);
+	  var logout = 1000*60;
+	  var renovo = false;
+	  var preciono = false;
+	  var worker = new Worker('/js/webworker-ajax.js');
+
+
+
+
+	  worker.onmessage = function (e) {
+		  if(e.data.cmd === 'time'){
+			  renovo = true;
+			  setTimeout(alertaTime,e.data.data - (1500*60));
+		  }
+
+	  }
+
+	  $(document).ready(function(){
+		  setTimeout(alertaTime,timeSession)
+	  });
+	  function extendTime(){
+		  preciono = true;
+		  worker.postMessage({'cmd': 'extendSession'});
+
+	  }
+	  function alertaTime(){
+		  if (renovo===false){
+			  $("#modalAlertaTime").modal({
+				  backdrop: 'static',
+				  keyboard: false
+			  })
+			  $("#modalAlertaTime").css("display", "block");
+			  document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+					  '\t\t\t\t\t\t\t  La Sesión ha caducado\n' +
+					  '\t\t\t\t\t\t  </div>'
+			  document.getElementById("timeButton").innerHTML = '<button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="extendTime()">Extender Tiempo</button>'
+			  setTimeout(alertLogout,logout);
+		  }else{
+			  $("#modalAlertaTime").modal({
+				  backdrop: 'static',
+				  keyboard: false
+			  })
+			  $("#modalAlertaTime").css("display", "block");
+			  document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+					  '\t\t\t\t\t\t\t  Ha excedido la cantidad de intento en renovar\n' +
+					  '\t\t\t\t\t\t  </div>'
+			  document.getElementById("timeButton").innerHTML = '<form action="/logout" method="get">' +
+					  '<button type="submit" class="btn btn-primary"   >Salir</button>' +
+					  '</form>'
+		  }
+
+	  }
+	  function alertLogout(){
+		  if (preciono===false){
+			  $("#modalAlertaTime").css("display", "block");
+			  document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+					  '\t\t\t\t\t\t\t  Ha excedido el tiempo en renovar la sesión\n' +
+					  '\t\t\t\t\t\t  </div>'
+			  document.getElementById("timeButton").innerHTML = '<form action="/logout" method="get">' +
+					  '<button type="submit" class="btn btn-primary"   >Salir</button>' +
+					  '</form>'
+		  }else{
+			  preciono = false;
+		  }
+
+	  }
+
+  </script>
   <!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async="" defer="" src="./Cliente_files/7875273.js(2).download"></script>
   <!-- End of HubSpot Embed Code -->

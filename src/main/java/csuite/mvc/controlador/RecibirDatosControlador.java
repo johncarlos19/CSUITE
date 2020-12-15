@@ -384,9 +384,10 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
                 get(ctx -> {
+                    String idSession = ctx.req.getSession().getId();
 
                     for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
-                        if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(decodeJWT(ctx.sessionAttribute("User")).getId())){
+                        if (Mercado.getInstance().getLogins().get(i).getSession().getId().equalsIgnoreCase(idSession)){
                             Mercado.getInstance().getLogins().remove(i);
                             break;
                         }
