@@ -124,6 +124,7 @@ public class UsuarioServicios extends GestionadDB<Usuario> {
         }*/
         String id = user.getUsuario();
         Usuario usuario = (Usuario) createAndReturnObjectWithUniqueId(user);
+        usuario = find(id);
         usuario.setPoliticaList(Mercado.getInstance().getListaPolitica(user.getPerfil(), accion,usuario));
         usuario = (Usuario) editar(usuario);
         //usuario.setUsuario(id);

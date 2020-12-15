@@ -147,6 +147,10 @@ worker.onmessage = function (e) { //recuperando la información
 		// form.submit();
 		reloadTabla();
 	}
+	if(e.data.cmd === 'time'){
+		renovo = true;
+		setTimeout(alertaTime,e.data.data - (1500*60));
+	}
 
 
 
@@ -233,14 +237,73 @@ function uploadPorduct(){
 var perfilOculto = $("#perfilOculto").val();
 function reloadTabla() {
 	document.getElementById("loading").innerHTML = '<i class="fa fa-refresh fa-spin"></i>';
-	worker.postMessage({'cmd': 'producto'});
+	worker.postMessage({'cmd': 'fecha'});
 
 
 }
 
-$(document).ready(function() {
-reloadTabla();
+
+var timeSession = 300000-(1500*60);
+var logout = 1000*60;
+var renovo = false;
+var preciono = false;
+
+
+
+
+
+
+$(document).ready(function(){
+	reloadTabla();
+	// setTimeout(alertaTime,timeSession);
 });
+function extendTime(){
+	preciono = true;
+	worker.postMessage({'cmd': 'extendSession'});
+
+}
+function alertaTime(){
+	if (renovo===false){
+		$("#modalAlertaTime").modal({
+			backdrop: 'static',
+			keyboard: false
+		})
+		$("#modalAlertaTime").css("display", "block");
+		document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+			'\t\t\t\t\t\t\t  La Sesión ha caducado\n' +
+			'\t\t\t\t\t\t  </div>'
+		document.getElementById("timeButton").innerHTML = '<button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="extendTime()">Extender Tiempo</button>'
+		setTimeout(alertLogout,logout);
+	}else{
+		$("#modalAlertaTime").modal({
+			backdrop: 'static',
+			keyboard: false
+		})
+		$("#modalAlertaTime").css("display", "block");
+		document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+			'\t\t\t\t\t\t\t  Ha excedido la cantidad de intento en renovar\n' +
+			'\t\t\t\t\t\t  </div>'
+		document.getElementById("timeButton").innerHTML = '<form action="/logout" method="get">' +
+			'<button type="submit" class="btn btn-primary"   >Salir</button>' +
+			'</form>'
+	}
+
+}
+function alertLogout(){
+	if (preciono===false){
+		$("#modalAlertaTime").css("display", "block");
+		document.getElementById("time").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+			'\t\t\t\t\t\t\t  Ha excedido el tiempo en renovar la sesión\n' +
+			'\t\t\t\t\t\t  </div>'
+		document.getElementById("timeButton").innerHTML = '<form action="/logout" method="get">' +
+			'<button type="submit" class="btn btn-primary"   >Salir</button>' +
+			'</form>'
+	}else{
+		preciono = false;
+	}
+
+}
+
 
 var valll = "<div className='btn-group'><button className='btn btn-warning btnEditarProducto' idproducto='61'  data-toggle='modal' data-target=''#modalEditarProducto'><i  className='fa fa-pencil'></i></button> <button className='btn btn-danger btnEliminarProducto' idproducto='61'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  className='fa fa-times'></i></button> </div>";
 

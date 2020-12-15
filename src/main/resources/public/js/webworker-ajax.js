@@ -14,7 +14,7 @@ this.addEventListener('message', function(e) {
 
     //
     switch (data.cmd) {
-        case 'producto':
+        case 'fecha':
             console.log("Buscando la fecha desde el servidor...");
             axios.get('/api/Producto')
                 .then(function (response) {
