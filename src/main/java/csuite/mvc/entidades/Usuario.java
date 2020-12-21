@@ -1,5 +1,6 @@
 package csuite.mvc.entidades;
 
+import csuite.mvc.jsonObject.ClienteJson;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -44,6 +45,21 @@ public class Usuario implements Identifiable<String> {
 
     public Usuario(){
 
+    }
+    public ClienteJson getUsuarioJson(){
+        ClienteJson clienteJson = new ClienteJson(usuario,
+        nombre,
+        apellido,
+        perfil,
+        pais,
+        municipio,
+        direccion,
+        telefono,
+        fecha_registro,
+        email,
+        documento,
+        tipoDocumento);
+        return clienteJson;
     }
 
     public List<Politica> getPoliticaList() {

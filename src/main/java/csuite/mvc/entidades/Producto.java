@@ -94,6 +94,16 @@ public class Producto implements Serializable {
     }
 
     public ProductoJSON getProductoJSON(){
+        float descuentoPorciento = 0;
+        float impu = 0;
+        float precioneto = productoEnVenta.getPrecioVenta();
+        for (ImpuestoProductoEnVenta impuesto : productoEnVenta.getImpuestoProductoEnVentas()
+        ){
+            descuentoPorciento += impuesto.getIdImpuesto().getDescuento((double) productoEnVenta.getPrecioVenta());
+            impu += impuesto.getIdImpuesto().getImpuesto((double) productoEnVenta.getPrecioVenta());
+            precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) productoEnVenta.getPrecioVenta());
+
+        }
         return new ProductoJSON(
                 this.getId(),
                 this.getNombre(),
@@ -106,7 +116,9 @@ public class Producto implements Serializable {
                 productoEnVenta.getPrecioVenta(),
                 productoEnVenta.getPrecioCompra(),
                 productoEnVenta.getCantMaxPorVenta(),
-                productoEnVenta.getDescuentoPorciento(),
+                descuentoPorciento,
+                impu
+                ,precioneto,
                 this.getNombreFoto(),
                 this.getMimeType(),
                 this.getFotoBase64()
@@ -129,7 +141,7 @@ public class Producto implements Serializable {
         productoEnVenta.setCantMaxPorVenta(-1);
         productoEnVenta.setPrecioCompra(almacen.getCosto());
         productoEnVenta.setPrecioVenta(almacen.getPrecioVentaFutura());
-        productoEnVenta.setDescuentoPorciento(0);
+//        productoEnVenta.setDescuentoPorciento(0);
         productoEnVenta.addProductoStock(almacen.getProductoAgregado());
 
         productoEnVenta.setIdAlmacen(almacen);
@@ -151,7 +163,7 @@ public class Producto implements Serializable {
             productoEnVenta.setCantMaxPorVenta(-1);
             productoEnVenta.setPrecioCompra(almacen.getCosto());
             productoEnVenta.setPrecioVenta(almacen.getPrecioVentaFutura());
-            productoEnVenta.setDescuentoPorciento(0);
+//            productoEnVenta.setDescuentoPorciento(0);
             productoEnVenta.setStock(almacen.getProductoAgregado());
 
             almacen= (Almacen) AlmacenServicios.getInstancia().crear(almacen);

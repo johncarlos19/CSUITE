@@ -22,9 +22,22 @@ this.addEventListener('message', function(e) {
                     console.log("Respuesta:");
                     console.log(response);
                     //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout','data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'respuesta', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
 
-                    postMessage({'cmd': 'respuesta', 'data': response.data});
-                    return response.data;
+
                 })
                 .catch(function (error) {
                     // handle error
@@ -44,7 +57,21 @@ this.addEventListener('message', function(e) {
                     console.log("Respuesta:");
                     console.log(response);
                     //enviando la información a la venta principal
-                    postMessage({'cmd': 'save', 'data': response.data});
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'save', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
 
                 })
                 .catch(function (error) {
@@ -65,8 +92,21 @@ this.addEventListener('message', function(e) {
                     console.log("Respuesta:");
                     console.log(response);
                     //enviando la información a la venta principal
-                    postMessage({'cmd': 'verifyUser', 'data': response.data});
-                    return response.data;
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'verifyUser', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
                 })
                 .catch(function (error) {
                     // handle error
@@ -86,8 +126,21 @@ this.addEventListener('message', function(e) {
                     console.log("Respuesta:");
                     console.log(response);
                     //enviando la información a la venta principal
-                    postMessage({'cmd': 'time', 'data': response.data});
-                    return response.data;
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'time', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
                 })
                 .catch(function (error) {
                     // handle error

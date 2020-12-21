@@ -2,11 +2,8 @@ package csuite.mvc.controlador;
 
 import csuite.mvc.entidades.*;
 import csuite.mvc.jsonObject.ProductoSaveJson;
-import csuite.mvc.servicios.ProductoEnVentaServicios;
-import csuite.mvc.servicios.ProductoServicios;
+import csuite.mvc.servicios.*;
 
-import csuite.mvc.servicios.UsuarioServicios;
-import csuite.mvc.servicios.VendedorServicios;
 import csuite.mvc.util.NoExisteEstudianteException;
 import io.javalin.Javalin;
 import io.jsonwebtoken.*;
@@ -48,7 +45,7 @@ public class ApiControlador extends JavalinControlador {
                         if (user==null || session == null){
 
                             System.out.println(Mercado.getInstance().getUserEncryptor().decrypt(user));
-                            ctx.redirect("/login");
+                            ctx.json(1);
 
                         }else{
                             System.out.println("\n\n\n\nverifico");
@@ -101,7 +98,28 @@ public class ApiControlador extends JavalinControlador {
                     });
 
                 });
+                path("/Cliente", () -> {
+                    after(ctx -> {
+                        ctx.header("Content-Type", "application/json");
+                    });
 
+                    post("/", ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+
+                        String tmp = ctx.body();
+                        ctx.json(UsuarioServicios.getInstancia().existe(tmp));
+                    });
+                    post("/search", ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+
+                        String tmp = ctx.body();
+                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
+                    });
+                });
                 path("/Usuario", () -> {
                             after(ctx -> {
                                 ctx.header("Content-Type", "application/json");
@@ -122,10 +140,27 @@ public class ApiControlador extends JavalinControlador {
                     });
 
                     get("/", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
 
-                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
-                        System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
-                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                        }else{
+
+
+
+                                try {
+                                    if(isExpirate(decodeJWT(session))==false){
+                                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                        System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                        ctx.json(ProductoServicios.getInstancia().getListaProductoJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                                    }else{
+                                        ctx.json(null);
+                                    }
+                        }catch (ExpiredJwtException e){
+                            ctx.json(null);
+                        }
+                    }
+
                     });
 
 //                    get("/:matricula", ctx -> {
@@ -159,6 +194,7 @@ public class ApiControlador extends JavalinControlador {
                         Almacen almacen = new Almacen(tmp.getSuplidor(),Long.parseLong(tmp.getStock()),0,(float) Double.parseDouble(tmp.getCompra()), (float)Double.parseDouble(tmp.getVenta()));
                         va.addAlmacen(almacen);
                         va = (Producto) new ProductoServicios().editar(va);
+                        Mercado.getInstance().addImpuestoToOnlyProducto(va.getId(), Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
 
 //                        va = (Producto) new ProductoServicios().find(va.getId());
 //                        Almacen almacen1 = new Almacen("Endy",10,1,300,600);

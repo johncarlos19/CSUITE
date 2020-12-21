@@ -24,13 +24,15 @@ public class ProductoJSON {
     private float precioCompra;
     private long cantMaxPorVenta;
     private float descuentoPorciento;
+    private float impuesto;
+    private float precioLista;
 
 
     private String nombreFoto;
     private String mimeType;
     private String fotoBase64;
 
-    public ProductoJSON(long id, String nombre, String descripcion, String codigo_local, long cantProductoVendido, boolean disponible, String categorias, long stock, float precioVenta, float precioCompra, long cantMaxPorVenta, float descuentoPorciento, String nombreFoto, String mimeType, String fotoBase64) {
+    public ProductoJSON(long id, String nombre, String descripcion, String codigo_local, long cantProductoVendido, boolean disponible, String categorias, long stock, float precioVenta, float precioCompra, long cantMaxPorVenta, float descuentoPorciento, float impuesto, float precioLista, String nombreFoto, String mimeType, String fotoBase64) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,6 +48,24 @@ public class ProductoJSON {
         this.nombreFoto = nombreFoto;
         this.mimeType = mimeType;
         this.fotoBase64 = fotoBase64;
+        this.impuesto = impuesto;
+        this.precioLista = precioLista;
+    }
+
+    public float getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(float impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public float getPrecioLista() {
+        return precioLista;
+    }
+
+    public void setPrecioLista(float precioLista) {
+        this.precioLista = precioLista;
     }
 
     public long getId() {

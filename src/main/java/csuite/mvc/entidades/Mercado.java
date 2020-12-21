@@ -1,6 +1,7 @@
 package csuite.mvc.entidades;
 
 import  csuite.mvc.entidades.*;
+import csuite.mvc.jsonObject.ProductoJSON;
 import csuite.mvc.servicios.*;
 import io.jsonwebtoken.Claims;
 import org.jasypt.util.text.AES256TextEncryptor;
@@ -46,6 +47,10 @@ public class Mercado {
 
         try {
             if (verificar_user("admin", "admin") !=null) {
+
+                for (ProductoJSON productoJSON : ProductoServicios.getInstancia().getListaProductoJson("admin")) {
+                    System.out.println("\n\nImpuesto"+productoJSON.getImpuesto()+"precioNeto"+productoJSON.getPrecioLista());
+                }
 
 //                Usuario usuario = new Usuario("admin", "Admin");
 //                usuario.setEmail("admin@cashsuite.com");
@@ -93,7 +98,13 @@ public class Mercado {
             Usuario usuario = new Usuario("admin", "Admin");
             usuario.setEmail("admin@cashsuite.com");
             usuario.setPerfil("Admin");
-            Usuario aux = new UsuarioServicios().crearUsuario(usuario);
+            usuario.setMunicipio("Moca");
+            usuario.setDireccion("Paso de moca");
+            usuario.setTelefono("5454454");
+//            Usuario aux = new UsuarioServicios().crearUsuario(usuario);
+            Usuario aux = RegistrarVendedor(usuario,"admin@cashsuite.com","admin");
+            Vendedor otro =VendedorServicios.getInstancia().getVendedor(aux.getUsuario());
+
 
             Producto producto = new Producto();
             producto.setNombre("Huevo");
@@ -105,12 +116,12 @@ public class Mercado {
             producto1.setCodigo_local("1445833");
 
 
-            Vendedor vendedor = new Vendedor();
-            vendedor.setEmail("admin@cashsuite.com");
-            vendedor.setPassword(passwordEncryptor.encrypt("admin"));
-            Vendedor otro = aux.addVendedor(vendedor);
-            VendedorServicios.getInstancia().crear(otro);
-            UsuarioServicios.getInstancia().editar(aux);
+//            Vendedor vendedor = new Vendedor();
+//            vendedor.setEmail("admin@cashsuite.com");
+//            vendedor.setPassword(passwordEncryptor.encrypt("admin"));
+//            Vendedor otro = aux.addVendedor(vendedor);
+//            VendedorServicios.getInstancia().crear(otro);
+//            UsuarioServicios.getInstancia().editar(aux);
 
             producto.CrearProductoVenta();
             producto1.CrearProductoVenta();
@@ -168,9 +179,24 @@ public class Mercado {
             otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
             Impuesto impuesto = new Impuesto("18% De ley","Porciento",18);
+            impuesto.setAplicarATodos(true);
             impuesto = (Impuesto) ImpuestoServicios.getInstancia().crear(impuesto);
             otro.addImpuesto(impuesto);
             otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
+
+            long f = 1;
+            impuesto = ImpuestoServicios.getInstancia().getImpuesto(impuesto.getId());
+            for (ProductoEnVenta productoEnVenta: ProductoEnVentaServicios.getInstancia().listaVentaProducto(0,"admin")
+            ) {
+//                ImpuestoProductoEnVenta impuestoProductoEnVenta = new ImpuestoProductoEnVenta(impuesto, productoEnVenta);
+//                ImpuestoProductoEnVentaServicios.getInstancia().crear(impuestoProductoEnVenta);
+//                impuesto.addProducto(productoEnVenta);
+                 productoEnVenta.addImpuesto(impuesto);
+                ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+
+            }
+//            ImpuestoServicios.getInstancia().editar(impuesto);
 
 
 
@@ -308,6 +334,28 @@ public class Mercado {
 
 
     }
+    public void addImpuestoToOnlyProducto(long id, String user){
+        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().getVentaProducto(id, user);
+        List<Impuesto> lista = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(user);
+        for (Impuesto impuesto : lista) {
+            productoEnVenta.addImpuesto(impuesto);
+        }
+        ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+
+    }
+    public void addImpuestoToAllProducto(long id, String user){
+        Impuesto impuesto = ImpuestoServicios.getInstancia().getImpuesto(id);
+        for (ProductoEnVenta productoEnVenta: ProductoEnVentaServicios.getInstancia().listaVentaProducto(0,user)
+        ) {
+//                ImpuestoProductoEnVenta impuestoProductoEnVenta = new ImpuestoProductoEnVenta(impuesto, productoEnVenta);
+//                ImpuestoProductoEnVentaServicios.getInstancia().crear(impuestoProductoEnVenta);
+//                impuesto.addProducto(productoEnVenta);
+            productoEnVenta.addImpuesto(impuesto);
+            ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+
+        }
+    }
 
     public long getTimeSessionMinute() {
         return timeSessionMinute;
@@ -341,15 +389,46 @@ public class Mercado {
         this.passwordEncryptor = passwordEncryptor;
     }
 
-    public Usuario RegistrarVendedor(Usuario usuario, String email, String password){
+    public Usuario RegistrarVendedor(Usuario usuario, String email, String password) throws UnsupportedEncodingException {
 
         usuario = new UsuarioServicios().crearUsuario(usuario);
         Vendedor vendedor = new Vendedor();
         vendedor.setEmail(email);
         vendedor.setPassword(passwordEncryptor.encrypt(password));
         Vendedor otro = usuario.addVendedor(vendedor);
-        VendedorServicios.getInstancia().crear(otro);
+        otro = (Vendedor) VendedorServicios.getInstancia().crear(otro);
         usuario = (Usuario) UsuarioServicios.getInstancia().editar(usuario);
+
+        Usuario usuarioCliente = new Usuario();
+        usuarioCliente.setNombre("Cliente Al Contado");
+        usuarioCliente.setApellido("");
+        usuarioCliente.setPerfil("Cliente");
+        try {
+            usuarioCliente.setPais(usuario.getPais());
+        } catch (Exception e) {
+            usuarioCliente.setPais("Republica Dominicana");
+
+        }
+        try {
+            usuarioCliente.setPais(usuario.getPais());
+        } catch (Exception e) {
+            usuarioCliente.setPais("Republica Dominicana");
+
+        }
+        usuarioCliente.setMunicipio(usuario.getMunicipio());
+        usuarioCliente.setDireccion(usuario.getDireccion());
+        usuarioCliente.setTelefono(usuario.getTelefono());
+        usuarioCliente.setDocumento("001");
+        usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
+        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+        Cliente cliente = new Cliente();
+        cliente.setIdClienteLocal("001");
+        cliente = usuarioCliente.addCliente(cliente);
+        cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
+        usuarioCliente = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente);
+        otro = VendedorServicios.getInstancia().getVendedor(otro.getIdVendedor().getUsuario());
+        otro.addCliente(cliente);
+        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
         return usuario;
     }
 
@@ -384,13 +463,14 @@ public class Mercado {
         otro.addCategoria(categoria);
         otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
     }
-    public void addImpuesto(String user, Impuesto impuesto){
+    public Impuesto addImpuesto(String user, Impuesto impuesto){
         Vendedor otro = null;
         otro = VendedorServicios.getInstancia().getVendedor(user);
 
         impuesto = (Impuesto) ImpuestoServicios.getInstancia().crear(impuesto);
         otro.addImpuesto(impuesto);
         otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
+        return impuesto;
     }
 
     public String tipoUsuario(String user){

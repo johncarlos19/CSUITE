@@ -7,12 +7,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
 public class ProductoEnVenta implements Serializable {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
     @JoinColumn(name = "idProducto")
     @OneToOne()
     private Producto idProducto;
@@ -23,12 +27,25 @@ public class ProductoEnVenta implements Serializable {
     @JoinColumn(name = "idAlmacen")
     @OneToOne()
     private Almacen idAlmacen;
-    private float descuentoPorciento;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "idProductoEnVenta", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name="idproductoEnVenta")
+    private List<ImpuestoProductoEnVenta> impuestoProductoEnVentas = new ArrayList<ImpuestoProductoEnVenta>();
 
     public ProductoEnVenta() {
     }
 
 
+    public ImpuestoProductoEnVenta addImpuesto(Impuesto impuesto){
+
+
+        ImpuestoProductoEnVenta can = new ImpuestoProductoEnVenta(impuesto,this);
+        impuesto.getImpuestoProductoEnVentas().add(can);
+        impuestoProductoEnVentas.add(can);
+        return can;
+//        impuesto.getProductoEnVentas().add(this);
+//
+//        impuestos.add(impuesto);
+    }
 
     public Almacen getIdAlmacen() {
         return idAlmacen;
@@ -42,12 +59,21 @@ public class ProductoEnVenta implements Serializable {
         this.idAlmacen = idAlmacen;
     }
 
-    public float getDescuentoPorciento() {
-        return descuentoPorciento;
+//    public List<Impuesto> getImpuestos() {
+//        return impuestos;
+//    }
+//
+//    public void setImpuestos(List<Impuesto> impuestos) {
+//        this.impuestos = impuestos;
+//    }
+
+
+    public List<ImpuestoProductoEnVenta> getImpuestoProductoEnVentas() {
+        return impuestoProductoEnVentas;
     }
 
-    public void setDescuentoPorciento(float descuentoPorciento) {
-        this.descuentoPorciento = descuentoPorciento;
+    public void setImpuestoProductoEnVentas(List<ImpuestoProductoEnVenta> impuestoProductoEnVentas) {
+        this.impuestoProductoEnVentas = impuestoProductoEnVentas;
     }
 
     public Producto getIdProducto() {
@@ -66,8 +92,26 @@ public class ProductoEnVenta implements Serializable {
         this.stock = stock;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public ProductoJSON getProductoJSON(){
+        float descuentoPorciento = 0;
+        float impu = 0;
+        float precioneto = 0;
+        for (ImpuestoProductoEnVenta impuesto : impuestoProductoEnVentas
+        ){
+            descuentoPorciento += impuesto.getIdImpuesto().getDescuento((double) precioVenta);
+            impu += impuesto.getIdImpuesto().getImpuesto((double) precioVenta);
+            precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) precioVenta);
+
+        }
+
         return new ProductoJSON(
                 idProducto.getId(),
                 idProducto.getNombre(),
@@ -81,6 +125,8 @@ public class ProductoEnVenta implements Serializable {
                 precioCompra,
                 cantMaxPorVenta,
                 descuentoPorciento,
+                impu
+                ,precioneto,
                 idProducto.getNombreFoto(),
                 idProducto.getMimeType(),
                 idProducto.getFotoBase64()

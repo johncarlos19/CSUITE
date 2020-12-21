@@ -1,7 +1,7 @@
 package csuite.mvc.servicios;
 
 import  csuite.mvc.entidades.CarroCompra;
-import  csuite.mvc.entidades.CarroCompra_Producto;
+//import  csuite.mvc.entidades.CarroCompra_Producto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -109,16 +109,16 @@ public class CarroCompraServicios extends GestionadDB<CarroCompra> {
     }*/
 
     public boolean borrarProductoCarroCompra(long id_carroCompra, long id_producto) {
-        CarroCompra aux = getCarroCompra(id_carroCompra);
-        for (CarroCompra_Producto ccp : aux.getListaProductos()
-        ) {
-            if (ccp.getProducto().getId() == id_producto) {
-                new CarroCompra_ProductoServicios().getBorrar(ccp);
-                aux.getListaProductos().remove(ccp);
-
-                return true;
-            }
-        }
+//        CarroCompra aux = getCarroCompra(id_carroCompra);
+//        for (CarroCompra_Producto ccp : aux.getListaProductos()
+//        ) {
+//            if (ccp.getProducto().getId() == id_producto) {
+//                new CarroCompra_ProductoServicios().getBorrar(ccp);
+//                aux.getListaProductos().remove(ccp);
+//
+//                return true;
+//            }
+//        }
 
         /*
         boolean ok =false;
@@ -152,12 +152,12 @@ public class CarroCompraServicios extends GestionadDB<CarroCompra> {
     }
 
     public boolean borrarTodoProductoCarroCompra(long id_carroCompra) {
-        CarroCompra aux = getCarroCompra(id_carroCompra);
-        for (CarroCompra_Producto cpp : aux.getListaProductos()
-        ) {
-            new CarroCompra_ProductoServicios().getBorrar(cpp);
-        }
-        aux.getListaProductos().clear();
+//        CarroCompra aux = getCarroCompra(id_carroCompra);
+//        for (CarroCompra_Producto cpp : aux.getListaProductos()
+//        ) {
+//            new CarroCompra_ProductoServicios().getBorrar(cpp);
+//        }
+//        aux.getListaProductos().clear();
 
         /*
         boolean ok =false;
@@ -186,7 +186,8 @@ public class CarroCompraServicios extends GestionadDB<CarroCompra> {
             }
         }*/
 
-        return updateCarroCompraProducto(aux);
+        return false;
+//        return updateCarroCompraProducto(aux);
     }
 
     public long getIdentityMax() {
@@ -275,16 +276,17 @@ public class CarroCompraServicios extends GestionadDB<CarroCompra> {
                 Logger.getLogger(CarroCompraServicios.class.getName()).log(Level.SEVERE, null, ex);
             }
         }*/
-        CarroCompra aux = find(id);
-        List<CarroCompra_Producto> ss = new CarroCompra_ProductoServicios().getListaCarroCompra_Producto(id);
-        try {
-            if (ss != null) {
-                aux.setListaProductos(ss);
-            }
-            return aux;
-        } catch (NullPointerException S) {
-            return aux;
-        }
+//        CarroCompra aux = find(id);
+//        List<CarroCompra_Producto> ss = new CarroCompra_ProductoServicios().getListaCarroCompra_Producto(id);
+//        try {
+//            if (ss != null) {
+//                aux.setListaProductos(ss);
+//            }
+//            return aux;
+//        } catch (NullPointerException S) {
+//            return aux;
+//        }
+        return null;
 
 
     }

@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://localhost/csuite.mvc/pos1/crear-venta -->
+<html style="height: auto; min-height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8 ">
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CashSuite App</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="icon" href="img/plantilla/logo-only.png">
+
+    <!--=====================================
+   PLUGINS DE CSS
+   ======================================-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/Ionicons/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/AdminLTE.css">
+
+    <!-- AdminLTE Skins -->
+    <link rel="stylesheet" href="../dashboardPlantilla/dist/css/skins/_all-skins.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../dashboardPlantilla/plugins/iCheck/all.css">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
+
+    <!--=====================================
+    PLUGINS DE JAVASCRIPT
+    ======================================-->
+
+    <!-- jQuery 3 -->
+    <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dashboardPlantilla/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="../dashboardPlantilla/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="../dashboardPlantilla/plugins/sweetalert2/sweetalert2.all.js"></script>
+    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="../dashboardPlantilla/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- jQuery Number -->
+    <script src="dashboard/plugins/jqueryNumber/jquerynumber.min.js"></script>
+
+    <!-- daterangepicker http://www.daterangepicker.com/-->
+    <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
+    <script src="../dashboardPlantilla/bower_components/raphael/raphael.min.js"></script>
+    <script src="../dashboardPlantilla/bower_components/morris.js/morris.min.js"></script>
+
+    <!-- ChartJS http://www.chartjs.org/-->
+    <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+
+</head>
+
+<!--=====================================
+CUERPO DOCUMENTO
+======================================-->
+
+<body class="skin-blue sidebar-collapse sidebar-mini login-page" style="height: auto; min-height: 100%;">
+
+
+<div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header">
+
+        <!--=====================================
+        LOGOTIPO
+        ======================================-->
+        <a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+
+            <!-- logo mini -->
+            <span class="logo-mini">
+
+			<img src="./CrearVentas_files/logo-only.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+            <!-- logo normal -->
+
+            <span class="logo-lg">
+
+			<img src="./CrearVentas_files/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+
+		</span>
+
+        </a>
+
+        <!--=====================================
+        BARRA DE NAVEGACIÓN
+        ======================================-->
+        <nav class="navbar navbar-static-top" role="navigation">
+
+            <!-- Botón de navegación -->
+
+            <a href="http://localhost/csuite.mvc/pos1/crear-venta#" class="sidebar-toggle" data-toggle="push-menu"
+               role="button">
+
+                <span class="sr-only">Toggle navigation</span>
+
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                            page and may cause design problems
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-red"></i> 5 new members joined
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user text-red"></i> You changed your username
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="user-image"><i class="fa fa-user" ></i></span>
+
+                            <span class="hidden-xs">Alexander Pierce</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <span class="img-circle"><i class="fa fa-user" ></i></span>
+
+                                <p>
+                                    Alexander Pierce - Web Developer
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+
+                </ul>
+            </div>
+
+
+        </nav>
+
+    </header>
+    <aside class="main-sidebar">
+
+        <section class="sidebar">
+
+            <ul class="sidebar-menu tree">
+
+
+                <li class="active">
+
+                    <a href="http://localhost/csuite.mvc/pos1/inicio">
+
+                        <i class="fa fa-home"></i>
+                        <span>Inicio</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/usuarios">
+
+                        <i class="fa fa-users"></i>
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+                    <a href="http://localhost/csuite.mvc/pos1/perfil">
+
+                        <i class="fa fa-user"></i>
+                        <span>Perfil</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/categorias">
+
+                        <i class="fa fa-th"></i>
+                        <span>Categorías</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/productos">
+
+                        <i class="fa fa-product-hunt"></i>
+                        <span>Inventario</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/clientes">
+
+                        <i class="fa fa-users"></i>
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="treeview">
+
+                    <a href="http://localhost/csuite.mvc/pos1/crear-venta#">
+
+                        <i class="fa fa-list-ul"></i>
+
+                        <span>Ventas</span>
+
+                        <span class="pull-right-container">
+
+						<i class="fa fa-angle-left pull-right"></i>
+
+					</span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/ventas">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Administrar ventas</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Crear venta</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <li class="treeview">
+
+                    <a href="http://localhost/csuite.mvc/pos1/crear-venta#">
+
+                        <i class="fa fa-list-ul"></i>
+
+                        <span>Reportes</span>
+
+                        <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/reportes">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Reporte de ventas</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="http://localhost/csuite.mvc/pos1/reportes-compras">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Reporte de compras</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <li>
+
+                    <a href="http://localhost/csuite.mvc/pos1/salir">
+
+                        <i class="fa fa-power-off"></i>
+
+                        <span>Log Out</span>
+
+                    </a>
+
+                </li>
+
+
+                ?&gt;
+
+            </ul>
+
+        </section>
+
+    </aside>
+    <div class="content-wrapper" style="min-height: 661px;">
+
+        <section class="content-header">
+
+            <h1>
+
+                Nueva venta
+
+            </h1>
+
+            <ol class="breadcrumb">
+
+                <li><a href="http://localhost/csuite.mvc/pos1/crear-venta#"><i class="fa fa-dashboard"></i> Inicio</a>
+                </li>
+
+                <li class="active">Nueva venta</li>
+
+            </ol>
+
+        </section>
+
+        <section class="content">
+
+            <div class="row">
+
+                <!--=====================================
+                EL FORMULARIO
+                ======================================-->
+
+                <div class="col-lg-5 col-xs-12">
+
+                    <div class="box box-success">
+
+                        <div class="box-header with-border"></div>
+
+                        <form role="form" method="post" class="formularioVenta">
+
+                            <div class="box-body">
+
+                                <div class="box">
+
+                                    <!--=====================================
+                                    ENTRADA DEL CÓDIGO
+                                    ======================================-->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                            <input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta"
+                                                   value="10031" readonly="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    ENTRADA DEL VENDEDOR
+                                    ======================================-->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                            <input type="text" class="form-control" id="nuevoVendedor"
+                                                   value="CashSuite-Admin" readonly="">
+
+                                            <input type="hidden" name="idVendedor" value="CashSuite-Admin">
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!--=====================================
+                                    ENTRADA DEL CLIENTE
+                                    ======================================-->
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+
+                                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+
+
+                                            <input type="text" class="form-control" name="nombre" placeholder="Ingresar ID o Documento Del CLiente" id="cliente"  required>
+
+
+    <span class="input-group-btn lime lighten-2" id="clienteBuscar">
+                                            <button type="button"
+                                                    class="btn btn-success "
+                                                    data-toggle="modal"
+                                                    data-target="#modalAgregarCliente"
+                                                    data-dismiss="modal">Buscar Cliente</button></span>
+
+
+    <span class="input-group-btn " id="clienteAlContado">
+                                            <button type="button"
+                                                    class="btn btn-primary "
+                                                    data-toggle="modal"
+                                                    data-target="#modalAgregarCliente"
+                                                    data-dismiss="modal">Cliente Al Contado</button></span>
+
+
+                                            </div>
+
+
+
+                                    </div>
+
+<!--                                    <div class="form-group">-->
+
+<!--                                        <div class="input-group">-->
+
+<!--                                            <span class="input-group-addon"><i class="fa fa-users"></i></span>-->
+
+<!--                                            <input type="text" class="form-control" id="seleccionarCliente"-->
+<!--                                                    name="seleccionarCliente" required="">-->
+
+
+
+
+<!--                                            </input>-->
+
+<!--                                            <span class="input-group-addon"><button type="button"-->
+<!--                                                                                    class="btn btn-success btn-xs"-->
+<!--                                                                                    data-toggle="modal"-->
+<!--                                                                                    data-target="#modalAgregarCliente"-->
+<!--                                                                                    data-dismiss="modal">Agregar cliente</button></span>-->
+
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+
+                                    <!--=====================================
+                                    ENTRADA PARA AGREGAR PRODUCTO
+                                    ======================================-->
+
+                                    <div class="form-group row nuevoProducto">
+
+
+                                        <div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="21"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="21"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Muela o cincel martillo demoledor muro"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="13440"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="13440"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="20"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="20"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Taladro Demoledor de muro 110V"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="5390"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="5390"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="19"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="19"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Muela o cincel martillo demoledor piso"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="13440"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="13440"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="listaProductos" name="listaProductos"
+                                           value="[{&quot;id&quot;:&quot;21&quot;,&quot;descripcion&quot;:&quot;Muela o cincel martillo demoledor muro&quot;,&quot;cantidad&quot;:&quot;1&quot;,&quot;stock&quot;:&quot;19&quot;,&quot;precio&quot;:&quot;13440&quot;,&quot;total&quot;:&quot;13440&quot;},{&quot;id&quot;:&quot;20&quot;,&quot;descripcion&quot;:&quot;Taladro Demoledor de muro 110V&quot;,&quot;cantidad&quot;:&quot;1&quot;,&quot;stock&quot;:&quot;19&quot;,&quot;precio&quot;:&quot;5390&quot;,&quot;total&quot;:&quot;5390&quot;},{&quot;id&quot;:&quot;19&quot;,&quot;descripcion&quot;:&quot;Muela o cincel martillo demoledor piso&quot;,&quot;cantidad&quot;:&quot;1&quot;,&quot;stock&quot;:&quot;19&quot;,&quot;precio&quot;:&quot;13440&quot;,&quot;total&quot;:&quot;13440&quot;}]">
+
+                                    <!--=====================================
+                                    BOTÓN PARA AGREGAR PRODUCTO
+                                    ======================================-->
+
+                                    <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar
+                                        producto
+                                    </button>
+
+                                    <hr>
+
+                                    <div class="row">
+
+                                        <!--=====================================
+                                        ENTRADA IMPUESTOS Y TOTAL
+                                        ======================================-->
+
+                                        <div class="col-xs-8 pull-left">
+
+                                            <table class="table">
+
+                                                <thead>
+
+                                                <tr>
+                                                    <th>Impuesto</th>
+                                                </tr>
+
+                                                </thead>
+
+
+                                                <tbody>
+
+                                                <tr>
+
+                                                    <td style="width: 50%">
+
+                                                        <div class="input-group">
+
+                                                            <input type="number" class="form-control input-lg" min="0"
+                                                                   id="nuevoImpuestoVenta" name="nuevoImpuestoVenta"
+                                                                   placeholder="0" required="">
+
+                                                            <input type="hidden" name="nuevoPrecioImpuesto"
+                                                                   id="nuevoPrecioImpuesto" required="" value="0">
+
+                                                            <input type="hidden" name="nuevoPrecioNeto"
+                                                                   id="nuevoPrecioNeto" required="" value="32270">
+
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-percent"></i></span>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                                <thead>
+
+                                                <tr>
+                                                    <th>Total</th>
+                                                </tr>
+
+                                                </thead>
+
+                                                <tbody>
+                                                <tr>
+                                                    <td style="width: 50%">
+
+                                                        <div class="input-group">
+
+                                                            <span class="input-group-addon"><i
+                                                                    class="ion ion-social-usd"></i></span>
+
+                                                            <input type="text" class="form-control input-lg"
+                                                                   id="nuevoTotalVenta" name="nuevoTotalVenta"
+                                                                   total="32270" placeholder="00000" readonly=""
+                                                                   required="">
+
+                                                            <input type="hidden" name="totalVenta" id="totalVenta"
+                                                                   value="32270">
+
+
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <!--=====================================
+                                    ENTRADA MÉTODO DE PAGO
+                                    ======================================-->
+
+                                    <div class="form-group row">
+
+                                        <div class="col-xs-6" style="padding-right:0px">
+
+                                            <div class="input-group">
+
+                                                <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago"
+                                                        required="">
+                                                    <option value="">Seleccione método de pago</option>
+                                                    <option value="Efectivo">Efectivo</option>
+                                                    <option value="TC/TD">Tarjeta Crédito/Débito</option>
+                                                    <option value="TB">Transferencia Bancaria</option>
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="cajasMetodoPago"></div>
+
+                                        <input type="hidden" id="listaMetodoPago" name="listaMetodoPago">
+
+                                    </div>
+
+                                    <br>
+
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+
+                                <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
+                LA TABLA DE PRODUCTOS
+                ======================================-->
+
+                <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+
+                    <div class="box box-warning">
+
+                        <div class="box-header with-border"></div>
+
+                        <div class="box-body">
+
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar
+                                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                                    class="form-control input-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> registros</label></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                            <label>Buscar:<input type="search" class="form-control input-sm"
+                                                                 placeholder=""
+                                                                 aria-controls="DataTables_Table_0"></label></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered table-striped dt-responsive tablaVentas dataTable no-footer dtr-inline"
+                                               id="DataTables_Table_0" role="grid"
+                                               aria-describedby="DataTables_Table_0_info" style="width: 811px;">
+
+                                            <thead>
+
+                                            <tr role="row">
+                                                <th style="width: 10px;" class="sorting_asc" tabindex="0"
+                                                    aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                                    aria-label="#: Activar para ordenar la columna de manera descendente"
+                                                    aria-sort="ascending">#
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    rowspan="1" colspan="1" style="width: 72px;"
+                                                    aria-label="Imagen: Activar para ordenar la columna de manera ascendente">
+                                                    Imagen
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    rowspan="1" colspan="1" style="width: 68px;"
+                                                    aria-label="Código: Activar para ordenar la columna de manera ascendente">
+                                                    Código
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    rowspan="1" colspan="1" style="width: 289px;"
+                                                    aria-label="Descripcion: Activar para ordenar la columna de manera ascendente">
+                                                    Descripcion
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    rowspan="1" colspan="1" style="width: 57px;"
+                                                    aria-label="Stock: Activar para ordenar la columna de manera ascendente">
+                                                    Stock
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    rowspan="1" colspan="1" style="width: 82px;"
+                                                    aria-label="Acciones: Activar para ordenar la columna de manera ascendente">
+                                                    Acciones
+                                                </th>
+                                            </tr>
+
+                                            </thead>
+
+                                            <tbody>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">41</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>204</td>
+                                                <td>Muela o cincel martillo demoledor muro</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn recuperarBoton btn-default" idproducto="21">
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1" tabindex="0">42</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>203</td>
+                                                <td>Taladro Demoledor de muro 110V</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn recuperarBoton btn-default" idproducto="20">
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">43</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>202</td>
+                                                <td>Muela o cincel martillo demoledor piso</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn recuperarBoton btn-default" idproducto="19">
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1" tabindex="0">44</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>201</td>
+                                                <td>Martillo Demoledor de Piso 110V</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="18">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">45</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>117</td>
+                                                <td>Torre de iluminacion</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="17">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1" tabindex="0">46</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>116</td>
+                                                <td>Careta para Soldador</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="16">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">47</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>115</td>
+                                                <td>Soldador Electrico</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="15">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1" tabindex="0">48</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>114</td>
+                                                <td>Disco de tugsteno para Sierra circular</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="14">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">49</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>113</td>
+                                                <td>Sierra Circular</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="13">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1" tabindex="0">50</td>
+                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
+                                                <td>112</td>
+                                                <td>Motobomba El?ctrica</td>
+                                                <td>
+                                                    <button class="btn btn-success">20</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary agregarProducto recuperarBoton"
+                                                                idproducto="12">Agregar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div id="DataTables_Table_0_processing"
+                                             class="dataTables_processing panel panel-default" style="display: none;">
+                                            Procesando...
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                             aria-live="polite">Mostrando registros del 41 al 50 de un total de 61
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="dataTables_paginate paging_simple_numbers"
+                                             id="DataTables_Table_0_paginate">
+                                            <ul class="pagination">
+                                                <li class="paginate_button previous" id="DataTables_Table_0_previous"><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">3</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">4</a>
+                                                </li>
+                                                <li class="paginate_button active"><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">5</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">6</a>
+                                                </li>
+                                                <li class="paginate_button "><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">7</a>
+                                                </li>
+                                                <li class="paginate_button next" id="DataTables_Table_0_next"><a
+                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
+                                                        aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0">Siguiente</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!--=====================================
+    MODAL AGREGAR CLIENTE
+    ======================================-->
+
+    <div id="modalAgregarCliente" class="modal fade" role="dialog">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form role="form" method="post">
+
+                    <!--=====================================
+                    CABEZA DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        <h4 class="modal-title">Agregar cliente</h4>
+
+                    </div>
+
+                    <!--=====================================
+                    CUERPO DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-body">
+
+                        <div class="box-body">
+
+                            <!-- ENTRADA PARA EL NOMBRE -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                    <input type="text" class="form-control input-lg" name="nuevoCliente"
+                                           placeholder="Ingresar nombre" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL DOCUMENTO ID -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="number" min="0" class="form-control input-lg" name="nuevoDocumentoId"
+                                           placeholder="Ingresar documento" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL EMAIL -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
+                                    <input type="email" class="form-control input-lg" name="nuevoEmail"
+                                           placeholder="Ingresar email" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL TELÉFONO -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                    <input type="text" class="form-control input-lg" name="nuevoTelefono"
+                                           placeholder="Ingresar teléfono"
+                                           data-inputmask="&#39;mask&#39;:&#39;(999) 999-9999&#39;" data-mask=""
+                                           required="">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA LA DIRECCIÓN -->
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                    <input type="text" class="form-control input-lg" name="nuevaDireccion"
+                                           placeholder="Ingresar dirección" required="">
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            PIE DEL MODAL
+                            ======================================-->
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir
+                                </button>
+
+                                <button type="submit" class="btn btn-primary">Guardar cliente</button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <footer class="main-footer">
+
+                <strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
+
+                Todos los derechos reservados.
+
+
+            </footer>
+        </div>
+
+        <script src="../dashboardPlantilla/js/plantilla.js"></script>
+        <script src="../dashboardPlantilla/js/usuarios.js"></script>
+        <script src="../dashboardPlantilla/js/categorias.js"></script>
+        <script src="../dashboardPlantilla/js/productos.js"></script>
+        <script src="../dashboardPlantilla/js/clientes.js"></script>
+        <script src="../dashboardPlantilla/js/ventas.js"></script>
+        <script src="../dashboardPlantilla/js/reportes.js"></script>
+        <!-- Start of HubSpot Embed Code -->
+        <script type="text/javascript" id="hs-script-loader" async="" defer=""
+                src="../dashboardPlantilla/js/7875273.js"></script>
+        <!-- End of HubSpot Embed Code -->
+
+
+    </div>
+</div>
+</div></body>
+</html>

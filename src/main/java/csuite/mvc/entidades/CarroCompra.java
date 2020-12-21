@@ -15,8 +15,8 @@ import java.util.Set;
 public class CarroCompra implements Serializable {
     @Id
     private long id;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CarroCompra_Producto> carroCompra_productos = new ArrayList<CarroCompra_Producto>();
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<CarroCompra_Producto> carroCompra_productos = new ArrayList<CarroCompra_Producto>();
 
 
     public CarroCompra() {
@@ -88,22 +88,22 @@ public class CarroCompra implements Serializable {
 //        return BigDecimal.valueOf(total).setScale(2);
 //    }
 
-    public List<CarroCompra_Producto> getListaProductos() {
-        return carroCompra_productos;
-    }
-
-//    public List<ProductoComprado> getListaProductos_PreComprado() {
-//        List<ProductoComprado> aux = new ArrayList<>();
-//        for (CarroCompra_Producto pro: carroCompra_productos
-//             ) {
-//            ProductoComprado pp = new ProductoComprado(pro.getProducto().getNombre(),pro.getProducto().getPrecio(),pro.getCantidad());
-//            new ProductoCompradoServicios().addProductoComprado(pp);
-//            aux.add(pp);
-//        }
-//        return aux;
+//    public List<CarroCompra_Producto> getListaProductos() {
+//        return carroCompra_productos;
 //    }
-
-    public void setListaProductos(List<CarroCompra_Producto> listaProductos) {
-        this.carroCompra_productos = listaProductos;
-    }
+//
+////    public List<ProductoComprado> getListaProductos_PreComprado() {
+////        List<ProductoComprado> aux = new ArrayList<>();
+////        for (CarroCompra_Producto pro: carroCompra_productos
+////             ) {
+////            ProductoComprado pp = new ProductoComprado(pro.getProducto().getNombre(),pro.getProducto().getPrecio(),pro.getCantidad());
+////            new ProductoCompradoServicios().addProductoComprado(pp);
+////            aux.add(pp);
+////        }
+////        return aux;
+////    }
+//
+//    public void setListaProductos(List<CarroCompra_Producto> listaProductos) {
+//        this.carroCompra_productos = listaProductos;
+//    }
 }

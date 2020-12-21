@@ -11,8 +11,8 @@
         <class>csuite.mvc.entidades.ProductoComprado</class>
         <class>csuite.mvc.entidades.Usuario</class>
         <class>csuite.mvc.entidades.VentasProductos</class>
-        <class>csuite.mvc.entidades.CarroCompra_Producto</class>
-        <class>csuite.mvc.entidades.CarrocompraProductoId</class>
+        <class>csuite.mvc.entidades.ImpuestoProductoEnVenta</class>
+        <class>csuite.mvc.entidades.ImpuestoProductoEnVentaId</class>
         <class>csuite.mvc.entidades.Foto</class>
         <class>csuite.mvc.entidades.Comentario</class>
         <class>csuite.mvc.entidades.Vendedor</class>
@@ -42,6 +42,10 @@
             <property
                     name="javax.persistence.schema-generation.database.action"
                     value="update" />
+            <property
+                    name="hibernate.connection.provider_disables_autocommit"
+                    value="true"
+            />
 <!--            <property-->
 <!--                    name="javax.persistence.schema-generation.database.action"-->
 <!--                    value="create-drop" />-->
@@ -60,8 +64,8 @@
         <class>csuite.mvc.entidades.ProductoComprado</class>
         <class>csuite.mvc.entidades.Usuario</class>
         <class>csuite.mvc.entidades.VentasProductos</class>
-        <class>csuite.mvc.entidades.CarroCompra_Producto</class>
-        <class>csuite.mvc.entidades.CarrocompraProductoId</class>
+        <class>csuite.mvc.entidades.ImpuestoProductoEnVenta</class>
+        <class>csuite.mvc.entidades.ImpuestoProductoEnVentaId</class>
         <class>csuite.mvc.entidades.Foto</class>
         <class>csuite.mvc.entidades.Comentario</class>
         <class>csuite.mvc.entidades.Vendedor</class>
@@ -84,7 +88,11 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="connection.pool_size" value="100"></property>
+            <property name="connection.pool_size" value="20"></property>
+<!--            <property-->
+<!--                    name="hibernate.connection.provider_disables_autocommit"-->
+<!--                    value="true"-->
+<!--            />-->
             <!-- Indica como será la generación de las tablas en el motor-->
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
             <property name="javax.persistence.schema-generation.database.action" value="update"/>

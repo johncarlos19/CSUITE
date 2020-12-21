@@ -18,7 +18,7 @@ public class FacturaCliente implements Identifiable<String> {
     private float precioNeto;
     private String idQuienLoRealizo;
     private String metodoDePago;
-    @ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "facturaClientes")
+    @ManyToMany()
     private List<Impuesto> impuestos = new ArrayList<Impuesto>();
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL ,  orphanRemoval = true)
     @JoinColumn(name="idFactura")

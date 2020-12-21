@@ -647,7 +647,16 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Impuesto impuesto = new Impuesto(ctx.formParam("nombre"),ctx.formParam("nuevoTributo"),Double.parseDouble(ctx.formParam("valor")));
-                        Mercado.getInstance().addImpuesto(user,impuesto);
+                        if (ctx.formParam("aplicarTodos").equalsIgnoreCase("true")){
+                            impuesto.setAplicarATodos(true);
+                            impuesto = Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))), impuesto);
+                            Mercado.getInstance().addImpuestoToAllProducto(impuesto.getId(),Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
+
+                        }else{
+                            impuesto.setAplicarATodos(false);
+                            Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))),impuesto);
+                        }
+
 
 
                         ctx.redirect("/dashboard/impuesto");

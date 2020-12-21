@@ -33,6 +33,40 @@ public class ClienteServicios extends GestionadDB<Cliente>{
     }
 
 
+    public Usuario getClienteUsuario(String user, String id) {
+
+
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+
+//        Query query = em.createQuery("select c.idCliente from Vendedor v, Cliente c join fetch v.clientes where v.idVendedor.usuario = '"+user+"' group by c.idCliente");
+            Query query = session.createQuery("select c.idCliente from Vendedor v inner join v.clientes c where v.idVendedor.usuario = '"+user+"' " );
+
+            //query.setParameter("nombre", apellido+"%");
+            List<Usuario> lista = (ArrayList<Usuario>) query.getResultList();
+            Usuario usuario1 = (Usuario) query.getSingleResult();
+            for (Usuario usuario : lista) {
+                if (usuario.getUsuario().equalsIgnoreCase(id) || usuario.getDocumento().equalsIgnoreCase(id)){
+                    usuario1 = usuario;
+                    break;
+                }
+            }
+            System.out.println("Cantidad"+lista.size());
+            //query.setParameter("nombre", apellido+"%");
+
+
+
+            return (Usuario) usuario1;
+        } finally {
+            session.close();
+        }
+
+
+    }
+
     public ArrayList<Usuario> listaCliente(String user) {
 
 

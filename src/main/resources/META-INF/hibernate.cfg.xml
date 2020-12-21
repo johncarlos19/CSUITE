@@ -18,7 +18,7 @@
 
         <property name="hibernate.archive.autodetection">class,hbm</property>
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">100</property>
+        <property name="connection.pool_size">20</property>
 
 
         <!-- Disable the second-level cache  -->
@@ -34,8 +34,8 @@
         <mapping class="csuite.mvc.entidades.ProductoComprado"/>
         <mapping class="csuite.mvc.entidades.Usuario"/>
         <mapping class="csuite.mvc.entidades.VentasProductos"/>
-        <mapping class="csuite.mvc.entidades.CarroCompra_Producto"/>
-        <mapping class="csuite.mvc.entidades.CarrocompraProductoId"/>
+        <mapping class="csuite.mvc.entidades.ImpuestoProductoEnVenta"/>
+        <mapping class="csuite.mvc.entidades.ImpuestoProductoEnVentaId"/>
         <mapping class="csuite.mvc.entidades.Foto"/>
         <mapping class="csuite.mvc.entidades.Comentario"/>
         <mapping class="csuite.mvc.entidades.Vendedor"/>
@@ -87,8 +87,8 @@
 <!--    <mapping class="csuite.mvc.entidades.ProductoComprado"/>-->
 <!--    <mapping class="csuite.mvc.entidades.Usuario"/>-->
 <!--    <mapping class="csuite.mvc.entidades.VentasProductos"/>-->
-<!--    <mapping class="csuite.mvc.entidades.CarroCompra_Producto"/>-->
-<!--    <mapping class="csuite.mvc.entidades.CarrocompraProductoId"/>-->
+<!--    <mapping class="csuite.mvc.entidades.ImpuestoProductoEnVenta"/>-->
+<!--    <mapping class="csuite.mvc.entidades.ImpuestoProductoEnVentaId"/>-->
 <!--    <mapping class="csuite.mvc.entidades.Foto"/>-->
 <!--    <mapping class="csuite.mvc.entidades.Comentario"/>-->
 <!--    <mapping class="csuite.mvc.entidades.Vendedor"/>-->

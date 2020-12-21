@@ -476,6 +476,7 @@ CUERPO DOCUMENTO
                             <th>Categoría</th>
                             <th>Precio de compra</th>
                             <th>Precio de venta</th>
+                            <th>Precio de lista</th>
                             <th>Stock</th>
                             <th>Disponible</th>
                             <th>Acciones</th>
@@ -1440,7 +1441,13 @@ CUERPO DOCUMENTO
 <script src="../dashboardPlantilla/js/clientes.js"></script>
 <script src="../dashboardPlantilla/js/ventas.js"></script>
 <script src="../dashboardPlantilla/js/reportes.js"></script>
-
+<script>
+    $(document).ready(function(){
+        reloadTabla();
+        setTimeout(alertaTime,timeSession);
+        // setTimeout(alertaTime,timeSession);
+    });
+</script>
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async="" defer="" src="./CashSuite App_files/7875273.js(2).download"></script>
 <!-- End of HubSpot Embed Code -->

@@ -46,8 +46,9 @@ worker.onmessage = function (e) { //recuperando la información
 				"Codigo": obj[key].codigo_local,
 				"Descripcion":  obj[key].descripcion,
 				"Categoria":     obj[key].categorias,
-				"Precio de compra":   obj[key].precioCompra,
-				"Precio de venta":     obj[key].precioVenta,
+				"Precio de compra":   (Math.round(obj[key].precioCompra * 100) / 100).toFixed(2),
+				"Precio de venta":     (Math.round(obj[key].precioVenta * 100) / 100).toFixed(2),
+				"Precio de lista":     (Math.round(obj[key].precioLista * 100) / 100).toFixed(2),
 				"Stock":     sto,
 				"Disponible":     obj[key].disponible,
 				"Acciones":     "<div class='btn-group' style = ' "+document.getElementById("inventa").value+"'><button class='btn btn-warning btnEditarProducto' idproducto='"+obj[key].id+"'  data-toggle='modal' data-target=''#modalEditarProducto'><i  class='fa fa-eye'></i></button> <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
@@ -110,6 +111,7 @@ worker.onmessage = function (e) { //recuperando la información
 				{"data": "Categoria"},
 				{"data": "Precio de compra"},
 				{"data": "Precio de venta"},
+				{"data": "Precio de lista"},
 				{"data": "Stock"},
 				{"data": "Disponible"},
 				{"data": "Acciones"}
@@ -150,6 +152,10 @@ worker.onmessage = function (e) { //recuperando la información
 	if(e.data.cmd === 'time'){
 		renovo = true;
 		setTimeout(alertaTime,e.data.data - (1500*60));
+	}
+	if(e.data.cmd === 'timeout'){
+		preciono = false;
+		alertLogout();
 	}
 
 
@@ -253,10 +259,7 @@ var preciono = false;
 
 
 
-$(document).ready(function(){
-	reloadTabla();
-	// setTimeout(alertaTime,timeSession);
-});
+
 function extendTime(){
 	preciono = true;
 	worker.postMessage({'cmd': 'extendSession'});
