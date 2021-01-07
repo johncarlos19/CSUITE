@@ -3,7 +3,7 @@
  * que simplifica la llamada vía el objeto XMLHttpRequest.
  */
 //importando el script
-importScripts('/js/axios.min.js'); // JQuery trabaja con el DOM no puede ser utilizada
+importScripts('../js/axios.min.js'); // JQuery trabaja con el DOM no puede ser utilizada
 // ver en https://github.com/axios/axios
 
 //eventos recuperados entre la ventana principal y el worker.
@@ -117,6 +117,76 @@ this.addEventListener('message', function(e) {
                     // always executed
                 });
             break;
+        case 'createFactura':
+
+            axios.post('/api/Factura/crear', data.id)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found"){
+                            console.log("Respuesta:"+response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'cliente', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'cliente', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+            case 'searchCliente':
+
+            axios.post('/api/Cliente/search', data.id)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found"){
+                            console.log("Respuesta:"+response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'cliente', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'cliente', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
         case 'extendSession':
             console.log("Buscando la extencion desde el servidor...");
 
@@ -135,7 +205,7 @@ this.addEventListener('message', function(e) {
                             return response.data;
                         }
                     } catch (error) {
-                        postMessage({'cmd': 'timeout'});
+                        postMessage({'cmd': 'time', 'data': response.data});
                         return response.data;
                         // expected output: ReferenceError: nonExistentFunction is not defined
                         // Note - error messages will vary depending on browser

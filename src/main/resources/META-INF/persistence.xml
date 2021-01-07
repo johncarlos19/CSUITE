@@ -24,6 +24,7 @@
         <class>csuite.mvc.entidades.FacturaCliente</class>
         <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
         <class>csuite.mvc.entidades.Impuesto</class>
+        <class>csuite.mvc.entidades.ImpuestoCliente</class>
         <class>csuite.mvc.entidades.Politica</class>
 
 
@@ -77,6 +78,7 @@
         <class>csuite.mvc.entidades.FacturaCliente</class>
         <class>csuite.mvc.entidades.FacturaClienteProductoVendido</class>
         <class>csuite.mvc.entidades.Impuesto</class>
+        <class>csuite.mvc.entidades.ImpuestoCliente</class>
         <class>csuite.mvc.entidades.Politica</class>
 
         <properties>
@@ -95,6 +97,10 @@
 <!--            />-->
             <!-- Indica como será la generación de las tablas en el motor-->
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
+<!--            <property-->
+<!--                    name="hibernate.connection.provider_disables_autocommit"-->
+<!--                    value="true"-->
+<!--            />-->
             <property name="javax.persistence.schema-generation.database.action" value="update"/>
 
 <!--            <property name="hibernate.hbm2ddl.auto" value="create-drop" /> &lt;!&ndash; create / create-drop / update &ndash;&gt;-->

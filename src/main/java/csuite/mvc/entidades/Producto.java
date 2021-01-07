@@ -51,8 +51,7 @@ public class Producto implements Serializable {
 //    private Set<Comentario> comentarios = new HashSet<Comentario>();
 //    @ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "productos")
 //    private List<Categoria> categorias = new ArrayList<Categoria>();
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL ,  orphanRemoval = true)
-    @JoinColumn(name="idProducto")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idProducto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FacturaClienteProductoVendido>  facturaClienteProductoVendidos= new ArrayList<FacturaClienteProductoVendido>();
 
 
@@ -104,7 +103,7 @@ public class Producto implements Serializable {
             precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) productoEnVenta.getPrecioVenta());
 
         }
-        return new ProductoJSON(
+        ProductoJSON productoJSON = new ProductoJSON(
                 this.getId(),
                 this.getNombre(),
                 this.getDescripcion(),
@@ -123,6 +122,13 @@ public class Producto implements Serializable {
                 this.getMimeType(),
                 this.getFotoBase64()
         );
+        productoJSON.setImpuestoClientes(productoEnVenta.getImpuestoCliente());
+        return productoJSON;
+    }
+
+    public FacturaClienteProductoVendido addFacturaClienteProductoVendido(FacturaClienteProductoVendido facturaClienteProductoVendido){
+        facturaClienteProductoVendido.setIdProducto(this);
+        return facturaClienteProductoVendido;
     }
 
 
@@ -140,7 +146,7 @@ public class Producto implements Serializable {
         productoEnVenta = (ProductoEnVenta) new ProductoEnVentaServicios().editar(productoEnVenta);
         productoEnVenta.setCantMaxPorVenta(-1);
         productoEnVenta.setPrecioCompra(almacen.getCosto());
-        productoEnVenta.setPrecioVenta(almacen.getPrecioVentaFutura());
+//        productoEnVenta.setPrecioVenta(almacen.getPrecioVentaFutura());
 //        productoEnVenta.setDescuentoPorciento(0);
         productoEnVenta.addProductoStock(almacen.getProductoAgregado());
 
@@ -172,16 +178,16 @@ public class Producto implements Serializable {
             this.almacenList.add(almacen);
 
             return almacen;
-        }else if(productoEnVenta.getIdAlmacen().getDisponible()!=0){
+        }else if(productoEnVenta.getStock()!=0){
 
             productoEnVenta.addProductoStock(almacen.getProductoAgregado());
 
-            almacen= (Almacen) AlmacenServicios.getInstancia().createAndReturnObjectWithUniqueId(almacen);
+//            almacen= (Almacen) AlmacenServicios.getInstancia().createAndReturnObjectWithUniqueId(almacen);
 
             this.almacenList.add(almacen);
             return almacen;
 
-       }else if(productoEnVenta.getIdAlmacen().getDisponible()==0){
+       }else if(productoEnVenta.getStock()==0){
 
 
             almacen= (Almacen) AlmacenServicios.getInstancia().crear(almacen);

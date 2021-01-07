@@ -21,8 +21,8 @@ public class Impuesto implements Serializable {
     private boolean aplicarATodos = false;
     private boolean utilizar = true;
 
-    @ManyToMany(cascade =  CascadeType.ALL , mappedBy = "impuestos",fetch = FetchType.LAZY)
-    private List<FacturaCliente> facturaClientes = new ArrayList<FacturaCliente>();
+//    @ManyToMany(cascade =  CascadeType.ALL , mappedBy = "impuestos",fetch = FetchType.LAZY)
+//    private List<FacturaCliente> facturaClientes = new ArrayList<FacturaCliente>();
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "idImpuesto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImpuestoProductoEnVenta> impuestoProductoEnVentas = new ArrayList<ImpuestoProductoEnVenta>();
 
@@ -122,13 +122,13 @@ public class Impuesto implements Serializable {
         this.aplicarATodos = aplicarATodos;
     }
 
-    public List<FacturaCliente> getFacturaClientes() {
-        return facturaClientes;
-    }
-
-    public void setFacturaClientes(List<FacturaCliente> facturaClientes) {
-        this.facturaClientes = facturaClientes;
-    }
+//    public List<FacturaCliente> getFacturaClientes() {
+//        return facturaClientes;
+//    }
+//
+//    public void setFacturaClientes(List<FacturaCliente> facturaClientes) {
+//        this.facturaClientes = facturaClientes;
+//    }
 
     public BigDecimal getValorSumandoExtraBig(){
         if (operacion.equalsIgnoreCase("Porciento")){

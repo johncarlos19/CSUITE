@@ -1,10 +1,11 @@
 package csuite.mvc.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import csuite.mvc.jsonObject.ProductoJSON;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class FacturaClienteProductoVendido implements Serializable {
@@ -16,8 +17,101 @@ public class FacturaClienteProductoVendido implements Serializable {
     private float precioVenta;
     private float precioCosto;
     private float impuestoTotal;
+    @ManyToOne()
+//    @MapsId("idImpuesto")
+    @JoinColumn(name = "idFacturaCliente")
+    private FacturaCliente idFacturaCliente;
+
+
+    @ManyToOne
+//    @MapsId("idProductoEnVenta")
+    @JoinColumn(name = "idProducto")
+    private Producto idProducto;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,mappedBy = "idFacturaClienteProductoVendido",  orphanRemoval = true)
+    private List<ImpuestoCliente> impuestoProducto= new ArrayList<ImpuestoCliente>();
 
     public FacturaClienteProductoVendido() {
+    }
+
+    public float precioLista(){
+        return precioVenta+impuestoTotal;
+    }
+    public ProductoJSON getProductoJSON(){
+        ProductoJSON productoJSON = null;
+        List<ImpuestoCliente> clienteList1 = new ArrayList<ImpuestoCliente>();
+        float descuento = 0;
+        for (ImpuestoCliente impuestoCliente : impuestoProducto) {
+            ImpuestoCliente aux = new ImpuestoCliente();
+            aux.setNombre(impuestoCliente.getNombre());
+            aux.setOperacion(impuestoCliente.getOperacion());
+            aux.setValorSumandoExtra(impuestoCliente.getValorSumandoExtra());
+            aux.setId(impuestoCliente.getId());
+            descuento += aux.getDescuento();
+            clienteList1.add(aux);
+        }
+        productoJSON = new ProductoJSON(
+                id,
+                idProducto.getNombre(),
+                idProducto.getDescripcion(),
+                idProducto.getCodigo_local(),
+                0,
+                true,
+                idProducto.getCategoria(),
+                cantidad,
+                precioVenta,
+                precioCosto,
+                idProducto.getProductoEnVenta().getCantMaxPorVenta(),
+                descuento,
+                impuestoTotal,
+                precioLista(),
+                null,
+                null,
+                null
+
+
+        );
+        productoJSON.setImpuestoClientes(clienteList1);
+
+        return productoJSON;
+    }
+
+
+    public void addProducto(long cant){
+        this.cantidad +=cant;
+    }
+    public void discountProducto(long cant){
+        this.cantidad -=cant;
+    }
+
+    public FacturaCliente getIdFacturaCliente() {
+        return idFacturaCliente;
+    }
+
+    public void setIdFacturaCliente(FacturaCliente idFacturaCliente) {
+        this.idFacturaCliente = idFacturaCliente;
+    }
+
+    public Producto getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Producto idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public List<ImpuestoCliente> getImpuestoProducto() {
+        return impuestoProducto;
+    }
+
+    public void setImpuestoProducto(List<ImpuestoCliente> impuestoProducto) {
+        this.impuestoProducto = impuestoProducto;
+    }
+    public void addImpuestoProducto(List<ImpuestoCliente> impuestoProducto) {
+        for (ImpuestoCliente impuestoCliente : impuestoProducto) {
+            impuestoCliente.setIdFacturaClienteProductoVendido(this);
+            this.impuestoProducto.add(impuestoCliente);
+        }
+
     }
 
     public long getId() {

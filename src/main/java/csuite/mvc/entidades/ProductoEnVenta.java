@@ -1,6 +1,7 @@
 package csuite.mvc.entidades;
 
 import csuite.mvc.jsonObject.ProductoJSON;
+import csuite.mvc.servicios.ImpuestoClienteServicios;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -50,9 +51,37 @@ public class ProductoEnVenta implements Serializable {
     public Almacen getIdAlmacen() {
         return idAlmacen;
     }
+    public float getImpuestoTotal() {
+        float impuestoTotal = 0;
+        for (ImpuestoProductoEnVenta impuesto : impuestoProductoEnVentas
+        ){
+
+            impuestoTotal += impuesto.getIdImpuesto().getPrecioNeto((double) precioVenta);
+
+        }
+        return impuestoTotal;
+    }
+
+    public List<ImpuestoCliente> getImpuestoCliente(){
+        List<ImpuestoCliente> impuestoClientes = new ArrayList<ImpuestoCliente>();
+        for (ImpuestoProductoEnVenta auxe : impuestoProductoEnVentas) {
+
+            ImpuestoCliente aux = new ImpuestoCliente();
+            aux.setNombre(auxe.getIdImpuesto().getNombre());
+            aux.setOperacion(auxe.getIdImpuesto().getOperacion());
+            aux.setValorSumandoExtra(auxe.getIdImpuesto().getPrecioNeto((double) precioVenta));
+//            aux = (ImpuestoCliente) ImpuestoClienteServicios.getInstancia().crear(aux);
+            impuestoClientes.add(aux);
+        }
+        return impuestoClientes;
+    }
 
     public void addProductoStock(long prod){
         stock+=prod;
+    }
+
+    public void discountProductoStock(long prod){
+        stock-=prod;
     }
 
     public void setIdAlmacen(Almacen idAlmacen) {
@@ -103,7 +132,7 @@ public class ProductoEnVenta implements Serializable {
     public ProductoJSON getProductoJSON(){
         float descuentoPorciento = 0;
         float impu = 0;
-        float precioneto = 0;
+        float precioneto = precioVenta;
         for (ImpuestoProductoEnVenta impuesto : impuestoProductoEnVentas
         ){
             descuentoPorciento += impuesto.getIdImpuesto().getDescuento((double) precioVenta);

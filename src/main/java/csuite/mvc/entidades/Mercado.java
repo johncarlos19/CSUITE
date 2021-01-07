@@ -1,6 +1,5 @@
 package csuite.mvc.entidades;
 
-import  csuite.mvc.entidades.*;
 import csuite.mvc.jsonObject.ProductoJSON;
 import csuite.mvc.servicios.*;
 import io.jsonwebtoken.Claims;
@@ -13,14 +12,14 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Mercado {
-//    private static ProductoServicios productoServicios = new ProductoServicios();
+    //    private static ProductoServicios productoServicios = new ProductoServicios();
 //    private static UsuarioServicios usuarioServicios = new UsuarioServicios();
 //    private static VentasProductosServicios ventasProductosServicios = new VentasProductosServicios();
 //    private static CarroCompraServicios carroCompraServicios = new CarroCompraServicios();
@@ -28,8 +27,9 @@ public class Mercado {
     private static Mercado mercado;
     private AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
     private AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
-    private ArrayList<Login>  logins = new ArrayList<Login>();
+    private ArrayList<Login> logins = new ArrayList<Login>();
     private long timeSessionMinute = 5;
+    public  List<VentasSession> listaSseUsuario = new ArrayList<VentasSession>();
 
     public Mercado() {
     }
@@ -43,14 +43,34 @@ public class Mercado {
     public void loadDataBase() throws UnsupportedEncodingException {
         userEncryptor.setPassword("admin");
         passwordEncryptor.setPassword("admin");
+//        FacturaCliente facturaCliente = new FacturaCliente();
+//        facturaCliente.setIdQuienLoRealizo("admin");
+//        FacturaClienteServicios.getInstancia().crearFacturaCliente(facturaCliente,"admin","CLI-000001");
+
+//        try {
+            if (verificar_user("admin", "admin") != null) {
+//                ImpuestoClienteServicios.getInstancia().ListaImpuestoFacturaCliente("FAC-00000003");
+//                discountProductoInFactura("FAC-00000003", 1, 21);
+                addProductoInFactura("FAC-00000003", 1, 3);
+//                //agregando para la factura lista producto
+//                long id = 1;
+//                Producto va = (Producto) new ProductoServicios().find(id);
+//                Almacen almacen1 = new Almacen("Flores",10,0,250,600);
+//                almacen1 = va.addAlmacen(almacen1);
+//                va = (Producto) new ProductoServicios().editar(va);
+//
+//                facturarOnlyProducto(va, 13);
 
 
-        try {
-            if (verificar_user("admin", "admin") !=null) {
+//                for (Usuario usuario : UsuarioServicios.getInstancia().listaUsuario()) {
+//                    if (usuario.getPerfil().equalsIgnoreCase("Admin") && !usuario.getUsuario().equalsIgnoreCase("admin") ){
+//                        crearClienteAlContado(usuario.getUsuario());
+//                    }
+//                }
 
-                for (ProductoJSON productoJSON : ProductoServicios.getInstancia().getListaProductoJson("admin")) {
-                    System.out.println("\n\nImpuesto"+productoJSON.getImpuesto()+"precioNeto"+productoJSON.getPrecioLista());
-                }
+//                for (ProductoJSON productoJSON : ProductoServicios.getInstancia().getListaProductoJson("admin")) {
+//                    System.out.println("\n\nImpuesto"+productoJSON.getImpuesto()+"precioNeto"+productoJSON.getPrecioLista());
+//                }
 
 //                Usuario usuario = new Usuario("admin", "Admin");
 //                usuario.setEmail("admin@cashsuite.com");
@@ -91,29 +111,58 @@ public class Mercado {
 //                va = (Producto) new ProductoServicios().editar(va);
 
 
-
-
             }
-        } catch (NullPointerException e) {
-            Usuario usuario = new Usuario("admin", "Admin");
-            usuario.setEmail("admin@cashsuite.com");
-            usuario.setPerfil("Admin");
-            usuario.setMunicipio("Moca");
-            usuario.setDireccion("Paso de moca");
-            usuario.setTelefono("5454454");
+//        } catch (NullPointerException e) {
+//            runMuestra();
+//        }
+
+
+    }
+
+    public  List<VentasSession> getListaSseUsuario() {
+        return listaSseUsuario;
+    }
+    public  void addListaSseUsuario(VentasSession ventasSession) {
+        this.listaSseUsuario.add(ventasSession);
+    }
+
+    public  void setListaSseUsuario(List<VentasSession> listaSseUsuario) {
+        this.listaSseUsuario = listaSseUsuario;
+    }
+    public void borrarSessionSSe(String id){
+        int borrar = -1;
+        for (int i = 0; i < listaSseUsuario.size(); i++) {
+            if (id.equalsIgnoreCase(listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId())){
+                borrar = i;
+                break;
+            }
+        }
+        if (borrar!=-1){
+            listaSseUsuario.remove(borrar);
+            System.out.println("\n\nelimino");
+        }
+    }
+
+    public void runMuestra() throws UnsupportedEncodingException {
+        Usuario usuario = new Usuario("admin", "Admin");
+        usuario.setEmail("admin@cashsuite.com");
+        usuario.setPerfil("Admin");
+        usuario.setMunicipio("Moca");
+        usuario.setDireccion("Paso de moca");
+        usuario.setTelefono("5454454");
 //            Usuario aux = new UsuarioServicios().crearUsuario(usuario);
-            Usuario aux = RegistrarVendedor(usuario,"admin@cashsuite.com","admin");
-            Vendedor otro =VendedorServicios.getInstancia().getVendedor(aux.getUsuario());
+        Usuario aux = RegistrarVendedor(usuario, "admin@cashsuite.com", "admin");
+        Vendedor otro = VendedorServicios.getInstancia().getVendedor(aux.getUsuario());
 
 
-            Producto producto = new Producto();
-            producto.setNombre("Huevo");
-            producto.setDescripcion("Son bueno");
-            producto.setCodigo_local("144533");
-            Producto producto1 = new Producto();
-            producto1.setNombre("Pan");
-            producto1.setDescripcion("Son malo");
-            producto1.setCodigo_local("1445833");
+        Producto producto = new Producto();
+        producto.setNombre("Huevo");
+        producto.setDescripcion("Son bueno");
+        producto.setCodigo_local("144533");
+        Producto producto1 = new Producto();
+        producto1.setNombre("Pan");
+        producto1.setDescripcion("Son malo");
+        producto1.setCodigo_local("1445833");
 
 
 //            Vendedor vendedor = new Vendedor();
@@ -123,179 +172,155 @@ public class Mercado {
 //            VendedorServicios.getInstancia().crear(otro);
 //            UsuarioServicios.getInstancia().editar(aux);
 
-            producto.CrearProductoVenta();
-            producto1.CrearProductoVenta();
-            producto = ProductoServicios.getInstancia().crearProducto(producto);
-            producto1 = ProductoServicios.getInstancia().crearProducto(producto1);
-            otro.addProducto(producto);
-            otro.addProducto(producto1);
+        producto.CrearProductoVenta();
+        producto1.CrearProductoVenta();
+        producto = ProductoServicios.getInstancia().crearProducto(producto);
+        producto1 = ProductoServicios.getInstancia().crearProducto(producto1);
+        otro.addProducto(producto);
+        otro.addProducto(producto1);
 
-            Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoList().get(0);
+        Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoList().get(0);
 
-            Almacen almacen = new Almacen("Don Lindo",10,10,200,500);
-            va.addAlmacen(almacen);
-            va = (Producto) new ProductoServicios().editar(va);
+        Almacen almacen = new Almacen("Don Lindo", 10, 10, 200, 500);
+        va.addAlmacen(almacen);
+        va = (Producto) new ProductoServicios().editar(va);
 
-            va = (Producto) new ProductoServicios().find(va.getId());
-            Almacen almacen1 = new Almacen("Endy",10,1,300,600);
-            almacen1 = va.addAlmacen(almacen1);
-             new ProductoServicios().update(va);
+        va = (Producto) new ProductoServicios().find(va.getId());
+        Almacen almacen1 = new Almacen("Endy", 10, 0, 300, 600);
+        almacen1 = va.addAlmacen(almacen1);
+        new ProductoServicios().update(va);
+        va.addOnlyList(almacen1);
 
-            va.addOnlyList(almacen1);
-            va = (Producto) new ProductoServicios().find(va.getId());
-            otro = VendedorServicios.getInstancia().getVendedor(otro.getIdVendedor().getUsuario());
-            Categoria categoria = new Categoria();
-            categoria.setDescripcion("Comida");
-            Categoria categoria1 = new Categoria();
-            categoria1.setDescripcion("Electronico");
-            categoria = (Categoria) CategoriaServicios.getInstancia().crear(categoria);
-            categoria1 = (Categoria) CategoriaServicios.getInstancia().crear(categoria1);
-            otro.addCategoria(categoria);
-            otro.addCategoria(categoria1);
-            otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
-
-
+        va = (Producto) new ProductoServicios().find(va.getId());
+        otro = VendedorServicios.getInstancia().getVendedor(otro.getIdVendedor().getUsuario());
+        Categoria categoria = new Categoria();
+        categoria.setDescripcion("Comida");
+        Categoria categoria1 = new Categoria();
+        categoria1.setDescripcion("Electronico");
+        categoria = (Categoria) CategoriaServicios.getInstancia().crear(categoria);
+        categoria1 = (Categoria) CategoriaServicios.getInstancia().crear(categoria1);
+        otro.addCategoria(categoria);
+        otro.addCategoria(categoria1);
+        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
 
+        Usuario usuarioCliente = new Usuario();
+        usuarioCliente.setNombre("Juan");
+        usuarioCliente.setApellido("Perez");
+        usuarioCliente.setPerfil("Cliente");
+        usuarioCliente.setPais("Republica Dominicana");
+        usuarioCliente.setMunicipio("Moca");
+        usuarioCliente.setDireccion("Paso De Moca");
+        usuarioCliente.setTelefono("8095557456");
+        usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
+        System.out.println("\n\n\nusua" + usuarioCliente.getUsuario());
+        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+        Cliente cliente = new Cliente();
+        cliente.setIdClienteLocal("sdsd");
+        cliente = usuarioCliente.addCliente(cliente);
+        cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
+        usuarioCliente = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente);
 
-            Usuario usuarioCliente = new Usuario();
-            usuarioCliente.setNombre("Juan");
-            usuarioCliente.setApellido("Perez");
-            usuarioCliente.setPerfil("Cliente");
-            usuarioCliente.setPais("Republica Dominicana");
-            usuarioCliente.setMunicipio("Moca");
-            usuarioCliente.setDireccion("Paso De Moca");
-            usuarioCliente.setTelefono("8095557456");
-            usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
-            System.out.println("\n\n\nusua"+usuarioCliente.getUsuario());
-            usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
-            Cliente cliente = new Cliente();
-            cliente.setIdClienteLocal("sdsd");
-            cliente = usuarioCliente.addCliente(cliente);
-            cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
-            usuarioCliente = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente);
+        otro.addCliente(cliente);
+        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
-            otro.addCliente(cliente);
-            otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
+        Impuesto impuesto = new Impuesto("18% De ley", "Porciento", 18);
+        impuesto.setAplicarATodos(true);
+        impuesto = (Impuesto) ImpuestoServicios.getInstancia().crear(impuesto);
+        otro.addImpuesto(impuesto);
+        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
 
-            Impuesto impuesto = new Impuesto("18% De ley","Porciento",18);
-            impuesto.setAplicarATodos(true);
-            impuesto = (Impuesto) ImpuestoServicios.getInstancia().crear(impuesto);
-            otro.addImpuesto(impuesto);
-            otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
-
-            long f = 1;
-            impuesto = ImpuestoServicios.getInstancia().getImpuesto(impuesto.getId());
-            for (ProductoEnVenta productoEnVenta: ProductoEnVentaServicios.getInstancia().listaVentaProducto(0,"admin")
-            ) {
+        long f = 1;
+        impuesto = ImpuestoServicios.getInstancia().getImpuesto(impuesto.getId());
+        for (ProductoEnVenta productoEnVenta : ProductoEnVentaServicios.getInstancia().listaVentaProducto(0, "admin")
+        ) {
 //                ImpuestoProductoEnVenta impuestoProductoEnVenta = new ImpuestoProductoEnVenta(impuesto, productoEnVenta);
 //                ImpuestoProductoEnVentaServicios.getInstancia().crear(impuestoProductoEnVenta);
 //                impuesto.addProducto(productoEnVenta);
-                 productoEnVenta.addImpuesto(impuesto);
-                ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+            productoEnVenta.addImpuesto(impuesto);
+            ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
 //                ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
 
-            }
+        }
 //            ImpuestoServicios.getInstancia().editar(impuesto);
 
 
+        Usuario usuario1 = new Usuario("johncarlos1943", "John");
+        usuario1.setEmail("johncarlos1943@cashsuite.com");
+        usuario1.setPerfil("Admin");
+        Usuario aux1 = new UsuarioServicios().crearUsuario(usuario1);
+
+        Vendedor vendedor1 = new Vendedor();
+        vendedor1.setEmail("johncarlos1943@cashsuite.com");
+        vendedor1.setPassword(passwordEncryptor.encrypt("admin"));
+        Vendedor otro1 = aux1.addVendedor(vendedor1);
+        VendedorServicios.getInstancia().crear(otro1);
+        aux1 = (Usuario) UsuarioServicios.getInstancia().editar(aux1);
 
 
+        Usuario usuarioCliente1 = new Usuario();
+        usuarioCliente1.setNombre("Pedro");
+        usuarioCliente1.setApellido("Perez");
+        usuarioCliente1.setPerfil("Cliente");
+        usuarioCliente1.setPais("Republica Dominicana");
+        usuarioCliente1.setMunicipio("Moca");
+        usuarioCliente1.setDireccion("Paso 11De Moca");
+        usuarioCliente1.setTelefono("809525456");
+        usuarioCliente1 = (Usuario) new UsuarioServicios().crear(usuarioCliente1);
+        System.out.println("\n\n\nusua" + usuarioCliente1.getUsuario());
+        usuarioCliente1 = UsuarioServicios.getInstancia().find(usuarioCliente1.getUsuario());
+        Cliente cliente1 = new Cliente();
+        cliente1.setIdClienteLocal("oooo");
+        cliente1 = usuarioCliente1.addCliente(cliente1);
+        cliente1 = (Cliente) ClienteServicios.getInstancia().crear(cliente1);
+        usuarioCliente1 = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente1);
 
 
+        otro1.addCliente(cliente1);
+        otro1 = (Vendedor) VendedorServicios.getInstancia().editar(otro1);
+        Usuario empleado = new Usuario();
+        empleado.setNombre("Pepe");
+        empleado.setApellido("Puraz");
+        empleado.setPerfil("Empleado");
+        empleado.setPais("Republica Dominicana");
+        empleado.setMunicipio("Santiago");
+        empleado.setDireccion("Pasfffffe Moca");
+        empleado.setTelefono("80955401221");
+        empleado.setUsuario("lalameme");
+        empleado.setEmail("pepe.puraz@cashsuite.com");
+        registrarEmpleado("admin", empleado, "admin", 1);
 
 
+        Usuario empleadoLectura = new Usuario();
+        empleadoLectura.setNombre("Empleado");
+        empleadoLectura.setApellido("Solo Lectura");
+        empleadoLectura.setPerfil("Empleado");
+        empleadoLectura.setPais("Republica Dominicana");
+        empleadoLectura.setMunicipio("La vega");
+        empleadoLectura.setDireccion("vegano");
+        empleadoLectura.setTelefono("80955401221");
+        empleadoLectura.setUsuario("empleadoLectura");
+        empleadoLectura.setEmail("pepe.puraz@cashsuite.com");
+        registrarEmpleado("admin", empleadoLectura, "admin", 2);
+
+        System.out.println("\n\nEl dueno del empleado:" + EmpleadoServicios.getInstancia().getJefe("lalameme"));
 
 
-
-            Usuario usuario1 = new Usuario("johncarlos1943", "John");
-            usuario1.setEmail("johncarlos1943@cashsuite.com");
-            usuario1.setPerfil("Admin");
-            Usuario aux1 = new UsuarioServicios().crearUsuario(usuario1);
-
-            Vendedor vendedor1 = new Vendedor();
-            vendedor1.setEmail("johncarlos1943@cashsuite.com");
-            vendedor1.setPassword(passwordEncryptor.encrypt("admin"));
-            Vendedor otro1 = aux1.addVendedor(vendedor1);
-            VendedorServicios.getInstancia().crear(otro1);
-            aux1 = (Usuario) UsuarioServicios.getInstancia().editar(aux1);
+        //usuario de elias
 
 
+        Usuario usuario10 = new Usuario("eliasmarte", "Elias");
+        usuario10.setApellido("Marte");
+        usuario10.setEmail("eliasMarte@cashsuite.com");
+        usuario10.setPerfil("Admin");
+        Usuario aux123 = new UsuarioServicios().crearUsuario(usuario10);
 
-
-            Usuario usuarioCliente1 = new Usuario();
-            usuarioCliente1.setNombre("Pedro");
-            usuarioCliente1.setApellido("Perez");
-            usuarioCliente1.setPerfil("Cliente");
-            usuarioCliente1.setPais("Republica Dominicana");
-            usuarioCliente1.setMunicipio("Moca");
-            usuarioCliente1.setDireccion("Paso 11De Moca");
-            usuarioCliente1.setTelefono("809525456");
-            usuarioCliente1 = (Usuario) new UsuarioServicios().crear(usuarioCliente1);
-            System.out.println("\n\n\nusua"+usuarioCliente1.getUsuario());
-            usuarioCliente1 = UsuarioServicios.getInstancia().find(usuarioCliente1.getUsuario());
-            Cliente cliente1 = new Cliente();
-            cliente1.setIdClienteLocal("oooo");
-            cliente1 = usuarioCliente1.addCliente(cliente1);
-            cliente1 = (Cliente) ClienteServicios.getInstancia().crear(cliente1);
-            usuarioCliente1 = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente1);
-
-
-
-
-            otro1.addCliente(cliente1);
-            otro1 = (Vendedor) VendedorServicios.getInstancia().editar(otro1);
-            Usuario empleado = new Usuario();
-            empleado.setNombre("Pepe");
-            empleado.setApellido("Puraz");
-            empleado.setPerfil("Empleado");
-            empleado.setPais("Republica Dominicana");
-            empleado.setMunicipio("Santiago");
-            empleado.setDireccion("Pasfffffe Moca");
-            empleado.setTelefono("80955401221");
-            empleado.setUsuario("lalameme");
-            empleado.setEmail("pepe.puraz@cashsuite.com");
-            registrarEmpleado("admin",empleado,"admin",1);
-
-
-            Usuario empleadoLectura = new Usuario();
-            empleadoLectura.setNombre("Empleado");
-            empleadoLectura.setApellido("Solo Lectura");
-            empleadoLectura.setPerfil("Empleado");
-            empleadoLectura.setPais("Republica Dominicana");
-            empleadoLectura.setMunicipio("La vega");
-            empleadoLectura.setDireccion("vegano");
-            empleadoLectura.setTelefono("80955401221");
-            empleadoLectura.setUsuario("empleadoLectura");
-            empleadoLectura.setEmail("pepe.puraz@cashsuite.com");
-            registrarEmpleado("admin",empleadoLectura,"admin",2);
-
-            System.out.println("\n\nEl dueno del empleado:"+EmpleadoServicios.getInstancia().getJefe("lalameme"));
-
-
-
-
-
-
-            //usuario de elias
-
-
-
-
-
-
-            Usuario usuario10 = new Usuario("eliasmarte", "Elias");
-            usuario10.setApellido("Marte");
-            usuario10.setEmail("eliasMarte@cashsuite.com");
-            usuario10.setPerfil("Admin");
-            Usuario aux123 = new UsuarioServicios().crearUsuario(usuario10);
-
-            Vendedor vendedor123 = new Vendedor();
-            vendedor123.setEmail("eliasmarte@cashsuite.com");
-            vendedor123.setPassword(passwordEncryptor.encrypt("admin"));
-            Vendedor otro123 = aux123.addVendedor(vendedor123);
-            VendedorServicios.getInstancia().crear(otro123);
-            aux123 = (Usuario) UsuarioServicios.getInstancia().editar(aux123);
+        Vendedor vendedor123 = new Vendedor();
+        vendedor123.setEmail("eliasmarte@cashsuite.com");
+        vendedor123.setPassword(passwordEncryptor.encrypt("admin"));
+        Vendedor otro123 = aux123.addVendedor(vendedor123);
+        VendedorServicios.getInstancia().crear(otro123);
+        aux123 = (Usuario) UsuarioServicios.getInstancia().editar(aux123);
 
            /* Producto pp = new Producto("Pan", BigDecimal.valueOf(50.00).setScale(2));
             pp.setDescripcion("Bueno");
@@ -330,11 +355,149 @@ public class Mercado {
             Producto ddtd = new Producto("CC", BigDecimal.valueOf(500.00).setScale(2));
             ddtd.setDescripcion("Malo");
             new ProductoServicios().crearProducto(ddtd);*/
+    }
+    public ProductoJSON discountProductoInFactura(String idFactura, long idProducro, long cantidad) {
+        FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+        FacturaClienteProductoVendido facturaClienteProductoVendido = FacturaClienteProductoVendidoServicios.getInstancia().verifyProducto(idFactura, idProducro);
+        Producto producto = ProductoServicios.getInstancia().buscar(idProducro);
+        if (facturaClienteProductoVendido != null) {
+            if (facturaClienteProductoVendido.getCantidad() <= cantidad){
+                cantidad = facturaClienteProductoVendido.getCantidad();
+//                facturaClienteProductoVendido.discountProducto(cantidad);
+                facturaCliente.discountPrecioProducto(facturaClienteProductoVendido.getPrecioVenta()*cantidad);
+//            facturaCliente.discountPrecioNeto(facturaClienteProductoVendido.getImpuestoTotal()*cantidad);
+//                FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
+                facturaCliente.discountValueImpuesto(facturaClienteProductoVendido,cantidad);
+                facturaCliente.removeFacturaClienteProductoVendido(facturaClienteProductoVendido.getId());
+                FacturaClienteServicios.getInstancia().editar(facturaCliente);
+                producto.getProductoEnVenta().addProductoStock(cantidad);
+                producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+                return producto.getProductoJSON();
+            }else {
+//                facturaClienteProductoVendido.discountProducto(cantidad);
+                facturaCliente.discountPrecioProducto(facturaClienteProductoVendido.getPrecioVenta()*cantidad);
+//            facturaCliente.discountPrecioNeto(facturaClienteProductoVendido.getImpuestoTotal()*cantidad);
+//                FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
+                for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
+                    facturaCliente.getFacturaClienteProductoVendidos().get(i).discountProducto(cantidad);
+                    break;
+                }
+                facturaCliente.discountValueImpuesto(facturaClienteProductoVendido,cantidad);
+                FacturaClienteServicios.getInstancia().editar(facturaCliente);
+                producto.getProductoEnVenta().addProductoStock(cantidad);
+                producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+                return producto.getProductoJSON();
+            }
+
+        }else{
+            return producto.getProductoJSON();
+        }
+    }
+
+    public ProductoJSON addProductoInFactura(String idFactura, long idProducro, long cantidad) {
+        FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+        FacturaClienteProductoVendido facturaClienteProductoVendido = FacturaClienteProductoVendidoServicios.getInstancia().verifyProducto(idFactura, idProducro);
+        Producto producto = ProductoServicios.getInstancia().buscar(idProducro);
+        if (facturaClienteProductoVendido != null) {
+            System.out.println("\n\nproducto"+facturaCliente.getFacturaClienteProductoVendidos().get(0).getImpuestoProducto().get(0).getNombre());
+
+
+//            facturaClienteProductoVendido.addProducto(cantidad);
+            facturaCliente.addPrecioProducto(facturaClienteProductoVendido.getPrecioVenta()*cantidad);
+//            facturaCliente.addPrecioNeto(facturaClienteProductoVendido.getImpuestoTotal()*cantidad);
+//            FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
+            for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
+                facturaCliente.getFacturaClienteProductoVendidos().get(i).addProducto(cantidad);
+                break;
+            }
+            facturaCliente.addValueImpuesto(facturaClienteProductoVendido,cantidad);
+            FacturaClienteServicios.getInstancia().editar(facturaCliente);
+            producto.getProductoEnVenta().discountProductoStock(cantidad);
+            producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+
+            return producto.getProductoJSON();
+        } else {
+            facturaClienteProductoVendido = new FacturaClienteProductoVendido();
+            facturaClienteProductoVendido.setCantidad(cantidad);
+            facturaClienteProductoVendido.setPrecioCosto(producto.getProductoEnVenta().getPrecioCompra());
+            facturaClienteProductoVendido.setPrecioVenta(producto.getProductoEnVenta().getPrecioVenta());
+            facturaClienteProductoVendido.setImpuestoTotal(producto.getProductoEnVenta().getImpuestoTotal());
+            facturaClienteProductoVendido = (FacturaClienteProductoVendido) FacturaClienteProductoVendidoServicios.getInstancia().crear(facturaClienteProductoVendido);
+            facturaClienteProductoVendido.addImpuestoProducto(producto.getProductoEnVenta().getImpuestoCliente());
+//            facturaClienteProductoVendido = (FacturaClienteProductoVendido) FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
+
+            producto.getProductoEnVenta().discountProductoStock(cantidad);
+            producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+
+            facturaClienteProductoVendido = producto.addFacturaClienteProductoVendido(facturaClienteProductoVendido);
+            float pro = producto.getProductoEnVenta().getPrecioVenta()*cantidad;
+            facturaCliente.addPrecioProducto(pro);
+            facturaCliente.addFacturaClienteProductoVendido(facturaClienteProductoVendido);
+            FacturaClienteServicios.getInstancia().editar(facturaCliente);
+            return producto.getProductoJSON();
+
+
         }
 
 
     }
-    public void addImpuestoToOnlyProducto(long id, String user){
+
+    public void facturarOnlyProducto(Producto producto, long cantidad) {
+        long cantidadRemove = cantidad;
+        boolean encontro = false;
+        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().buscar(producto.getProductoEnVenta().getId());
+//        productoEnVenta.discountProductoStock(cantidad);
+        List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, producto.getId());
+        for (int i = lista.size() - 1; i > -1; i--) {
+            if (productoEnVenta.getIdAlmacen().getIdAlmacen() == lista.get(i).getIdAlmacen() || encontro == true) {
+                System.out.println("\n\nentro para cobrar" + i);
+                encontro = true;
+                if (i == 0) {
+                    cantidadRemove = lista.get(i).agregarProductoVendido(cantidadRemove);
+                    AlmacenServicios.getInstancia().editar(lista.get(i));
+                } else {
+                    while (cantidadRemove != 0) {
+                        if (i == -1) {
+                            break;
+                        }
+                        System.out.println("\n\nentro para 2" + lista.get(i).getDisponible());
+                        if (lista.get(i).getDisponible() >= cantidadRemove) {
+                            cantidadRemove = lista.get(i).agregarProductoVendido(cantidadRemove);
+                            if (cantidadRemove == 0) {
+
+                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                                lista.set(i, almacen);
+                                if (i > 0 && lista.get(i).getDisponible() == 0) {
+                                    productoEnVenta.setIdAlmacen(lista.get(i - 1));
+                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+                                } else {
+                                    productoEnVenta.setIdAlmacen(lista.get(i));
+                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+                                }
+                                break;
+                            } else {
+                                cantidadRemove = lista.get(i).agregarProductoVendido(cantidadRemove);
+                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                                lista.set(i, almacen);
+                            }
+                            i--;
+                        } else {
+                            cantidadRemove = lista.get(i).agregarProductoVendido(cantidadRemove);
+                            Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                            lista.set(i, almacen);
+                        }
+                        i--;
+
+                    }
+
+
+                }
+            }
+        }
+    }
+
+
+    public void addImpuestoToOnlyProducto(long id, String user) {
         ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().getVentaProducto(id, user);
         List<Impuesto> lista = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(user);
         for (Impuesto impuesto : lista) {
@@ -343,9 +506,10 @@ public class Mercado {
         ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
 
     }
-    public void addImpuestoToAllProducto(long id, String user){
+
+    public void addImpuestoToAllProducto(long id, String user) {
         Impuesto impuesto = ImpuestoServicios.getInstancia().getImpuesto(id);
-        for (ProductoEnVenta productoEnVenta: ProductoEnVentaServicios.getInstancia().listaVentaProducto(0,user)
+        for (ProductoEnVenta productoEnVenta : ProductoEnVentaServicios.getInstancia().listaVentaProducto(0, user)
         ) {
 //                ImpuestoProductoEnVenta impuestoProductoEnVenta = new ImpuestoProductoEnVenta(impuesto, productoEnVenta);
 //                ImpuestoProductoEnVentaServicios.getInstancia().crear(impuestoProductoEnVenta);
@@ -365,7 +529,7 @@ public class Mercado {
         this.timeSessionMinute = timeSessionMinute;
     }
 
-    public  ArrayList<Login> getLogins() {
+    public ArrayList<Login> getLogins() {
         return logins;
     }
 
@@ -432,12 +596,50 @@ public class Mercado {
         return usuario;
     }
 
-    public Empleado registrarEmpleado(String vendedor, Usuario usuarioEmpleado, String password, int acceso){
+    public void crearClienteAlContado(String userVendedor) throws UnsupportedEncodingException {
+
+        Usuario usuario = UsuarioServicios.getInstancia().getUsuario(userVendedor);
+        Vendedor otro = VendedorServicios.getInstancia().getVendedor(userVendedor);
+
+        Usuario usuarioCliente = new Usuario();
+        usuarioCliente.setNombre("Cliente Al Contado");
+        usuarioCliente.setApellido("");
+        usuarioCliente.setPerfil("Cliente");
+        try {
+            usuarioCliente.setPais(usuario.getPais());
+        } catch (Exception e) {
+            usuarioCliente.setPais("Republica Dominicana");
+
+        }
+        try {
+            usuarioCliente.setPais(usuario.getPais());
+        } catch (Exception e) {
+            usuarioCliente.setPais("Republica Dominicana");
+
+        }
+        usuarioCliente.setMunicipio(usuario.getMunicipio());
+        usuarioCliente.setDireccion(usuario.getDireccion());
+        usuarioCliente.setTelefono(usuario.getTelefono());
+        usuarioCliente.setDocumento("001");
+        usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
+        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+        Cliente cliente = new Cliente();
+        cliente.setIdClienteLocal("001");
+        cliente = usuarioCliente.addCliente(cliente);
+        cliente = (Cliente) ClienteServicios.getInstancia().crear(cliente);
+        usuarioCliente = (Usuario) UsuarioServicios.getInstancia().editar(usuarioCliente);
+        otro = VendedorServicios.getInstancia().getVendedor(otro.getIdVendedor().getUsuario());
+        otro.addCliente(cliente);
+        otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
+    }
+
+
+    public Empleado registrarEmpleado(String vendedor, Usuario usuarioEmpleado, String password, int acceso) {
         Vendedor otro = VendedorServicios.getInstancia().getVendedor(vendedor);
 
 
-        usuarioEmpleado = (Usuario) new UsuarioServicios().crearUsuariEmpleado(usuarioEmpleado,acceso);
-        System.out.println("\n\n\nusua"+usuarioEmpleado.getUsuario());
+        usuarioEmpleado = (Usuario) new UsuarioServicios().crearUsuariEmpleado(usuarioEmpleado, acceso);
+        System.out.println("\n\n\nusua" + usuarioEmpleado.getUsuario());
         usuarioEmpleado = UsuarioServicios.getInstancia().find(usuarioEmpleado.getUsuario());
         Empleado empleado = new Empleado();
         empleado.setPassword(passwordEncryptor.encrypt(password));
@@ -454,7 +656,7 @@ public class Mercado {
 
     }
 
-    public void addCategoria(String user, String catego){
+    public void addCategoria(String user, String catego) {
         Vendedor otro = null;
         otro = VendedorServicios.getInstancia().getVendedor(user);
         Categoria categoria = new Categoria();
@@ -463,7 +665,8 @@ public class Mercado {
         otro.addCategoria(categoria);
         otro = (Vendedor) VendedorServicios.getInstancia().editar(otro);
     }
-    public Impuesto addImpuesto(String user, Impuesto impuesto){
+
+    public Impuesto addImpuesto(String user, Impuesto impuesto) {
         Vendedor otro = null;
         otro = VendedorServicios.getInstancia().getVendedor(user);
 
@@ -473,13 +676,13 @@ public class Mercado {
         return impuesto;
     }
 
-    public String tipoUsuario(String user){
+    public String tipoUsuario(String user) {
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         return aux.getPerfil();
     }
 
 
-    public List<Politica> getListaPolitica(String perfil, int acceso, Usuario use){
+    public List<Politica> getListaPolitica(String perfil, int acceso, Usuario use) {
         List<Politica> politicaList = new ArrayList<Politica>();
         Politica aux = null;
         Politica aux1 = null;
@@ -493,40 +696,38 @@ public class Mercado {
         Politica aux9 = null;
         Politica aux10 = null;
 
-        switch (perfil){
+        switch (perfil) {
             case "Admin":
-                aux = new Politica("inventarioAdd",true);
+                aux = new Politica("inventarioAdd", true);
                 aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
                 politicaList.add(aux);
-                aux1 = new Politica("inventarioEdit",true);
+                aux1 = new Politica("inventarioEdit", true);
                 aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
                 politicaList.add(aux1);
-                aux3 = new Politica("clienteAdd",true);
+                aux3 = new Politica("clienteAdd", true);
                 aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
                 politicaList.add(aux3);
-                aux4 = new Politica("clienteEdit",true);
+                aux4 = new Politica("clienteEdit", true);
                 aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
                 politicaList.add(aux4);
-                aux5 = new Politica("impuestoAdd",true);
+                aux5 = new Politica("impuestoAdd", true);
                 aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
                 politicaList.add(aux5);
-                aux6 = new Politica("impuestoEdit",true);
+                aux6 = new Politica("impuestoEdit", true);
                 aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
                 politicaList.add(aux6);
-                aux7 = new Politica("categoriaAdd",true);
+                aux7 = new Politica("categoriaAdd", true);
                 aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
                 politicaList.add(aux7);
-                aux8 = new Politica("categoriaEdit",true);
+                aux8 = new Politica("categoriaEdit", true);
                 aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
                 politicaList.add(aux8);
-                aux9 = new Politica("empleadoAdd",true);
+                aux9 = new Politica("empleadoAdd", true);
                 aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
                 politicaList.add(aux9);
-                aux10 = new Politica("empleadoEdit",true);
+                aux10 = new Politica("empleadoEdit", true);
                 aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
                 politicaList.add(aux10);
-
-
 
 
                 break;
@@ -534,66 +735,66 @@ public class Mercado {
             case "Empleado":
                 switch (acceso) {
                     case 2:
-                        aux = new Politica("inventarioAdd",false);
+                        aux = new Politica("inventarioAdd", false);
                         aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
                         politicaList.add(aux);
-                        aux1 = new Politica("inventarioEdit",false);
+                        aux1 = new Politica("inventarioEdit", false);
                         aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
                         politicaList.add(aux1);
-                        aux3 = new Politica("clienteAdd",false);
+                        aux3 = new Politica("clienteAdd", false);
                         aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
                         politicaList.add(aux3);
-                        aux4 = new Politica("clienteEdit",false);
+                        aux4 = new Politica("clienteEdit", false);
                         aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
                         politicaList.add(aux4);
-                        aux5 = new Politica("impuestoAdd",false);
+                        aux5 = new Politica("impuestoAdd", false);
                         aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
                         politicaList.add(aux5);
-                        aux6 = new Politica("impuestoEdit",false);
+                        aux6 = new Politica("impuestoEdit", false);
                         aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
                         politicaList.add(aux6);
-                        aux7 = new Politica("categoriaAdd",false);
+                        aux7 = new Politica("categoriaAdd", false);
                         aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
                         politicaList.add(aux7);
-                        aux8 = new Politica("categoriaEdit",false);
+                        aux8 = new Politica("categoriaEdit", false);
                         aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
                         politicaList.add(aux8);
-                        aux9 = new Politica("empleadoAdd",false);
+                        aux9 = new Politica("empleadoAdd", false);
                         aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
                         politicaList.add(aux9);
-                        aux10 = new Politica("empleadoEdit",false);
+                        aux10 = new Politica("empleadoEdit", false);
                         aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
                         politicaList.add(aux10);
                         break;
                     case 1:
-                        aux = new Politica("inventarioAdd",true);
+                        aux = new Politica("inventarioAdd", true);
                         aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
                         politicaList.add(aux);
-                        aux1 = new Politica("inventarioEdit",true);
+                        aux1 = new Politica("inventarioEdit", true);
                         aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
                         politicaList.add(aux1);
-                        aux3 = new Politica("clienteAdd",true);
+                        aux3 = new Politica("clienteAdd", true);
                         aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
                         politicaList.add(aux3);
-                        aux4 = new Politica("clienteEdit",true);
+                        aux4 = new Politica("clienteEdit", true);
                         aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
                         politicaList.add(aux4);
-                        aux5 = new Politica("impuestoAdd",true);
+                        aux5 = new Politica("impuestoAdd", true);
                         aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
                         politicaList.add(aux5);
-                        aux6 = new Politica("impuestoEdit",true);
+                        aux6 = new Politica("impuestoEdit", true);
                         aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
                         politicaList.add(aux6);
-                        aux7 = new Politica("categoriaAdd",true);
+                        aux7 = new Politica("categoriaAdd", true);
                         aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
                         politicaList.add(aux7);
-                        aux8 = new Politica("categoriaEdit",true);
+                        aux8 = new Politica("categoriaEdit", true);
                         aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
                         politicaList.add(aux8);
-                        aux9 = new Politica("empleadoAdd",true);
+                        aux9 = new Politica("empleadoAdd", true);
                         aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
                         politicaList.add(aux9);
-                        aux10 = new Politica("empleadoEdit",true);
+                        aux10 = new Politica("empleadoEdit", true);
                         aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
                         politicaList.add(aux10);
                         break;
@@ -602,38 +803,36 @@ public class Mercado {
                 }
 
 
-
-
                 break;
             case "Vendedor":
-                aux = new Politica("inventarioAdd",true);
+                aux = new Politica("inventarioAdd", true);
                 aux = (Politica) PoliticaServicios.getInstancia().crear(aux);
                 politicaList.add(aux);
-                aux1 = new Politica("inventarioEdit",true);
+                aux1 = new Politica("inventarioEdit", true);
                 aux1 = (Politica) PoliticaServicios.getInstancia().crear(aux1);
                 politicaList.add(aux1);
-                aux3 = new Politica("clienteAdd",true);
+                aux3 = new Politica("clienteAdd", true);
                 aux3 = (Politica) PoliticaServicios.getInstancia().crear(aux3);
                 politicaList.add(aux3);
-                aux4 = new Politica("clienteEdit",true);
+                aux4 = new Politica("clienteEdit", true);
                 aux4 = (Politica) PoliticaServicios.getInstancia().crear(aux4);
                 politicaList.add(aux4);
-                aux5 = new Politica("impuestoAdd",true);
+                aux5 = new Politica("impuestoAdd", true);
                 aux5 = (Politica) PoliticaServicios.getInstancia().crear(aux5);
                 politicaList.add(aux5);
-                aux6 = new Politica("impuestoEdit",true);
+                aux6 = new Politica("impuestoEdit", true);
                 aux6 = (Politica) PoliticaServicios.getInstancia().crear(aux6);
                 politicaList.add(aux6);
-                aux7 = new Politica("categoriaAdd",true);
+                aux7 = new Politica("categoriaAdd", true);
                 aux7 = (Politica) PoliticaServicios.getInstancia().crear(aux7);
                 politicaList.add(aux7);
-                aux8 = new Politica("categoriaEdit",true);
+                aux8 = new Politica("categoriaEdit", true);
                 aux8 = (Politica) PoliticaServicios.getInstancia().crear(aux8);
                 politicaList.add(aux8);
-                aux9 = new Politica("empleadoAdd",true);
+                aux9 = new Politica("empleadoAdd", true);
                 aux9 = (Politica) PoliticaServicios.getInstancia().crear(aux9);
                 politicaList.add(aux9);
-                aux10 = new Politica("empleadoEdit",true);
+                aux10 = new Politica("empleadoEdit", true);
                 aux10 = (Politica) PoliticaServicios.getInstancia().crear(aux10);
                 politicaList.add(aux10);
 
@@ -645,71 +844,71 @@ public class Mercado {
         return politicaList;
     }
 
-    public String getUserJefeWithToken(Claims claims){
+    public String getUserJefeWithToken(Claims claims) {
 //        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;
-        System.out.println("\n\nPerfil"+claims.getAudience()+"-"+claims.getIssuer());
+        System.out.println("\n\nPerfil" + claims.getAudience() + "-" + claims.getIssuer());
 
-        switch (claims.getAudience()){
+        switch (claims.getAudience()) {
             case "Admin":
 
-                se =  claims.getIssuer();
+                se = claims.getIssuer();
                 break;
 
             case "Empleado":
 
-                se =  claims.getIssuer();
+                se = claims.getIssuer();
                 break;
             case "Vendedor":
-                se =  claims.getIssuer();
+                se = claims.getIssuer();
                 break;
             default:
-                se =  claims.getIssuer();
+                se = claims.getIssuer();
                 break;
         }
         return se;
     }
-    public String getUserJefe(String user){
+
+    public String getUserJefe(String user) {
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;
-        switch (aux.getPerfil()){
+        switch (aux.getPerfil()) {
             case "Admin":
 
-                se =  user;
+                se = user;
                 break;
 
             case "Empleado":
 
-                se =  EmpleadoServicios.getInstancia().getJefe(aux.getUsuario());
+                se = EmpleadoServicios.getInstancia().getJefe(aux.getUsuario());
                 break;
             case "Vendedor":
-                se =  user;
+                se = user;
                 break;
             default:
-se  = user;
+                se = user;
                 break;
         }
         return se;
     }
 
 
-
-    public List<Producto> listaProductoOrdenada(String user){
+    public List<Producto> listaProductoOrdenada(String user) {
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         List<Producto> productoList = null;
-        switch (aux.getPerfil()){
+        switch (aux.getPerfil()) {
             case "Admin":
 
 
-                productoList = new ProductoServicios().listaProducto(0,user);
-            break;
+                productoList = new ProductoServicios().listaProducto(0, user);
+                break;
 
             case "Empleado":
 
-                productoList =  new ProductoServicios().listaProducto(0,EmpleadoServicios.getInstancia().getJefe(aux.getUsuario()));
+                productoList = new ProductoServicios().listaProducto(0, EmpleadoServicios.getInstancia().getJefe(aux.getUsuario()));
                 break;
             case "Vendedor":
-                productoList =  new ProductoServicios().listaProducto(0,user);
+                productoList = new ProductoServicios().listaProducto(0, user);
                 break;
             default:
 
@@ -719,14 +918,12 @@ se  = user;
     }
 
 
-
-    public boolean send_correo_online(String correo, String mensaje, String asunto){
+    public boolean send_correo_online(String correo, String mensaje, String asunto) {
         Properties propiedad = new Properties();
         propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
         propiedad.setProperty("mail.smtp.starttls.enable", "true");
         propiedad.setProperty("mail.smtp.port", "587");
         propiedad.setProperty("mail.smtp.auth", "true");
-
 
 
         Session sesion = Session.getDefaultInstance(propiedad);
@@ -735,12 +932,10 @@ se  = user;
         String receptor = correo;
 
 
-
-
         Message mail = new MimeMessage(sesion);
         try {
             mail.setFrom(new InternetAddress(correoEnvia));
-            mail.addRecipient(Message.RecipientType.TO, new InternetAddress (receptor));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(receptor));
             mail.setSubject(asunto);
 
             MimeMultipart multipart = new MimeMultipart("related");
@@ -753,7 +948,7 @@ se  = user;
             multipart.addBodyPart(messageBodyPart);
 
             // second part (the image)
-            if (asunto.equalsIgnoreCase("Error del servidor")){
+            if (asunto.equalsIgnoreCase("Error del servidor")) {
                 messageBodyPart = new MimeBodyPart();
                 DataSource fds = new FileDataSource(
                         "/home/ubuntu/CSUITE/build/libs/error.txt");
@@ -770,7 +965,7 @@ se  = user;
 
 
             Transport transportar = sesion.getTransport("smtp");
-            transportar.connect(correoEnvia,contrasena);
+            transportar.connect(correoEnvia, contrasena);
             transportar.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
             transportar.close();
 
@@ -789,45 +984,38 @@ se  = user;
     public String verificar_user(String user, String password) {
 
 
+        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
+        switch (aux.getPerfil()) {
+            case "Vendedor":
 
+                System.out.println("Esto sale" + aux.getVendedor().getPassword());
+                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                    return "Vendedor";
+                }
 
+                break;
 
+            case "Admin":
 
+                System.out.println("Esto sale" + aux.getVendedor().getPassword());
+                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                    return "Admin";
+                }
 
-            Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
-            switch (aux.getPerfil()){
-                case "Vendedor":
+                break;
+            case "Empleado":
 
-                    System.out.println("Esto sale"+aux.getVendedor().getPassword());
-                    if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
-                        return "Vendedor";
-                    }
+                System.out.println("Esto sale" + aux.getEmpleado().getPassword());
+                if (passwordEncryptor.decrypt(aux.getEmpleado().getPassword()).equals(password)) {
+                    return "Empleado";
+                }
 
-                    break;
-
-                case "Admin":
-
-                    System.out.println("Esto sale"+aux.getVendedor().getPassword());
-                    if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
-                        return "Admin";
-                    }
-
-                    break;
-                case "Empleado":
-
-                    System.out.println("Esto sale"+aux.getEmpleado().getPassword());
-                    if (passwordEncryptor.decrypt(aux.getEmpleado().getPassword()).equals(password)) {
-                        return "Empleado";
-                    }
-
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
 
 
         }
-
-
 
 
         return null;

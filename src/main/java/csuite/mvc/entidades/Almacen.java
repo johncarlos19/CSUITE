@@ -38,6 +38,22 @@ public class Almacen implements Serializable{
     public long getDisponible(){
         return productoAgregado-productoDescartado-productoVendido;
     }
+    public long agregarProductoVendido(long cantidad){
+
+        if(getDisponible()>=cantidad){
+            this.productoVendido+=cantidad;
+            return 0;
+        }else{
+            long value = cantidad-getDisponible();
+            this.productoVendido+=getDisponible();
+            return value;
+        }
+
+    }
+    public void agregarProductoDescartado(long cantidad){
+        this.productoDescartado+=cantidad;
+    }
+
 
     public ProductoEnVenta getProductoEnVenta() {
         return productoEnVenta;

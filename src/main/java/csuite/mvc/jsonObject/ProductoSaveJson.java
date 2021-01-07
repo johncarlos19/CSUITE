@@ -12,6 +12,8 @@ public class ProductoSaveJson {
     private String base64;
     private String nombreImg;
     private String categorias;
+    private String idFactura;
+    private long idProducto;
 
     public ProductoSaveJson() {
     }
@@ -26,6 +28,22 @@ public class ProductoSaveJson {
         this.venta = venta;
         this.mimetype = mimetype;
         this.base64 = base64;
+    }
+
+    public String getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(String idFactura) {
+        this.idFactura = idFactura;
+    }
+
+    public long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(long idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getCategorias() {

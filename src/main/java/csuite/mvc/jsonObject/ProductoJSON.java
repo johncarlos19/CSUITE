@@ -1,9 +1,6 @@
 package csuite.mvc.jsonObject;
 
-import csuite.mvc.entidades.Almacen;
-import csuite.mvc.entidades.Categoria;
-import csuite.mvc.entidades.FacturaClienteProductoVendido;
-import csuite.mvc.entidades.ProductoEnVenta;
+import csuite.mvc.entidades.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class ProductoJSON {
     private float descuentoPorciento;
     private float impuesto;
     private float precioLista;
-
+    private List<ImpuestoCliente>  impuestoClientes= new ArrayList<ImpuestoCliente>();
 
     private String nombreFoto;
     private String mimeType;
@@ -49,7 +46,18 @@ public class ProductoJSON {
         this.mimeType = mimeType;
         this.fotoBase64 = fotoBase64;
         this.impuesto = impuesto;
-        this.precioLista = precioLista;
+        this.precioLista = precioLista+descuentoPorciento;
+    }
+
+    public void addImpuestoCliente(ImpuestoCliente impuestoCliente) {
+         impuestoClientes.add(impuestoCliente);
+    }
+    public List<ImpuestoCliente> getImpuestoClientes() {
+        return impuestoClientes;
+    }
+
+    public void setImpuestoClientes(List<ImpuestoCliente> impuestoClientes) {
+        this.impuestoClientes = impuestoClientes;
     }
 
     public float getImpuesto() {

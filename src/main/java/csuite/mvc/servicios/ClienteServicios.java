@@ -34,6 +34,7 @@ public class ClienteServicios extends GestionadDB<Cliente>{
 
 
     public Usuario getClienteUsuario(String user, String id) {
+        long cant = 0;
 
 
         final Session session = getHibernateSession();
@@ -46,20 +47,30 @@ public class ClienteServicios extends GestionadDB<Cliente>{
             Query query = session.createQuery("select c.idCliente from Vendedor v inner join v.clientes c where v.idVendedor.usuario = '"+user+"' " );
 
             //query.setParameter("nombre", apellido+"%");
-            List<Usuario> lista = (ArrayList<Usuario>) query.getResultList();
-            Usuario usuario1 = (Usuario) query.getSingleResult();
-            for (Usuario usuario : lista) {
-                if (usuario.getUsuario().equalsIgnoreCase(id) || usuario.getDocumento().equalsIgnoreCase(id)){
-                    usuario1 = usuario;
-                    break;
-                }
-            }
+            List<Usuario> lista =  query.getResultList();
             System.out.println("Cantidad"+lista.size());
+
+            try {
+            for (Usuario usuario :  lista) {
+                System.out.println("\n\nimprimio"+usuario.getUsuario());
+                    if (usuario.getUsuario().equalsIgnoreCase(id) || usuario.getDocumento().equalsIgnoreCase(id)){
+
+                        System.out.println("\n\nimprimio123");
+                        session.close();
+                        return usuario;
+
+                    }
+
+
+            }}catch (NullPointerException e){
+            return null;
+        }
+
             //query.setParameter("nombre", apellido+"%");
 
 
 
-            return (Usuario) usuario1;
+            return  null;
         } finally {
             session.close();
         }

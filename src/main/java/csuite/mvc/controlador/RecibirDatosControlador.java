@@ -388,6 +388,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
                         if (Mercado.getInstance().getLogins().get(i).getSession().getId().equalsIgnoreCase(idSession)){
+                            Mercado.getInstance().borrarSessionSSe(idSession);
                             Mercado.getInstance().getLogins().remove(i);
                             break;
                         }
@@ -588,6 +589,31 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     });
                 });
+
+                path("/ventas", () -> {
+
+                    path("/crear", () -> {
+
+                        get(ctx -> {
+                            Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                            System.out.println("\n\n\nusuario" + user);
+                            ctx.res.addHeader("Authorization", ctx.cookie("User"));
+                            Map<String, Object> contexto = new HashMap<>();
+//                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+                            for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                            ) {
+                                contexto.put(politica.getKey(), politica.getValue());
+                            }
+
+                            ctx.render("/public/dashboardPlantilla/crearVenta.html", contexto);
+
+
+                        });
+                    });
+
+
+                        });
+
                 path("/categoria", () -> {
 
                     get(ctx -> {

@@ -891,8 +891,8 @@ CUERPO DOCUMENTO
 								  <!--                                      <input type="number" min="0" class="form-control input-lg" name="tipoDocumento" placeholder="Ingresar El Tipo de Documento" required>-->
 								  <select class="form-control  input-lg" name="privilegio" required>
 									  <option disabled selected>Seleccione El Tipo de Privilegio</option>
-									  <option value="1">Modo Modificar y Lectura</option>
-									  <option value="2">Modo Lectura</option>
+									  <option value="1">Modo supervisor</option>
+									  <option value="2">Modo Empleado</option>
 								  </select>
 
 							  </div>
@@ -1285,7 +1285,7 @@ CUERPO DOCUMENTO
 	  var logout = 1000*60;
 	  var renovo = false;
 	  var preciono = false;
-	  var worker = new Worker('/js/webworker-ajax.js');
+	  var worker = new Worker('../js/webworker-ajax.js');
 
 
 

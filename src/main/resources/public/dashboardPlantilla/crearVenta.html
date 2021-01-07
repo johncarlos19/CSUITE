@@ -466,7 +466,7 @@ CUERPO DOCUMENTO
                                             <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                                             <input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta"
-                                                   value="10031" readonly="">
+                                                   value="" readonly>
 
                                         </div>
 
@@ -476,20 +476,7 @@ CUERPO DOCUMENTO
                                     ENTRADA DEL VENDEDOR
                                     ======================================-->
 
-                                    <div class="form-group">
 
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-
-                                            <input type="text" class="form-control" id="nuevoVendedor"
-                                                   value="CashSuite-Admin" readonly="">
-
-                                            <input type="hidden" name="idVendedor" value="CashSuite-Admin">
-
-                                        </div>
-
-                                    </div>
 
 
 
@@ -507,20 +494,22 @@ CUERPO DOCUMENTO
                                             <input type="text" class="form-control" name="nombre" placeholder="Ingresar ID o Documento Del CLiente" id="cliente"  required>
 
 
-    <span class="input-group-btn lime lighten-2" id="clienteBuscar">
-                                            <button type="button"
-                                                    class="btn btn-success "
-                                                    data-toggle="modal"
-                                                    data-target="#modalAgregarCliente"
-                                                    data-dismiss="modal">Buscar Cliente</button></span>
+    <span class="input-group-btn lime" id="clienteBuscar">
+                                            <button type="button" id="searchClientebtn"
+                                                    class="btn btn-success btn-sm "
+                                                    onclick="searchCliente('')">Buscar Cliente</button></span>
+<!--<span class="input-group-btn lime lighten-2" id="clienteBuscar">-->
+<!--                                            <button type="button" id="searchClientebtn"-->
+<!--                                                    class="btn btn-success "-->
+<!--                                                    data-toggle="modal"-->
+<!--                                                    data-target="#modalAgregarCliente"-->
+<!--                                                    data-dismiss="modal">Buscar Cliente</button></span>-->
 
 
-    <span class="input-group-btn " id="clienteAlContado">
+    <span class="input-group-btn lime " id="clienteAlContado">
                                             <button type="button"
-                                                    class="btn btn-primary "
-                                                    data-toggle="modal"
-                                                    data-target="#modalAgregarCliente"
-                                                    data-dismiss="modal">Cliente Al Contado</button></span>
+                                                    class="btn btn-primary btn-sm "
+                                                    onclick="searchCliente('001')">Cliente Al Contado</button></span>
 
 
                                             </div>
@@ -528,6 +517,8 @@ CUERPO DOCUMENTO
 
 
                                     </div>
+
+                                    <div id="nameCliente"></div>
 
 <!--                                    <div class="form-group">-->
 
@@ -557,6 +548,9 @@ CUERPO DOCUMENTO
                                     ENTRADA PARA AGREGAR PRODUCTO
                                     ======================================-->
 
+
+                                    <div class="d-md-flex" >
+                                        <div class="overflow-auto mb-3 mb-md-0 mr-md-3" style=" max-height: 200px;" >
                                     <div class="form-group row nuevoProducto">
 
 
@@ -648,6 +642,95 @@ CUERPO DOCUMENTO
                                                                                                      value="13440"
                                                                                                      readonly=""
                                                                                                      required=""></div>
+                                            </div>
+                                        </div><div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="19"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="19"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Muela o cincel martillo demoledor piso"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="13440"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="13440"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div><div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="19"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="19"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Muela o cincel martillo demoledor piso"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="13440"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="13440"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div><div class="row" style="padding:5px 15px"><!-- Descripción del producto -->
+                                            <div class="col-xs-6" style="padding-right:0px">
+                                                <div class="input-group"><span class="input-group-addon"><button
+                                                        type="button" class="btn btn-danger btn-xs quitarProducto"
+                                                        idproducto="19"><i
+                                                        class="fa fa-times"></i></button></span><input type="text"
+                                                                                                       class="form-control nuevaDescripcionProducto"
+                                                                                                       idproducto="19"
+                                                                                                       name="agregarProducto"
+                                                                                                       value="Muela o cincel martillo demoledor piso"
+                                                                                                       readonly=""
+                                                                                                       required="">
+                                                </div>
+                                            </div><!-- Cantidad del producto -->
+                                            <div class="col-xs-3"><input type="number"
+                                                                         class="form-control nuevaCantidadProducto"
+                                                                         name="nuevaCantidadProducto" min="1" value="1"
+                                                                         stock="20" nuevostock="19" required=""></div>
+                                            <!-- Precio del producto -->
+                                            <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="input-group"><span class="input-group-addon"><i
+                                                        class="ion ion-social-usd"></i></span><input type="text"
+                                                                                                     class="form-control nuevoPrecioProducto"
+                                                                                                     precioreal="13440"
+                                                                                                     name="nuevoPrecioProducto"
+                                                                                                     value="13440"
+                                                                                                     readonly=""
+                                                                                                     required=""></div>
+                                            </div>
+                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -814,31 +897,31 @@ CUERPO DOCUMENTO
 
                             <div id="DataTables_Table_0_wrapper"
                                  class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar
-                                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                                    class="form-control input-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> registros</label></div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                            <label>Buscar:<input type="search" class="form-control input-sm"
-                                                                 placeholder=""
-                                                                 aria-controls="DataTables_Table_0"></label></div>
-                                    </div>
-                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-6">-->
+<!--                                        <div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar-->
+<!--                                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"-->
+<!--                                                    class="form-control input-sm">-->
+<!--                                                <option value="10">10</option>-->
+<!--                                                <option value="25">25</option>-->
+<!--                                                <option value="50">50</option>-->
+<!--                                                <option value="100">100</option>-->
+<!--                                            </select> registros</label></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-6">-->
+<!--                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">-->
+<!--                                            <label>Buscar:<input type="search" class="form-control input-sm"-->
+<!--                                                                 placeholder=""-->
+<!--                                                                 aria-controls="DataTables_Table_0"></label></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dt-responsive tablaVentas dataTable no-footer dtr-inline"
+                                        <table class="table  table-bordered table-striped dt-responsive tablaVentas dataTable no-footer dtr-inline"
                                                id="DataTables_Table_0" role="grid"
                                                aria-describedby="DataTables_Table_0_info" style="width: 811px;">
 
-                                            <thead>
+                                            <thead class="">
 
                                             <tr role="row">
                                                 <th style="width: 10px;" class="sorting_asc" tabindex="0"
@@ -875,7 +958,7 @@ CUERPO DOCUMENTO
 
                                             </thead>
 
-                                            <tbody>
+                                            <tbody class="">
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1" tabindex="0">41</td>
                                                 <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>
@@ -1044,56 +1127,56 @@ CUERPO DOCUMENTO
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-5">
-                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                             aria-live="polite">Mostrando registros del 41 al 50 de un total de 61
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers"
-                                             id="DataTables_Table_0_paginate">
-                                            <ul class="pagination">
-                                                <li class="paginate_button previous" id="DataTables_Table_0_previous"><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">3</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">4</a>
-                                                </li>
-                                                <li class="paginate_button active"><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">5</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">6</a>
-                                                </li>
-                                                <li class="paginate_button "><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">7</a>
-                                                </li>
-                                                <li class="paginate_button next" id="DataTables_Table_0_next"><a
-                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"
-                                                        aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0">Siguiente</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-5">-->
+<!--                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"-->
+<!--                                             aria-live="polite">Mostrando registros del 41 al 50 de un total de 61-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-7">-->
+<!--                                        <div class="dataTables_paginate paging_simple_numbers"-->
+<!--                                             id="DataTables_Table_0_paginate">-->
+<!--                                            <ul class="pagination">-->
+<!--                                                <li class="paginate_button previous" id="DataTables_Table_0_previous"><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">3</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">4</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button active"><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">5</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">6</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button "><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">7</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="paginate_button next" id="DataTables_Table_0_next"><a-->
+<!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+<!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0">Siguiente</a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
 
                         </div>
@@ -1255,6 +1338,9 @@ CUERPO DOCUMENTO
         <script src="../dashboardPlantilla/js/clientes.js"></script>
         <script src="../dashboardPlantilla/js/ventas.js"></script>
         <script src="../dashboardPlantilla/js/reportes.js"></script>
+        <script src="../js/jquery-3.2.1.min.js"></script>
+
+
         <!-- Start of HubSpot Embed Code -->
         <script type="text/javascript" id="hs-script-loader" async="" defer=""
                 src="../dashboardPlantilla/js/7875273.js"></script>

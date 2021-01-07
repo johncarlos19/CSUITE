@@ -13,7 +13,7 @@ CARGAR LA TABLA DINÁMICA DE PRODUCTOS
 
 // })
 //llamando el webworker
-var worker = new Worker('/js/webworker-ajax.js');
+var worker = new Worker('../js/webworker-ajax.js');
 var tablaUsuarios;
 const kk = [];
 
@@ -149,6 +149,38 @@ worker.onmessage = function (e) { //recuperando la información
 		// form.submit();
 		reloadTabla();
 	}
+	if(e.data.cmd === 'cliente'){
+		document.getElementById("searchClientebtn").disabled = true;
+		document.getElementById("clienteAlContado").disabled = true;
+		document.getElementById("cliente").readOnly  = true;
+		var obj = e.data.data;
+		document.getElementById("cliente").value = obj.usuario;
+		document.getElementById("nameCliente").innerHTML = '<div class="form-group">\n' +
+			'\n' +
+			'                                        <div class="input-group">\n' +
+			'\n' +
+			'                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>\n' +
+			'\n' +
+			'                                            <input type="text" class="form-control" id="nuevoVendedor"\n' +
+			'                                                   value="'+obj.nombre+' '+obj.apellido+'" readonly="">\n' +
+			'\n' +
+			'                                            <input type="hidden" name="idCliente" value="'+obj.usuario+'">\n' +
+			'\n' +
+			'                                        </div>\n' +
+			'\n' +
+			'                                    </div>';
+
+
+
+		renovo = true;
+		setTimeout(alertaTime,e.data.data - (1500*60));
+	}
+	if(e.data.cmd === 'noFound'){
+		document.getElementById("nameCliente").innerHTML =  '<div class="alert alert-danger alert-dismissible">\n' +
+			'\t\t\t\t\t\t\t  Cliente No Encontrado\n' +
+			'\t\t\t\t\t\t  </div>'
+	}
+
 	if(e.data.cmd === 'time'){
 		renovo = true;
 		setTimeout(alertaTime,e.data.data - (1500*60));

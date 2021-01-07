@@ -21,14 +21,23 @@ public class Cliente implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL ,  orphanRemoval = true)
     @JoinColumn(name="idCliente")
     private List<FacturaCliente>  facturaClientes= new ArrayList<FacturaCliente>();
+    private Long facturaTotal = new Long(0);
 
     public Cliente() {
     }
-
-    public long getFacturaTotal(){
-        return facturaClientes.size();
+    public void addFacturaCliente(FacturaCliente facturaCliente){
+        this.fechaUltimaCompra = facturaCliente.getFechaCompra();
+        this.facturaTotal+=1;
+        this.facturaClientes.add(facturaCliente);
     }
 
+    public Long getFacturaTotal() {
+        return facturaTotal;
+    }
+
+    public void setFacturaTotal(Long facturaTotal) {
+        this.facturaTotal = facturaTotal;
+    }
 
     public List<FacturaCliente> getFacturaClientes() {
         return facturaClientes;
