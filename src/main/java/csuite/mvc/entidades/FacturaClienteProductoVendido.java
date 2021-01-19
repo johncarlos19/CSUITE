@@ -1,6 +1,7 @@
 package csuite.mvc.entidades;
 
 import csuite.mvc.jsonObject.ProductoJSON;
+import org.hibernate.LazyInitializationException;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,17 +41,23 @@ public class FacturaClienteProductoVendido implements Serializable {
         ProductoJSON productoJSON = null;
         List<ImpuestoCliente> clienteList1 = new ArrayList<ImpuestoCliente>();
         float descuento = 0;
-        for (ImpuestoCliente impuestoCliente : impuestoProducto) {
-            ImpuestoCliente aux = new ImpuestoCliente();
-            aux.setNombre(impuestoCliente.getNombre());
-            aux.setOperacion(impuestoCliente.getOperacion());
-            aux.setValorSumandoExtra(impuestoCliente.getValorSumandoExtra());
-            aux.setId(impuestoCliente.getId());
-            descuento += aux.getDescuento();
-            clienteList1.add(aux);
+        try {
+            for (ImpuestoCliente impuestoCliente : impuestoProducto) {
+                ImpuestoCliente aux = new ImpuestoCliente();
+                aux.setNombre(impuestoCliente.getNombre());
+                aux.setOperacion(impuestoCliente.getOperacion());
+                aux.setValorSumandoExtra(impuestoCliente.getValorSumandoExtra());
+                aux.setId(impuestoCliente.getId());
+                descuento += aux.getDescuento();
+                clienteList1.add(aux);
+            }
+        } catch (LazyInitializationException e){
+            System.out.println("\nEsto es de los impuesto");
+            e.printStackTrace();
         }
+
         productoJSON = new ProductoJSON(
-                id,
+                idProducto.getId(),
                 idProducto.getNombre(),
                 idProducto.getDescripcion(),
                 idProducto.getCodigo_local(),
@@ -70,6 +77,7 @@ public class FacturaClienteProductoVendido implements Serializable {
 
 
         );
+        productoJSON.setCantMaxPorVenta(idProducto.getProductoEnVenta().getStock());
         productoJSON.setImpuestoClientes(clienteList1);
 
         return productoJSON;

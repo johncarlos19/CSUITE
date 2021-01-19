@@ -31,7 +31,7 @@ public class ApiControlador extends JavalinControlador {
 
     public ApiControlador(Javalin app) {
         super(app);
-        iniStart();
+//        iniStart();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ApiControlador extends JavalinControlador {
                         if (user==null || session == null){
 
                             System.out.println(Mercado.getInstance().getUserEncryptor().decrypt(user));
-                            ctx.json(1);
+                            ctx.json(-1);
 
                         }else{
                             System.out.println("\n\n\n\nverifico");
@@ -89,14 +89,14 @@ public class ApiControlador extends JavalinControlador {
 
 
                                     }else{
-                                        ctx.json(1);
+                                        ctx.json(-1);
                                     }
 
                                 }catch (ExpiredJwtException e){
-                                    ctx.json(1);
+                                    ctx.json(-1);
                                 }
                             }else{
-                                ctx.json(1);
+                                ctx.json(-1);
                             }
 
 
@@ -114,33 +114,39 @@ public class ApiControlador extends JavalinControlador {
                     sseClient.sendEvent("conectado","ready");
 
                     Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(sseClient.ctx.cookie("User")));
-                    VentasSession ventasSession = new VentasSession(sseClient,Mercado.getInstance().getUserJefeWithToken(user), user.getId());
+                    if (user!= null){
+                        VentasSession ventasSession = new VentasSession(sseClient,Mercado.getInstance().getUserJefeWithToken(user), user.getId());
 
-                    Mercado.getInstance().addListaSseUsuario(ventasSession);
-                    sseClient.onClose(() -> {
-                        System.out.println("\n\neliminar");
-                        int borra = -1;
-                        for (int i = 0; i < Mercado.getInstance().listaSseUsuario.size(); i++) {
-                            try {
-                                if (Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId().equalsIgnoreCase(sseClient.ctx.req.getSession().getId())){
-                                    System.out.println("\n\neste es el id"+Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId()+" el otro "+sseClient.ctx.req.getSession().getId());
-                                    borra = i;
+                        Mercado.getInstance().addListaSseUsuario(ventasSession);
+                        sseClient.onClose(() -> {
+                            System.out.println("\n\neliminar");
+                            int borra = -1;
+                            for (int i = 0; i < Mercado.getInstance().listaSseUsuario.size(); i++) {
+                                try {
+                                    if (Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId().equalsIgnoreCase(sseClient.ctx.req.getSession().getId())){
+                                        System.out.println("\n\neste es el id"+Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId()+" el otro "+sseClient.ctx.req.getSession().getId());
+                                        borra = i;
 //                                    Mercado.getInstance().listaSseUsuario.remove(Mercado.getInstance().listaSseUsuario.get(i));
-                                    System.out.println("\n\neliminar12");
-                                    break;
+                                        System.out.println("\n\neliminar12");
+                                        break;
+                                    }
+                                }catch (IllegalStateException e){
+
                                 }
-                            }catch (IllegalStateException e){
+                            }
+                            System.out.println("\n\neliminar12");
+                            if (borra!=-1){
+                                Mercado.getInstance().listaSseUsuario.remove(borra);
 
                             }
-                        }
-                        System.out.println("\n\neliminar12");
-                        if (borra!=-1){
-                            Mercado.getInstance().listaSseUsuario.remove(borra);
-
-                        }
 
 //                        listaSseUsuario.remove(sseClient);
-                    });
+                        });
+                    }else{
+
+                        sseClient.sendEvent("statuServer", "error");
+                    }
+
                 });
                 path("/Cliente", () -> {
                     after(ctx -> {
@@ -157,13 +163,13 @@ public class ApiControlador extends JavalinControlador {
                     });
                     post("/search", ctx -> {
 
-//                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
 //                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
 
                         String tmp =  ctx.body().toString();
                         System.out.println("Esto llego:"+tmp);
 //                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
-                        Usuario clienteJson = ClienteServicios.getInstancia().getClienteUsuario("admin",tmp);
+                        Usuario clienteJson = ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp);
                         if (clienteJson != null){
                             ctx.json(clienteJson.getUsuarioJson());
                         }else {
@@ -177,7 +183,23 @@ public class ApiControlador extends JavalinControlador {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");
                     });
-
+                    get("/ventasActivas", ctx -> {
+                        List<FacturaJson> facturaJsonList = new ArrayList<FacturaJson>();
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                        if (user.getId().equalsIgnoreCase(Mercado.getInstance().getUserJefeWithToken(user))){
+                            List<FacturaCliente> facturaClienteList= FacturaClienteServicios.getInstancia().ListFacturaClienteActivaVendedor(user.getId());
+                            for (FacturaCliente facturaCliente : facturaClienteList) {
+                                facturaJsonList.add(facturaCliente.getFacturaJson());
+                            }
+                        }else{
+                            List<FacturaCliente> facturaClienteList= FacturaClienteServicios.getInstancia().ListFacturaClienteActivaEmpleado(user.getId());
+                            for (FacturaCliente facturaCliente : facturaClienteList) {
+                                facturaJsonList.add(facturaCliente.getFacturaJson());
+                            }
+                        }
+                        ctx.json(facturaJsonList);
+                    });
                     post("/loadProducto", ctx -> {
 
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
@@ -217,8 +239,17 @@ public class ApiControlador extends JavalinControlador {
                         AddDiscountProductoFacturaJSON addDiscountProductoFacturaJSON = ctx.bodyAsClass(AddDiscountProductoFacturaJSON.class);
 //                        String tmp =  ctx.body().toString();
 //                        System.out.println("Esto llego:"+tmp);
-                        ProductoJSON productoJSON = Mercado.getInstance().addProductoInFactura(addDiscountProductoFacturaJSON.getIdFactura(),addDiscountProductoFacturaJSON.getIdProducto(),addDiscountProductoFacturaJSON.getCantidad());
-                        sendJsonProductoUpdate(productoJSON,Mercado.getInstance().getUserJefeWithToken(user));
+                        boolean editar = true;
+                        ProductoJSON productoJSON = null;
+                        do {
+                            editar = Mercado.getInstance().sePuedeEditarYActivate(Mercado.getInstance().getUserJefeWithToken(user),addDiscountProductoFacturaJSON.getIdProducto(), user.getId() );
+                            if (editar== true){
+
+                                productoJSON = Mercado.getInstance().addProductoInFactura(addDiscountProductoFacturaJSON.getIdFactura(),addDiscountProductoFacturaJSON.getIdProducto(),addDiscountProductoFacturaJSON.getCantidad());
+                                Mercado.getInstance().sePuedeEditarYDesactivate(Mercado.getInstance().getUserJefeWithToken(user),addDiscountProductoFacturaJSON.getIdProducto(), user.getId() );
+                                sendJsonProductoUpdate(productoJSON,Mercado.getInstance().getUserJefeWithToken(user));
+                            }
+                        }while (editar==false);
                         FacturaJson facturaJson = FacturaClienteServicios.getInstancia().getFacturaCliente(addDiscountProductoFacturaJSON.getIdFactura()).getFacturaJson();
                         ctx.json(facturaJson);
 //                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
@@ -237,10 +268,48 @@ public class ApiControlador extends JavalinControlador {
                         AddDiscountProductoFacturaJSON addDiscountProductoFacturaJSON = ctx.bodyAsClass(AddDiscountProductoFacturaJSON.class);
 //                        String tmp =  ctx.body().toString();
 //                        System.out.println("Esto llego:"+tmp);
-                        ProductoJSON productoJSON = Mercado.getInstance().discountProductoInFactura(addDiscountProductoFacturaJSON.getIdFactura(),addDiscountProductoFacturaJSON.getIdProducto(),addDiscountProductoFacturaJSON.getCantidad());
-                        sendJsonProductoUpdate(productoJSON,Mercado.getInstance().getUserJefeWithToken(user));
+                        boolean editar = true;
+                        ProductoJSON productoJSON = null;
+                        do {
+                            editar = Mercado.getInstance().sePuedeEditarYActivate(Mercado.getInstance().getUserJefeWithToken(user),addDiscountProductoFacturaJSON.getIdProducto(), user.getId() );
+                            if (editar== true){
+
+
+                                productoJSON = Mercado.getInstance().discountProductoInFactura(addDiscountProductoFacturaJSON.getIdFactura(),addDiscountProductoFacturaJSON.getIdProducto(),addDiscountProductoFacturaJSON.getCantidad());
+                                Mercado.getInstance().sePuedeEditarYDesactivate(Mercado.getInstance().getUserJefeWithToken(user),addDiscountProductoFacturaJSON.getIdProducto(), user.getId() );
+                                sendJsonProductoUpdate(productoJSON,Mercado.getInstance().getUserJefeWithToken(user));
+                            }
+                        }while (editar==false);
+
                         FacturaJson facturaJson = FacturaClienteServicios.getInstancia().getFacturaCliente(addDiscountProductoFacturaJSON.getIdFactura()).getFacturaJson();
                         ctx.json(facturaJson);
+
+                    });
+                    post("/deleteFacturaActiva", ctx -> {
+
+//                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+//                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        if (user != null){
+                            String tmp =  ctx.body().toString();
+                            System.out.println("Esto llego:"+tmp);
+                            boolean dele = Mercado.getInstance().borrarFactura(tmp);
+                            if (dele == true){
+
+                                ctx.json("deleted");
+                            }else {
+                                ctx.json("no deleted");
+
+                            }
+                        }else{
+                            ctx.json(-1);
+                        }
+
+//                        if (clienteJson != null){
+//
+//                        }else {
+//                            ctx.json("no found");
+//                        }
 
                     });
                     post("/loadFactura", ctx -> {
@@ -407,17 +476,21 @@ public class ApiControlador extends JavalinControlador {
     }
     public void iniStart(){
         new Thread(() -> {
+            long id = 1;
+            ProductoJSON productoJSON = ProductoServicios.getInstancia().buscar(id).getProductoJSON();
             while(true){
-                List<VentasSession> listaTmp = new CopyOnWriteArrayList<>(Mercado.getInstance().getListaSseUsuario());
-                listaTmp.forEach(sseClient -> {
-                    System.out.println("Enviando informacion...");
-                    if ("admin".equalsIgnoreCase(sseClient.getIdJefe())){
-                        sseClient.getSseClient().sendEvent("productoload", ""+new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
-                    }
-
-                });
+                productoJSON.setStock(productoJSON.getStock()+1);
+//                List<VentasSession> listaTmp = new CopyOnWriteArrayList<>(Mercado.getInstance().getListaSseUsuario());
+//                listaTmp.forEach(sseClient -> {
+//                    System.out.println("Enviando informacion...");
+//                    if ("admin".equalsIgnoreCase(sseClient.getIdJefe())){
+//                        sseClient.getSseClient().sendEvent("productoload", ""+new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+//                    }
+//
+//                });
+                sendJsonProductoUpdate(productoJSON,"admin");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -459,9 +532,11 @@ public class ApiControlador extends JavalinControlador {
 
     public static boolean isExpirate(Claims jwt){
         boolean expire = true;
+        if (jwt != null){
+            if (new  Date(System.currentTimeMillis()).after(jwt.getExpiration())){
+                return expire;
+            }
 
-        if (new  Date(System.currentTimeMillis()).after(jwt.getExpiration())){
-            return expire;
         }
         return false;
     }
@@ -469,10 +544,14 @@ public class ApiControlador extends JavalinControlador {
     public static Claims decodeJWT(String jwt) {
 
         //This line will throw an exception if it is not a signed JWS (as expected)
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
-                .parseClaimsJws(jwt).getBody();
+        try {
 
-        return claims;
-    }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                    .parseClaimsJws(jwt).getBody();
+
+            return claims;
+        }catch (ExpiredJwtException e){
+            return null;
+        }    }
 }

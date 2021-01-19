@@ -25,6 +25,8 @@ public class FacturaCliente implements Identifiable<String> {
     private String idQuienLoRealizo;
     private String metodoDePago;
     private String idVendedor;
+    private String nombreCliente;
+    private String idCliente;
     private boolean facturaGuardada = false;
     @CreationTimestamp
     private Timestamp fechaCompra;
@@ -34,6 +36,8 @@ public class FacturaCliente implements Identifiable<String> {
     private List<FacturaClienteProductoVendido>  facturaClienteProductoVendidos= new ArrayList<FacturaClienteProductoVendido>();
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,mappedBy = "idFacturaCliente",  orphanRemoval = true)
     private List<ImpuestoCliente>  impuestoClientes= new ArrayList<ImpuestoCliente>();
+
+
 
     public FacturaCliente() {
     }
@@ -51,6 +55,8 @@ public class FacturaCliente implements Identifiable<String> {
 
 
         FacturaJson facturaJson = new FacturaJson(idFactura,total,precioNeto,idQuienLoRealizo,metodoDePago,fechaCompra,list);
+        facturaJson.setIdCliente(idCliente);
+        facturaJson.setNombreCliente(nombreCliente);
         for (FacturaClienteProductoVendido vendido : facturaClienteProductoVendidos) {
             facturaJson.addProductoJSON(vendido.getProductoJSON());
         }
@@ -58,6 +64,21 @@ public class FacturaCliente implements Identifiable<String> {
 
     }
 
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public String getIdVendedor() {
         return idVendedor;
@@ -70,7 +91,7 @@ public class FacturaCliente implements Identifiable<String> {
     public void addFacturaClienteProductoVendido(FacturaClienteProductoVendido facturaClienteProductoVendido){
 
 //        impuestoClientes = ImpuestoClienteServicios.getInstancia().ListaImpuestoFacturaCliente(idFactura);
-        List<ImpuestoCliente> listafacturaClienteProductoVendido = facturaClienteProductoVendido.getImpuestoProducto();
+        List<ImpuestoCliente> listafacturaClienteProductoVendido = new ArrayList<>(facturaClienteProductoVendido.getImpuestoProducto());
         boolean vaEliminar = false;
         int eli = -1;
         float totalImpuesto = 0;

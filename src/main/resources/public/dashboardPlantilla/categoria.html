@@ -781,6 +781,43 @@ MODAL EDITAR CATEGORÍA
       </div>
 
 
+      <div id="modalLoading" class="modal fade" role="dialog"  style="display: none" >
+
+          <div class="modal-dialog swal2-container" >
+
+              <div class="swal2-center swal2-fade "  style="background: transparent; ">
+                  <!--                <div class="modal-header alert alert-danger alert-dismissible " >-->
+
+                  <!--                    &lt;!&ndash;				  <button type="button" class="close" data-dismiss="modal">&times;</button>&ndash;&gt;-->
+
+                  <!--                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>-->
+
+                  <!--                </div>-->
+
+                  <!--=====================================
+                  CUERPO DEL MODAL
+                  ======================================-->
+
+
+
+
+                  <div id="loading" class="" ><i class="fa fa-refresh fa-spin fa-5x " style="color: ghostwhite" ></i></div>
+
+
+
+
+
+                  <!--                <div class="modal-body">-->
+
+
+                  <!--                    </div>-->
+                  <!--                </div>-->
+
+
+              </div>
+          </div>
+      </div>
+
 <footer class="main-footer">
 	
 	<strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
@@ -791,6 +828,7 @@ MODAL EDITAR CATEGORÍA
 </footer></div>
 
 
+<script src="../dashboardPlantilla/js/ajaxpeticiones.js"></script>
 <script src="../dashboardPlantilla/js/plantilla.js"></script>
 <script src="../dashboardPlantilla/js/usuarios.js"></script>
 <script src="../dashboardPlantilla/js/categorias.js"></script>
@@ -803,18 +841,18 @@ MODAL EDITAR CATEGORÍA
     var logout = 1000*60;
     var renovo = false;
     var preciono = false;
-    var worker = new Worker('../js/webworker-ajax.js');
-
-
-
-
-    worker.onmessage = function (e) {
-        if(e.data.cmd === 'time'){
-            renovo = true;
-            setTimeout(alertaTime,e.data.data - (1500*60));
-        }
-
-    }
+    // var worker = new Worker('../js/webworker-ajax.js');
+    //
+    //
+    //
+    //
+    // worker.onmessage = function (e) {
+    //     if(e.data.cmd === 'time'){
+    //         renovo = true;
+    //         setTimeout(alertaTime,e.data.data - (1500*60));
+    //     }
+    //
+    // }
 
     $(document).ready(function(){
         setTimeout(alertaTime,timeSession)

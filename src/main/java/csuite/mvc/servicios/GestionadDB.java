@@ -230,6 +230,21 @@ public class GestionadDB<T> {
         }
         return ok;
     }
+    public boolean delete(Object entidadId) throws PersistenceException {
+        boolean ok = false;
+        final Session session = getHibernateSession();
+//        EntityManager em = getEntityManager();
+        session.getTransaction().begin();
+        try {
+            T entidad = session.find(claseEntidad, entidadId);
+            session.remove(entidad);
+            session.getTransaction().commit();
+            ok = true;
+        } finally {
+            session.close();
+        }
+        return ok;
+    }
 
     /**
      * @param id

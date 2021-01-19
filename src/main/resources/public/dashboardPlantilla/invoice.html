@@ -3,8 +3,73 @@
 <head>
     <meta charset="utf-8">
     <title>A simple, clean, and responsive HTML invoice template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          alt="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!--    <script src="https://cdn.usebootstrap.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/jquery-barcode.js"></script>
 
     <style>
+
+        * {
+            color:#7F7F7F;
+            font-family:Arial,sans-serif;
+            font-size:12px;
+            font-weight:normal;
+        }
+        #config{
+            overflow: auto;
+            margin-bottom: 10px;
+        }
+        .config{
+            float: left;
+            width: 200px;
+            height: 250px;
+            border: 1px solid #000;
+            margin-left: 10px;
+        }
+        .config .title{
+            font-weight: bold;
+            text-align: center;
+        }
+        .config .barcode2D,
+        #miscCanvas{
+            display: none;
+        }
+        #submit{
+            clear: both;
+        }
+        #barcodeTarget,
+        #canvasTarget{
+            margin-top: 20px;
+        }
+
+    </style>
+    <style>
+         .navbar-brand {
+            font-size: 40px;
+            font-family: "Lato-Black";
+            text-transform: capitalize;
+            background: -webkit-linear-gradient(left, #1d3ede, #01e6f8);
+            background: -ms-linear-gradient(left, #1d3ede, #01e6f8);
+            background: -moz-linear-gradient(left, #1d3ede, #01e6f8);
+            background: -o-linear-gradient(left, #1d3ede, #01e6f8);
+            -webkit-background-clip: text;
+            -ms-background-clip: text;
+            -o-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -ms-text-fill-color: transparent;
+            -o-text-fill-color: transparent;
+        }
         .invoice-box {
             max-width: 800px;
             margin: auto;
@@ -107,7 +172,8 @@
                 <table>
                     <tr>
                         <td class="title">
-                            <img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;">
+                            <a class="navbar-brand nav-link" style="width:100%; max-width:300px;">CashSuite</a>
+
                         </td>
 
                         <td>
@@ -140,27 +206,12 @@
             </td>
         </tr>
 
-        <tr class="heading">
-            <td>
-                Payment Method
-            </td>
 
-            <td>
-                Check #
-            </td>
-        </tr>
-
-        <tr class="details">
-            <td>
-                Check
-            </td>
-
-            <td>
-                1000
-            </td>
-        </tr>
 
         <tr class="heading">
+            <td>
+                UDS
+            </td>
             <td>
                 Item
             </td>
@@ -173,6 +224,8 @@
         <tr class="item">
             <td>
                 Website design
+            </td><td>
+                Website design
             </td>
 
             <td>
@@ -183,6 +236,8 @@
         <tr class="item">
             <td>
                 Hosting (3 months)
+            </td><td>
+                Hosting (3 months)
             </td>
 
             <td>
@@ -192,6 +247,8 @@
 
         <tr class="item last">
             <td>
+                Domain name (1 year)
+            </td><td>
                 Domain name (1 year)
             </td>
 

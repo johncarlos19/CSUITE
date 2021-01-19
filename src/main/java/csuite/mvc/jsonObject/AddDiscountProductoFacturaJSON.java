@@ -5,6 +5,9 @@ public class AddDiscountProductoFacturaJSON {
     private long idProducto;
     private String idFactura;
 
+
+    public AddDiscountProductoFacturaJSON() {
+    }
     public AddDiscountProductoFacturaJSON(long cantidad, long idProducto, String idFactura) {
         this.cantidad = cantidad;
         this.idProducto = idProducto;

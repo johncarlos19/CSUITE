@@ -14,6 +14,8 @@ public class FacturaJson {
     private String idQuienLoRealizo;
     private String metodoDePago;
     private Timestamp fechaCompra;
+    private String nombreCliente;
+    private String idCliente;
     private List<ImpuestoCliente> impuestoFacturas= new ArrayList<ImpuestoCliente>();
     private List<ProductoJSON> productos= new ArrayList<ProductoJSON>();
 
@@ -25,6 +27,22 @@ public class FacturaJson {
         this.metodoDePago = metodoDePago;
         this.fechaCompra = fechaCompra;
         this.impuestoFacturas = impuestoFacturas;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
     }
 
     public List<ProductoJSON> getProductos() {

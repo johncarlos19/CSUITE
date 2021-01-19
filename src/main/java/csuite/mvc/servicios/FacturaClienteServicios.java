@@ -34,15 +34,30 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
                 query.setParameter("idFacturaCliente",idFacturaCliente);
                 //query.setParameter("nombre", apellido+"%");
                 facturaCliente = (FacturaCliente) query.getSingleResult() ;
-                System.out.println("\n\nxxxx"+facturaCliente.getImpuestoClientes().size());
-                System.out.println("\n\nxxxxImpuestoProducto"+facturaCliente.getFacturaClienteProductoVendidos().get(0).getImpuestoProducto().size());
+
+                System.out.println("\n\nxxxxTamano debe salir"+facturaCliente.getImpuestoClientes().size());
+                for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
+                    System.out.println("\n\nxxxxIDPeroductoFactura: "+facturaCliente.getFacturaClienteProductoVendidos().get(i).getId()+" ImpuestoProducto"+facturaCliente.getFacturaClienteProductoVendidos().get(i).getImpuestoProducto().size());
+                }
                 return facturaCliente;
             }catch (javax.persistence.NoResultException D){
-                Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idFactura = :idFacturaCliente   " );
-                query.setParameter("idFacturaCliente",idFacturaCliente);
-                //query.setParameter("nombre", apellido+"%");
-                facturaCliente = (FacturaCliente) query.getSingleResult() ;
-                return facturaCliente;
+                try {
+                    D.printStackTrace();
+                    Query query = session.createQuery("select fc from FacturaCliente fc inner join fc.impuestoClientes ic  where fc.idFactura = :idFacturaCliente   " );
+                    query.setParameter("idFacturaCliente",idFacturaCliente);
+                    //query.setParameter("nombre", apellido+"%");
+                    facturaCliente = (FacturaCliente) query.getSingleResult() ;
+                    System.out.println("\n\nxxxxTamano debe salir"+facturaCliente.getImpuestoClientes().size());
+                    return facturaCliente;
+                }catch (javax.persistence.NoResultException f){
+                    f.printStackTrace();
+                    Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idFactura = :idFacturaCliente   " );
+                    query.setParameter("idFacturaCliente",idFacturaCliente);
+                    //query.setParameter("nombre", apellido+"%");
+                    facturaCliente = (FacturaCliente) query.getSingleResult() ;
+                    return facturaCliente;
+                }
+
             }
 
         } finally {
@@ -50,6 +65,40 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         }
     }
 
+    public List<FacturaCliente> ListFacturaClienteActivaVendedor(String idFacturaCliente){
+        final Session session = getHibernateSession();
+        try {
+            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact " );
+            query.setParameter("idFacturaCliente",idFacturaCliente);
+            query.setParameter("fact",false);
+            //query.setParameter("nombre", apellido+"%");
+            List<FacturaCliente> facturaClienteList = (List<FacturaCliente>) query.getResultList() ;
+
+
+            return facturaClienteList;
+
+        } finally {
+            session.close();
+        }
+
+    }
+    public List<FacturaCliente> ListFacturaClienteActivaEmpleado(String idFacturaCliente){
+        final Session session = getHibernateSession();
+        try {
+            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idQuienLoRealizo = :idFacturaCliente and fc.facturaGuardada = :fact " );
+            query.setParameter("idFacturaCliente",idFacturaCliente);
+            query.setParameter("fact",false);
+            //query.setParameter("nombre", apellido+"%");
+            List<FacturaCliente> facturaClienteList = (List<FacturaCliente>) query.getResultList() ;
+
+
+            return facturaClienteList;
+
+        } finally {
+            session.close();
+        }
+
+    }
 
     public FacturaCliente crearFacturaCliente(FacturaCliente facturaCliente, String user, String idCliente) {
         boolean subio = false;
@@ -78,7 +127,9 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
                 Logger.getLogger(UsuarioServicios.class.getName()).log(Level.SEVERE, null, ex);
             }
         }*/
-
+        Cliente cliente = ClienteServicios.getInstancia().getCliente(idCliente);
+        facturaCliente.setIdCliente(idCliente);
+        facturaCliente.setNombreCliente(cliente.getIdCliente().getNombre() + " "+cliente.getIdCliente().getApellido());
         FacturaCliente facturaClienteAux = (FacturaCliente) crear(facturaCliente);
          facturaClienteAux.getId();
         facturaClienteAux = (FacturaCliente) buscar(facturaClienteAux.getId());
@@ -94,7 +145,7 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         }
         facturaCliente = (FacturaCliente) editar(facturaCliente);
 
-        Cliente cliente = ClienteServicios.getInstancia().getCliente(idCliente);
+
         cliente.addFacturaCliente(facturaCliente);
         ClienteServicios.getInstancia().editar(cliente);
         facturaCliente = (FacturaCliente) getFacturaCliente(facturaClienteAux.getId());

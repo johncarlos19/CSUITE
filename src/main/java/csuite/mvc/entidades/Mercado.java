@@ -28,7 +28,7 @@ public class Mercado {
     private AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
     private AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
     private ArrayList<Login> logins = new ArrayList<Login>();
-    private long timeSessionMinute = 5;
+    private long timeSessionMinute = 10;
     public  List<VentasSession> listaSseUsuario = new ArrayList<VentasSession>();
 
     public Mercado() {
@@ -49,9 +49,11 @@ public class Mercado {
 
 //        try {
             if (verificar_user("admin", "admin") != null) {
+
+//                ClienteServicios.getInstancia().getCliente("CLI-000001");
 //                ImpuestoClienteServicios.getInstancia().ListaImpuestoFacturaCliente("FAC-00000003");
-//                discountProductoInFactura("FAC-00000003", 1, 21);
-                addProductoInFactura("FAC-00000003", 1, 3);
+//                discountProductoInFactura("FAC-00000003", 1, 6);
+//                    addProductoInFactura("FAC-00000004", 1, 4);
 //                //agregando para la factura lista producto
 //                long id = 1;
 //                Producto va = (Producto) new ProductoServicios().find(id);
@@ -355,6 +357,64 @@ public class Mercado {
             Producto ddtd = new Producto("CC", BigDecimal.valueOf(500.00).setScale(2));
             ddtd.setDescripcion("Malo");
             new ProductoServicios().crearProducto(ddtd);*/
+    }
+
+    public boolean sePuedeEditarYActivate(String jefe, long producto, String user){
+        boolean editar = true;
+        int posi = -1;
+        for (int i = 0; i < listaSseUsuario.size(); i++) {
+            if (listaSseUsuario.get(i).isVaEnviar()== true && listaSseUsuario.get(i).getProducoAEnviar() == producto && listaSseUsuario.get(i).getIdJefe().equalsIgnoreCase(jefe)){
+                editar = false;
+                break;
+            }
+            if (listaSseUsuario.get(i).getIdJefe().equalsIgnoreCase(jefe) && listaSseUsuario.get(i).getUser().equalsIgnoreCase(user)){
+                posi = i;
+            }
+        }
+        if (posi != -1 && editar == true){
+            listaSseUsuario.get(posi).activateVaEnviar(producto);
+        }
+        return editar;
+    }
+    public void sePuedeEditarYDesactivate(String jefe, long producto, String user){
+        boolean editar = true;
+        for (int i = 0; i < listaSseUsuario.size(); i++) {
+            if (listaSseUsuario.get(i).getIdJefe().equalsIgnoreCase(jefe) && listaSseUsuario.get(i).getUser().equalsIgnoreCase(user)){
+                listaSseUsuario.get(i).desactivateVaEnviar();
+            }
+        }
+    }
+
+
+
+    public boolean borrarFactura(String idFactura){
+
+            FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+            if (facturaCliente.isFacturaGuardada()==false){
+                for (FacturaClienteProductoVendido clienteProductoVendido : facturaCliente.getFacturaClienteProductoVendidos()) {
+                    Producto producto = ProductoServicios.getInstancia().buscar(clienteProductoVendido.getIdProducto().getId());
+                    long cantidad = clienteProductoVendido.getCantidad();
+                    facturaCliente.discountPrecioProducto(clienteProductoVendido.getPrecioVenta()*cantidad);
+                    facturaCliente.discountValueImpuesto(clienteProductoVendido,cantidad);
+//                    facturaCliente.removeFacturaClienteProductoVendido(clienteProductoVendido.getId());
+
+                    producto.getProductoEnVenta().addProductoStock(cantidad);
+                    producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+
+                }
+                FacturaClienteServicios.getInstancia().delete(idFactura);
+                return true;
+            }else{
+                return false;
+            }
+
+
+
+
+
+
+
+
     }
     public ProductoJSON discountProductoInFactura(String idFactura, long idProducro, long cantidad) {
         FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
@@ -847,7 +907,7 @@ public class Mercado {
     public String getUserJefeWithToken(Claims claims) {
 //        Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;
-        System.out.println("\n\nPerfil" + claims.getAudience() + "-" + claims.getIssuer());
+//        System.out.println("\n\nPerfil" + claims.getAudience() + "-" + claims.getIssuer());
 
         switch (claims.getAudience()) {
             case "Admin":
@@ -863,7 +923,7 @@ public class Mercado {
                 se = claims.getIssuer();
                 break;
             default:
-                se = claims.getIssuer();
+                se = null;
                 break;
         }
         return se;

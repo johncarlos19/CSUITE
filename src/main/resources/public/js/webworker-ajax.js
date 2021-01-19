@@ -43,6 +43,8 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
@@ -78,6 +80,8 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
@@ -112,6 +116,82 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'deleteFactura':
+
+            axios.post('/api/Factura/deleteFacturaActiva', data.id)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === -1){
+                            console.log("Respuesta:"+response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'facturaBorrada', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'facturaBorrada', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'facturaLoad':
+
+            axios.post('/api/Factura/loadFactura', data.id)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found"){
+                            console.log("Respuesta:"+response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'facturaLoad', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'facturaLoad', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
@@ -132,11 +212,11 @@ this.addEventListener('message', function(e) {
                             postMessage({'cmd': 'noFound', 'data': response.data});
                             return response.data;
                         }else{
-                            postMessage({'cmd': 'cliente', 'data': response.data});
+                            postMessage({'cmd': 'createFactura', 'data': response.data});
                             return response.data;
                         }
                     } catch (error) {
-                        postMessage({'cmd': 'cliente', 'data': response.data});
+                        postMessage({'cmd': 'createFactura', 'data': response.data});
                         return response.data;
                         // expected output: ReferenceError: nonExistentFunction is not defined
                         // Note - error messages will vary depending on browser
@@ -147,6 +227,8 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
@@ -182,6 +264,8 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
@@ -216,12 +300,161 @@ this.addEventListener('message', function(e) {
                     // handle error
                     console.log("Error:");
                     console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'ventasActiva':
+            console.log("Buscando la fecha desde el servidor...");
+            axios.get('/api/Factura/ventasActivas')
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout','data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'ventasActiva', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    // postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'ventaINV':
+            console.log("Buscando la fecha desde el servidor...");
+            axios.get('/api/Producto')
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout','data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'ventaProducto', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'addProductoFactura':
+            console.log("addProducto...");
+
+            axios.post('/api/Factura/addProducto', data.AddDiscountProductoFacturaJSON)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'facturaLoad', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'discountProductoFactura':
+            console.log("discountProductoFactura...");
+
+            axios.post('/api/Factura/discountProducto', data.AddDiscountProductoFacturaJSON)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1){
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'facturaLoad', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
                 })
                 .then(function () {
                     // always executed
                 });
             break;
         default:
+
             this.postMessage('{"tipo": "msg","mensaje" : "Mensaje no procesado: '+data.msg+'}');
     };
 }, false);

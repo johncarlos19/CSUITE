@@ -473,7 +473,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                     System.out.println(headerAuth);
                     String user = ctx.cookie("User");
                     String session = ctx.sessionAttribute("User");
-                    System.out.println("este es e; [add"+ctx.path());
+                    System.out.println("este es el add:"+ctx.path());
 
 //                    if (ctx.path().contains("/dashboardPlantilla/")==true  || ctx.path().contains("/webPage")==true ||ctx.path().contains("/js")==true ||ctx.path().contains("/bd")==true || ctx.path().contains("/assets")==true ){
 
@@ -482,6 +482,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                             || ctx.path().contains("/categoria")==true
                             || ctx.path().contains("/impuesto")==true
                             || ctx.path().contains("/empleado")==true
+                            || ctx.path().contains("/crearVentas")==true
+                            || ctx.path().contains("/ventasActivas")==true
                     ){
                         if (user==null || session == null){
 
@@ -524,6 +526,9 @@ public class RecibirDatosControlador extends JavalinControlador {
                                     }
 
                                 }catch (ExpiredJwtException e){
+                                    ctx.req.getSession().invalidate();
+                                    ctx.redirect("/login");
+                                }catch (NullPointerException e){
                                     ctx.req.getSession().invalidate();
                                     ctx.redirect("/login");
                                 }
@@ -590,28 +595,73 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                 });
 
-                path("/ventas", () -> {
-
-                    path("/crear", () -> {
-
-                        get(ctx -> {
-                            Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
-                            System.out.println("\n\n\nusuario" + user);
-                            ctx.res.addHeader("Authorization", ctx.cookie("User"));
-                            Map<String, Object> contexto = new HashMap<>();
+                path("/crearVentas", () -> {
+                    get(ctx -> {
+                        String idFact = ctx.sessionAttribute("idFactura");
+                        if (idFact ==null){
+                            idFact = "";
+                        }else{
+                            ctx.req.removeAttribute("idFactura");
+                        }
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nusuario" + user);
+                        ctx.res.addHeader("Authorization", ctx.cookie("User"));
+                        Map<String, Object> contexto = new HashMap<>();
 //                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
-                            for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
-                            ) {
-                                contexto.put(politica.getKey(), politica.getValue());
-                            }
+                        for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                        ) {
+                            contexto.put(politica.getKey(), politica.getValue());
 
-                            ctx.render("/public/dashboardPlantilla/crearVenta.html", contexto);
+                        }
+                        contexto.put("idFactura", idFact);
+                        ctx.render("/public/dashboardPlantilla/crearVenta.html", contexto);
+
+
+                    });
+
+//                    path("/crear", () -> {
+//
+//
+//                    });
 
 
                         });
-                    });
+                path("/ventasActivas", () -> {
+                            get(ctx -> {
+                                Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                System.out.println("\n\n\nusuario" + user);
+                                ctx.res.addHeader("Authorization", ctx.cookie("User"));
+                                Map<String, Object> contexto = new HashMap<>();
+//                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+                                for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                                ) {
+                                    contexto.put(politica.getKey(), politica.getValue());
+                                }
+
+                                ctx.render("/public/dashboardPlantilla/facturaActiva.html", contexto);
 
 
+                            });
+                            post(ctx -> {
+                                Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                String idFac = ctx.formParam("idFactura");
+                                if (idFac != null){
+                                    ctx.sessionAttribute("idFactura",idFac);
+//                                    System.out.println("\n\n\nusuario" + user);
+//                                    ctx.res.addHeader("Authorization", ctx.cookie("User"));
+//                                    Map<String, Object> contexto = new HashMap<>();
+////                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+//                                    for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+//                                    ) {
+//                                        contexto.put(politica.getKey(), politica.getValue());
+//                                    }
+
+                                    ctx.redirect("/dashboard/crearVentas");
+                                }
+
+
+
+                            });
                         });
 
                 path("/categoria", () -> {
@@ -1017,9 +1067,11 @@ public class RecibirDatosControlador extends JavalinControlador {
 
     public static boolean isExpirate(Claims jwt){
         boolean expire = true;
+        if (jwt != null){
+            if (new  Date(System.currentTimeMillis()).after(jwt.getExpiration())){
+                return expire;
+            }
 
-        if (new  Date(System.currentTimeMillis()).after(jwt.getExpiration())){
-            return expire;
         }
         return false;
     }
@@ -1027,10 +1079,14 @@ public class RecibirDatosControlador extends JavalinControlador {
     public static Claims decodeJWT(String jwt) {
 
         //This line will throw an exception if it is not a signed JWS (as expected)
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
-                .parseClaimsJws(jwt).getBody();
+        try {
 
-        return claims;
-    }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                    .parseClaimsJws(jwt).getBody();
+
+            return claims;
+        }catch (ExpiredJwtException e){
+            return null;
+    }    }
 }

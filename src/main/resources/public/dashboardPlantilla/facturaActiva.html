@@ -327,6 +327,8 @@ CUERPO DOCUMENTO
 
                     </li>
 
+
+
                     <li>
 
                         <a href="http://localhost/csuite.mvc/pos1/crear-venta">
@@ -420,15 +422,15 @@ CUERPO DOCUMENTO
 
             <h1>
 
-                Administrar categorías
+                Administrar Ventas Activas
 
             </h1>
 
             <ol class="breadcrumb">
 
-                <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="/dashboard/home"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-                <li class="active">Administrar Impuesto</li>
+                <li class="active">Administrar Ventas Activas</li>
 
             </ol>
 
@@ -436,176 +438,142 @@ CUERPO DOCUMENTO
 
         <section class="content">
 
-            <div class="box">
+            <div class="">
+                <div class="users-list clearfix facturaAct" id="facturaAct">
 
-                <div class="box-header with-border" th:style="${impuestoAdd}">
+                    <div class="col-md-3">
+                    <div class="box box-default ">
+                        <div class="box-header with-border">
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCategoria">
+                            <h3 class="box-title" >FA-CCCe</h3>
 
-                        Agregar Impuesto
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-paper-outline"></i></span>
+                                    <!-- ./chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-8">
+                                    <table>
 
-                    </button>
+                                    <tbody>
+                                    <tr class="row"><td class="form-group">
+
+
+                                        <div class="col-sm-7">
+                                            <label for="inputName1" class="control-label">Fecha:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a  class="form-control-" id="inputName1" placeholder="Name">ssiiiiiiiiiiiiiiiiiiiiiii</a>
+                                        </div>
+                                    </td></tr>
+                                    <tr class="row"><td class="form-group">
+
+
+
+                                        <div class="col-sm-7">
+                                            <label for="inputName" class="control-label">ID Cliente:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a  class="form-control-" id="inputName" placeholder="Name">ssiiiiiiiiiiiiiiiiiiiiiii</a>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    <tr class="row"><td class="form-group">
+
+
+
+                                        <div class="col-sm-7">
+                                            <label for="inputName2" class="control-label">Nombre:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a  class="form-control-" id="inputName2" placeholder="Name">ssiiiiiiiiiiiiiiiiiiiiiii</a>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    <tr class="row"><td class="form-group">
+
+
+
+                                        <div class="col-sm-7">
+                                            <label for="inputName3" class="control-label">Creador:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a  class="form-control-" id="inputName3" placeholder="Name">ssiiiiiiiiiiiiiiiiiiiiiii</a>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">SubTotal
+                                    <span class="pull-right text-yellow">kkk</span></a></li>
+
+                                <li><a >Total
+                                    <span class="pull-right text-green">44</span></a></li>
+                                <li><a ><button type="button" class="btn  btn-danger btnEliminarFactura1" id="ccc" >Eliminar</button><div class="pull-right">
+                                    <form method="post">
+                                        <input type="hidden" name="idFactura" value="">
+                                        <button class="btn  btn-success" type="submit">Editar</button>
+                                    </form>
+                                </div></a >
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
+                    </div>
+                    </div>
 
                 </div>
+<!--                <div class="card-deck  mb-3 text-center d-flex justify-content-center">-->
 
-                <div class="box-body">
+<!--                    <th:block th:each="aux : ${listaPaqueteProducto}">-->
 
-                    <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+<!--                        <div class="card mb-4 shadow-sm">-->
+<!--                            <div class="card-header">-->
+<!--                                <h4 class="my-0 font-weight-normal" th:text="${aux.nombrePaquete}">Free</h4>-->
+<!--                            </div>-->
+<!--                            <div class="card-body">-->
+<!--                                <h1 class="card-title pricing-card-title"><a th:text="'$'+${aux.total}">$0</a> <small-->
+<!--                                        class="text-muted">/ mo</small></h1>-->
+<!--                                <ul class="list-unstyled mt-3 mb-4">-->
+<!--                                    <th:block th:each="produ : ${aux.productoList}">-->
+<!--                                        <li th:text="${produ.nombre}+'-'+${produ.descripcion}">10 users included</li>-->
+<!--                                    </th:block>-->
+<!--                                </ul>-->
+<!--                                <form action="/checkout" method="post">-->
+<!--                                    <input type="hidden" name="id" th:value="${aux.id}">-->
 
-                        <thead>
+<!--                                    <button type="submit" class="text-black btn btn-lg btn-block btn-outline btn-primary">Seleccionar</button>-->
+<!--                                </form>-->
 
-                        <tr>
-
-                            <th style="width:10px">#</th>
-                            <th>Nombre</th>
-                            <th>Tipo de Tributo</th>
-                            <th>Valor</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-
-                        </tr>
-
-                        </thead>
-
-                        <tbody>
-
-
-                        <th:block th:each="aux : ${impuesto}">
-
-                            <tr>
-
-                                <td th:text="${aux.id}"></td>
-
-                                <td class="text-uppercase" th:text="${aux.nombre}">'.$value["categoria"].'</td>
-                                <td class="text-uppercase" th:text="${aux.operacion}">'.$value["categoria"].'</td>
-                                <td class="text-uppercase" th:text="${aux.ValorSumandoExtraBig}">'.$value["categoria"].'</td>
-                                <th>
+<!--                            </div>-->
+<!--                        </div>-->
 
 
-                                    <div th:if="${aux.isUtilizar}">
-                                        <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.id}">Activado</button>
-                                    </div>
-                                    <!-- ELSE -->
-                                    <div th:unless="${aux.isUtilizar}">
-                                        <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.id}">Desactivado</button>
-                                    </div>
-                                </th>
-                                <td>
-
-                                    <div class="btn-group" th:style="${impuestoEdit}">
-
-                                        <button  class="btn btn-warning btnEditarCategoria" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button>
-                                        <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
+<!--                    </th:block>-->
 
 
 
-                        </th:block>
+<!--                </div>-->
 
 
-
-
-
-                        </tbody>
-
-
-                        <!--        <tbody>-->
-
-                        <!--         -->
-                        <!--        <tr role="row" class="odd">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">1</td>-->
-
-                        <!--                    <td class="text-uppercase">Equipos Electromecánicos</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="1" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="1"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">2</td>-->
-
-                        <!--                    <td class="text-uppercase">Taladros</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="2" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="2"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">3</td>-->
-
-                        <!--                    <td class="text-uppercase">Andamios</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="3" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="3"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">4</td>-->
-
-                        <!--                    <td class="text-uppercase">Generadores de energía</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="4" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="4"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">5</td>-->
-
-                        <!--                    <td class="text-uppercase">Equipos para construcción</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="5" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="5"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="even">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">6</td>-->
-
-                        <!--                    <td class="text-uppercase">Martillos mecánicos</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="6" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="6"><i class="fa fa-times"></i></button> </div></td></tr><tr role="row" class="odd">-->
-
-                        <!--                    <td tabindex="0" class="sorting_1">7</td>-->
-
-                        <!--                    <td class="text-uppercase">PANELES</td>-->
-
-                        <!--                    <td>-->
-
-                        <!--                      <div class="btn-group">-->
-                        <!--                          -->
-                        <!--                        <button class="btn btn-warning btnEditarCategoria" idcategoria="7" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCategoria" idcategoria="7"><i class="fa fa-times"></i></button></div>  -->
-
-                        <!--                    </td>-->
-
-                        <!--                  </tr></tbody>-->
-
-                    </table>
-                </div>
             </div>
-
-
-
-            <!--           <div class="row">-->
-            <!--               <div class="col-sm-5">-->
-            <!--                   <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Mostrando registros del 1 al 7 de un total de 7</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="DataTables_Table_0_previous"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a></li><li class="paginate_button active"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button next disabled" id="DataTables_Table_0_next"><a href="http://localhost/csuite.mvc/pos1/categorias#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">Siguiente</a></li></ul></div></div></div></div>-->
-
-            <!--      </div>-->
-
-            <!--    </div>-->
 
         </section>
 
@@ -828,6 +796,40 @@ CUERPO DOCUMENTO
 
     </div>
 
+    <div id="modalAlertaTime" class="modal fade" role="dialog" style="display: none;" >
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header alert alert-danger alert-dismissible " >
+
+                    <!--				  <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+
+                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>
+
+                </div>
+
+                <!--=====================================
+                CUERPO DEL MODAL
+                ======================================-->
+
+                <div class="modal-body">
+
+                    <div class="box-body">
+                        <div id="time"></div>
+                        <div class="modal-footer" id="timeButton">
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 
     <div id="modalLoading" class="modal fade" role="dialog"  style="display: none" >
 
@@ -866,42 +868,6 @@ CUERPO DOCUMENTO
         </div>
     </div>
 
-    <div id="modalAlertaTime" class="modal fade" role="dialog" style="display: block;" >
-
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header alert alert-danger alert-dismissible " >
-
-                    <!--				  <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-
-                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>
-
-                </div>
-
-                <!--=====================================
-                CUERPO DEL MODAL
-                ======================================-->
-
-                <div class="modal-body">
-
-                    <div class="box-body">
-                        <div id="time"></div>
-                        <div class="modal-footer" id="timeButton">
-
-
-
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
-
     <footer class="main-footer">
 
         <strong>Copyright © 2020 <a href="https://www.cashsuite.net/" target="_blank">CashSuite</a>.</strong>
@@ -934,17 +900,29 @@ CUERPO DOCUMENTO
     //         renovo = true;
     //         setTimeout(alertaTime,e.data.data - (1500*60));
     //     }
+    //     if(e.data.cmd === 'ventasActiva'){
+    //         loadFacturaListActive(e.data.data);
+    //     }
     //
     // }
 
     $(document).ready(function(){
+
+
+        reloadFactActiva();
+
         setTimeout(alertaTime,timeSession)
+
     });
+
+
+
     function extendTime(){
         preciono = true;
-        worker.postMessage({'cmd': 'extendSession'});
 
+        worker.postMessage({'cmd': 'extendSession'});
     }
+
     function alertaTime(){
         if (renovo===false){
             $("#modalAlertaTime").modal({
@@ -991,23 +969,7 @@ CUERPO DOCUMENTO
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async="" defer="" src="./categoria_files/7875273.js(2).download"></script>
 <script>
-    function cantidad(va){
-        var e = document.getElementById("nuevoImpuesto");
-        var strUser = e.value;
 
-        switch (strUser) {
-            case "Porciento":
-                    document.getElementById("val").innerText = "%"
-                break;
-            case "Suma de Cantidad":
-                document.getElementById("val").innerText = "$"
-                break;
-            default:
-                document.getElementById("val").innerHTML = ""
-                break;
-
-        }
-    }
 </script>
 <!-- End of HubSpot Embed Code -->
 
