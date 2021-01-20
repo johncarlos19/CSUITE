@@ -47,7 +47,7 @@ public class ProductoServicios extends GestionadDB<Producto> {
         for ( Producto aux : listaProducto(0,user)
         ) {
             System.out.println("\n\n\nIdddddd"+aux.getId());
-            productoJSONS.add(aux.getProductoJSON());
+            productoJSONS.add(aux.getProductoJSON(1));
 
         }
         return productoJSONS;
@@ -90,15 +90,15 @@ List<Foo> fooList = fooList = query.list();*/
 //        EntityManager em = getEntityManager();
         try {
 
-        Query query = session.createQuery("select p from Vendedor v inner join v.productoList p where v.idVendedor.usuario = '"+user+"' order by p.id desc " );
+        Query query = session.createQuery("select p from Vendedor v inner join v.productoList p inner join p.foto f where v.idVendedor.usuario = '"+user+"' order by p.id desc " );
 
         if (page != 0){
             query.setFirstResult(0+10*(page-1));
             query.setMaxResults(5);
         }
-
         //query.setParameter("nombre", apellido+"%");
-        lista = query.getResultList();
+            lista = query.getResultList();
+            System.out.println("\n\n\n\n\nCantidadLista +"+ ((ArrayList<Producto>) lista).size());
 
     } finally {
             session.close();
@@ -245,37 +245,39 @@ List<Foo> fooList = fooList = query.list();*/
         return eliminar(ID);
     }
 
-    public Producto getProducto(long id) {
-        /*
-        Producto produ = null;
-        Connection con = null;
+    public Producto getProductoSinFoto(long id) {
+        Producto lista = null;
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
         try {
-            //utilizando los comodines (?)...
-            String query = "select * from PRODUCTO where ID = ?";
-            con = DataBaseServices.getInstancia().getConexion();
-            //
-            PreparedStatement prepareStatement = con.prepareStatement(query);
-            //Antes de ejecutar seteo los parametros.
-            prepareStatement.setInt(1, id);
-            //Ejecuto...
-            ResultSet rs = prepareStatement.executeQuery();
-            while(rs.next()){
-                produ = new Producto(rs.getString("NOMBRE"), rs.getBigDecimal("PRECIO"));
-                produ.setId(rs.getInt("ID"));
 
-            }
+            Query query = session.createQuery("select p from Producto p where p.id = :id order by p.id desc " );
+            query.setParameter("id",id);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductoServicios.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductoServicios.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
+            //query.setParameter("nombre", apellido+"%");
+            lista = (Producto) query.getSingleResult();
 
-        return find(id);
+        } finally {
+            session.close();
+        }return (Producto) lista;
+    }
+    public Producto getProductoConFoto(long id) {
+        Producto lista = null;
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select p from Producto p  inner join p.foto f where p.id = :id order by p.id desc " );
+            query.setParameter("id",id);
+
+            //query.setParameter("nombre", apellido+"%");
+            lista = (Producto) query.getSingleResult();
+
+        } finally {
+            session.close();
+        }return (Producto) lista;
     }
 //    public boolean deleteFoto(Producto producto, Foto foto){
 //        EntityManager em = getEntityManager();

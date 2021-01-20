@@ -62,10 +62,14 @@ public class Producto implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL , orphanRemoval = true,mappedBy = "idProducto")
     private ProductoEnVenta productoEnVenta;
 
-    private String nombreFoto;
-    private String mimeType;
-    @Lob
-    private String fotoBase64;
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL , orphanRemoval = true,mappedBy = "idProducto")
+    private Foto foto;
+
+
+//    private String nombreFoto;
+//    private String mimeType;
+//    @Lob
+//    private String fotoBase64;
 
 //        public List<Foto> getFotos() {
 //        return fotos;
@@ -76,11 +80,21 @@ public class Producto implements Serializable {
 //        this.fotos = fotos;
 //    }
 //
-//    public void addPicture(@NotNull Foto foto){
-//
-//            this.fotos.add(foto);
-//
-//    }
+
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
+
+    public void addFoto(Foto foto1){
+            foto1.setIdProducto(this);
+            this.foto = foto1;
+
+    }
 
     public Producto(){
 
@@ -92,7 +106,7 @@ public class Producto implements Serializable {
 //        this.precio = precio;
     }
 
-    public ProductoJSON getProductoJSON(){
+    public ProductoJSON getProductoJSON(int posi){
         float descuentoPorciento = 0;
         float impu = 0;
         float precioneto = productoEnVenta.getPrecioVenta();
@@ -103,25 +117,54 @@ public class Producto implements Serializable {
             precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) productoEnVenta.getPrecioVenta());
 
         }
-        ProductoJSON productoJSON = new ProductoJSON(
-                this.getId(),
-                this.getNombre(),
-                this.getDescripcion(),
-                this.getCodigo_local(),
-                this.getCantProductoVendido(),
-                this.isDisponible(),
-                this.categoria,
-                productoEnVenta.getStock(),
-                productoEnVenta.getPrecioVenta(),
-                productoEnVenta.getPrecioCompra(),
-                productoEnVenta.getCantMaxPorVenta(),
-                descuentoPorciento,
-                impu
-                ,precioneto,
-                this.getNombreFoto(),
-                this.getMimeType(),
-                this.getFotoBase64()
-        );
+        ProductoJSON productoJSON = null;
+        switch (posi){
+            case 1:
+                productoJSON = new ProductoJSON(
+                        this.getId(),
+                        this.getNombre(),
+                        this.getDescripcion(),
+                        this.getCodigo_local(),
+                        this.getCantProductoVendido(),
+                        this.isDisponible(),
+                        this.categoria,
+                        productoEnVenta.getStock(),
+                        productoEnVenta.getPrecioVenta(),
+                        productoEnVenta.getPrecioCompra(),
+                        productoEnVenta.getCantMaxPorVenta(),
+                        descuentoPorciento,
+                        impu
+                        ,precioneto,
+                        this.foto.getNombre(),
+                        this.foto.getMimeType(),
+                        this.foto.getFotoBase64()
+                );
+                break;
+            case 2:
+                productoJSON = new ProductoJSON(
+                        this.getId(),
+                        this.getNombre(),
+                        this.getDescripcion(),
+                        this.getCodigo_local(),
+                        this.getCantProductoVendido(),
+                        this.isDisponible(),
+                        this.categoria,
+                        productoEnVenta.getStock(),
+                        productoEnVenta.getPrecioVenta(),
+                        productoEnVenta.getPrecioCompra(),
+                        productoEnVenta.getCantMaxPorVenta(),
+                        descuentoPorciento,
+                        impu
+                        ,precioneto,
+                        null,
+                        null,
+                        null
+                );
+                 break;
+            default:
+                break;
+        }
+
         productoJSON.setImpuestoClientes(productoEnVenta.getImpuestoCliente());
         return productoJSON;
     }
@@ -141,6 +184,7 @@ public class Producto implements Serializable {
     }
     public boolean addOnlyList(Almacen almacen){
         System.out.println("\n\n\n\nproooooooo"+productoEnVenta.getIdAlmacen().getFechaRegistro());
+
         productoEnVenta.setIdAlmacen(null);
 
         productoEnVenta = (ProductoEnVenta) new ProductoEnVentaServicios().editar(productoEnVenta);
@@ -150,9 +194,9 @@ public class Producto implements Serializable {
 //        productoEnVenta.setDescuentoPorciento(0);
         productoEnVenta.addProductoStock(almacen.getProductoAgregado());
 
-        productoEnVenta.setIdAlmacen(almacen);
         almacen.setProductoEnVenta(productoEnVenta);
-        almacen= (Almacen) AlmacenServicios.getInstancia().editar(almacen);
+        productoEnVenta.setIdAlmacen(almacen);
+//        almacen= (Almacen) AlmacenServicios.getInstancia().editar(almacen);
 
         productoEnVenta = (ProductoEnVenta) new ProductoEnVentaServicios().editar(productoEnVenta);
 
@@ -170,7 +214,7 @@ public class Producto implements Serializable {
             productoEnVenta.setPrecioCompra(almacen.getCosto());
             productoEnVenta.setPrecioVenta(almacen.getPrecioVentaFutura());
 //            productoEnVenta.setDescuentoPorciento(0);
-            productoEnVenta.setStock(almacen.getProductoAgregado());
+            productoEnVenta.setStock(almacen.getDisponible());
 
             almacen= (Almacen) AlmacenServicios.getInstancia().crear(almacen);
             productoEnVenta.setIdAlmacen(almacen);
@@ -180,8 +224,8 @@ public class Producto implements Serializable {
             return almacen;
         }else if(productoEnVenta.getStock()!=0){
 
-            productoEnVenta.addProductoStock(almacen.getProductoAgregado());
-
+            almacen= (Almacen) AlmacenServicios.getInstancia().crear(almacen);
+            productoEnVenta.addProductoStock(almacen.getDisponible());
 //            almacen= (Almacen) AlmacenServicios.getInstancia().createAndReturnObjectWithUniqueId(almacen);
 
             this.almacenList.add(almacen);
@@ -215,10 +259,10 @@ return null;
 //    }
 
     public String getImgComplete() {
-        if (mimeType == null){
+        if (foto.getMimeType() == null){
             return "../dashboardPlantilla/img/productos/default/anonymous.png";
         }else{
-            return fotoBase64;
+            return foto.getFotoBase64();
         }
 
 
@@ -318,29 +362,29 @@ return null;
         return id;
     }
 
-    public String getNombreFoto() {
-        return nombreFoto;
-    }
-
-    public void setNombreFoto(String nombreFoto) {
-        this.nombreFoto = nombreFoto;
-    }
-
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    public String getFotoBase64() {
-        return fotoBase64;
-    }
-
-    public void setFotoBase64(String fotoBase64) {
-        this.fotoBase64 = fotoBase64;
-    }
+//    public String getNombreFoto() {
+//        return nombreFoto;
+//    }
+//
+//    public void setNombreFoto(String nombreFoto) {
+//        this.nombreFoto = nombreFoto;
+//    }
+//
+//    public String getMimeType() {
+//        return mimeType;
+//    }
+//
+//    public void setMimeType(String mimeType) {
+//        this.mimeType = mimeType;
+//    }
+//
+//    public String getFotoBase64() {
+//        return fotoBase64;
+//    }
+//
+//    public void setFotoBase64(String fotoBase64) {
+//        this.fotoBase64 = fotoBase64;
+//    }
 
     //    private Foto buscarFoto(Long ID) {
 //        Foto foto = null;

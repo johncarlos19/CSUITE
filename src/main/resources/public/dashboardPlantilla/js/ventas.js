@@ -135,16 +135,38 @@ function startServerSent1(){
 				"                                                   value='"+obj.stock+"' >\n"
 		}
 
-
 		var img = obj.fotoBase64
 		if (img == null){
-			img = "../dashboardPlantilla/img/productos/default/anonymous.png"
+			img = "<img src='"+"../dashboardPlantilla/img/productos/default/anonymous.png"+"' width='40px' >"
+		}else{
+			img = "<img src='"+obj.fotoBase64+"' width='40px' >"
 		}
+		if (row!== null){
+
+			$.fn.dataTable.ext.errMode = 'none';
+
+			$('#tablaInventario').on( 'error.dt', function ( e, settings, techNote, message ) {
+				console.log( 'An error has been reported by DataTables: ', message );
+			} ) ;
+
+			var table = $('#tablaInventario').DataTable();
+			// Remove a row by Id:
+			var index1 = table.row("#row_"+ obj.id).index()
+
+			img = table
+				.cell( index1, 1)
+				.data();
+
+
+
+		}
+
+
 
 		var employee = {
 			"DT_RowId": "row_"+ obj.id,
 			"#":    obj.id,
-			"Imagen":   "<img src='"+img+"' width='40px' >",
+			"Imagen":   img,
 			"Codigo": obj.codigo_local,
 			"Descripcion":   obj.nombre + "-"+ obj.descripcion,
 			"Stock":     sto,
@@ -445,7 +467,7 @@ function getFactura(factura){
 }
 
 function facturaLoadNow(factura){
-	stopLoading()
+	stopLoading();
 	var formatConfig1 = {
 		// style: "currency",
 		// currency: "DOP", // CNY for Chinese Yen, EUR for Euro

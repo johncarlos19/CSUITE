@@ -26,7 +26,7 @@ public class ProductoEnVenta implements Serializable {
     private float precioCompra;
     private long cantMaxPorVenta;
     @JoinColumn(name = "idAlmacen")
-    @OneToOne()
+    @OneToOne(cascade=CascadeType.ALL)
     private Almacen idAlmacen;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "idProductoEnVenta", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name="idproductoEnVenta")
@@ -87,6 +87,10 @@ public class ProductoEnVenta implements Serializable {
     public void setIdAlmacen(Almacen idAlmacen) {
         this.idAlmacen = idAlmacen;
     }
+    public void addIdAlmacen(Almacen idAlmacen) {
+        idAlmacen.setProductoEnVenta(this);
+        this.idAlmacen = idAlmacen;
+    }
 
 //    public List<Impuesto> getImpuestos() {
 //        return impuestos;
@@ -129,7 +133,7 @@ public class ProductoEnVenta implements Serializable {
         this.id = id;
     }
 
-    public ProductoJSON getProductoJSON(){
+    public ProductoJSON getProductoJSON(int posi){
         float descuentoPorciento = 0;
         float impu = 0;
         float precioneto = precioVenta;
@@ -140,26 +144,54 @@ public class ProductoEnVenta implements Serializable {
             precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) precioVenta);
 
         }
-
-        return new ProductoJSON(
-                idProducto.getId(),
-                idProducto.getNombre(),
-                idProducto.getDescripcion(),
-                idProducto.getCodigo_local(),
-                idProducto.getCantProductoVendido(),
-                idProducto.isDisponible(),
-                "Comida",
-                stock,
-                precioVenta,
-                precioCompra,
-                cantMaxPorVenta,
-                descuentoPorciento,
-                impu
-                ,precioneto,
-                idProducto.getNombreFoto(),
-                idProducto.getMimeType(),
-                idProducto.getFotoBase64()
-        );
+        ProductoJSON productoJSON = null;
+        switch (posi){
+            case 1:
+                 productoJSON = new ProductoJSON(
+                        idProducto.getId(),
+                        idProducto.getNombre(),
+                        idProducto.getDescripcion(),
+                        idProducto.getCodigo_local(),
+                        idProducto.getCantProductoVendido(),
+                        idProducto.isDisponible(),
+                        "Comida",
+                        stock,
+                        precioVenta,
+                        precioCompra,
+                        cantMaxPorVenta,
+                        descuentoPorciento,
+                        impu
+                        ,precioneto,
+                        idProducto.getFoto().getNombre(),
+                        idProducto.getFoto().getMimeType(),
+                        idProducto.getFoto().getFotoBase64()
+                );
+                break;
+            case 2:
+                productoJSON = new ProductoJSON(
+                        idProducto.getId(),
+                        idProducto.getNombre(),
+                        idProducto.getDescripcion(),
+                        idProducto.getCodigo_local(),
+                        idProducto.getCantProductoVendido(),
+                        idProducto.isDisponible(),
+                        "Comida",
+                        stock,
+                        precioVenta,
+                        precioCompra,
+                        cantMaxPorVenta,
+                        descuentoPorciento,
+                        impu
+                        ,precioneto,
+                        null,
+                        null,
+                        null
+                );
+                break;
+            default:
+                break;
+        }
+        return productoJSON;
     }
 
 

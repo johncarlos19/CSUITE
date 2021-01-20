@@ -117,27 +117,28 @@ public class GestionadDB<T> {
      */
 
     public Object crear(T entidad) throws IllegalArgumentException, EntityExistsException, PersistenceException {
-        EntityManager em = getEntityManager();
+        final Session session = getHibernateSession();
+//        EntityManager em = getEntityManager();
         Object aux = null;
 
         try {
 
-            em.getTransaction().begin();
-            em.persist(entidad);
-            em.flush();
+            session.getTransaction().begin();
+            session.persist(entidad);
+            session.flush();
             try {
                 aux = entidad;
             }catch (NullPointerException E){
                 aux = null;
             }
 
-            em.getTransaction().commit();
+            session.getTransaction().commit();
 
 
 
             return aux;
         } finally {
-            em.close();
+            session.close();
         }
     }
 
@@ -149,23 +150,24 @@ public class GestionadDB<T> {
     @Transactional
     public Object editar(T entidad) throws PersistenceException {
         Object aux = null;
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
+        final Session session = getHibernateSession();
+//        EntityManager em = getEntityManager();
+        session.getTransaction().begin();
         boolean dd = false;
         try {
 
-            em.merge(entidad);
-            em.flush();
+            session.merge(entidad);
+            session.flush();
             try {
                 aux = entidad;
             }catch (NullPointerException E){
                 aux = null;
             }
 
-            em.getTransaction().commit();
+            session.getTransaction().commit();
             dd = true;
         } finally {
-            em.close();
+            session.close();
         }
         return aux;
     }

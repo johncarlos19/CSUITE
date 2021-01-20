@@ -47,7 +47,7 @@ public class Mercado {
 //        facturaCliente.setIdQuienLoRealizo("admin");
 //        FacturaClienteServicios.getInstancia().crearFacturaCliente(facturaCliente,"admin","CLI-000001");
 
-//        try {
+        try {
             if (verificar_user("admin", "admin") != null) {
 
 //                ClienteServicios.getInstancia().getCliente("CLI-000001");
@@ -114,9 +114,9 @@ public class Mercado {
 
 
             }
-//        } catch (NullPointerException e) {
-//            runMuestra();
-//        }
+        } catch (NullPointerException e) {
+            runMuestra();
+        }
 
 
     }
@@ -156,11 +156,16 @@ public class Mercado {
         Usuario aux = RegistrarVendedor(usuario, "admin@cashsuite.com", "admin");
         Vendedor otro = VendedorServicios.getInstancia().getVendedor(aux.getUsuario());
 
+        Foto foto= new Foto(null,null,null);
+//        foto = (Foto) FotoServices.getInstancia().crear(foto);
+        Foto foto1= new Foto(null,null,null);
+//        foto1 = (Foto) FotoServices.getInstancia().crear(foto1);
 
         Producto producto = new Producto();
         producto.setNombre("Huevo");
         producto.setDescripcion("Son bueno");
         producto.setCodigo_local("144533");
+
         Producto producto1 = new Producto();
         producto1.setNombre("Pan");
         producto1.setDescripcion("Son malo");
@@ -178,6 +183,8 @@ public class Mercado {
         producto1.CrearProductoVenta();
         producto = ProductoServicios.getInstancia().crearProducto(producto);
         producto1 = ProductoServicios.getInstancia().crearProducto(producto1);
+        producto.addFoto(foto);
+        producto1.addFoto(foto1);
         otro.addProducto(producto);
         otro.addProducto(producto1);
 
@@ -189,8 +196,10 @@ public class Mercado {
 
         va = (Producto) new ProductoServicios().find(va.getId());
         Almacen almacen1 = new Almacen("Endy", 10, 0, 300, 600);
+//        almacen1 = (Almacen) AlmacenServicios.getInstancia().crear(almacen1);
         almacen1 = va.addAlmacen(almacen1);
-        new ProductoServicios().update(va);
+         ProductoServicios.getInstancia().update(va);
+//        almacen1 = AlmacenServicios.getInstancia().buscar(almacen1.getIdAlmacen());
         va.addOnlyList(almacen1);
 
         va = (Producto) new ProductoServicios().find(va.getId());
@@ -419,7 +428,7 @@ public class Mercado {
     public ProductoJSON discountProductoInFactura(String idFactura, long idProducro, long cantidad) {
         FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
         FacturaClienteProductoVendido facturaClienteProductoVendido = FacturaClienteProductoVendidoServicios.getInstancia().verifyProducto(idFactura, idProducro);
-        Producto producto = ProductoServicios.getInstancia().buscar(idProducro);
+        Producto producto = ProductoServicios.getInstancia().getProductoSinFoto(idProducro);
         if (facturaClienteProductoVendido != null) {
             if (facturaClienteProductoVendido.getCantidad() <= cantidad){
                 cantidad = facturaClienteProductoVendido.getCantidad();
@@ -432,7 +441,7 @@ public class Mercado {
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
-                return producto.getProductoJSON();
+                return producto.getProductoJSON(1);
             }else {
 //                facturaClienteProductoVendido.discountProducto(cantidad);
                 facturaCliente.discountPrecioProducto(facturaClienteProductoVendido.getPrecioVenta()*cantidad);
@@ -446,11 +455,11 @@ public class Mercado {
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
-                return producto.getProductoJSON();
+                return producto.getProductoJSON(1);
             }
 
         }else{
-            return producto.getProductoJSON();
+            return producto.getProductoJSON(1);
         }
     }
 
@@ -475,7 +484,7 @@ public class Mercado {
             producto.getProductoEnVenta().discountProductoStock(cantidad);
             producto = (Producto) ProductoServicios.getInstancia().editar(producto);
 
-            return producto.getProductoJSON();
+            return producto.getProductoJSON(1);
         } else {
             facturaClienteProductoVendido = new FacturaClienteProductoVendido();
             facturaClienteProductoVendido.setCantidad(cantidad);
@@ -494,7 +503,7 @@ public class Mercado {
             facturaCliente.addPrecioProducto(pro);
             facturaCliente.addFacturaClienteProductoVendido(facturaClienteProductoVendido);
             FacturaClienteServicios.getInstancia().editar(facturaCliente);
-            return producto.getProductoJSON();
+            return producto.getProductoJSON(1);
 
 
         }

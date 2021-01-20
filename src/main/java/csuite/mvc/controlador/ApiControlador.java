@@ -391,9 +391,9 @@ public class ApiControlador extends JavalinControlador {
                         producto.setNombre(tmp.getNombre());
                         producto.setDescripcion(tmp.getDescripcion());
                         producto.setCodigo_local(tmp.getCodigo());
-                        producto.setMimeType(tmp.getMimetype());
-                        producto.setNombreFoto(tmp.getNombreImg());
-                        producto.setFotoBase64(tmp.getBase64());
+//                        producto.setMimeType();
+//                        producto.setNombreFoto();
+//                        producto.setFotoBase64();
                         producto.setCategoria(tmp.getCategorias());
 
 
@@ -401,6 +401,18 @@ public class ApiControlador extends JavalinControlador {
 
                         producto.CrearProductoVenta();
                         producto = ProductoServicios.getInstancia().crearProducto(producto);
+                        if (tmp.getNombreImg() != null || tmp.getMimetype() != null || tmp.getBase64() != null ){
+
+                            Foto foto= new Foto(tmp.getNombreImg(), tmp.getMimetype(), tmp.getBase64());
+                            foto = (Foto) FotoServices.getInstancia().crear(foto);
+                            producto.addFoto(foto);
+                            producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+                        }else{
+                            Foto foto= new Foto(null,null,null);
+                            foto = (Foto) FotoServices.getInstancia().crear(foto);
+                            producto.addFoto(foto);
+                            producto = (Producto) ProductoServicios.getInstancia().editar(producto);
+                        }
                         otro.addProducto(producto);
 //            VendedorServicios.getInstancia().editar(otro);
                         Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoEspecif(producto.getId());
@@ -477,7 +489,7 @@ public class ApiControlador extends JavalinControlador {
     public void iniStart(){
         new Thread(() -> {
             long id = 1;
-            ProductoJSON productoJSON = ProductoServicios.getInstancia().buscar(id).getProductoJSON();
+            ProductoJSON productoJSON = ProductoServicios.getInstancia().buscar(id).getProductoJSON(1);
             while(true){
                 productoJSON.setStock(productoJSON.getStock()+1);
 //                List<VentasSession> listaTmp = new CopyOnWriteArrayList<>(Mercado.getInstance().getListaSseUsuario());

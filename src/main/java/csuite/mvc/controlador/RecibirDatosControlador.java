@@ -396,7 +396,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
                     ctx.removeCookie("User");
-                    ctx.req.getSession().invalidate();
+                    ctx.req.removeAttribute("User");
                     ctx.redirect("/login");
 
                 });

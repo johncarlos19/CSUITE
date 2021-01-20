@@ -111,7 +111,7 @@ List<Foo> fooList = fooList = query.list();*/
         for ( ProductoEnVenta aux : ListadoCompleto()
              ) {
             System.out.println("\n\n\nIdddddd"+aux.getIdProducto().getId());
-            productoJSONS.add(aux.getProductoJSON());
+            productoJSONS.add(aux.getProductoJSON(1));
 
         }
         return productoJSONS;

@@ -382,6 +382,11 @@ function startLoading(){
     $("#modalLoading").css("display", "block");
 }
 function stopLoading(){
+    setTimeout(stopNowLoading,2000);
+
+}
+
+function stopNowLoading(){
     $('#modalLoading').modal('toggle');
     $("#modalLoading").css("display", "none");
 }

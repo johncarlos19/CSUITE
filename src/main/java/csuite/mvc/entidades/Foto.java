@@ -8,6 +8,9 @@ public class Foto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JoinColumn(name = "idProducto")
+    @OneToOne()
+    private Producto idProducto;
     private String nombre;
     private String mimeType;
     @Lob
@@ -22,6 +25,15 @@ public class Foto implements Serializable {
         this.nombre = nombre;
         this.mimeType = mimeType;
         this.fotoBase64 = fotoBase64;
+    }
+
+
+    public Producto getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Producto idProducto) {
+        this.idProducto = idProducto;
     }
 
 
