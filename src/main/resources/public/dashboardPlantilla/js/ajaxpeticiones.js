@@ -28,7 +28,7 @@ worker.onmessage = function (e) { //recuperando la información
             }
             var employee = {
                 "#":    obj[key].id,
-                "Imagen":   "<img src='"+img+"' width='40px' >",
+                "Imagen":   "<img src='"+img+"' width='64' height='64' >",
                 "Nombre":   obj[key].nombre,
                 "Codigo": obj[key].codigo_local,
                 "Descripcion":  obj[key].descripcion,
