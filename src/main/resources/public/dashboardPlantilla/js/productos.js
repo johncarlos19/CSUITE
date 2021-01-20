@@ -27,6 +27,31 @@ function reloadtabladeInevntario(){
 	worker.postMessage({'cmd': 'ventaINV'});
 }
 
+function resizeBase64Img(base64, newWidth, newHeight) {
+	return new Promise((resolve, reject)=>{
+
+
+		var canvas = document.createElement("canvas");
+		canvas.style.width = newWidth.toString()+"px";
+		canvas.style.height = newHeight.toString()+"px";
+		let context = canvas.getContext("2d");
+		let img = document.createElement("img");
+		img.src = base64;
+		img.onload = function () {
+			var iw=img.width;
+			var ih=img.height;
+			var scale=Math.min((newWidth/iw),(newHeight/ih));
+			var iwScaled=iw*scale;
+			var ihScaled=ih*scale;
+			canvas.width=iwScaled;
+			canvas.height=ihScaled;
+
+			// context.scale(newWidth/img.width,  newHeight/img.height);
+			context.drawImage(img, 0, 0,iwScaled,ihScaled);
+			resolve(canvas.toDataURL());
+		}
+	});
+}
 
 function uploadPorduct(){
 	var nombre = document.getElementById("nombreProducto").value;
@@ -65,24 +90,33 @@ function uploadPorduct(){
 		reader.readAsDataURL(file1);
 		reader.onload = function () {
 
+			var base6412;
+			console.log("Esto es lo prim" + reader.result)
+			resizeBase64Img(reader.result, 50, 50).then(resized=>{
+
+					base6412 = resized;
+					console.log("sale esto"+base6412)
+				let temp = {
+
+					nombre: nombre,
+					codigo: codigo,
+					descripcion: descripcion,
+					stock: stock,
+					suplidor: suplidor,
+					compra: compra,
+					venta: venta,
+					base64: base6412,
+					mimetype: mimetype,
+					nombreImg: nombreImg,
+					categorias: categoria
+				}
+				console.log(temp)
+				worker.postMessage({'cmd': 'uploadProducto', 'ProductoSaveJson': temp});
+
+			});
 
 
-			let temp = {
 
-				nombre: nombre,
-				codigo: codigo,
-				descripcion: descripcion,
-				stock: stock,
-				suplidor: suplidor,
-				compra: compra,
-				venta: venta,
-				base64: reader.result,
-				mimetype: mimetype,
-				nombreImg: nombreImg,
-				categorias: categoria
-			}
-			console.log(temp)
-			worker.postMessage({'cmd': 'uploadProducto', 'ProductoSaveJson': temp});
 		};
 		reader.onerror = function (error) {
 			console.log('Error: ', error);
