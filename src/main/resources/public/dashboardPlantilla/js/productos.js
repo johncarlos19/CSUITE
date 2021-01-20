@@ -92,7 +92,7 @@ function uploadPorduct(){
 
 			var base6412;
 			console.log("Esto es lo prim" + reader.result)
-			resizeBase64Img(reader.result, 50, 50).then(resized=>{
+			resizeBase64Img(reader.result, 150, 150).then(resized=>{
 
 					base6412 = resized;
 					console.log("sale esto"+base6412)
