@@ -422,13 +422,29 @@ public class RecibirDatosControlador extends JavalinControlador {
                             String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
                             if (isSessionAvailable(ctx.formParam("ingresoEmail"),ctx.req.getSession().getId())){
                                 String user = ctx.formParam("ingresoEmail");
-
+                                Map<String, Object> map = null;
                                 String header = "Authorization";
                                 String dueno = user;
+                                String direccion;
+                                String compania;
+                                String telefono;
+                                String ciudadPais;
                                 if (perfil.equalsIgnoreCase("Admin") == false||perfil.equalsIgnoreCase("Vendedor"  ) == false){
-                                    dueno = Mercado.getInstance().getUserJefe(user);
+
+                                    map = Mercado.getInstance().getUserJefe(user);
+                                    dueno = (String) map.get("user");
+                                    direccion = (String) map.get("direccion");
+                                    compania = (String) map.get("compania");
+                                    telefono = (String) map.get("telefono");
+                                    ciudadPais = (String) map.get("ciudadPais");
+                                }else{
+                                    map = Mercado.getInstance().getUserJefe(user);
+                                    direccion = (String) map.get("direccion");
+                                    compania = (String) map.get("compania");
+                                    telefono = (String) map.get("telefono");
+                                    ciudadPais = (String) map.get("ciudadPais");
                                 }
-                                String jwt = createJWT(user,perfil,dueno);
+                                String jwt = createJWT(user,perfil,map);
                                 Login login = new Login(user,decodeJWT(jwt));
                                 login.setSession(ctx.req.getSession());
                                 Mercado.getInstance().getLogins().add(login);
@@ -496,10 +512,16 @@ public class RecibirDatosControlador extends JavalinControlador {
                             if(Mercado.getInstance().getUserEncryptor().decrypt(user).equalsIgnoreCase(session)){
                                 try {
                                     if(isExpirate(decodeJWT(session))==false){
-                                        String header = "Authorization";
                                         Claims claims = decodeJWT(session);
+                                        String header = "Authorization";
                                         String use = claims.getId();
-                                        String jwt = createJWT(use,claims.getAudience(), claims.getIssuer());
+                                        Map<String, Object> map = new HashMap<String, Object>();
+                                        map.put("user",claims.get("user"));
+                                        map.put("direccion",claims.get("direccion"));
+                                        map.put("telefono",claims.get("telefono"));
+                                        map.put("compania",claims.get("compania"));
+                                        map.put("ciudadPais",claims.get("ciudadPais"));
+                                        String jwt = createJWT(use,claims.getAudience(), map);
                                         ctx.header(header,jwt);
                                         ctx.sessionAttribute("User",jwt);
                                         ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -555,6 +577,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
+                        System.out.println("\n\n\nusuario12"+user.getId());
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
@@ -1035,7 +1058,7 @@ public class RecibirDatosControlador extends JavalinControlador {
         return available;
     }
 
-    public static String createJWT(String username, String perfil, String dueno) {
+    public static String createJWT(String username, String perfil, Map<String, Object> map) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -1048,10 +1071,11 @@ public class RecibirDatosControlador extends JavalinControlador {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         //Let's set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(username)
+        JwtBuilder builder;
+        builder = Jwts.builder().setClaims(map).setId(username)
                 .setIssuedAt(now)
                 .setSubject("CashSuite")
-                .setIssuer(dueno)
+                .setIssuer((String) map.get("user"))
                 .setAudience(perfil)
                 .signWith(signatureAlgorithm, signingKey);
 

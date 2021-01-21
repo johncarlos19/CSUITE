@@ -382,7 +382,7 @@ function startLoading(){
     $("#modalLoading").css("display", "block");
 }
 function stopLoading(){
-    setTimeout(stopNowLoading,2000);
+    setTimeout(stopNowLoading,3000);
 
 }
 

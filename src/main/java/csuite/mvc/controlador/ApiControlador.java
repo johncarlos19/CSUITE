@@ -16,9 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.Key;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -65,7 +63,13 @@ public class ApiControlador extends JavalinControlador {
                                         String header = "Authorization";
                                         Claims claims = decodeJWT(session);
                                         String use = claims.getId();
-                                        String jwt = createJWT(use,claims.getAudience(), claims.getIssuer());
+                                        Map<String, Object> map = new HashMap<String, Object>();
+                                        map.put("user",claims.get("user"));
+                                        map.put("direccion",claims.get("direccion"));
+                                        map.put("telefono",claims.get("telefono"));
+                                        map.put("compania",claims.get("compania"));
+                                        map.put("ciudadPais",claims.get("ciudadPais"));
+                                        String jwt = createJWT(use,claims.getAudience(), map);
                                         ctx.header(header,jwt);
                                         ctx.sessionAttribute("User",jwt);
                                         ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
@@ -219,7 +223,12 @@ public class ApiControlador extends JavalinControlador {
 //                      ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
 //                        Usuario clienteJson = ClienteServicios.getInstancia().getClienteUsuario("admin",tmp);
                         FacturaCliente facturaCliente = new FacturaCliente();
+                        facturaCliente.setDireccion((String) user.get("direccion"));
+                        facturaCliente.setTelefono((String) user.get("telefono"));
+                        facturaCliente.setCompania((String) user.get("compania"));
+                        facturaCliente.setCiudadPais((String) user.get("ciudadPais"));
                         facturaCliente.setIdQuienLoRealizo(user.getId());
+
                         facturaCliente.setIdVendedor(Mercado.getInstance().getUserJefeWithToken(user));
 
                         facturaCliente = FacturaClienteServicios.getInstancia().crearFacturaCliente(facturaCliente,"admin",tmp);
@@ -512,7 +521,7 @@ public class ApiControlador extends JavalinControlador {
 
 
 
-    public static String createJWT(String username, String perfil, String dueno) {
+    public static String createJWT(String username, String perfil, Map<String, Object> map) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -525,10 +534,11 @@ public class ApiControlador extends JavalinControlador {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         //Let's set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(username)
+        JwtBuilder builder;
+        builder = Jwts.builder().setClaims(map).setId(username)
                 .setIssuedAt(now)
                 .setSubject("CashSuite")
-                .setIssuer(dueno)
+                .setIssuer((String) map.get("user"))
                 .setAudience(perfil)
                 .signWith(signatureAlgorithm, signingKey);
 

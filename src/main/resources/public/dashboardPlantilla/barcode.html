@@ -40,9 +40,10 @@
     <script type="text/javascript">
     
       function generateBarcode(){
-        var value = $("#barcodeValue").val();
+        var value = "FAC-00000003"
         var btype = $("input[name=btype]:checked").val();
         var renderer = $("input[name=renderer]:checked").val();
+        console.log("entro"+value+btype+renderer)
 
         var settings = {
           output:renderer,
@@ -55,17 +56,18 @@
           posY: $("#posY").val(),
           addQuietZone: $("#quietZoneSize").val()
         };
-        if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')){
-          value = {code:value, rect: true};
-        }
-        if (renderer == 'canvas'){
-          clearCanvas();
-          $("#barcodeTarget").hide();
-          $("#canvasTarget").show().barcode(value, btype, settings);
-        } else {
+        console.log(settings)
+        // if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')){
+        //   value = {code:value, rect: true};
+        // }
+        // if (renderer == 'canvas'){
+        //   clearCanvas();
+        //   $("#barcodeTarget").hide();
+        //   $("#canvasTarget").show().barcode(value, btype, settings);
+        // } else {
           $("#canvasTarget").hide();
           $("#barcodeTarget").html("").show().barcode(value, btype, settings);
-        }
+        // }
       }
           
       function showConfig1D(){
@@ -90,12 +92,12 @@
       }
       
       $(function(){
-        $('input[name=btype]').click(function(){
-          if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
-        });
-        $('input[name=renderer]').click(function(){
-          if ($(this).attr('id') == 'canvas') $('#miscCanvas').show(); else $('#miscCanvas').hide();
-        });
+        // $('input[name=btype]').click(function(){
+        //   if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
+        // });
+        // $('input[name=renderer]').click(function(){
+        //   if ($(this).attr('id') == 'canvas') $('#miscCanvas').show(); else $('#miscCanvas').hide();
+        // });
         generateBarcode();
       });
   

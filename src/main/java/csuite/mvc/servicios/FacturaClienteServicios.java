@@ -133,7 +133,7 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         FacturaCliente facturaClienteAux = (FacturaCliente) crear(facturaCliente);
          facturaClienteAux.getId();
         facturaClienteAux = (FacturaCliente) buscar(facturaClienteAux.getId());
-        List<Impuesto> impuestos = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(Mercado.getInstance().getUserJefe(user));
+        List<Impuesto> impuestos = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos((String) Mercado.getInstance().getUserJefe(user).get("user"));
         List<ImpuestoCliente> impuestoClientes = new ArrayList<ImpuestoCliente>();
         for (Impuesto impuesto : impuestos) {
             ImpuestoCliente aux = new ImpuestoCliente();

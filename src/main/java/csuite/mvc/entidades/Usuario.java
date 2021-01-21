@@ -22,6 +22,7 @@ public class Usuario implements Identifiable<String> {
     private String nombre;
     private String apellido;
     private String perfil;
+    private String nombreCompania;
     private String pais;
     private String municipio;
     private String direccion;
@@ -60,6 +61,14 @@ public class Usuario implements Identifiable<String> {
         documento,
         tipoDocumento);
         return clienteJson;
+    }
+
+    public String getNombreCompania() {
+        return nombreCompania;
+    }
+
+    public void setNombreCompania(String nombreCompania) {
+        this.nombreCompania = nombreCompania;
     }
 
     public List<Politica> getPoliticaList() {

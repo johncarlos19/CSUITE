@@ -81,6 +81,9 @@ function startServerSent1(){
 		// // const britishNumberFormatter = new Intl.NumberFormat("en-GB", formatConfig);
 		// console.log(new Intl.NumberFormat("en-GB", formatConfig).format((500000).toFixed(2)));
 		console.log("EventSource failed."+e);
+		console.log("Fecha "+returnDate(1609046757407))
+		console.log("Fecha1 "+returnTime(1609046757407))
+		console.log("Fecha2 "+returnOnlyDate(1609046757407))
 		// setTimeout(startServerSent(), 30000);
 	};
 	evtSource.onopen = function() {
@@ -209,6 +212,36 @@ function startServerSent1(){
 
 	}, false);
 
+}
+
+function returnDate(val){
+
+	var milliseconds = val  // 1575909015000
+
+	var dateObject = new Date(milliseconds)
+
+	var humanDateFormat = dateObject.toLocaleString()
+	return humanDateFormat;
+}
+
+function returnTime(val){
+
+	var milliseconds = val  // 1575909015000
+
+	var dateObject = new Date(milliseconds)
+
+	var humanDateFormat = dateObject.toLocaleTimeString('en-US')
+	return humanDateFormat;
+}
+
+function returnOnlyDate(val){
+	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	var milliseconds = val  // 1575909015000
+
+	var dateObject = new Date(milliseconds)
+
+	var humanDateFormat = dateObject.toLocaleDateString('en-US',options)
+	return humanDateFormat;
 }
 
 function returnDate(val){

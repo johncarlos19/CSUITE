@@ -7,17 +7,8 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
           alt="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!--    <script src="https://cdn.usebootstrap.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../js/jquery-barcode.js"></script>
-
     <style>
 
         * {
@@ -54,6 +45,19 @@
         }
 
     </style>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- Optional theme -->
+
+
+    <!--    <script src="https://cdn.usebootstrap.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/jquery-barcode.js"></script>
+
+
+
     <style>
          .navbar-brand {
             font-size: 40px;
@@ -108,7 +112,7 @@
         }
 
         .invoice-box table tr.information table td {
-            padding-bottom: 40px;
+            padding-bottom: 10px;
         }
 
         .invoice-box table tr.heading td {
@@ -167,147 +171,299 @@
 <body>
 <div class="invoice-box">
     <table cellpadding="0" cellspacing="0">
-        <tr class="top">
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td class="title">
-                            <a class="navbar-brand nav-link" style="width:100%; max-width:300px;">CashSuite</a>
-
-                        </td>
-
-                        <td>
-                            Invoice #: 123<br>
-                            Created: January 1, 2015<br>
-                            Due: February 1, 2015
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
         <tr class="information">
             <td colspan="2">
                 <table>
-                    <tr>
+                    <tr><td class=" ">
+                        <img src="../dashboardPlantilla/img/plantilla/cashsuite_logo.png" style="width:100%; max-width:180px;">
+
+                    </td>
                         <td>
                             Sparksuite, Inc.<br>
                             12345 Sunny Road<br>
                             Sunnyville, CA 12345
                         </td>
 
+
+
+
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr> <td                                   >
+
+                        <div id="barcodeTarget" class="item" style=" "></div><br>
+                    </td>
+
+
                         <td>
-                            Acme Corp.<br>
-                            John Doe<br>
-                            john@example.com
+                            ID Cliente: Acme Corp.<br>
+                            Nombre Completo: John Doe<br>
                         </td>
+
+                    </tr>
+                    <tr> <td >
+
+                        <span>Fecha: January 1, 2015</span><br>
+                        <span>Hora: February 1, 2015</span>
+                    </td>
+
+
+                        <td><br>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0">
+        <tr class="heading">
+            <td class="">
+                UDS
+            </td>
+            <td class=" " style="text-align: left;">
+                Descripción
+            </td>
+            <td>
+                <br>
+            </td>
+
+            <td style="text-align: right;">
+                Valor
+            </td>
+        </tr>
+
+        <tr class="item">
+            <td>
+                2
+
+            </td >
+            <td style="text-align: left;">
+            <table >
+                <tr class="item last " >
+                    <td style="padding: 0px; font-weight: bold;">
+                        Website design
+                    </td>
+                </tr>
+                <tr class="item last" >
+                    <td style="padding: 0px;">
+                        ITBIS
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+
+            <td>
+                <table>
+                    <tr class="item last">
+                        <td style="padding: 0px; font-weight: bold;">
+                            $50.00
+                        </td>
+                    </tr>
+                    <tr class="item last" >
+                        <td style="padding: 0px; ">
+                            $25.00
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr class="item last" style="text-align: right;">
+                        <td style="font-weight: bold;">
+                            $100.00
+                        </td>
+
                     </tr>
                 </table>
             </td>
         </tr>
 
+        <tr class="item">
+            <td>
+                2
+
+            </td >
+            <td style="text-align: left;">
+                <table >
+                    <tr class="item last " >
+                        <td style="padding: 0px; font-weight: bold;">
+                            Website design
+                        </td>
+                    </tr>
+                    <tr class="item last" >
+                        <td style="padding: 0px;">
+                            ITBIS
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <table>
+                    <tr class="item last">
+                        <td style="padding: 0px; font-weight: bold;">
+                            $50.00
+                        </td>
+                    </tr>
+                    <tr class="item last" >
+                        <td style="padding: 0px; ">
+                            $25.00
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr class="item last" style="text-align: right;">
+                        <td style="font-weight: bold;">
+                            $100.00
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+    <table cellpadding="0" cellspacing="0">
+
+
+
+
+
 
 
         <tr class="heading">
-            <td>
-                UDS
-            </td>
-            <td>
-                Item
-            </td>
 
             <td>
-                Price
+                <br>
             </td>
-        </tr>
-
-        <tr class="item">
-            <td>
-                Website design
-            </td><td>
-                Website design
-            </td>
-
-            <td>
-                $300.00
-            </td>
-        </tr>
-
-        <tr class="item">
-            <td>
-                Hosting (3 months)
-            </td><td>
-                Hosting (3 months)
-            </td>
-
-            <td>
-                $75.00
-            </td>
-        </tr>
-
-        <tr class="item last">
-            <td>
-                Domain name (1 year)
-            </td><td>
-                Domain name (1 year)
-            </td>
-
-            <td>
-                $10.00
-            </td>
-        </tr>
-
-        <tr class="total">
-            <td></td>
-
-            <td>
-                $385.00
-            </td>
-        </tr>
-        <tr class="heading">
-            <td>
+            <td style="text-align: right;">
                 Información De Pago
             </td>
 
-            <td>
-                Price
+            <td style="text-align: right;">
+                <br>
             </td>
         </tr>
+
         <tr class="item last">
+
             <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
                 Itbis
             </td>
 
-            <td>
+            <td style="text-align: right;">
                 $20.00
             </td>
         </tr>
+
         <tr class="item last">
-        <td>
+
+            <td>
+                <br>
+            </td>
+        <td style="text-align: right;">
             10%
         </td>
 
-        <td>
+        <td style="text-align: right;">
             $10.00
         </td>
         </tr>
-        <tr class="item last">
-            <td>
-                5% De Descuento
-            </td>
+
+        <tr class="item ">
 
             <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                SubTotal
+            </td>
+
+            <td style="text-align: right;">
                 $2.00
             </td>
         </tr>
+
         <tr class="total">
-            <td></td>
 
             <td>
+                <br>
+            </td>
+            <td>
+                <br>
+            </td>
+
+            <td style="text-align: right; font-weight: bold">
                 Total: $405.00
             </td>
         </tr>
     </table>
 </div>
+<script type="text/javascript">
+
+    function generateBarcode(){
+        var value = "FAC-00000003";
+        var btype = "code128";
+        var renderer = "css";
+
+        var settings = {
+            output:renderer,
+            bgColor: "#FFFFFF",
+            color: "#000000",
+            barWidth: "1",
+            barHeight: "50",
+            moduleSize: "5",
+            posX: "10",
+            posY: "20",
+            addQuietZone: "1"
+        };
+        $("#barcodeTarget").html("").show().barcode(value, btype, settings);
+
+    }
+
+    function showConfig1D(){
+        $('.config .barcode1D').show();
+        $('.config .barcode2D').hide();
+    }
+
+    function showConfig2D(){
+        $('.config .barcode1D').hide();
+        $('.config .barcode2D').show();
+    }
+
+    function clearCanvas(){
+        var canvas = $('#canvasTarget').get(0);
+        var ctx = canvas.getContext('2d');
+        ctx.lineWidth = 1;
+        ctx.lineCap = 'butt';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle  = '#000000';
+        ctx.clearRect (0, 0, canvas.width, canvas.height);
+        ctx.strokeRect (0, 0, canvas.width, canvas.height);
+    }
+
+    $(document).ready(function(){
+
+        generateBarcode();
+    });
+
+
+</script>
 </body>
 </html>

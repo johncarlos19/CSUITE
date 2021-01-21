@@ -22,6 +22,10 @@ public class FacturaCliente implements Identifiable<String> {
     private String idFactura;
     private float total = 0;//subtotal
     private float precioNeto = 0;
+    private String compania;
+    private String direccion;
+    private String ciudadPais;
+    private String telefono;
     private String idQuienLoRealizo;
     private String metodoDePago;
     private String idVendedor;
@@ -57,11 +61,47 @@ public class FacturaCliente implements Identifiable<String> {
         FacturaJson facturaJson = new FacturaJson(idFactura,total,precioNeto,idQuienLoRealizo,metodoDePago,fechaCompra,list);
         facturaJson.setIdCliente(idCliente);
         facturaJson.setNombreCliente(nombreCliente);
+        facturaJson.setDireccion(direccion);
+        facturaJson.setTelefono(telefono);
+        facturaJson.setCompania(compania);
+        facturaJson.setCiudadPais(ciudadPais);
         for (FacturaClienteProductoVendido vendido : facturaClienteProductoVendidos) {
             facturaJson.addProductoJSON(vendido.getProductoJSON());
         }
         return facturaJson;
 
+    }
+
+    public String getCiudadPais() {
+        return ciudadPais;
+    }
+
+    public void setCiudadPais(String ciudadPais) {
+        this.ciudadPais = ciudadPais;
+    }
+
+    public String getCompania() {
+        return compania;
+    }
+
+    public void setCompania(String compania) {
+        this.compania = compania;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getNombreCliente() {

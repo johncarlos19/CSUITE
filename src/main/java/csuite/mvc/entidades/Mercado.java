@@ -12,9 +12,8 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -938,27 +937,50 @@ public class Mercado {
         return se;
     }
 
-    public String getUserJefe(String user) {
+    public Map<String, Object> getUserJefe(String user) {
+        Map<String, Object> map = new HashMap<String, Object>();
         Usuario aux = UsuarioServicios.getInstancia().getUsuario(user);
         String se = null;
         switch (aux.getPerfil()) {
             case "Admin":
-
                 se = user;
+                map.put("user",se);
+                map.put("direccion",aux.getDireccion());
+                map.put("telefono",aux.getTelefono());
+                map.put("compania",aux.getNombreCompania());
+                if (aux.getMunicipio() != null && aux.getPais()== null){
+                    map.put("ciudadPais",aux.getMunicipio());
+                }else if (aux.getMunicipio() == null && aux.getPais()!= null){
+                    map.put("ciudadPais",aux.getPais());
+                }else{
+                    map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
+                }
+
+
                 break;
 
             case "Empleado":
 
                 se = EmpleadoServicios.getInstancia().getJefe(aux.getUsuario());
+                map.put("user",se);
+                map.put("direccion",aux.getDireccion());
+                map.put("telefono",aux.getTelefono());
+                map.put("compania",aux.getNombreCompania());
+                map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
                 break;
             case "Vendedor":
                 se = user;
+                map.put("user",se);
+                map.put("direccion",aux.getDireccion());
+                map.put("telefono",aux.getTelefono());
+                map.put("compania",aux.getNombreCompania());
+                map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
                 break;
             default:
                 se = user;
                 break;
         }
-        return se;
+        return map;
     }
 
 
