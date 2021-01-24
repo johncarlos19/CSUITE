@@ -160,6 +160,43 @@ this.addEventListener('message', function(e) {
                     // always executed
                 });
             break;
+        case 'saveFactura':
+
+            axios.post('/api/Factura/saveFactura', data.GuardarFacturaJson)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found"){
+                            console.log("Respuesta:"+response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        }else{
+                            postMessage({'cmd': 'facturaLoadIMP', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'facturaLoadIMP', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
         case 'facturaLoadIMP':
 
             axios.post('/api/Factura/loadFactura', data.id)
@@ -197,6 +234,7 @@ this.addEventListener('message', function(e) {
                     // always executed
                 });
             break;
+
         case 'facturaLoad':
 
             axios.post('/api/Factura/loadFactura', data.id)

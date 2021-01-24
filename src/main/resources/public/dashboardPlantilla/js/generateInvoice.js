@@ -48,7 +48,7 @@ function addProductoInInvoice(producto){
 
         var string = '<tr class="item ">\n' +
             '            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">\n' +
-            '                '+producto[key].stock+'\n' +
+            '                '+producto.stock+'\n' +
             '\n' +
             '            </td>\n' +
             '\n' +
@@ -64,7 +64,7 @@ function addProductoInInvoice(producto){
             '            </td>\n' +
             '            <td style="text-align: right; font-weight: bold; padding-top: 0px; padding-bottom: 0px;">\n' +
             '\n' +
-            '                '+currentyMoney(producto.precioLista*producto[key].stock)+'\n' +
+            '                '+currentyMoney(producto.precioLista*producto.stock)+'\n' +
             '\n' +
             '            </td>\n' +
             '        </tr>'
@@ -72,7 +72,7 @@ function addProductoInInvoice(producto){
     }else{
         var string = '<tr class="item last">\n' +
             '            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">\n' +
-            '                '+producto[key].stock+'\n' +
+            '                '+producto.stock+'\n' +
             '\n' +
             '            </td>\n' +
             '\n' +
@@ -88,7 +88,7 @@ function addProductoInInvoice(producto){
             '            </td>\n' +
             '            <td style="text-align: right; font-weight: bold; padding-top: 0px; padding-bottom: 0px;">\n' +
             '\n' +
-            '                '+currentyMoney(producto.precioLista*producto[key].stock)+'\n' +
+            '                '+currentyMoney(producto.precioVenta*producto.stock)+'\n' +
             '\n' +
             '            </td>\n' +
             '        </tr>'
@@ -114,7 +114,7 @@ function addProductoInInvoice(producto){
                     '                <br>\n' +
                     '            </td>\n' +
                     '        </tr>'
-                string.concat("\n",impString);
+                string +=(impString);
             }else{
                 var impString = '<tr class="item last">\n' +
                     '            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">\n' +
@@ -136,7 +136,7 @@ function addProductoInInvoice(producto){
                     '                <br>\n' +
                     '            </td>\n' +
                     '        </tr>'
-            string.concat("\n",impString)
+            string +=(impString)
             }
 
 
@@ -147,6 +147,7 @@ function addProductoInInvoice(producto){
 
 function addImpuestoInInvoice(impuestoFactura){
     var string = "";
+    console.log("cantidad"+impuestoFactura.length )
     if (impuestoFactura.length ===0){
         return string;
     }else{
@@ -164,7 +165,7 @@ function addImpuestoInInvoice(impuestoFactura){
                 '                '+currentyMoney(impuestoFactura[key].impuesto)+'\n' +
                 '            </td>\n' +
                 '        </tr>\n'
-            string.concat("\n",stingIMP);
+            string +=(stingIMP);
 
 
         }
@@ -334,7 +335,7 @@ function createInvoice(factura){
         '            </td>\n' +
         '\n' +
         '            <td style="text-align: right;">\n' +
-        '                '+currentyMoney(obj.total)+'\n' +
+        '                '+currentyMoney(factura.total)+'\n' +
         '            </td>\n' +
         '        </tr>\n' +
         '\n' +
@@ -348,7 +349,7 @@ function createInvoice(factura){
         '            </td>\n' +
         '\n' +
         '            <td style="text-align: right; font-weight: bold">\n' +
-        '                Total: '+currentyMoney(obj.precioNeto)+'\n' +
+        '                Total: '+currentyMoney(factura.precioNeto)+'\n' +
         '            </td>\n' +
         '        </tr>\n' +
         '    </table>\n' +
@@ -356,7 +357,10 @@ function createInvoice(factura){
         '    <button class="oculto-impresion" onclick="imprimir()">Imprimir</button>\n' +
         '\n' +
         '</div>\n' +
+        '\n<script>$(document).ready(function () {\n' +
         '\n' +
+        '    generateBarcode();\n' +
+        '});</script>' +
         '</body>\n' +
         '</html>');
 
@@ -366,7 +370,3 @@ function createInvoice(factura){
     printWindow.print();
 }
 
-$(document).ready(function () {
-
-    generateBarcode();
-});

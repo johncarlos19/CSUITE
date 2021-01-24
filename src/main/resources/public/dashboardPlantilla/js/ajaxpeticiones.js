@@ -335,7 +335,7 @@ worker.onmessage = function (e) { //recuperando la información
     }
     if(e.data.cmd === 'facturaLoadIMP'){
         console.log("entro aqui")
-        createInvoice(getFactura(e.data.data))
+        createInvoice(e.data.data)
     }
 
     if(e.data.cmd === 'verifyUser'){

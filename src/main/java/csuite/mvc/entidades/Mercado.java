@@ -1,5 +1,7 @@
 package csuite.mvc.entidades;
 
+import csuite.mvc.jsonObject.FacturaJson;
+import csuite.mvc.jsonObject.GuardarFacturaJson;
 import csuite.mvc.jsonObject.ProductoJSON;
 import csuite.mvc.servicios.*;
 import io.jsonwebtoken.Claims;
@@ -522,6 +524,21 @@ public class Mercado {
 
 
     }
+
+    public FacturaJson guardarFactura(GuardarFacturaJson guardarFacturaJson){
+        FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(guardarFacturaJson.getIdFactura());
+        facturaCliente.setMetodoDePago(guardarFacturaJson.getMetodoDePago());
+        facturaCliente.setFacturaGuardada(true);
+        for (FacturaClienteProductoVendido facturaClienteProductoVendido : facturaCliente.getFacturaClienteProductoVendidos()) {
+            facturarOnlyProducto(facturaClienteProductoVendido.getIdProducto(), facturaClienteProductoVendido.getCantidad());
+        }
+        FacturaJson facturaJson = facturaCliente.getFacturaJson();
+        FacturaClienteServicios.getInstancia().editar(facturaCliente);
+        return facturaJson;
+
+    }
+
+
 
     public void facturarOnlyProducto(Producto producto, long cantidad) {
         long cantidadRemove = cantidad;

@@ -246,7 +246,18 @@ function returnOnlyDate(val){
 }
 
 function imprimirFact(){
-	worker.postMessage({'cmd': 'facturaLoadIMP', 'id': document.getElementById("nuevaVenta").value});
+	if (document.getElementById("nuevaVenta").value === "" || document.getElementById("nuevaVenta").value === null) {
+		swal({
+			title: "Error al Imprimir la factura",
+			text: "¡Debe crear la factura para poder imprimirla!",
+			type: "error",
+			confirmButtonText: "¡Cerrar!"
+		});
+	} else {
+		worker.postMessage({'cmd': 'facturaLoadIMP', 'id': document.getElementById("nuevaVenta").value});
+	}
+
+
 }
 
 function reloadFactActiva(){

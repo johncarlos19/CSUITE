@@ -212,6 +212,16 @@ public class ApiControlador extends JavalinControlador {
                         String tmp = ctx.body();
                         ctx.json(UsuarioServicios.getInstancia().existe(tmp));
                     });
+                    post("/saveFactura", ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+
+                        GuardarFacturaJson tmp = ctx.bodyAsClass(GuardarFacturaJson.class);
+                        FacturaJson facturaJson = Mercado.getInstance().guardarFactura(tmp);
+
+                        ctx.json(facturaJson);
+                    });
                     post("/crear", ctx -> {
 
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
