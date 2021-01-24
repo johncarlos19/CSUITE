@@ -62,6 +62,8 @@
     <!-- Morris chart -->
     <link rel="stylesheet" href="../dashboardPlantilla/bower_components/morris.js/morris.css">
 
+    <!--    invoice style-->
+<!--    <link rel="stylesheet" href="../dashboardPlantilla/css/invoice.css">-->
     <!--=====================================
     PLUGINS DE JAVASCRIPT
     ======================================-->
@@ -259,9 +261,9 @@ CUERPO DOCUMENTO
             <ul class="sidebar-menu tree">
 
 
-                <li class="active">
+                <li class="">
 
-                    <a href="http://localhost/csuite.mvc/pos1/inicio">
+                    <a href="/dashboard/home">
 
                         <i class="fa fa-home"></i>
                         <span>Inicio</span>
@@ -272,10 +274,10 @@ CUERPO DOCUMENTO
 
                 <li>
 
-                    <a href="http://localhost/csuite.mvc/pos1/usuarios">
+                    <a href="/dashboard/empleado">
 
                         <i class="fa fa-users"></i>
-                        <span>Usuarios</span>
+                        <span>Empleados</span>
 
                     </a>
 
@@ -293,20 +295,55 @@ CUERPO DOCUMENTO
                 </li>
 
 
-                <li>
+                <li class="treeview ">
 
-                    <a href="http://localhost/csuite.mvc/pos1/categorias">
+                    <a href="">
 
-                        <i class="fa fa-th"></i>
-                        <span>Categorías</span>
+                        <i class="fa fa-th "></i>
+
+                        <span>Categorias</span>
+
+                        <span class="pull-right-container">
+
+							<i class="fa fa-angle-left pull-right"></i>
+
+						</span>
 
                     </a>
 
+                    <ul class="treeview-menu">
+
+                        <li>
+
+                            <a href="/dashboard/categoria">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Categorias</span>
+
+                            </a>
+
+                        </li>
+
+                        <li class="">
+
+                            <a href="/dashboard/impuesto">
+
+                                <i class="fa fa-circle-o"></i>
+                                <span>Impuesto</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
                 </li>
+
 
                 <li>
 
-                    <a href="http://localhost/csuite.mvc/pos1/productos">
+
+                    <a href="/dashboard/inventario">
 
                         <i class="fa fa-product-hunt"></i>
                         <span>Inventario</span>
@@ -318,7 +355,7 @@ CUERPO DOCUMENTO
 
                 <li>
 
-                    <a href="http://localhost/csuite.mvc/pos1/clientes">
+                    <a href="/dashboard/cliente">
 
                         <i class="fa fa-users"></i>
                         <span>Clientes</span>
@@ -328,11 +365,11 @@ CUERPO DOCUMENTO
                 </li>
 
 
-                <li class="treeview">
+                <li class="treeview active">
 
-                    <a href="http://localhost/csuite.mvc/pos1/crear-venta#">
+                    <a href="#">
 
-                        <i class="fa fa-list-ul"></i>
+                        <i class="fa fa-list-ul " ></i>
 
                         <span>Ventas</span>
 
@@ -356,12 +393,21 @@ CUERPO DOCUMENTO
                             </a>
 
                         </li>
-
                         <li>
 
-                            <a href="http://localhost/csuite.mvc/pos1/crear-venta">
+                            <a href="/dashboard/ventasActivas">
 
                                 <i class="fa fa-circle-o"></i>
+                                <span>Ventas Activas</span>
+
+                            </a>
+
+                        </li>
+                        <li class="">
+
+                            <a href="/dashboard/crearVentas">
+
+                                <i class="fa fa-check-circle-o active"></i>
                                 <span>Crear venta</span>
 
                             </a>
@@ -375,7 +421,7 @@ CUERPO DOCUMENTO
 
                 <li class="treeview">
 
-                    <a href="http://localhost/csuite.mvc/pos1/crear-venta#">
+                    <a href="http://localhost/csuite.mvc/pos1/categorias#">
 
                         <i class="fa fa-list-ul"></i>
 
@@ -420,7 +466,7 @@ CUERPO DOCUMENTO
 
                 <li>
 
-                    <a href="http://localhost/csuite.mvc/pos1/salir">
+                    <a href="/logout">
 
                         <i class="fa fa-power-off"></i>
 
@@ -430,8 +476,6 @@ CUERPO DOCUMENTO
 
                 </li>
 
-
-                ?&gt;
 
             </ul>
 
@@ -788,7 +832,8 @@ CUERPO DOCUMENTO
 
                             <div class="box-footer">
 
-                                <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;">Guardar venta</button>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="imprimirFact()">Imprimir</button>
 
                             </div>
 
@@ -1321,6 +1366,7 @@ CUERPO DOCUMENTO
 <script src="../dashboardPlantilla/js/clientes.js"></script>
 <script src="../dashboardPlantilla/js/productos.js"></script>
 <script src="../dashboardPlantilla/js/reportes.js"></script>
+<script src="../dashboardPlantilla/js/generateInvoice.js"></script>
 
 <script>
 
@@ -1340,7 +1386,9 @@ CUERPO DOCUMENTO
         startServerSent1();
 
 
-        reloadtabladeInevntario();
+
+
+
 
         if (document.getElementById("nuevaVenta").value === "" || document.getElementById("nuevaVenta").value === null) {
 

@@ -1,0 +1,322 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A simple, clean, and responsive HTML invoice template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          alt="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../dashboardPlantilla/css/invoice.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/jquery-barcode.js"></script>
+    <script type="text/javascript" src="../dashboardPlantilla/js/generateInvoice.js"></script>
+
+
+
+</head>
+
+<body class="invoice-box onlyInvoice">
+<div >
+    <table cellpadding="0" cellspacing="0">
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class=" " style="max-width:180px;  margin-left: auto; margin-right: auto;">
+                            <img src="../dashboardPlantilla/img/plantilla/cashsuite_logo.png"
+                                 style="width:100%; max-width:180px; ">
+
+                        </td>
+                        <td>
+                            Sparksuite, Inc.<br>
+                            12345 Sunny Road<br>
+                            Sunnyville, CA 12345
+                        </td>
+
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="item last">
+                                    <td id="barcodeTarget" style=" margin: 0px; padding: 5px;
+            vertical-align: top; font-weight: bold; margin-left: auto; margin-right: auto;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="item last ">
+                                    <td style="padding: 0px;">
+                                        <span id="facturaPrint">FAC-00000003</span>
+                                    </td>
+                                </tr>
+                                <tr class="item last ">
+                                    <td style="padding: 0px;">
+                                        <span>ID Cliente: </span><span>Acme Corp.</span>
+                                    </td>
+                                </tr>
+                                <tr class="item last">
+                                    <td style="padding: 0px;">
+                                        Nombre Completo: John Doe
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+
+                        <td>
+
+                            <span>Fecha: January 1, 2015</span><br>
+                            <span>Hora: February 1, 2015</span>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0">
+        <tr class="heading">
+            <td class="">
+                UDS
+            </td>
+            <td class=" " style="text-align: left;">
+                Descripción
+            </td>
+            <td>
+                <br>
+            </td>
+
+            <td style="text-align: right;">
+                Valor
+            </td>
+        </tr>
+
+        <tr class="item last">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+                2
+
+            </td>
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+                Website design center
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+
+                $50.00
+
+            </td>
+            <td style="text-align: right; font-weight: bold; padding-top: 0px; padding-bottom: 0px;">
+
+                $100.00
+
+            </td>
+        </tr>
+
+        <tr class="item last">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+
+            </td>
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+
+                ITBIS
+
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                $25.00
+            </td>
+
+            <td style="text-align: right; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+            </td>
+        </tr>
+
+        <tr class="item ">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+
+            </td>
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+
+                10%
+
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                $15.00
+            </td>
+
+            <td style="text-align: right; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+            </td>
+        </tr>
+
+
+
+        <tr class="item last">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+                2
+
+            </td>
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+                Website design
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px; font-weight: bold;">
+
+                $50.00
+
+            </td>
+            <td style="text-align: right; font-weight: bold; padding-top: 0px; padding-bottom: 0px;">
+
+                $100.00
+
+            </td>
+        </tr>
+
+        <tr class="item last">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+
+            </td>
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+
+                ITBIS
+
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                $25.00
+            </td>
+
+            <td style="text-align: right; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+            </td>
+        </tr>
+
+        <tr class="item ">
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+
+            </td>
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+
+                10%
+
+            </td>
+
+
+            <td style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
+                $15.00
+            </td>
+
+            <td style="text-align: right; padding-top: 0px; padding-bottom: 0px;">
+                <br>
+            </td>
+        </tr>
+
+    </table>
+    <table cellpadding="0" cellspacing="0">
+
+
+        <tr class="heading">
+
+            <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                Información De Pago
+            </td>
+
+            <td style="text-align: right;">
+                <br>
+            </td>
+        </tr>
+
+        <tr class="item last">
+
+            <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                Itbis
+            </td>
+
+            <td style="text-align: right;">
+                $20.00
+            </td>
+        </tr>
+
+        <tr class="item last">
+
+            <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                10%
+            </td>
+
+            <td style="text-align: right;">
+                $10.00
+            </td>
+        </tr>
+
+        <tr class="item ">
+
+            <td>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                SubTotal
+            </td>
+
+            <td style="text-align: right;">
+                $2.00
+            </td>
+        </tr>
+
+        <tr class="total">
+
+            <td>
+                <br>
+            </td>
+            <td>
+                <br>
+            </td>
+
+            <td style="text-align: right; font-weight: bold">
+                Total: $405.00
+            </td>
+        </tr>
+    </table>
+
+    <button class="oculto-impresion" onclick="createInvoice()">Imprimir</button>
+
+</div>
+
+</body>
+</html>

@@ -10,6 +10,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <style>
+        .centrado {
+            text-align: center;
+            align-content: center;
+        }
+
+        .ticket {
+            width: 155px;
+            max-width: 155px;
+        }
+
+        img {
+            max-width: inherit;
+            width: inherit;
+        }
+        @media print {
+            .oculto-impresion,
+            .oculto-impresion * {
+                display: none !important;
+            }
+        }
 
         * {
             color:#7F7F7F;
@@ -168,13 +188,13 @@
     </style>
 </head>
 
-<body>
+<body class="">
 <div class="invoice-box">
     <table cellpadding="0" cellspacing="0">
         <tr class="information">
             <td colspan="2">
                 <table>
-                    <tr><td class=" ">
+                    <tr><td class=" " style="max-width:180px;">
                         <img src="../dashboardPlantilla/img/plantilla/cashsuite_logo.png" style="width:100%; max-width:180px;">
 
                     </td>
@@ -195,27 +215,40 @@
         <tr class="information">
             <td colspan="2">
                 <table>
-                    <tr> <td                                   >
+                    <tr>
+                        <td       >
+                        <table >
+                            <tr class="item last" >
+                                <td  id="barcodeTarget"  style=" margin: 0px; padding: 5px;
+            vertical-align: top; font-weight: bold;">
+                                    <div ></div>
+                                </td>
+                            </tr>
+                            <tr class="item last " >
+                                <td style="padding: 0px;">
+                                    ID Cliente: Acme Corp.
+                                </td>
+                            </tr>
+                            <tr class="item last" >
+                                <td style="padding: 0px;">
+                                    Nombre Completo: John Doe
+                                </td>
 
-                        <div id="barcodeTarget" class="item" style=" "></div><br>
+                            </tr>
+                        </table>
+
                     </td>
 
 
-                        <td>
-                            ID Cliente: Acme Corp.<br>
-                            Nombre Completo: John Doe<br>
-                        </td>
 
-                    </tr>
-                    <tr> <td >
+
+                    <td >
 
                         <span>Fecha: January 1, 2015</span><br>
                         <span>Hora: February 1, 2015</span>
                     </td>
 
 
-                        <td><br>
-                        </td>
 
                     </tr>
                 </table>
@@ -414,13 +447,19 @@
             </td>
         </tr>
     </table>
+
+    <button class="oculto-impresion" onclick="imprimir()">Imprimir</button>
+
 </div>
 <script type="text/javascript">
+    function imprimir() {
+        window.print();
+    }
 
     function generateBarcode(){
         var value = "FAC-00000003";
-        var btype = "code128";
-        var renderer = "css";
+        var btype = "code39";
+        var renderer = "bmp";
 
         var settings = {
             output:renderer,

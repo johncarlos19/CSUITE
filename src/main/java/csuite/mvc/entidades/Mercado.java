@@ -133,10 +133,17 @@ public class Mercado {
     public void borrarSessionSSe(String id){
         int borrar = -1;
         for (int i = 0; i < listaSseUsuario.size(); i++) {
-            if (id.equalsIgnoreCase(listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId())){
+            try {
+                if (id.equalsIgnoreCase(listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId())){
+                    borrar = i;
+                    break;
+                }
+            }catch (IllegalStateException e){
+                e.printStackTrace();
                 borrar = i;
                 break;
             }
+
         }
         if (borrar!=-1){
             listaSseUsuario.remove(borrar);
@@ -440,25 +447,28 @@ public class Mercado {
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
-                return producto.getProductoJSON(1);
+                return producto.getProductoJSON(2);
             }else {
 //                facturaClienteProductoVendido.discountProducto(cantidad);
                 facturaCliente.discountPrecioProducto(facturaClienteProductoVendido.getPrecioVenta()*cantidad);
 //            facturaCliente.discountPrecioNeto(facturaClienteProductoVendido.getImpuestoTotal()*cantidad);
 //                FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
                 for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
-                    facturaCliente.getFacturaClienteProductoVendidos().get(i).discountProducto(cantidad);
-                    break;
+                    if(facturaCliente.getFacturaClienteProductoVendidos().get(i).getId() == facturaClienteProductoVendido.getId()){
+                        facturaCliente.getFacturaClienteProductoVendidos().get(i).discountProducto(cantidad);
+                        break;
+                    }
+
                 }
                 facturaCliente.discountValueImpuesto(facturaClienteProductoVendido,cantidad);
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
-                return producto.getProductoJSON(1);
+                return producto.getProductoJSON(2);
             }
 
         }else{
-            return producto.getProductoJSON(1);
+            return producto.getProductoJSON(2);
         }
     }
 
@@ -475,15 +485,18 @@ public class Mercado {
 //            facturaCliente.addPrecioNeto(facturaClienteProductoVendido.getImpuestoTotal()*cantidad);
 //            FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
             for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
-                facturaCliente.getFacturaClienteProductoVendidos().get(i).addProducto(cantidad);
-                break;
+                if(facturaCliente.getFacturaClienteProductoVendidos().get(i).getId() == facturaClienteProductoVendido.getId()){
+                    facturaCliente.getFacturaClienteProductoVendidos().get(i).addProducto(cantidad);
+                    break;
+                }
+
             }
             facturaCliente.addValueImpuesto(facturaClienteProductoVendido,cantidad);
             FacturaClienteServicios.getInstancia().editar(facturaCliente);
             producto.getProductoEnVenta().discountProductoStock(cantidad);
             producto = (Producto) ProductoServicios.getInstancia().editar(producto);
 
-            return producto.getProductoJSON(1);
+            return producto.getProductoJSON(2);
         } else {
             facturaClienteProductoVendido = new FacturaClienteProductoVendido();
             facturaClienteProductoVendido.setCantidad(cantidad);
@@ -502,7 +515,7 @@ public class Mercado {
             facturaCliente.addPrecioProducto(pro);
             facturaCliente.addFacturaClienteProductoVendido(facturaClienteProductoVendido);
             FacturaClienteServicios.getInstancia().editar(facturaCliente);
-            return producto.getProductoJSON(1);
+            return producto.getProductoJSON(2);
 
 
         }

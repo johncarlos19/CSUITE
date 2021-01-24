@@ -16,10 +16,12 @@ public class FacturaJson {
     private Timestamp fechaCompra;
     private String nombreCliente;
     private String idCliente;
+
     private String compania;
     private String direccion;
     private String ciudadPais;
     private String telefono;
+
     private List<ImpuestoCliente> impuestoFacturas= new ArrayList<ImpuestoCliente>();
     private List<ProductoJSON> productos= new ArrayList<ProductoJSON>();
 

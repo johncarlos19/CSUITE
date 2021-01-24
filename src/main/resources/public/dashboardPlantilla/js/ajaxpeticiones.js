@@ -244,7 +244,7 @@ worker.onmessage = function (e) { //recuperando la información
             var employee = {
                 "DT_RowId": "row_"+ obj[key].id,
                 "#":    obj[key].id,
-                "Imagen":   "<img src='"+img+"' width='40px' >",
+                "Imagen":   "<img src='"+img+"' width='64' height='64' >",
                 "Codigo": obj[key].codigo_local,
                 "Descripcion":   obj[key].nombre + "-"+ obj[key].descripcion,
                 "Stock":     sto,
@@ -332,6 +332,10 @@ worker.onmessage = function (e) { //recuperando la información
     if(e.data.cmd === 'facturaBorrada'){
         console.log("entro aqui")
         reloadFactActiva();
+    }
+    if(e.data.cmd === 'facturaLoadIMP'){
+        console.log("entro aqui")
+        createInvoice(getFactura(e.data.data))
     }
 
     if(e.data.cmd === 'verifyUser'){

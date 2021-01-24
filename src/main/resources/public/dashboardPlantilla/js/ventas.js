@@ -87,6 +87,7 @@ function startServerSent1(){
 		// setTimeout(startServerSent(), 30000);
 	};
 	evtSource.onopen = function() {
+		reloadtabladeInevntario();
 		console.log("Connection to server opened.");
 	};
 	evtSource.addEventListener("conectado", function(e) {
@@ -244,18 +245,12 @@ function returnOnlyDate(val){
 	return humanDateFormat;
 }
 
-function returnDate(val){
-
-	var milliseconds = val  // 1575909015000
-
-	var dateObject = new Date(milliseconds)
-
-	var humanDateFormat = dateObject.toLocaleString()
-	return humanDateFormat;
+function imprimirFact(){
+	worker.postMessage({'cmd': 'facturaLoadIMP', 'id': document.getElementById("nuevaVenta").value});
 }
 
 function reloadFactActiva(){
-
+	startLoading();
 	worker.postMessage({'cmd': 'ventasActiva'});
 }
 
@@ -491,6 +486,10 @@ function getFactura(factura){
 		"fechaCompra": factura.fechaCompra,
 		"nombreCliente": factura.nombreCliente,
 		"idCliente": factura.idCliente,
+		"compania": factura.compania,
+		"direccion": factura.direccion,
+		"ciudadPais": factura.ciudadPais,
+		"telefono": factura.telefono,
 		"impuestoFacturas": impuestoFactura,
 		"productos": productosList
 	}
@@ -533,6 +532,7 @@ function facturaLoadNow(factura){
 		var onlyFaPro = document.getElementById("productoFactura"+obj.productos[key].id)
 		var idProducto = obj.productos[key].id;
 		if( onlyFaPro != null){
+			console.log("productoAhora:"+idProducto)
 			$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('btn-primary agregarProducto');
 
 			$("button.recuperarBoton[idProducto='"+idProducto+"']").addClass('btn-default');
@@ -546,7 +546,10 @@ function facturaLoadNow(factura){
 			$("#PrecioProductoOri"+obj.productos[key].id).val(precio);
 			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).setAttribute("max",stock); // set a new val
 			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).setAttribute("stock",stock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).setAttribute("valueBefore",obj.productos[key].stock); // set a new val
 			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).setAttribute("nuevoStock",Nuevostock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).setAttribute("value",obj.productos[key].stock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).value = obj.productos[key].stock // set a new value
 			document.getElementById("nuevaCantidadProducto"+obj.productos[key].id).readOnly = false;
 
 		}else{
@@ -580,7 +583,7 @@ function facturaLoadNow(factura){
 
 				'<div class="col-xs-3">'+
 
-				'<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" idPro="'+obj.productos[key].id+' max="'+stock+'" id="nuevaCantidadProducto'+obj.productos[key].id+'" min="1" value="'+obj.productos[key].stock+'" stock="'+stock+'" nuevoStock="'+Number(stock-obj.productos[key].stock)+'" required>'+
+				'<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" idPro="'+obj.productos[key].id+'" max="'+stock+'" id="nuevaCantidadProducto'+obj.productos[key].id+'" min="1" valueBefore="'+obj.productos[key].stock+'" value="'+obj.productos[key].stock+'" stock="'+stock+'" nuevoStock="'+Number(stock-obj.productos[key].stock)+'" required>'+
 
 				'</div>' +
 
@@ -1074,9 +1077,11 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 	var id = $(this).attr("idPro");
 
-	var cantOri = Number($(this).attr("stock")) -Number($(this).attr("nuevoStock"));
+	var cantOri = Number($(this).attr("valueBefore")) ;
 
-	var stockNow = Number($(this).attr("nuevoStock"));
+	var stockNow = Number($(this).attr("stock"));
+
+	var stockINV = $(this).attr("nuevoStock");
 
 
 
@@ -1109,34 +1114,40 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 		//
 		// sumarTotalPrecios();
 
-		swal({
-	      title: "La cantidad supera el Stock",
-	      text: "¡Sólo hay "+$(this).attr("nuevoStock")+" unidades!",
-	      type: "error",
-	      confirmButtonText: "¡Cerrar!"
-	    });
+			swal({
+				title: "La cantidad supera el Stock",
+				text: "¡Sólo hay "+stockINV+" unidades!",
+				type: "error",
+				confirmButtonText: "¡Cerrar!"
+			});
+
+
 
 	    return;
 
 	}else{
+		var newValue = Number($(this).val()) - cantOri;
+		console.log("valor actual:"+Number($(this).val())+"otro mas"+newValue)
 		$(this).attr('readonly', true);
-		if (Number($(this).val()) > cantOri){
+		if (newValue > 0){
 
-			var newValue = Number($(this).val()) - cantOri;
+
 			let producto = {
 				cantidad: newValue,
 				idProducto : parseInt(id),
 				idFactura : document.getElementById("nuevaVenta").value
 			}
+			console.log("agregarProducto"+JSON.stringify(producto) )
 			startLoading();
 			worker.postMessage({'cmd': 'addProductoFactura', 'AddDiscountProductoFacturaJSON': producto});
-		}else{
-			var newValue =  cantOri-Number($(this).val());
+		}else if (newValue < 0){
+
 			let producto = {
 				cantidad: newValue,
 				idProducto : parseInt(id),
 				idFactura : document.getElementById("nuevaVenta").value
 			}
+			console.log("descontar"+JSON.stringify(producto))
 			startLoading();
 			worker.postMessage({'cmd': 'discountProductoFactura', 'AddDiscountProductoFacturaJSON': producto});
 		}
