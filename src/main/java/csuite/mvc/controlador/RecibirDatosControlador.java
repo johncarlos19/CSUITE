@@ -1056,18 +1056,22 @@ public class RecibirDatosControlador extends JavalinControlador {
 
     public static boolean isSessionAvailable(String user, String sessionID){
         boolean available = true;
-        for (Login aux: Mercado.getInstance().getLogins()
-             ) {
-            if (aux.getId().equals(user)){
-                if (isExpirate(aux.getJwt())==true || aux.getSession().getId().equals(sessionID)){
-                    Mercado.getInstance().getLogins().remove(aux);
-                    return true;
-                }else{
-                    return false;
+        long posi = -1;
+        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+            if (Mercado.getInstance().getLogins().get(i).getId().equals(user)){
+                if (isExpirate(Mercado.getInstance().getLogins().get(i).getJwt())==true || Mercado.getInstance().getLogins().get(i).getSession().getId().equals(sessionID)){
+                    posi = i;
+                   break;
                 }
             }
         }
-        return available;
+        if (posi!=-1){
+            Mercado.getInstance().getLogins().remove(posi);
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public static String createJWT(String username, String perfil, Map<String, Object> map) {
