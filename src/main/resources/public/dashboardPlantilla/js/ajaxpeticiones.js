@@ -268,8 +268,8 @@ worker.onmessage = function (e) { //recuperando la información
 
         console.log("valorr"+JSON.stringify(kk))
 
-        $('.tablaVentas1').DataTable().clear().destroy();
-        $('.tablaVentas1').DataTable( {
+        $('#tablaInventario').DataTable().clear().destroy();
+        $('#tablaInventario').DataTable( {
             // "ajax": "ajax/datatable-productos.ajax.php?perfilOculto="+perfilOculto,
             "deferRender": true,
             "retrieve": true,
@@ -314,7 +314,62 @@ worker.onmessage = function (e) { //recuperando la información
             ],
 
         } );
-        $('.tablaProductos').columns.adjust().draw();
+        $('#tablaInventario1').DataTable().clear().destroy();
+        $('#tablaInventario1').DataTable( {
+            // "ajax": "ajax/datatable-productos.ajax.php?perfilOculto="+perfilOculto,
+            "deferRender": true,
+            "retrieve": true,
+            "processing": true,
+
+            "language": {
+
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+
+            },
+            "data": kk
+            ,"responsive": {
+                "details": {
+                    "type": 'column',
+                    "target": 'tr'
+                }
+            },
+            "columnDefs": [ {
+                "className": 'control',
+                "orderable": "false",
+                "targets": "1"
+            } ],
+            "columns":[
+                {"data": "#", "width": "10%"},
+                {"data": "Imagen", "width": "10%"},
+                {"data": "Codigo", "width": "15%"},
+                {"data": "Descripcion", "width": "20%"},
+                {"data": "Stock", "width": "10%"},
+                {"data": "Precio de lista", "width": "20%"},
+                {"data": "Acciones", "width": "15%"}
+            ],
+
+        } );
         console.log("ca a imprimir2")
 
 
