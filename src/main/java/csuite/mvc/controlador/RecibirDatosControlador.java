@@ -637,7 +637,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                         }
                         contexto.put("idFactura", idFact);
-                        ctx.render("/public/dashboardPlantilla/crearVenta.html", contexto);
+                        ctx.render("/public/dashboardPlantilla/crearNuevaVenta.html", contexto);
 
 
                     });
@@ -1061,16 +1061,17 @@ public class RecibirDatosControlador extends JavalinControlador {
             if (Mercado.getInstance().getLogins().get(i).getId().equals(user)){
                 if (isExpirate(Mercado.getInstance().getLogins().get(i).getJwt())==true || Mercado.getInstance().getLogins().get(i).getSession().getId().equals(sessionID)){
                     posi = i;
-                   break;
+
+                }
+                if (posi!=-1){
+                    Mercado.getInstance().getLogins().remove(posi);
+                    return true;
+                }else{
+                    return false;
                 }
             }
         }
-        if (posi!=-1){
-            Mercado.getInstance().getLogins().remove(posi);
-            return true;
-        }else{
-            return false;
-        }
+        return available;
 
     }
 
