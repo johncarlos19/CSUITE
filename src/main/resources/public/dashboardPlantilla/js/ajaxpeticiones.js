@@ -57,6 +57,7 @@ worker.onmessage = function (e) { //recuperando la información
         $('.tablaProductos').DataTable().clear().destroy();
         $('.tablaProductos').DataTable( {
             // "ajax": "ajax/datatable-productos.ajax.php?perfilOculto="+perfilOculto,
+
             "deferRender": true,
             "retrieve": true,
             "processing": true,
@@ -105,6 +106,7 @@ worker.onmessage = function (e) { //recuperando la información
             ]
 
         } );
+
 
 
         document.getElementById("loading").innerHTML = "";
@@ -198,14 +200,14 @@ worker.onmessage = function (e) { //recuperando la información
             var sto;
             var accion = '                                                    <div class="btn-group">\n' +
                 '                                                        <button class="btn btn-primary agregarProducto recuperarBoton"\n' +
-                '                                                                idproducto="'+obj[key].id+'" id="productoINV'+obj[key].id+'">Agregar\n' +
+                '                                                                idproducto="'+obj[key].id+'" data-dismiss="modal" id="productoINV'+obj[key].id+'">Agregar\n' +
                 '                                                        </button>\n' +
                 '                                                    </div>'
             var onlyFaPro = document.getElementById("productoFactura"+obj[key].id)
             if( onlyFaPro != null){
                 accion = '                                                    <div class="btn-group">\n' +
                     '                                                        <button class="btn btn-default recuperarBoton"\n' +
-                    '                                                                idproducto="'+obj[key].id+'" id="productoINV'+obj[key].id+'" >Agregar\n' +
+                    '                                                                idproducto="'+obj[key].id+'" data-dismiss="modal" id="productoINV'+obj[key].id+'" >Agregar\n' +
                     '                                                        </button>\n' +
                     '                                                    </div>';
             }else{
@@ -222,7 +224,7 @@ worker.onmessage = function (e) { //recuperando la información
             if(obj[key].stock === 0){
                 accion = '                                                    <div class="btn-group">\n' +
                     '                                                        <button class="btn btn-default recuperarBoton"\n' +
-                    '                                                                idproducto="'+obj[key].id+'" id="productoINV'+obj[key].id+'" disabled>Agregar\n' +
+                    '                                                                idproducto="'+obj[key].id+'" data-dismiss="modal" id="productoINV'+obj[key].id+'" disabled>Agregar\n' +
                     '                                                        </button>\n' +
                     '                                                    </div>';
                 sto = "<button class='btn btn-default' >"+obj[key].stock+"</button> "+"                                            <input type='hidden'  id='stock"+obj[key].id+"'\n" +
@@ -309,9 +311,10 @@ worker.onmessage = function (e) { //recuperando la información
                 {"data": "Stock", "width": "10%"},
                 {"data": "Precio de lista", "width": "20%"},
                 {"data": "Acciones", "width": "15%"}
-            ]
+            ],
 
         } );
+        $('.tablaProductos').columns.adjust().draw();
         console.log("ca a imprimir2")
 
 

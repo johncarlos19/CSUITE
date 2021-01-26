@@ -822,24 +822,7 @@ CUERPO DOCUMENTO
 
                             <div id="DataTables_Table_0_wrapper"
                                  class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                                <!--                                <div class="row">-->
-                                <!--                                    <div class="col-sm-6">-->
-                                <!--                                        <div class="dataTables_length" id="DataTables_Table_0_length"><label>Mostrar-->
-                                <!--                                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"-->
-                                <!--                                                    class="form-control input-sm">-->
-                                <!--                                                <option value="10">10</option>-->
-                                <!--                                                <option value="25">25</option>-->
-                                <!--                                                <option value="50">50</option>-->
-                                <!--                                                <option value="100">100</option>-->
-                                <!--                                            </select> registros</label></div>-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="col-sm-6">-->
-                                <!--                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">-->
-                                <!--                                            <label>Buscar:<input type="search" class="form-control input-sm"-->
-                                <!--                                                                 placeholder=""-->
-                                <!--                                                                 aria-controls="DataTables_Table_0"></label></div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
+
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table class="table table-bordered table-striped dt-responsive tablaVentas1"
@@ -1108,13 +1091,13 @@ CUERPO DOCUMENTO
     MODAL AGREGAR CATEGORÍA
     ======================================-->
 
-    <div id="modalAgregarProductoAlCarro" class="modal fade" role="dialog" style="display: none;">
+    <div id="modalAgregarProductoAlCarro" class="modal fade" role="dialog" >
 
         <div class="modal-dialog">
 
             <div class="modal-content">
 
-                <form role="form" method="post" id="addImpuesto" action="/dashboard/impuesto">
+                <div >
 
 
 
@@ -1127,7 +1110,7 @@ CUERPO DOCUMENTO
 
                         <button type="button" class="close" data-dismiss="modal">×</button>
 
-                        <h4 class="modal-title">Agregar Impuesto</h4>
+                        <h4 class="modal-title">Agregar Producto</h4>
 
                     </div>
 
@@ -1137,82 +1120,262 @@ CUERPO DOCUMENTO
 
                     <div class="modal-body">
 
-                        <div class="box-body">
+                        <div class="box box-warning">
+                            <div class="box-body">
 
-                            <!-- ENTRADA PARA EL NOMBRE -->
+                                <!-- ENTRADA PARA EL NOMBRE -->
 
-                            <div class="form-group">
+                                <div id=""
+                                     class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 
-                                <div class="input-group">
+                                    <table class="table table-bordered table-striped dt-responsive tablaVentas1"
+                                           id="tablaInventario1">
 
-                                    <span class="input-group-addon"><i class="fa fa-navicon"></i></span>
+                                        <thead class="">
 
+                                        <tr role="row">
+                                            <th>#
+                                            </th>
+                                            <th style="width: 72px;">
+                                                Imagen
+                                            </th>
+                                            <th>
+                                                Codigo
+                                            </th>
+                                            <th>
+                                                Descripcion
+                                            </th>
+                                            <th>
+                                                Stock
+                                            </th>
+                                            <th style="width: 130px;">
+                                                Precio de lista
+                                            </th>
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
 
-                                    <input type="text" class="form-control input-lg" name="nombre" placeholder="Ingresar nombre del Impuesto" for="addImpuesto" required="">
+                                        </thead>
 
-
-
+                                        <tbody class="">
+                                        <!--                                            <tr role="row" class="odd">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">41</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>204</td>-->
+                                        <!--                                                <td>Muela o cincel martillo demoledor muro</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn recuperarBoton btn-default" idproducto="21">-->
+                                        <!--                                                            Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="even">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">42</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>203</td>-->
+                                        <!--                                                <td>Taladro Demoledor de muro 110V</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn recuperarBoton btn-default" idproducto="20">-->
+                                        <!--                                                            Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="odd">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">43</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>202</td>-->
+                                        <!--                                                <td>Muela o cincel martillo demoledor piso</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn recuperarBoton btn-default" idproducto="19">-->
+                                        <!--                                                            Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="even">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">44</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>201</td>-->
+                                        <!--                                                <td>Martillo Demoledor de Piso 110V</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="18">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="odd">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">45</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>117</td>-->
+                                        <!--                                                <td>Torre de iluminacion</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="17">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="even">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">46</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>116</td>-->
+                                        <!--                                                <td>Careta para Soldador</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="16">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="odd">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">47</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>115</td>-->
+                                        <!--                                                <td>Soldador Electrico</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="15">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="even">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">48</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>114</td>-->
+                                        <!--                                                <td>Disco de tugsteno para Sierra circular</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="14">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="odd">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">49</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>113</td>-->
+                                        <!--                                                <td>Sierra Circular</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="13">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        <!--                                            <tr role="row" class="even">-->
+                                        <!--                                                <td class="sorting_1" tabindex="0">50</td>-->
+                                        <!--                                                <td><img src="./CrearVentas_files/anonymous.png" width="40px"></td>-->
+                                        <!--                                                <td>112</td>-->
+                                        <!--                                                <td>Motobomba El?ctrica</td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <button class="btn btn-success">20</button>-->
+                                        <!--                                                </td>-->
+                                        <!--                                                <td>-->
+                                        <!--                                                    <div class="btn-group">-->
+                                        <!--                                                        <button class="btn btn-primary agregarProducto recuperarBoton"-->
+                                        <!--                                                                idproducto="12">Agregar-->
+                                        <!--                                                        </button>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </td>-->
+                                        <!--                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                    <!--                                <div class="row">-->
+                                    <!--                                    <div class="col-sm-5">-->
+                                    <!--                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"-->
+                                    <!--                                             aria-live="polite">Mostrando registros del 41 al 50 de un total de 61-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="col-sm-7">-->
+                                    <!--                                        <div class="dataTables_paginate paging_simple_numbers"-->
+                                    <!--                                             id="DataTables_Table_0_paginate">-->
+                                    <!--                                            <ul class="pagination">-->
+                                    <!--                                                <li class="paginate_button previous" id="DataTables_Table_0_previous"><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0">Anterior</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">2</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">3</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">4</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button active"><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">5</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">6</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button "><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">7</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                                <li class="paginate_button next" id="DataTables_Table_0_next"><a-->
+                                    <!--                                                        href="http://localhost/csuite.mvc/pos1/crear-venta#"-->
+                                    <!--                                                        aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0">Siguiente</a>-->
+                                    <!--                                                </li>-->
+                                    <!--                                            </ul>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
                                 </div>
 
-                            </div>
 
-                            <!-- ENTRADA PARA SELECCIONAR CATEGORÍA -->
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-th"></i></span>
-
-                                    <select class="form-control input-lg" id="nuevoImpuesto" onchange="cantidad()"  name="nuevoTributo"
-                                            required>
-
-                                        <option disabled selected value>Selecionar el tipo de tributo</option>
-
-                                        <option  value="Porciento" >Porciento</option>
-                                        <option  value="Suma de Cantidad" >Suma de Cantidad</option>
-                                        <option  value="Descuento Absoluto" >Descuento Absoluto</option>
-                                        <option  value="Descuento Porcentual" >Descuento Porcentual</option>
-
-                                    </select>
-
-                                </div>
 
                             </div>
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-
-                                    <input type="number" step="0.01" class="form-control input-lg" min="0"  name="valor" placeholder="Ingresar el valor" for="addImpuesto" required><span class="input-group-addon"><a class="fa" id="val"></a></span>
-
-
-
-                                </div>
-
-                            </div>
-
-                            <!-- ENTRADA DE ACCESO -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><input type="checkbox" class="" value="true" name="aplicarTodos" placeholder="Aplicar a todos los Productos" for="addImpuesto"></span>
-
-
-                                    <a  class="form-control input-lg" >Aplicar a todos los Productos</a>
-
-
-
-                                </div>
-
-                            </div>
-
-
-
                         </div>
 
 
@@ -1230,7 +1393,6 @@ CUERPO DOCUMENTO
 
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-                        <button type="submit" class="btn btn-primary" for="addCategoria">Guardar Impuesto</button>
 
 
                     </div>
@@ -1239,7 +1401,7 @@ CUERPO DOCUMENTO
 
 
 
-                </form>
+                </div>
 
             </div>
 

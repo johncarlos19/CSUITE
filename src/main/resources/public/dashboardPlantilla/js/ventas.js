@@ -107,14 +107,14 @@ function startServerSent1(){
 		var sto;
 		var accion = '                                                    <div class="btn-group">\n' +
 			'                                                        <button class="btn btn-primary agregarProducto recuperarBoton"\n' +
-			'                                                                idproducto="'+obj.id+'" id="productoINV'+obj.id+'">Agregar\n' +
+			'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'">Agregar\n' +
 			'                                                        </button>\n' +
 			'                                                    </div>'
 		var onlyFaPro = document.getElementById("productoFactura"+obj.id)
 		if( onlyFaPro != null){
 			accion = '                                                    <div class="btn-group">\n' +
 				'                                                        <button class="btn btn-default recuperarBoton"\n' +
-				'                                                                idproducto="'+obj.id+'" id="productoINV'+obj.id+'" >Agregar\n' +
+				'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
 				'                                                        </button>\n' +
 				'                                                    </div>';
 		}else{
@@ -123,7 +123,7 @@ function startServerSent1(){
 		if(obj.stock === 0){
 			accion = '                                                    <div class="btn-group">\n' +
 				'                                                        <button class="btn btn-default recuperarBoton"\n' +
-				'                                                                idproducto="'+obj.id+'" id="productoINV'+obj.id+'" >Agregar\n' +
+				'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
 				'                                                        </button>\n' +
 				'                                                    </div>';
 			sto = "<button class='btn btn-default' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
@@ -149,11 +149,11 @@ function startServerSent1(){
 
 			$.fn.dataTable.ext.errMode = 'none';
 
-			$('#tablaInventario').on( 'error.dt', function ( e, settings, techNote, message ) {
+			$('.tablaVentas1').on( 'error.dt', function ( e, settings, techNote, message ) {
 				console.log( 'An error has been reported by DataTables: ', message );
 			} ) ;
 
-			var table = $('#tablaInventario').DataTable();
+			var table = $('.tablaVentas1').DataTable();
 			// Remove a row by Id:
 			var index1 = table.row("#row_"+ obj.id).index()
 
@@ -183,6 +183,11 @@ function startServerSent1(){
 		var row = document.getElementById("row_"+ obj.id)
 		if (row!== null){
 			var table = $('#tablaInventario').DataTable();
+			// Remove a row by Id:
+			table.row("#row_"+ obj.id).remove().draw();
+			// Likewise to add a new row:
+			table.row.add(employee).draw();
+			var table = $('#tablaInventario1').DataTable();
 			// Remove a row by Id:
 			table.row("#row_"+ obj.id).remove().draw();
 			// Likewise to add a new row:
@@ -729,9 +734,12 @@ $(".tablaVentas1 tbody").on("click", "button.agregarProducto", function(){
 
 		var idProducto = $(this).attr("idProducto");
 
-		$(this).removeClass("btn-primary agregarProducto");
+		$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('btn-primary agregarProducto');
+		$("button.recuperarBoton[idProducto='"+idProducto+"']").addClass('btn-default');
 
-		$(this).addClass("btn-default");
+		// $(this).removeClass("btn-primary agregarProducto");
+		//
+		// $(this).addClass("btn-default");
 
 		let producto = {
 			cantidad: 1,
