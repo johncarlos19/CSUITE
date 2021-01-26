@@ -269,6 +269,56 @@ function deleteFactura(id){
 	startLoading();
 	worker.postMessage({'cmd': 'deleteFactura', 'id': id});
 }
+function saveFacturaNow(){
+	var estado = $("#nuevoMetodoPago").children("option:selected").val();
+	if (document.getElementById("nuevaVenta").value === "" || document.getElementById("nuevaVenta").value === null) {
+		swal({
+			title: "Error al Imprimir la factura",
+			text: "¡Debe crear la factura para poder imprimirla!",
+			type: "error",
+			confirmButtonText: "¡Cerrar!"
+		});
+	} else {
+		if (estado === "nada"){
+			swal({
+				title: "Error al guardar la factura",
+				text: "¡Debe seleccionar el metodo de pago para poder guardar la factura!",
+				type: "error",
+				confirmButtonText: "¡Cerrar!"
+			});
+		}else{
+			switch (estado) {
+				case "Efectivo":
+					var GuardarFacturaJson = {
+						"idFactura": document.getElementById("nuevaVenta").value,
+						"metodoDePago": estado,
+						"codigo": currentyMoney($("#nuevoValorEfectivo").val()),
+					}
+					worker.postMessage({'cmd': 'saveFactura', 'GuardarFacturaJson': GuardarFacturaJson});
+					// nuevoValorEfectivo
+					// nuevoCodigoTransaccion
+					break;
+				case "TC/TD":
+					var GuardarFacturaJson = {
+						"idFactura": document.getElementById("nuevaVenta").value,
+						"metodoDePago": estado,
+						"codigo": $("#nuevoCodigoTransaccion").val(),
+					}
+					worker.postMessage({'cmd': 'saveFactura', 'GuardarFacturaJson': GuardarFacturaJson});
+					break;
+				case "TB":
+					var GuardarFacturaJson = {
+						"idFactura": document.getElementById("nuevaVenta").value,
+						"metodoDePago": estado,
+						"codigo": $("#nuevoCodigoTransaccion").val(),
+					}
+					worker.postMessage({'cmd': 'saveFactura', 'GuardarFacturaJson': GuardarFacturaJson});
+					break;
+			}
+		}
+	}
+
+}
 
 
 
@@ -314,8 +364,6 @@ $('.facturaAct').on("click" , "button.btnEliminarFactura1" ,function(){
 	})
 
 })
-
-
 
 
 
@@ -928,109 +976,7 @@ AGREGANDO PRODUCTOS DESDE EL BOTÓN PARA DISPOSITIVOS
 
 var numProducto = 0;
 
-$(".btnAgregarProducto").click(function(){
 
-	numProducto ++;
-
-	var datos = new FormData();
-	datos.append("traerProductos", "ok");
-
-	$.ajax({
-
-		url:"ajax/productos.ajax.php",
-      	method: "POST",
-      	data: datos,
-      	cache: false,
-      	contentType: false,
-      	processData: false,
-      	dataType:"json",
-      	success:function(respuesta){
-      	    
-      	    	$(".nuevoProducto").append(
-
-          	'<div class="row" style="padding:5px 15px">'+
-
-			  '<!-- Descripción del producto -->'+
-	          
-	          '<div class="col-xs-6 idProductoAlBorrar" style="padding-right:0px">'+
-	          
-	            '<div class="input-group">'+
-	              
-	              '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto><i class="fa fa-times"></i></button></span>'+
-
-	              '<select class="form-control nuevaDescripcionProducto" id="producto'+numProducto+'" idProducto name="nuevaDescripcionProducto" required>'+
-
-	              '<option>Seleccione el producto</option>'+
-
-	              '</select>'+  
-
-	            '</div>'+
-
-	          '</div>'+
-
-	          '<!-- Cantidad del producto -->'+
-
-	          '<div class="col-xs-3 ingresoCantidad">'+
-	            
-	             '<input type="number" class="form-control nuevaCantidadProducto"  name="nuevaCantidadProducto" min="1" value="0" stock nuevoStock required>'+
-
-	          '</div>' +
-
-	          '<!-- Precio del producto -->'+
-
-	          '<div class="col-xs-3 ingresoPrecio" style="padding-left:0px">'+
-
-	            '<div class="input-group">'+
-
-	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
-	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
-	 
-	            '</div>'+
-	             
-	          '</div>'+
-
-	        '</div>');
-
-
-	        // AGREGAR LOS PRODUCTOS AL SELECT 
-
-	         respuesta.forEach(funcionForEach);
-
-	         function funcionForEach(item, index){
-
-	         	if(item.stock != 0){
-
-		         	$("#producto"+numProducto).append(
-
-						'<option idProducto="'+item.id+'" value="'+item.descripcion+'">'+item.descripcion+'</option>'
-		         	)
-
-		         
-		         }
-
-		         
-
-	         }
-
-        	 // SUMAR TOTAL DE PRECIOS
-
-    		sumarTotalPrecios()
-
-    		// AGREGAR IMPUESTO
-	        
-	        agregarImpuesto()
-
-	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
-
-	        $(".nuevoPrecioProducto").number(true, 2);
-
-
-      	}
-
-	})
-
-})
 
 /*=============================================
 SELECCIONAR PRODUCTO
@@ -1249,7 +1195,7 @@ $("#nuevoImpuestoVenta").change(function(){
 FORMATO AL PRECIO FINAL
 =============================================*/
 
-$("#nuevoTotalVenta").number(true, 2);
+// $("#nuevoTotalVenta").number(true, 2);
 
 /*=============================================
 SELECCIONAR MÉTODO DE PAGO
@@ -1273,7 +1219,7 @@ $("#nuevoMetodoPago").change(function(){
 
 			 		'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+ 
 
-			 		'<input type="text" class="form-control" id="nuevoValorEfectivo" placeholder="000000" required>'+
+			 		'<input type="number" class="form-control" id="nuevoValorEfectivo" placeholder="0.00" required>'+
 
 			 	'</div>'+
 
@@ -1285,7 +1231,7 @@ $("#nuevoMetodoPago").change(function(){
 
 			 		'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-			 		'<input type="text" class="form-control" id="nuevoCambioEfectivo" placeholder="000000" readonly required>'+
+			 		'<input type="text" class="form-control" id="nuevoCambioEfectivo" placeholder="0.00" readonly required>'+
 
 			 	'</div>'+
 
@@ -1295,7 +1241,7 @@ $("#nuevoMetodoPago").change(function(){
 
 		// Agregar formato al precio
 
-		$('#nuevoValorEfectivo').number( true, 2);
+		$('#totalVenta').number( true, 2);
       	$('#nuevoCambioEfectivo').number( true, 2);
 
 
@@ -1309,6 +1255,7 @@ $("#nuevoMetodoPago").change(function(){
 		$(this).parent().parent().addClass('col-xs-6');
 
 		 $(this).parent().parent().parent().children('.cajasMetodoPago').html(
+
 
 		 	'<div class="col-xs-6" style="padding-left:0px">'+
                         
@@ -1335,7 +1282,7 @@ $(".formularioVenta").on("change", "input#nuevoValorEfectivo", function(){
 
 	var efectivo = $(this).val();
 
-	var cambio =  Number(efectivo) - Number($('#nuevoTotalVenta').val());
+	var cambio =  Number(efectivo) - Number($('#totalVenta').val());
 
 	var nuevoCambioEfectivo = $(this).parent().parent().parent().children('#capturarCambioEfectivo').children().children('#nuevoCambioEfectivo');
 

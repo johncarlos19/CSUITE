@@ -32,6 +32,7 @@ public class FacturaCliente implements Identifiable<String> {
     private String nombreCliente;
     private String idCliente;
     private boolean facturaGuardada = false;
+    private String codigo; //este codigo es de trans o monto que pago en efectivo
     @CreationTimestamp
     private Timestamp fechaCompra;
 //    @ManyToMany()
@@ -70,6 +71,14 @@ public class FacturaCliente implements Identifiable<String> {
         }
         return facturaJson;
 
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getCiudadPais() {

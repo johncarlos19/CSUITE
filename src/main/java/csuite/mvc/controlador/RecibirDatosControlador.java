@@ -651,6 +651,12 @@ public class RecibirDatosControlador extends JavalinControlador {
                         });
                 path("/ventasActivas", () -> {
                             get(ctx -> {
+                                String idFact = ctx.sessionAttribute("idFactura");
+                                if (idFact ==null){
+                                    idFact = "";
+                                }else{
+                                    ctx.req.removeAttribute("idFactura");
+                                }
                                 Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                                 System.out.println("\n\n\nusuario" + user);
                                 ctx.res.addHeader("Authorization", ctx.cookie("User"));
@@ -666,6 +672,12 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                             });
                             post(ctx -> {
+                                String idFact = ctx.sessionAttribute("idFactura");
+                                if (idFact ==null){
+                                    idFact = "";
+                                }else{
+                                    ctx.req.removeAttribute("idFactura");
+                                }
                                 Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                                 String idFac = ctx.formParam("idFactura");
                                 if (idFac != null){

@@ -16,6 +16,7 @@ public class FacturaJson {
     private Timestamp fechaCompra;
     private String nombreCliente;
     private String idCliente;
+    private String codigo;
 
     private String compania;
     private String direccion;
@@ -33,6 +34,14 @@ public class FacturaJson {
         this.metodoDePago = metodoDePago;
         this.fechaCompra = fechaCompra;
         this.impuestoFacturas = impuestoFacturas;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getCompania() {

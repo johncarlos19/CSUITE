@@ -22,7 +22,16 @@
    ======================================-->
 
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--    https://cdn.usebootstrap.com/bootstrap/3.3.7/css/bootstrap.min.css-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          alt="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">-->
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
@@ -63,8 +72,10 @@
     <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap 3.3.7 -->
-    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
+<!--    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
     <!-- FastClick -->
     <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
 
@@ -103,6 +114,8 @@
 
     <!-- ChartJS http://www.chartjs.org/-->
     <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
+    <!-- Slimscroll -->
+    <script src="../dashboardPlantilla/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
 
 </head>
@@ -119,7 +132,7 @@ CUERPO DOCUMENTO
         <!--=====================================
         LOGOTIPO
         ======================================-->
-        <a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+        <a href="/dashboard/home/" class="logo">
 
             <!-- logo mini -->
             <span class="logo-mini">
@@ -152,6 +165,86 @@ CUERPO DOCUMENTO
                 <span class="sr-only">Toggle navigation</span>
 
             </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
+                                            may not fit into the
+                                            page and may cause design problems
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-red"></i> 5 new members joined
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user text-red"></i> You changed your username
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="user-image"><i class="fa fa-user"></i></span>
+
+                            <span class="hidden-xs">Alexander Pierce</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <span class="img-circle"><i class="fa fa-user"></i></span>
+
+                                <p>
+                                    Alexander Pierce - Web Developer
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+
+                </ul>
+            </div>
 
 
         </nav>

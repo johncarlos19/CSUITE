@@ -528,6 +528,7 @@ public class Mercado {
     public FacturaJson guardarFactura(GuardarFacturaJson guardarFacturaJson){
         FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(guardarFacturaJson.getIdFactura());
         facturaCliente.setMetodoDePago(guardarFacturaJson.getMetodoDePago());
+        facturaCliente.setCodigo(guardarFacturaJson.getCodigo());
         facturaCliente.setFacturaGuardada(true);
         for (FacturaClienteProductoVendido facturaClienteProductoVendido : facturaCliente.getFacturaClienteProductoVendidos()) {
             facturarOnlyProducto(facturaClienteProductoVendido.getIdProducto(), facturaClienteProductoVendido.getCantidad());

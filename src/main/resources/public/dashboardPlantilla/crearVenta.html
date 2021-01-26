@@ -105,7 +105,7 @@
     <script src="../dashboardPlantilla/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 
     <!-- jQuery Number -->
-    <script src="../dashboard/plugins/jqueryNumber/jquerynumber.min.js"></script>
+    <script src="../dashboardPlantilla/plugins/jqueryNumber/jquerynumber.min.js"></script>
 
     <!-- daterangepicker http://www.daterangepicker.com/-->
     <script src="../dashboardPlantilla/bower_components/moment/min/moment.min.js"></script>
@@ -137,12 +137,13 @@ CUERPO DOCUMENTO
         <!--=====================================
         LOGOTIPO
         ======================================-->
-        <a href="http://localhost/csuite.mvc/pos1/inicio" class="logo">
+        <a href="/dashboard/home/" class="logo">
 
             <!-- logo mini -->
             <span class="logo-mini">
 
-			<img src="./CrearVentas_files/logo-only.png" class="img-responsive" style="padding:10px 0px">
+			<img src="../dashboardPlantilla/img/plantilla/logo-only.png" class="img-responsive"
+                 style="padding:10px 0px">
 
 		</span>
 
@@ -150,21 +151,21 @@ CUERPO DOCUMENTO
 
             <span class="logo-lg">
 
-			<img src="./CrearVentas_files/cashsuite4.png" class="img-responsive" style="padding:10px 0px">
+			<img src="../dashboardPlantilla/img/plantilla/cashsuite4.png" class="img-responsive"
+                 style="padding:10px 0px">
 
 		</span>
 
         </a>
 
         <!--=====================================
-        BARRA DE NAVEGACIÓN
+        BARRA DE NAVEGACI?N
         ======================================-->
         <nav class="navbar navbar-static-top" role="navigation">
 
-            <!-- Botón de navegación -->
+            <!-- Bot?n de navegaci?n -->
 
-            <a href="http://localhost/csuite.mvc/pos1/crear-venta#" class="sidebar-toggle" data-toggle="push-menu"
-               role="button">
+            <a href="http://localhost/csuite.mvc/pos1/#" class="sidebar-toggle" data-toggle="push-menu" role="button">
 
                 <span class="sr-only">Toggle navigation</span>
 
@@ -681,7 +682,7 @@ CUERPO DOCUMENTO
                                     BOTÓN PARA AGREGAR PRODUCTO
                                     ======================================-->
 
-                                    <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar
+                                    <button type="button" data-toggle="modal" data-target="#modalAgregarProductoAlCarro" class="btn btn-default hidden-lg btnAgregarProducto">Agregar
                                         producto
                                     </button>
 
@@ -808,7 +809,7 @@ CUERPO DOCUMENTO
 
                                                 <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago"
                                                         required="">
-                                                    <option selected disabled>Seleccione método de pago</option>
+                                                    <option selected disabled value="nada">Seleccione método de pago</option>
                                                     <option value="Efectivo">Efectivo</option>
                                                     <option value="TC/TD">Tarjeta Crédito/Débito - (TC/TD)</option>
                                                     <option value="TB">Transferencia Bancaria - (TB)</option>
@@ -832,7 +833,7 @@ CUERPO DOCUMENTO
 
                             <div class="box-footer">
 
-                                <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;">Guardar venta</button>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="saveFacturaNow()">Guardar venta</button>
                                 <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="imprimirFact()">Imprimir</button>
 
                             </div>
@@ -1134,6 +1135,191 @@ CUERPO DOCUMENTO
 
             </div>
 
+            <div id="modalLoading" class="modal fade" role="dialog"  style="display: none" >
+
+                <div class="modal-dialog swal2-container" >
+
+                    <div class="swal2-center swal2-fade "  style="background: transparent; ">
+                        <!--                <div class="modal-header alert alert-danger alert-dismissible " >-->
+
+                        <!--                    &lt;!&ndash;				  <button type="button" class="close" data-dismiss="modal">&times;</button>&ndash;&gt;-->
+
+                        <!--                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>-->
+
+                        <!--                </div>-->
+
+                        <!--=====================================
+                        CUERPO DEL MODAL
+                        ======================================-->
+
+
+
+
+                        <div id="loading" class="" ><i class="fa fa-refresh fa-spin fa-5x " style="color: ghostwhite" ></i></div>
+
+
+
+
+
+                        <!--                <div class="modal-body">-->
+
+
+                        <!--                    </div>-->
+                        <!--                </div>-->
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!--    <div id="modalInvoice" class="modal fade" role="dialog"  style="display: none" >-->
+
+            <!--        <div class="modal-dialog swal2-container" >-->
+
+            <!--            <div class="swal2-center swal2-fade "  style="background: transparent; ">-->
+            <!--               -->
+
+            <!--                                <div class="modal-body">-->
+
+            <!--                                    <div id="invoice" style="background: white">-->
+
+            <!--                                    </div>-->
+            <!--                                    </div>-->
+
+
+
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--    </div>-->
+
+            <div id="modalAgregarProductoAlCarro" class="modal fade" role="dialog">
+
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <form role="form" method="post">
+
+                            <!--=====================================
+                            CABEZA DEL MODAL
+                            ======================================-->
+
+                            <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+
+                                <h4 class="modal-title">Agregar cliente</h4>
+
+                            </div>
+
+                            <!--=====================================
+                            CUERPO DEL MODAL
+                            ======================================-->
+
+                            <div class="modal-body">
+
+                                <div class="box-body">
+
+                                    <!-- ENTRADA PARA EL NOMBRE -->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                            <input type="text" class="form-control input-lg" name="nuevoCliente"
+                                                   placeholder="Ingresar nombre" required="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA EL DOCUMENTO ID -->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                            <input type="number" min="0" class="form-control input-lg" name="nuevoDocumentoId"
+                                                   placeholder="Ingresar documento" required="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA EL EMAIL -->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
+                                            <input type="email" class="form-control input-lg" name="nuevoEmail"
+                                                   placeholder="Ingresar email" required="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA EL TELÉFONO -->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                            <input type="text" class="form-control input-lg" name="nuevoTelefono"
+                                                   placeholder="Ingresar teléfono"
+                                                   data-inputmask="&#39;mask&#39;:&#39;(999) 999-9999&#39;" data-mask=""
+                                                   required="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ENTRADA PARA LA DIRECCIÓN -->
+
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                            <input type="text" class="form-control input-lg" name="nuevaDireccion"
+                                                   placeholder="Ingresar dirección" required="">
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    PIE DEL MODAL
+                                    ======================================-->
+
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir
+                                        </button>
+
+                                        <button type="submit" class="btn btn-primary">Guardar cliente</button>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     </div>
@@ -1141,209 +1327,7 @@ CUERPO DOCUMENTO
     <!--=====================================
     MODAL AGREGAR CLIENTE
     ======================================-->
-    <div id="modalLoading" class="modal fade" role="dialog"  style="display: none" >
 
-        <div class="modal-dialog swal2-container" >
-
-            <div class="swal2-center swal2-fade "  style="background: transparent; ">
-                <!--                <div class="modal-header alert alert-danger alert-dismissible " >-->
-
-                <!--                    &lt;!&ndash;				  <button type="button" class="close" data-dismiss="modal">&times;</button>&ndash;&gt;-->
-
-                <!--                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>-->
-
-                <!--                </div>-->
-
-                <!--=====================================
-                CUERPO DEL MODAL
-                ======================================-->
-
-
-
-
-                <div id="loading" class="" ><i class="fa fa-refresh fa-spin fa-5x " style="color: ghostwhite" ></i></div>
-
-
-
-
-
-                <!--                <div class="modal-body">-->
-
-
-                <!--                    </div>-->
-                <!--                </div>-->
-
-
-            </div>
-        </div>
-    </div>
-
-    <div id="modalInvoice" class="modal fade" role="dialog"  style="display: none" >
-
-        <div class="modal-dialog swal2-container" >
-
-            <div class="swal2-center swal2-fade "  style="background: transparent; ">
-                <!--                <div class="modal-header alert alert-danger alert-dismissible " >-->
-
-                <!--                    &lt;!&ndash;				  <button type="button" class="close" data-dismiss="modal">&times;</button>&ndash;&gt;-->
-
-                <!--                    <h4 class="modal-title"><i class="icon fa fa-ban"></i> Alerta!</h4>-->
-
-                <!--                </div>-->
-
-                <!--=====================================
-                CUERPO DEL MODAL
-                ======================================-->
-
-
-
-
-
-
-
-
-
-
-                                <div class="modal-body">
-
-                                    <div id="invoice" style="background: white">
-
-                                    </div>
-                                    </div>
-                <!--                </div>-->
-
-
-            </div>
-        </div>
-    </div>
-
-    <div id="modalAgregarCliente" class="modal fade" role="dialog">
-
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-
-                <form role="form" method="post">
-
-                    <!--=====================================
-                    CABEZA DEL MODAL
-                    ======================================-->
-
-                    <div class="modal-header" style="background:#3c8dbc; color:white">
-
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-
-                        <h4 class="modal-title">Agregar cliente</h4>
-
-                    </div>
-
-                    <!--=====================================
-                    CUERPO DEL MODAL
-                    ======================================-->
-
-                    <div class="modal-body">
-
-                        <div class="box-body">
-
-                            <!-- ENTRADA PARA EL NOMBRE -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-
-                                    <input type="text" class="form-control input-lg" name="nuevoCliente"
-                                           placeholder="Ingresar nombre" required="">
-
-                                </div>
-
-                            </div>
-
-                            <!-- ENTRADA PARA EL DOCUMENTO ID -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                                    <input type="number" min="0" class="form-control input-lg" name="nuevoDocumentoId"
-                                           placeholder="Ingresar documento" required="">
-
-                                </div>
-
-                            </div>
-
-                            <!-- ENTRADA PARA EL EMAIL -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-
-                                    <input type="email" class="form-control input-lg" name="nuevoEmail"
-                                           placeholder="Ingresar email" required="">
-
-                                </div>
-
-                            </div>
-
-                            <!-- ENTRADA PARA EL TELÉFONO -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-
-                                    <input type="text" class="form-control input-lg" name="nuevoTelefono"
-                                           placeholder="Ingresar teléfono"
-                                           data-inputmask="&#39;mask&#39;:&#39;(999) 999-9999&#39;" data-mask=""
-                                           required="">
-
-                                </div>
-
-                            </div>
-
-                            <!-- ENTRADA PARA LA DIRECCIÓN -->
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-
-                                    <input type="text" class="form-control input-lg" name="nuevaDireccion"
-                                           placeholder="Ingresar dirección" required="">
-
-                                </div>
-
-                            </div>
-
-                            <!--=====================================
-                            PIE DEL MODAL
-                            ======================================-->
-
-                            <div class="modal-footer">
-
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir
-                                </button>
-
-                                <button type="submit" class="btn btn-primary">Guardar cliente</button>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
 
 
 
@@ -1401,10 +1385,9 @@ CUERPO DOCUMENTO
 
 
 <!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async="" defer=""
-        src="../dashboardPlantilla/js/7875273.js"></script>
+
 <!-- End of HubSpot Embed Code -->
 
 
-</div></body>
+</body>
 </html>
