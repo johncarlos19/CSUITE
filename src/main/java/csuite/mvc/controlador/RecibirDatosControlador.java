@@ -624,6 +624,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                         if (idFact ==null){
                             idFact = "";
                         }else{
+                            ctx.sessionAttribute("idFactura",null);
                             ctx.req.removeAttribute("idFactura");
                         }
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
@@ -655,6 +656,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 if (idFact ==null){
                                     idFact = "";
                                 }else{
+                                    ctx.sessionAttribute("idFactura",null);
                                     ctx.req.removeAttribute("idFactura");
                                 }
                                 Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
