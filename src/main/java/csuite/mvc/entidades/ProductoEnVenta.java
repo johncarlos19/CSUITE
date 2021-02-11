@@ -22,6 +22,7 @@ public class ProductoEnVenta implements Serializable {
     @OneToOne()
     private Producto idProducto;
     private long stock;
+    private long vendido = 0;
     private float precioVenta;
     private float precioCompra;
     private long cantMaxPorVenta;
@@ -34,6 +35,8 @@ public class ProductoEnVenta implements Serializable {
 
     public ProductoEnVenta() {
     }
+
+
 
 
     public ImpuestoProductoEnVenta addImpuesto(Impuesto impuesto){
@@ -78,6 +81,15 @@ public class ProductoEnVenta implements Serializable {
 
     public void addProductoStock(long prod){
         stock+=prod;
+
+    }
+    public void addProductoVendido(long prod){
+        vendido+=prod;
+
+    }
+    public void discountProductoVendido(long prod){
+        vendido-=prod;
+
     }
 
     public void discountProductoStock(long prod){
@@ -107,6 +119,14 @@ public class ProductoEnVenta implements Serializable {
 
     public void setImpuestoProductoEnVentas(List<ImpuestoProductoEnVenta> impuestoProductoEnVentas) {
         this.impuestoProductoEnVentas = impuestoProductoEnVentas;
+    }
+
+    public long getVendido() {
+        return vendido;
+    }
+
+    public void setVendido(long vendido) {
+        this.vendido = vendido;
     }
 
     public Producto getIdProducto() {

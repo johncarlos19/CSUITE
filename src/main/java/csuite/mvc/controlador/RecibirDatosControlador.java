@@ -15,6 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Key;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -588,6 +589,9 @@ public class RecibirDatosControlador extends JavalinControlador {
                         contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("cliente", ClienteServicios.getInstancia().cantidadCliente(Mercado.getInstance().getUserJefeWithToken(user)));
+
+                        contexto.put("ventas", NumberFormat.getCurrencyInstance(new Locale("en", "US"))
+                                .format(FacturaClienteServicios.getInstancia().ventasRealizadaEnMenos30Dias(Mercado.getInstance().getUserJefeWithToken(user))));
 
                         ctx.render("/public/dashboardPlantilla/home.html", contexto);
 

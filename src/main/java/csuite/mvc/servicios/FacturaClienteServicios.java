@@ -4,7 +4,9 @@ import csuite.mvc.entidades.*;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
@@ -63,6 +65,31 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         } finally {
             session.close();
         }
+    }
+    public double ventasRealizadaEnMenos30Dias(String user){
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(calendar.MONTH,-1);
+            Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+
+            Query query = session.createQuery("select sum(fc.precioNeto) from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact  and fc.fechaCompra >= :fecha" );
+            query.setParameter("idFacturaCliente",user);
+            query.setParameter("fact",true);
+            query.setParameter("fecha",timestamp);
+
+
+            //query.setParameter("nombre", apellido+"%");
+            double lista = (double)query.getSingleResult() ;
+            return lista;
+        }catch (NullPointerException e){
+            return 0;
+        }finally {
+            session.close();
+        }
+
     }
 
     public List<FacturaCliente> ListFacturaClienteActivaVendedor(String idFacturaCliente){

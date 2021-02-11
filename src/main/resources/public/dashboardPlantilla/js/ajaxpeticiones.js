@@ -393,6 +393,8 @@ worker.onmessage = function (e) { //recuperando la información
     }
     if(e.data.cmd === 'facturaLoadIMP'){
         console.log("entro aqui")
+        stopLoading()
+        $('#guardarFactura').prop('disabled', false);
         createInvoice(e.data.data)
     }
 
@@ -441,14 +443,15 @@ function startLoading(){
         backdrop: 'static',
         keyboard: false
     })
+    $('#modalLoading').modal('show');
     $("#modalLoading").css("display", "block");
 }
 function stopLoading(){
-    setTimeout(stopNowLoading,3000);
+    setTimeout(stopNowLoading,1000);
 
 }
 
 function stopNowLoading(){
-    $('#modalLoading').modal('toggle');
+    $('#modalLoading').modal('hide');
     $("#modalLoading").css("display", "none");
 }

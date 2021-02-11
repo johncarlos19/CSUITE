@@ -14,6 +14,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,6 +51,7 @@ public class Mercado {
 
         try {
             if (verificar_user("admin", "admin") != null) {
+
 
 //                ClienteServicios.getInstancia().getCliente("CLI-000001");
 //                ImpuestoClienteServicios.getInstancia().ListaImpuestoFacturaCliente("FAC-00000003");
@@ -416,6 +418,7 @@ public class Mercado {
 //                    facturaCliente.removeFacturaClienteProductoVendido(clienteProductoVendido.getId());
 
                     producto.getProductoEnVenta().addProductoStock(cantidad);
+                    producto.getProductoEnVenta().discountProductoVendido(cantidad);
                     producto = (Producto) ProductoServicios.getInstancia().editar(producto);
 
                 }
@@ -448,6 +451,7 @@ public class Mercado {
                 facturaCliente.removeFacturaClienteProductoVendido(facturaClienteProductoVendido.getId());
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
+                producto.getProductoEnVenta().discountProductoVendido(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
                 return producto.getProductoJSON(2);
             }else {
@@ -465,6 +469,7 @@ public class Mercado {
                 facturaCliente.discountValueImpuesto(facturaClienteProductoVendido,cantidad);
                 FacturaClienteServicios.getInstancia().editar(facturaCliente);
                 producto.getProductoEnVenta().addProductoStock(cantidad);
+                producto.getProductoEnVenta().discountProductoVendido(cantidad);
                 producto = (Producto) ProductoServicios.getInstancia().editar(producto);
                 return producto.getProductoJSON(2);
             }
@@ -496,6 +501,7 @@ public class Mercado {
             facturaCliente.addValueImpuesto(facturaClienteProductoVendido,cantidad);
             FacturaClienteServicios.getInstancia().editar(facturaCliente);
             producto.getProductoEnVenta().discountProductoStock(cantidad);
+            producto.getProductoEnVenta().addProductoVendido(cantidad);
             producto = (Producto) ProductoServicios.getInstancia().editar(producto);
 
             return producto.getProductoJSON(2);
@@ -510,6 +516,7 @@ public class Mercado {
 //            facturaClienteProductoVendido = (FacturaClienteProductoVendido) FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
 
             producto.getProductoEnVenta().discountProductoStock(cantidad);
+            producto.getProductoEnVenta().addProductoVendido(cantidad);
             producto = (Producto) ProductoServicios.getInstancia().editar(producto);
 
             facturaClienteProductoVendido = producto.addFacturaClienteProductoVendido(facturaClienteProductoVendido);

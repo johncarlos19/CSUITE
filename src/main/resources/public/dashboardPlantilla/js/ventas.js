@@ -294,6 +294,8 @@ function saveFacturaNow(){
 		}else{
 			switch (estado) {
 				case "Efectivo":
+					startLoading();
+					$('#guardarFactura').prop('disabled', true);
 					var GuardarFacturaJson = {
 						"idFactura": document.getElementById("nuevaVenta").value,
 						"metodoDePago": estado,
@@ -304,6 +306,8 @@ function saveFacturaNow(){
 					// nuevoCodigoTransaccion
 					break;
 				case "TC/TD":
+					startLoading();
+					$('#guardarFactura').prop('disabled', true);
 					var GuardarFacturaJson = {
 						"idFactura": document.getElementById("nuevaVenta").value,
 						"metodoDePago": estado,
@@ -312,6 +316,8 @@ function saveFacturaNow(){
 					worker.postMessage({'cmd': 'saveFactura', 'GuardarFacturaJson': GuardarFacturaJson});
 					break;
 				case "TB":
+					startLoading();
+					$('#guardarFactura').prop('disabled', true);
 					var GuardarFacturaJson = {
 						"idFactura": document.getElementById("nuevaVenta").value,
 						"metodoDePago": estado,
