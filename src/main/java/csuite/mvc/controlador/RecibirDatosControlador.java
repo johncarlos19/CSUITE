@@ -740,6 +740,52 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                 });
 
+
+                path("/administrarVentas", () -> {
+
+                    get(ctx -> {
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nusuario"+user);
+                        ctx.res.addHeader("Authorization",ctx.cookie("User"));
+                        Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("factura", FacturaClienteServicios.getInstancia().ListFacturaClienteCerradaVendedor(Mercado.getInstance().getUserJefeWithToken(user)));
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                        ) {
+                            contexto.put(politica.getKey(), politica.getValue());
+                        }
+
+                        ctx.render("/public/dashboardPlantilla/administrarVentas.html",contexto);
+
+
+
+
+                    });
+//                    post(ctx -> {
+//                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+//                        System.out.println("\n\n\nusuario"+user);
+//                        ctx.res.addHeader("Authorization",ctx.cookie("User"));
+//                        Impuesto impuesto = new Impuesto(ctx.formParam("nombre"),ctx.formParam("nuevoTributo"),Double.parseDouble(ctx.formParam("valor")));
+//                        if (ctx.formParam("aplicarTodos").equalsIgnoreCase("true")){
+//                            impuesto.setAplicarATodos(true);
+//                            impuesto = Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))), impuesto);
+//                            Mercado.getInstance().addImpuestoToAllProducto(impuesto.getId(),Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
+//
+//                        }else{
+//                            impuesto.setAplicarATodos(false);
+//                            Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))),impuesto);
+//                        }
+//
+//
+//
+//                        ctx.redirect("/dashboard/impuesto");
+//
+//
+//
+//
+//                    });
+                });
+
+
                 path("/impuesto", () -> {
 
                     get(ctx -> {

@@ -484,7 +484,7 @@ CUERPO DOCUMENTO
 
             <ol class="breadcrumb">
 
-                <li><a href="http://localhost/csuite.mvc/pos1/inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="/dashboard/home"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
                 <li class="active">Administrar Ventas</li>
 
@@ -514,11 +514,11 @@ CUERPO DOCUMENTO
 
                         <tr>
 
-                            <th style="width:10px">Id Factura</th>
+                            <th>Id Factura</th>
 
                             <th>Id Cliente</th>
-                            <th>Interes</th>
                             <th>SubTotal</th>
+                            <th>Interes</th>
                             <th>Neto</th>
                             <th>Forma de Pago</th>
                             <th>Referencia</th>
@@ -537,27 +537,33 @@ CUERPO DOCUMENTO
 
                             <tr>
 
-                                <td th:text="${aux.id}"></td>
+                                <td th:text="${aux.idFactura}"></td>
 
-                                <td class="text-uppercase" th:text="${aux.nombre}">'.$value["categoria"].'</td>
-                                <td class="text-uppercase" th:text="${aux.operacion}">'.$value["categoria"].'</td>
-                                <td class="text-uppercase" th:text="${aux.ValorSumandoExtraBig}">'.$value["categoria"].'</td>
-                                <th>
+                                <td class="text-uppercase" th:text="${aux.idCliente}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.subtotal}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.interes}">'.$value["categoria"].'</td>
+
+                                <td class="text-uppercase" th:text="${aux.neto}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.metodoDePago}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.codigo}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.idQuienLoRealizo}">'.$value["categoria"].'</td>
+                                <td class="text-uppercase" th:text="${aux.fechaCompra}">'.$value["categoria"].'</td>
+<!--                                <th>-->
 
 
-                                    <div th:if="${aux.isUtilizar}">
-                                        <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.id}">Activado</button>
-                                    </div>
-                                    <!-- ELSE -->
-                                    <div th:unless="${aux.isUtilizar}">
-                                        <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.id}">Desactivado</button>
-                                    </div>
-                                </th>
+<!--                                    <div th:if="${aux.isUtilizar}">-->
+<!--                                        <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.id}">Activado</button>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash; ELSE &ndash;&gt;-->
+<!--                                    <div th:unless="${aux.isUtilizar}">-->
+<!--                                        <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.id}">Desactivado</button>-->
+<!--                                    </div>-->
+<!--                                </th>-->
                                 <td>
 
-                                    <div class="btn-group" th:style="${impuestoEdit}">
+                                    <div class="btn-group">
 
-                                        <button  class="btn btn-info btnEditarCategoria" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-file"></i></button>
+                                        <button  class="btn btn-info btnImprimirFacturaNow" th:id="${aux.idFactura}" type="button"><i class="fa fa-file"></i></button>
 <!--                                        <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>-->
 
                                     </div>
@@ -978,9 +984,11 @@ CUERPO DOCUMENTO
 <script src="../dashboardPlantilla/js/plantilla.js"></script>
 <script src="../dashboardPlantilla/js/usuarios.js"></script>
 <script src="../dashboardPlantilla/js/categorias.js"></script>
-<script src="../dashboardPlantilla/js/clientes.js"></script>
 <script src="../dashboardPlantilla/js/ventas.js"></script>
+<script src="../dashboardPlantilla/js/clientes.js"></script>
+<script src="../dashboardPlantilla/js/productos.js"></script>
 <script src="../dashboardPlantilla/js/reportes.js"></script>
+<script src="../dashboardPlantilla/js/generateInvoice.js"></script>
 <script>
 
     var timeSession = 300000-(1500*60);
@@ -1053,25 +1061,7 @@ CUERPO DOCUMENTO
 </script>
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async="" defer="" src="./categoria_files/7875273.js(2).download"></script>
-<script>
-    function cantidad(va){
-        var e = document.getElementById("nuevoImpuesto");
-        var strUser = e.value;
 
-        switch (strUser) {
-            case "Porciento":
-                document.getElementById("val").innerText = "%"
-                break;
-            case "Suma de Cantidad":
-                document.getElementById("val").innerText = "$"
-                break;
-            default:
-                document.getElementById("val").innerHTML = ""
-                break;
-
-        }
-    }
-</script>
 <!-- End of HubSpot Embed Code -->
 
 

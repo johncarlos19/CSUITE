@@ -2,16 +2,20 @@ package csuite.mvc.entidades;
 
 import csuite.mvc.jsonObject.FacturaJson;
 import csuite.mvc.jsonObject.ProductoJSON;
+import csuite.mvc.servicios.FacturaClienteServicios;
 import csuite.mvc.servicios.ImpuestoClienteServicios;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 public class FacturaCliente implements Identifiable<String> {
@@ -35,6 +39,8 @@ public class FacturaCliente implements Identifiable<String> {
     private String codigo; //este codigo es de trans o monto que pago en efectivo
     @CreationTimestamp
     private Timestamp fechaCompra;
+    @UpdateTimestamp
+    private Timestamp fechaModificacion;
 //    @ManyToMany()
 //    private List<Impuesto> impuestos = new ArrayList<Impuesto>();
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "idFacturaCliente", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -72,6 +78,24 @@ public class FacturaCliente implements Identifiable<String> {
         return facturaJson;
 
     }
+    public String getInteres(){
+        String interes;
+        interes = NumberFormat.getCurrencyInstance(new Locale("en", "US")).format((double) precioNeto - total);
+        return interes;
+
+    }
+    public String getSubtotal(){
+        String interes;
+        interes = NumberFormat.getCurrencyInstance(new Locale("en", "US")).format((double)total);
+        return interes;
+
+    }
+    public String getNeto(){
+        String interes;
+        interes = NumberFormat.getCurrencyInstance(new Locale("en", "US")).format((double)precioNeto);
+        return interes;
+
+    }
 
     public String getCodigo() {
         return codigo;
@@ -79,6 +103,14 @@ public class FacturaCliente implements Identifiable<String> {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public Timestamp getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Timestamp fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
 
     public String getCiudadPais() {

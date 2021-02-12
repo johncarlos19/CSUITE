@@ -32,7 +32,7 @@ dependencies {
 
 
 
-    compile 'io.javalin:javalin:3.8.0'
+    compile 'io.javalin:javalin:3.13.0'
     //manejo de log.
     compile "org.slf4j:slf4j-simple:1.7.28"
     //libreria jsoup.

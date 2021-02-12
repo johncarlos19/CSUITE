@@ -395,6 +395,7 @@ worker.onmessage = function (e) { //recuperando la información
         console.log("entro aqui")
         stopLoading()
         $('#guardarFactura').prop('disabled', false);
+        $("#guardarFactura").html('Guardar venta');
         createInvoice(e.data.data)
     }
 

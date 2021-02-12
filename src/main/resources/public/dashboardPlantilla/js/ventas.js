@@ -296,6 +296,7 @@ function saveFacturaNow(){
 				case "Efectivo":
 					startLoading();
 					$('#guardarFactura').prop('disabled', true);
+					$("#guardarFactura").html('Guardar venta '+'<i class="fa fa-refresh fa-spin"></i>');
 					var GuardarFacturaJson = {
 						"idFactura": document.getElementById("nuevaVenta").value,
 						"metodoDePago": estado,
@@ -981,6 +982,15 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
     //     listarProductos()
 	//
 	// }
+
+})
+
+$(".tablas tbody").on("click", "button.btnImprimirFacturaNow", function(){
+	console.log("Imprimir")
+
+	var idFa = $(this).attr('id');
+	worker.postMessage({'cmd': 'facturaLoadIMP', 'id': idFa});
+
 
 })
 

@@ -109,6 +109,23 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         }
 
     }
+    public List<FacturaCliente> ListFacturaClienteCerradaVendedor(String idFacturaCliente){
+        final Session session = getHibernateSession();
+        try {
+            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact " );
+            query.setParameter("idFacturaCliente",idFacturaCliente);
+            query.setParameter("fact",true);
+            //query.setParameter("nombre", apellido+"%");
+            List<FacturaCliente> facturaClienteList = (List<FacturaCliente>) query.getResultList() ;
+
+
+            return facturaClienteList;
+
+        } finally {
+            session.close();
+        }
+
+    }
     public List<FacturaCliente> ListFacturaClienteActivaEmpleado(String idFacturaCliente){
         final Session session = getHibernateSession();
         try {
