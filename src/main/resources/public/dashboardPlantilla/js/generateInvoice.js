@@ -1,6 +1,9 @@
 function imprimir() {
     window.print();
 }
+function imprimirNow(factu) {
+    createInvoice(JSON.parse(factu))
+}
 
 function generateBarcode() {
     var value = $("#facturaPrint").html();
@@ -173,6 +176,376 @@ function addImpuestoInInvoice(impuestoFactura){
 
     }
 }
+function setCookie(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function returnInvoice(factura){
+
+    var printWindow = ""
+    printWindow += '<style>' +
+
+        '#includedContent .centrado {\n' +
+        '    text-align: center;\n' +
+        '    align-content: center;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  .ticket {\n' +
+        '    width: 155px;\n' +
+        '    max-width: 155px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  img {\n' +
+        '    max-width: inherit;\n' +
+        '    width: inherit;\n' +
+        '}\n' +
+        '\n' +
+        ' @media print {\n' +
+        '    .oculto-impresion,\n' +
+        '    .oculto-impresion * {\n' +
+        '        display: none !important;\n' +
+        '    }\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  * {\n' +
+        '    color: #7F7F7F;\n' +
+        '    font-family: Arial, sans-serif;\n' +
+        '    font-size: 12px;\n' +
+        '    font-weight: normal;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  #config {\n' +
+        '    overflow: auto;\n' +
+        '    margin-bottom: 10px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  .config {\n' +
+        '    float: left;\n' +
+        '    width: 200px;\n' +
+        '    height: 250px;\n' +
+        '    border: 1px solid #000;\n' +
+        '    margin-left: 10px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  .config .title {\n' +
+        '    font-weight: bold;\n' +
+        '    text-align: center;\n' +
+        '}\n' +
+        '\n' +
+        '.#includedContent  config .barcode2D,\n' +
+        '#miscCanvas {\n' +
+        '    display: none;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  #submit {\n' +
+        '    clear: both;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent  #barcodeTarget,\n' +
+        '#includedContent  #canvasTarget {\n' +
+        '    margin-top: 20px;\n' +
+        '}\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '#includedContent .invoice-box table {\n' +
+        '    width: 100%;\n' +
+        '    line-height: inherit;\n' +
+        '    text-align: left;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table td {\n' +
+        '    padding: 5px;\n' +
+        '    vertical-align: top;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr td:nth-child(2) {\n' +
+        '    text-align: right;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.top table td {\n' +
+        '    padding-bottom: 20px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.top table td.title {\n' +
+        '    font-size: 45px;\n' +
+        '    line-height: 45px;\n' +
+        '    color: #333;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.information table td {\n' +
+        '    padding-bottom: 10px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.heading td {\n' +
+        '    background: #eee;\n' +
+        '    border-bottom: 1px solid #ddd;\n' +
+        '    font-weight: bold;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.details td {\n' +
+        '    padding-bottom: 20px;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.item td {\n' +
+        '    border-bottom: 1px solid #eee;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.item.last td {\n' +
+        '    border-bottom: none;\n' +
+        '}\n' +
+        '\n' +
+        '#includedContent .invoice-box table tr.total td:nth-child(2) {\n' +
+        '    border-top: 2px solid #eee;\n' +
+        '    font-weight: bold;\n' +
+        '}\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '/** RTL **/\n' +
+        '.rtl {\n' +
+        '    direction: rtl;\n' +
+        '    font-family: Tahoma, \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+        '}\n' +
+        '\n' +
+        '.rtl table {\n' +
+        '    text-align: right;\n' +
+        '}\n' +
+        '\n' +
+        '.rtl table tr td:nth-child(2) {\n' +
+        '    text-align: left;\n' +
+        '}' +
+        '         @media only screen and (max-width: 600px) {'+
+
+        '            #includedContent .invoice-box table tr.top table td {\n' +
+        '                width: 100%;\n' +
+        '                display: block;\n' +
+        '                text-align: center;\n' +
+        '            }\n' +
+        '            #includedContent .invoice-box {\n' +
+        '                max-width: 80mm;\n' +
+        '                margin: auto;\n' +
+        '                padding: 30px;\n' +
+        '                border: 1px solid #eee;\n' +
+        '                box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+        '                font-size: 16px;\n' +
+        '                line-height: 24px;\n' +
+        '                font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+        '                color: #555;\n' +
+        '            }\n' +
+        '\n' +
+        '            #includedContent .invoice-box table tr.information table td {\n' +
+        '                width: 100%;\n' +
+        '                display: block;\n' +
+        '                text-align: center;\n' +
+        '            }\n' +
+        '}' +
+
+        '' +
+        '</style>'
+
+    printWindow += ('<style>\n' +
+        '#includedContent .invoice-box {\n' +
+        '    max-width: 800px;\n' +
+        '    margin: auto;\n' +
+        '    padding: 30px;\n' +
+        '    border: 1px solid #eee;\n' +
+        '    box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+        '    font-size: 16px;\n' +
+        '    line-height: 24px;\n' +
+        '    font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+        '    color: #555;\n' +
+        '}'+
+        '    </style>');
+
+
+
+    printWindow += ('<div class="invoice-box">\n' +
+        '<div >\n' +
+        '    <table cellpadding="0" cellspacing="0">\n' +
+        '        <tr class="information">\n' +
+        '            <td colspan="2">\n' +
+        '                <table>\n' +
+        '                    <tr>\n' +
+        '                        <td class=" " style="max-width:180px;  margin-left: auto; margin-right: auto;">\n' +
+        '                            <img src="../dashboardPlantilla/img/plantilla/cashsuite_logo.png"\n' +
+        '                                 style="width:100%; max-width:180px; ">\n' +
+        '\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            '+factura.compania+'<br>\n' +
+        '                            '+factura.direccion+'<br>\n' +
+        '                            '+factura.ciudadPais+'<br>\n' +
+        '                            '+factura.telefono+'<br>\n' +
+        '                        </td>\n' +
+        '\n' +
+        '\n' +
+        '                    </tr>\n' +
+        '                </table>\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '        <tr class="information">\n' +
+        '            <td colspan="2">\n' +
+        '                <table>\n' +
+        '                    <tr>\n' +
+        '                        <td>\n' +
+        '                            <table>\n' +
+        '                                <tr class="item last">\n' +
+        '                                    <td id="barcodeTarget" style=" margin: 0px; padding: 5px;\n' +
+        '            vertical-align: top; font-weight: bold; margin-left: auto; margin-right: auto;">\n' +
+        '                                        <div></div>\n' +
+        '                                    </td>\n' +
+        '                                </tr>\n' +
+        '                                <tr class="item last ">\n' +
+        '                                    <td style="padding: 0px;">\n' +
+        '                                        <span id="facturaPrint">'+factura.idFactura+'</span>\n' +
+        '                                    </td>\n' +
+        '                                </tr>\n' +
+        '                                <tr class="item last ">\n' +
+        '                                    <td style="padding: 0px;">\n' +
+        '                                        <span>ID Cliente: </span><span>'+factura.idCliente+'</span>\n' +
+        '                                    </td>\n' +
+        '                                </tr>\n' +
+        '                                <tr class="item last">\n' +
+        '                                    <td style="padding: 0px;">\n' +
+        '                                        Nombre Completo: '+factura.nombreCliente+'\n' +
+        '                                    </td>\n' +
+        '\n' +
+        '                                </tr>\n' )
+    if(factura.metodoDePago !== null){
+        printWindow += ('                                <tr class="item last">\n' +
+            '                                    <td style="padding: 0px;">\n' +
+            '                                        Metodo De Pago: '+factura.metodoDePago+'\n' +
+            '                                    </td>\n' +
+            '\n' +
+            '                                </tr>\n' )
+    }
+
+    printWindow += (
+        '                            </table>\n' +
+        '\n' +
+        '                        </td>\n' +
+        '\n' +
+        '\n' +
+        '                        <td>\n' +
+        '\n' +
+        '                            <span>Fecha: '+returnOnlyDate(factura.fechaCompra)+'</span><br>\n' +
+        '                            <span>Hora: '+returnTime(factura.fechaCompra)+'</span>\n' +
+        '                        </td>\n' +
+        '\n' +
+        '\n' +
+        '                    </tr>\n' +
+        '                </table>\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '    </table>\n' +
+        '    <table cellpadding="0" cellspacing="0">\n' +
+        '        <tr class="heading">\n' +
+        '            <td class="">\n' +
+        '                UDS\n' +
+        '            </td>\n' +
+        '            <td class=" " style="text-align: left;">\n' +
+        '                Descripci&#243;n\n' +
+        '            </td>\n' +
+        '            <td>\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '\n' +
+        '            <td style="text-align: right;">\n' +
+        '                Valor\n' +
+        '            </td>\n' +
+        '        </tr>\n'
+    );
+    for (var key in factura.productos){
+        printWindow += (addProductoInInvoice(factura.productos[key]));
+    }
+    printWindow += (
+        '\n' +
+        '    </table>\n' +
+        '    <table cellpadding="0" cellspacing="0">\n' +
+        '\n' +
+        '\n' +
+        '        <tr class="heading">\n' +
+        '\n' +
+        '            <td>\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '            <td style="text-align: right;">\n' +
+        '                Informaci&#243;n De Pago\n' +
+        '            </td>\n' +
+        '\n' +
+        '            <td style="text-align: right;">\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '\n' );
+
+
+    printWindow += (addImpuestoInInvoice(factura.impuestoFacturas));
+
+    printWindow += (
+        '\n' +
+        '        <tr class="item ">\n' +
+        '\n' +
+        '            <td>\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '            <td style="text-align: right;">\n' +
+        '                SubTotal\n' +
+        '            </td>\n' +
+        '\n' +
+        '            <td style="text-align: right;">\n' +
+        '                '+currentyMoney(factura.total)+'\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '\n' +
+        '        <tr class="total">\n' +
+        '\n' +
+        '            <td>\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '            <td>\n' +
+        '                <br>\n' +
+        '            </td>\n' +
+        '\n' +
+        '            <td style="text-align: right; font-weight: bold">\n' +
+        '                Total: '+currentyMoney(factura.precioNeto)+'\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '    </table>\n' +
+        '\n' +
+        '    <button class="oculto-impresion" onclick="imprimirNow('+JSON.stringify(factura)+')">Imprimir</button>\n' +
+        '\n' +
+        '</div>\n' +
+
+        '</div>\n' +
+        '');
+
+    // printWindow += (divContents);
+    // printWindow.document.write('</body></html>');
+    return printWindow;
+}
 
 function createInvoice(factura){
     var divContents = $("#dvContainer").html();
@@ -194,8 +567,95 @@ function createInvoice(factura){
         '            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"\n' +
         '            crossorigin="anonymous"></script>\n' +
         '    <script type="text/javascript" src="../js/jquery-barcode.js"></script>\n' +
-        '    <script type="text/javascript" src="../dashboardPlantilla/js/generateInvoice.js"></script>\n' +
-        '\n' +
+        '    <script type="text/javascript" src="../dashboardPlantilla/js/generateInvoice.js"></script>\n');
+
+
+        if(getCookie('print'!=="")){
+            switch (getCookie("print")) {
+                case 'thermal80':
+                    printWindow.document.write('<style>\n' +
+                        '        .invoice-box table tr.top table td {\n' +
+                        '            width: 100%;\n' +
+                        '            display: block;\n' +
+                        '            text-align: center;\n' +
+                        '        }\n' +
+                        '\n' +
+                        '        .invoice-box table tr.information table td {\n' +
+                        '            width: 100%;\n' +
+                        '            display: block;\n' +
+                        '            text-align: center;\n' +
+                        '        }\n' +
+                        '        .invoice-box {\n' +
+                        '            max-width: 80mm;\n' +
+                        '            margin: auto;\n' +
+                        '            padding: 30px;\n' +
+                        '            border: 1px solid #eee;\n' +
+                        '            box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+                        '            font-size: 16px;\n' +
+                        '            line-height: 24px;\n' +
+                        '            font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+                        '            color: #555;\n' +
+                        '        }\n' +
+                        '    </style>');
+                    break;
+                case 'thermal58':
+                    printWindow.document.write('<style>\n' +
+                        '        .invoice-box table tr.top table td {\n' +
+                        '            width: 100%;\n' +
+                        '            display: block;\n' +
+                        '            text-align: center;\n' +
+                        '        }\n' +
+                        '\n' +
+                        '        .invoice-box table tr.information table td {\n' +
+                        '            width: 100%;\n' +
+                        '            display: block;\n' +
+                        '            text-align: center;\n' +
+                        '        }\n' +
+                        '        .invoice-box {\n' +
+                        '            max-width: 58mm;\n' +
+                        '            margin: auto;\n' +
+                        '            padding: 30px;\n' +
+                        '            border: 1px solid #eee;\n' +
+                        '            box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+                        '            font-size: 16px;\n' +
+                        '            line-height: 24px;\n' +
+                        '            font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+                        '            color: #555;\n' +
+                        '        }\n' +
+                        '    </style>');
+                    break;
+                case 'paperA4':
+                    printWindow.document.write('<style>\n' +
+                        '.invoice-box {\n' +
+                        '    max-width: 800px;\n' +
+                        '    margin: auto;\n' +
+                        '    padding: 30px;\n' +
+                        '    border: 1px solid #eee;\n' +
+                        '    box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+                        '    font-size: 16px;\n' +
+                        '    line-height: 24px;\n' +
+                        '    font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+                        '    color: #555;\n' +
+                        '}'+
+                        '    </style>');
+                    break;
+            }
+        }else{
+            printWindow.document.write('<style>\n' +
+                '.invoice-box {\n' +
+                '    max-width: 800px;\n' +
+                '    margin: auto;\n' +
+                '    padding: 30px;\n' +
+                '    border: 1px solid #eee;\n' +
+                '    box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+                '    font-size: 16px;\n' +
+                '    line-height: 24px;\n' +
+                '    font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+                '    color: #555;\n' +
+                '}'+
+                '    </style>');
+        }
+        printWindow.document.write('\n' +
         '\n' +
         '</head>');
 

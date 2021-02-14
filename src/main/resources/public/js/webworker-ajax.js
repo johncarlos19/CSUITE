@@ -212,7 +212,13 @@ this.addEventListener('message', function(e) {
                             postMessage({'cmd': 'noFound', 'data': response.data});
                             return response.data;
                         }else{
-                            postMessage({'cmd': 'facturaLoadIMP', 'data': response.data});
+                            if(data.ubi === 'modal'){
+
+                                postMessage({'cmd': 'facturaLoadIMPModal', 'data': response.data});
+                            }else{
+
+                                postMessage({'cmd': 'facturaLoadIMP', 'data': response.data});
+                            }
                             return response.data;
                         }
                     } catch (error) {

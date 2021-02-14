@@ -391,6 +391,14 @@ worker.onmessage = function (e) { //recuperando la información
         console.log("entro aqui")
         reloadFactActiva();
     }
+    if(e.data.cmd === 'facturaLoadIMPModal'){
+        console.log("entro aqui")
+        stopLoading()
+        var invo = returnInvoice(e.data.data)
+        document.getElementById("includedContent").innerHTML = invo;
+        generateBarcode();
+        // $("#includedContent").html(invo);
+    }
     if(e.data.cmd === 'facturaLoadIMP'){
         console.log("entro aqui")
         stopLoading()

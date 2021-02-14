@@ -580,6 +580,9 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         System.out.println("\n\n\nusuario12"+user.getId());
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
+                        if(ctx.cookie("print")==null){
+                            ctx.cookie("print","thermal80",2147483647);
+                        }
                         Map<String, Object> contexto = new HashMap<>();
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                              ) {

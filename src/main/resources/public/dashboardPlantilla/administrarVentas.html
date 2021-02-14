@@ -22,7 +22,12 @@
    PLUGINS DE CSS
    ======================================-->
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" alt="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="../dashboardPlantilla/bower_components/bootstrap/dist/css/bootstrap.min.css">-->
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../dashboardPlantilla/bower_components/font-awesome/css/font-awesome.min.css">
@@ -60,7 +65,11 @@
     <script src="../dashboardPlantilla/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap 3.3.7 -->
-    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+<!--    <script src="../dashboardPlantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
 
     <!-- FastClick -->
     <script src="../dashboardPlantilla/bower_components/fastclick/lib/fastclick.js"></script>
@@ -101,6 +110,14 @@
     <!-- ChartJS http://www.chartjs.org/-->
     <script src="../dashboardPlantilla/bower_components/Chart.js/Chart.js"></script>
 
+<!--    barcode-->
+
+
+
+
+
+    <script type="text/javascript" src="../dashboardPlantilla/js/generateInvoice.js"></script>
+       <script type="text/javascript" src="../js/jquery-barcode.js"></script>
 
 
 
@@ -563,7 +580,7 @@ CUERPO DOCUMENTO
 
                                     <div class="btn-group">
 
-                                        <button  class="btn btn-info btnImprimirFacturaNow" th:id="${aux.idFactura}" type="button"><i class="fa fa-file"></i></button>
+                                        <button  class="btn btn-info btnImprimirFacturaNow" data-toggle="modal" data-target="#modalShowInvoice" th:id="${aux.idFactura}" type="button"><i class="fa fa-file"></i></button>
 <!--                                        <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>-->
 
                                     </div>
@@ -826,6 +843,62 @@ CUERPO DOCUMENTO
     <!--=====================================
     MODAL EDITAR CATEGORÍA
     ======================================-->
+
+    <div id="modalShowInvoice" class="modal fade" role="dialog">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+
+
+                    <!--=====================================
+                    CABEZA DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        <h4 class="modal-title">Invoice</h4>
+
+                    </div>
+
+                    <!--=====================================
+                    CUERPO DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-body">
+
+                        <div class="box-body">
+
+                            <!-- ENTRADA PARA EL NOMBRE -->
+
+                            <div id="includedContent"></div>
+
+                        </div>
+
+                    </div>
+
+                    <!--=====================================
+                    PIE DEL MODAL
+                    ======================================-->
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+
+                    </div>
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
 
     <div id="modalEditarCategoria" class="modal fade" role="dialog">
 

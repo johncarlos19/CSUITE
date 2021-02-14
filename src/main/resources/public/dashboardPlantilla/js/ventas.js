@@ -989,7 +989,8 @@ $(".tablas tbody").on("click", "button.btnImprimirFacturaNow", function(){
 	console.log("Imprimir")
 
 	var idFa = $(this).attr('id');
-	worker.postMessage({'cmd': 'facturaLoadIMP', 'id': idFa});
+	document.getElementById("includedContent").innerHTML = ""
+	worker.postMessage({'cmd': 'facturaLoadIMP', 'id': idFa, 'ubi': 'modal'});
 
 
 })
