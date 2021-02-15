@@ -501,6 +501,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                             || ctx.path().contains("/empleado")==true
                             || ctx.path().contains("/crearVentas")==true
                             || ctx.path().contains("/ventasActivas")==true
+                            || ctx.path().contains("//administrarVentas")==true
                     ){
                         if (user==null || session == null){
 
@@ -1114,6 +1115,7 @@ public class RecibirDatosControlador extends JavalinControlador {
         long posi = -1;
         for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
             if (Mercado.getInstance().getLogins().get(i).getId().equals(user)){
+                System.out.println("\n\n ididid"+Mercado.getInstance().getLogins().get(i).getId());
                 if (isExpirate(Mercado.getInstance().getLogins().get(i).getJwt())==true || Mercado.getInstance().getLogins().get(i).getSession().getId().equals(sessionID)){
                     posi = i;
 

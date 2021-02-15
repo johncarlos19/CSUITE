@@ -1,8 +1,12 @@
+
+var Invoice;
+
+
 function imprimir() {
     window.print();
 }
-function imprimirNow(factu) {
-    createInvoice(JSON.parse(factu))
+function imprimirNow() {
+    createInvoice(Invoice)
 }
 
 function generateBarcode() {
@@ -535,12 +539,13 @@ function returnInvoice(factura){
         '        </tr>\n' +
         '    </table>\n' +
         '\n' +
-        '    <button class="oculto-impresion" onclick="imprimirNow('+JSON.stringify(factura)+')">Imprimir</button>\n' +
+        '    <button class="oculto-impresion" onclick="imprimirNow()">Imprimir</button>\n' +
         '\n' +
         '</div>\n' +
 
         '</div>\n' +
         '');
+    Invoice = factura;
 
     // printWindow += (divContents);
     // printWindow.document.write('</body></html>');
@@ -550,6 +555,7 @@ function returnInvoice(factura){
 function createInvoice(factura){
     var divContents = $("#dvContainer").html();
     var printWindow = window.open('', '', 'width=800');
+    console.log("print"+getCookie('print'))
     printWindow.document.write('<html>\n' +
         '<head>\n' +
         '    <meta charset="utf-8">\n' +
@@ -570,7 +576,7 @@ function createInvoice(factura){
         '    <script type="text/javascript" src="../dashboardPlantilla/js/generateInvoice.js"></script>\n');
 
 
-        if(getCookie('print'!=="")){
+
             switch (getCookie("print")) {
                 case 'thermal80':
                     printWindow.document.write('<style>\n' +
@@ -639,22 +645,23 @@ function createInvoice(factura){
                         '}'+
                         '    </style>');
                     break;
+                default:
+                    printWindow.document.write('<style>\n' +
+                        '.invoice-box {\n' +
+                        '    max-width: 800px;\n' +
+                        '    margin: auto;\n' +
+                        '    padding: 30px;\n' +
+                        '    border: 1px solid #eee;\n' +
+                        '    box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
+                        '    font-size: 16px;\n' +
+                        '    line-height: 24px;\n' +
+                        '    font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
+                        '    color: #555;\n' +
+                        '}'+
+                        '    </style>');
+                    break;
             }
-        }else{
-            printWindow.document.write('<style>\n' +
-                '.invoice-box {\n' +
-                '    max-width: 800px;\n' +
-                '    margin: auto;\n' +
-                '    padding: 30px;\n' +
-                '    border: 1px solid #eee;\n' +
-                '    box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
-                '    font-size: 16px;\n' +
-                '    line-height: 24px;\n' +
-                '    font-family: \'Helvetica Neue\', \'Helvetica\', Helvetica, Arial, sans-serif;\n' +
-                '    color: #555;\n' +
-                '}'+
-                '    </style>');
-        }
+
         printWindow.document.write('\n' +
         '\n' +
         '</head>');
