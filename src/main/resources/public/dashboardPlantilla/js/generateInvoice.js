@@ -594,7 +594,7 @@ function createInvoice(factura){
                         '        .invoice-box {\n' +
                         '            max-width: 80mm;\n' +
                         '            margin: auto;\n' +
-                        '            padding: 30px;\n' +
+                        '            padding: 5px;\n' +
                         '            border: 1px solid #eee;\n' +
                         '            box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
                         '            font-size: 16px;\n' +
@@ -618,9 +618,9 @@ function createInvoice(factura){
                         '            text-align: center;\n' +
                         '        }\n' +
                         '        .invoice-box {\n' +
-                        '            max-width: 58mm;\n' +
+                        '            max-width: 65mm;\n' +
                         '            margin: auto;\n' +
-                        '            padding: 30px;\n' +
+                        '            padding: 5px;\n' +
                         '            border: 1px solid #eee;\n' +
                         '            box-shadow: 0 0 10px rgba(0, 0, 0, .15);\n' +
                         '            font-size: 16px;\n' +
