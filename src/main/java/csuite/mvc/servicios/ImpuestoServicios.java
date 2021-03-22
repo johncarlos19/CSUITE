@@ -1,5 +1,6 @@
 package csuite.mvc.servicios;
 
+import csuite.mvc.entidades.Almacen;
 import csuite.mvc.entidades.Impuesto;
 import csuite.mvc.entidades.Usuario;
 import org.hibernate.Session;
@@ -25,6 +26,33 @@ public class ImpuestoServicios extends GestionadDB<Impuesto>{
         super(Impuesto.class);
     }
 
+
+    public long getCantImpuesto(String user) {
+
+        long cant = -1;
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+
+
+//        Query query = em.createQuery("select c.idCliente from Vendedor v, Cliente c join fetch v.clientes where v.idVendedor.usuario = '"+user+"' group by c.idCliente");
+        try {
+            Query query = session.createQuery("select count(i) from Vendedor v inner join v.impuestos i where v.idVendedor.usuario = '"+user+"' " );
+
+            //query.setParameter("nombre", apellido+"%");
+            cant = (long) query.getSingleResult();
+            System.out.println("Cantidad"+cant);
+
+
+            return cant;
+        } finally {
+            session.close();
+        }
+
+
+
+
+    }
     public ArrayList<Impuesto> listaImpuesto(String user) {
 
 
@@ -75,6 +103,31 @@ public class ImpuestoServicios extends GestionadDB<Impuesto>{
             session.close();
         }
 
+
+
+
+    }
+    public ArrayList<Impuesto> impuestoProductoNotAdded( long id, String user) {
+
+
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select i from ImpuestoProductoEnVenta imp, Vendedor v inner join v.impuestos i where imp.idProductoEnVenta.idProducto.id = :id and imp.idImpuesto != i.id and v.idVendedor.usuario = :user order by i.id desc ");
+            query.setParameter("id",id).setParameter("user",user);
+//            if (page != 0) {
+//                query.setFirstResult(0 + 10 * (page - 1));
+//                query.setMaxResults(10);
+//            }
+
+            //query.setParameter("nombre", apellido+"%");
+            List<Impuesto> lista = query.getResultList();
+            return (ArrayList<Impuesto>) lista;
+        }finally {
+            session.close();
+        }
 
 
 

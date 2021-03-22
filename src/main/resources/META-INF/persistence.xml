@@ -83,12 +83,12 @@
 
         <properties>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://csuite.cpaiyaspohoi.us-east-1.rds.amazonaws.com:5432/csuite" />
-            <property name="javax.persistence.jdbc.user" value="johncarlos1943" />
-            <property name="javax.persistence.jdbc.password" value="castillo30" />
+                      value="jdbc:postgresql://csuite-do-user-8614748-0.b.db.ondigitalocean.com:25060/csuite?sslmode=require" />
+            <property name="javax.persistence.jdbc.user" value="doadmin" />
+            <property name="javax.persistence.jdbc.password" value="tqgdztx0bkf726m8" />
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="connection.pool_size" value="20"></property>
 <!--            <property-->

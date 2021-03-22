@@ -10,6 +10,7 @@ public class Politica {
     private long id;
     private String key;
     private boolean permitido = true;
+    private String grupo;
 //    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL )
 //    @JoinColumn(name = "idUsuario")
 //    private Usuario idUsuario;
@@ -26,8 +27,14 @@ public class Politica {
         this.permitido = permitido;
     }
 
+    public String getGrupo() {
+        return grupo;
+    }
 
-//    public Usuario getIdUsuario() {
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+    //    public Usuario getIdUsuario() {
 //        return idUsuario;
 //    }
 //

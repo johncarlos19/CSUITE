@@ -80,12 +80,13 @@ public class ApiControlador extends JavalinControlador {
                                         //
                                         System.out.println(mensaje);
 
-                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
-                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
-                                                Mercado.getInstance().getLogins().get(i).setJwt(claims);
-                                                Mercado.getInstance().getLogins().get(i).setSession(ctx.req.getSession());
-                                            }
-                                        }
+                                        Mercado.getInstance().getLogins().get(use).setJwt(claims);
+                                        Mercado.getInstance().getLogins().get(use).setSession(ctx.req.getSession());
+//                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+//                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
+//
+//                                            }
+//                                        }
                                         String tmp = ctx.body();
                                         ctx.json(Mercado.getInstance().getTimeSessionMinute()*60*1000);
 
@@ -371,6 +372,143 @@ public class ApiControlador extends JavalinControlador {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");
                     });
+                    post("/Impuesto", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    String idProducto =  ctx.body().toString();
+                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto(Long.parseLong(idProducto));
+
+                                    List<ImpuestoJson> listaJson = new ArrayList<ImpuestoJson>();
+                                    for (int i = 0; i < producto.getProductoEnVenta().getImpuestoProductoEnVentas().size(); i++) {
+                                        listaJson.add(producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getIdImpuesto().damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getId()));
+                                    }
+//
+
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(listaJson);
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
+
+
+                    post("/ImpuestoNoAdded", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    String idProducto =  ctx.body().toString();
+                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto(Long.parseLong(idProducto));
+                                    long cant = ImpuestoServicios.getInstancia().getCantImpuesto(Mercado.getInstance().getUserJefeWithToken(user));
+                                    List<Impuesto> imp = ImpuestoServicios.getInstancia().impuestoProductoNotAdded(Long.parseLong(idProducto),Mercado.getInstance().getUserJefeWithToken(user));
+
+
+                                    List<ImpuestoJson> listaJson = new ArrayList<ImpuestoJson>();
+                                    if (cant != imp.size()){
+
+                                        for (int i = 0; i < imp.size(); i++) {
+                                            listaJson.add(imp.get(i).damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),-1));
+                                        }
+                                    }
+//
+
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(listaJson);
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
+                    post("/ProductoRelation", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    ActionJson actionJson =  ctx.bodyAsClass(ActionJson.class);
+                                    long idProdu = (long) Mercado.getInstance().selectActionClass(actionJson,user);
+//                                    List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, Long.parseLong(idProducto));
+//                                    List<AlmacenJson> listaJson = new ArrayList<AlmacenJson>();
+//                                    for (int i = 0; i < lista.size(); i++) {
+//                                        listaJson.add(lista.get(i).getAlmacenJson());
+//                                    }
+//                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto();
+                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto(idProdu);
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(producto.getProductoJSON(2));
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
+                    post("/Almacen", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    String idProducto =  ctx.body().toString();
+                                    List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, Long.parseLong(idProducto));
+                                    List<AlmacenJson> listaJson = new ArrayList<AlmacenJson>();
+                                    for (int i = 0; i < lista.size(); i++) {
+                                        listaJson.add(lista.get(i).getAlmacenJson());
+                                    }
+//                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto();
+
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(listaJson);
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
 
                     get("/", ctx -> {
                         String session = ctx.sessionAttribute("User");
@@ -391,7 +529,10 @@ public class ApiControlador extends JavalinControlador {
                                     }
                         }catch (ExpiredJwtException e){
                             ctx.json(null);
-                        }
+                        }catch (NullPointerException e){
+                                    e.printStackTrace();
+                                    ctx.json(null);
+                                }
                     }
 
                     });

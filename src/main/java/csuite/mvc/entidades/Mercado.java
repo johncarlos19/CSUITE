@@ -1,5 +1,7 @@
 package csuite.mvc.entidades;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import csuite.mvc.jsonObject.ActionJson;
 import csuite.mvc.jsonObject.FacturaJson;
 import csuite.mvc.jsonObject.GuardarFacturaJson;
 import csuite.mvc.jsonObject.ProductoJSON;
@@ -13,6 +15,7 @@ import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.*;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.*;
@@ -29,7 +32,8 @@ public class Mercado {
     private static Mercado mercado;
     private AES256TextEncryptor userEncryptor = new AES256TextEncryptor();
     private AES256TextEncryptor passwordEncryptor = new AES256TextEncryptor();
-    private ArrayList<Login> logins = new ArrayList<Login>();
+    private Map<String, Login> logins = new HashMap<String, Login>();
+//    private ArrayList<Login> logins = new ArrayList<Login>();
     private long timeSessionMinute = 10;
     public  List<VentasSession> listaSseUsuario = new ArrayList<VentasSession>();
 
@@ -51,6 +55,9 @@ public class Mercado {
 
         try {
             if (verificar_user("admin", "admin") != null) {
+//                for (Impuesto impuesto : ImpuestoServicios.getInstancia().impuestoProductoNotAdded(1)) {
+//                    System.out.println("\n\nEso es:"+impuesto.getNombre());
+//                }
 
 
 //                ClienteServicios.getInstancia().getCliente("CLI-000001");
@@ -127,6 +134,9 @@ public class Mercado {
     public  List<VentasSession> getListaSseUsuario() {
         return listaSseUsuario;
     }
+
+
+
     public  void addListaSseUsuario(VentasSession ventasSession) {
         this.listaSseUsuario.add(ventasSession);
     }
@@ -134,6 +144,8 @@ public class Mercado {
     public  void setListaSseUsuario(List<VentasSession> listaSseUsuario) {
         this.listaSseUsuario = listaSseUsuario;
     }
+
+
     public void borrarSessionSSe(String id){
         int borrar = -1;
         for (int i = 0; i < listaSseUsuario.size(); i++) {
@@ -228,6 +240,7 @@ public class Mercado {
         Usuario usuarioCliente = new Usuario();
         usuarioCliente.setNombre("Juan");
         usuarioCliente.setApellido("Perez");
+        usuarioCliente.setDocumento("123456");
         usuarioCliente.setPerfil("Cliente");
         usuarioCliente.setPais("Republica Dominicana");
         usuarioCliente.setMunicipio("Moca");
@@ -284,6 +297,7 @@ public class Mercado {
         usuarioCliente1.setApellido("Perez");
         usuarioCliente1.setPerfil("Cliente");
         usuarioCliente1.setPais("Republica Dominicana");
+        usuarioCliente1.setDocumento("654321");
         usuarioCliente1.setMunicipio("Moca");
         usuarioCliente1.setDireccion("Paso 11De Moca");
         usuarioCliente1.setTelefono("809525456");
@@ -404,6 +418,149 @@ public class Mercado {
         }
     }
 
+
+    public Object selectActionClass(ActionJson actionJson,Claims user){
+        Object aux = null;
+        switch (actionJson.getTypeClass()){
+            case "Producto":
+                System.out.println("\n\nentro a producto");
+                aux = selectActionProducto(actionJson,user);
+
+
+            case "Impuesto":
+                break;
+            default:
+                break;
+
+
+        }
+
+
+        return aux;
+    }
+
+    public Object selectActionProducto(ActionJson actionJson,Claims user){
+
+        Object aux = null;
+        Map<String, String> map = null;
+        Producto producto = null;
+        switch (actionJson.getAction()){
+            case "addImpuesto":
+
+                addNewImpuestoToOnlyProducto(actionJson.getAnotherID(),getUserJefeWithToken(user),actionJson.getId());
+                aux = actionJson.getAnotherID();
+            break;
+
+
+            case "deleteImpuesto":
+
+                System.out.println("\n\nentro a borrar");
+                ImpuestoProductoEnVentaServicios.getInstancia().deleteImpuestoProductoEnVentaId(actionJson.getId());
+                aux = actionJson.getAnotherID();
+
+            break;
+
+            case "addAlmacen":
+
+                map = JsonStringToMap(actionJson.getDetail());
+                System.out.println("Esto se convirtio"+map.get("proveedor")+"-"+Long.parseLong( map.get("productoAgregado")));
+                Almacen almacen = new Almacen(map.get("proveedor"),Long.parseLong( map.get("productoAgregado")),Long.parseLong(map.get("productoVendido")) , Float.parseFloat(map.get("costo")), Float.parseFloat(map.get("costo")));
+                addAlmacen(actionJson.getId(),almacen);
+                aux = actionJson.getId();
+            break;
+            case "editarInfoProducto":
+
+                map = JsonStringToMap(actionJson.getDetail());
+
+                System.out.println("Esto se convirtio"+map.get("codigo")+"-"+ map.get("nombre"));
+                producto = ProductoServicios.getInstancia().find(actionJson.getId());
+                producto.setCodigo_local(map.get("codigo"));
+                producto.setNombre(map.get("nombre"));
+                producto.setDescripcion(map.get("descripcion"));
+                producto.setCategoria(map.get("categoria"));
+                ProductoServicios.getInstancia().editar(producto);
+
+                aux = actionJson.getId();
+                break;
+            case "editarPrecioProducto":
+
+                map = JsonStringToMap(actionJson.getDetail());
+
+                System.out.println("Esto se convirtio"+map.get("codigo")+"-"+ map.get("nombre"));
+                producto = ProductoServicios.getInstancia().find(actionJson.getId());
+                producto.getProductoEnVenta().setPrecioVenta(Float.parseFloat(map.get("venta")));
+                ProductoServicios.getInstancia().editar(producto);
+
+                aux = actionJson.getId();
+                break;
+            case "editarFotoProducto":
+
+                map = JsonStringToMap(actionJson.getDetail());
+                System.out.println("Esto se convirtio"+map.get("nombreImg")+"-"+ map.get("mimetype"));
+                if (map.get("base64") != null || map.get("mimetype") != null || map.get("nombreImg") != null ){
+                    Foto foto= FotoServices.getInstancia().find((Long)actionJson.getAnotherID());
+                    foto.setNombre(map.get("nombreImg"));
+                    foto.setMimeType( map.get("mimetype"));
+                    foto.setFotoBase64(map.get("base64"));
+                    FotoServices.getInstancia().editar(foto);
+                }else{
+                    Foto foto= FotoServices.getInstancia().find((Long)actionJson.getAnotherID());
+                    foto.setNombre(null);
+                    foto.setMimeType(null);
+                    foto.setFotoBase64(null);
+                    FotoServices.getInstancia().editar(foto);
+
+                }
+
+
+
+                aux = actionJson.getId();
+                break;
+
+
+
+            default:
+                break;
+
+
+        }
+
+
+        return aux;
+    }
+    public Map<String, String> JsonStringToMap(String json){
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = null;
+
+
+        try {
+
+            // convert JSON string to Map
+            map = mapper.readValue(json, Map.class);
+
+            // it works
+            //Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {});
+
+            System.out.println(map);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public void addAlmacen(long id, Almacen almacen){
+
+        Producto va = ProductoServicios.getInstancia().find(id);
+
+        almacen = va.addAlmacen(almacen);
+        ProductoServicios.getInstancia().update(va);
+        if (va.getProductoEnVenta().getStock()==0){
+            va.addOnlyList(almacen);
+        }
+
+
+    }
 
 
     public boolean borrarFactura(String idFactura){
@@ -547,6 +704,60 @@ public class Mercado {
     }
 
 
+    public void DescartarOnlyProducto(Producto producto, long cantidad) {
+        long cantidadRemove = cantidad;
+        boolean encontro = false;
+        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().buscar(producto.getProductoEnVenta().getId());
+//        productoEnVenta.discountProductoStock(cantidad);
+        List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, producto.getId());
+        for (int i = lista.size() - 1; i > -1; i--) {
+            if (productoEnVenta.getIdAlmacen().getIdAlmacen() == lista.get(i).getIdAlmacen() || encontro == true) {
+                System.out.println("\n\nentro para cobrar" + i);
+                encontro = true;
+                if (i == 0) {
+                    cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+                    AlmacenServicios.getInstancia().editar(lista.get(i));
+                } else {
+                    while (cantidadRemove != 0) {
+                        if (i == -1) {
+                            break;
+                        }
+                        System.out.println("\n\nentro para 2" + lista.get(i).getDisponible());
+                        if (lista.get(i).getDisponible() >= cantidadRemove) {
+                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+                            if (cantidadRemove == 0) {
+
+                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                                lista.set(i, almacen);
+                                if (i > 0 && lista.get(i).getDisponible() == 0) {
+                                    productoEnVenta.setIdAlmacen(lista.get(i - 1));
+                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+                                } else {
+                                    productoEnVenta.setIdAlmacen(lista.get(i));
+                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+                                }
+                                break;
+                            } else {
+                                cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                                lista.set(i, almacen);
+                            }
+                            i--;
+                        } else {
+                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+                            Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+                            lista.set(i, almacen);
+                        }
+                        i--;
+
+                    }
+
+
+                }
+            }
+        }
+    }
+
 
     public void facturarOnlyProducto(Producto producto, long cantidad) {
         long cantidadRemove = cantidad;
@@ -602,7 +813,7 @@ public class Mercado {
         }
     }
 
-
+//agrega atributos preseleccionado a un solo producto
     public void addImpuestoToOnlyProducto(long id, String user) {
         ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().getVentaProducto(id, user);
         List<Impuesto> lista = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(user);
@@ -610,6 +821,17 @@ public class Mercado {
             productoEnVenta.addImpuesto(impuesto);
         }
         ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+
+    }
+
+    public ProductoEnVenta addNewImpuestoToOnlyProducto(long id, String user, long idIMP) {
+        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().getVentaProducto(id, user);
+        Impuesto impuesto = ImpuestoServicios.getInstancia().getImpuesto(idIMP);
+//        List<Impuesto> lista = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(user);
+        productoEnVenta.addImpuesto(impuesto);
+        productoEnVenta = (ProductoEnVenta) ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+
+        return productoEnVenta;
 
     }
 
@@ -635,13 +857,21 @@ public class Mercado {
         this.timeSessionMinute = timeSessionMinute;
     }
 
-    public ArrayList<Login> getLogins() {
+    public Map<String, Login> getLogins() {
         return logins;
     }
 
-    public void setLogins(ArrayList<Login> logins) {
+    public void setLogins(Map<String, Login> logins) {
         this.logins = logins;
     }
+
+    //    public ArrayList<Login> getLogins() {
+//        return logins;
+//    }
+//
+//    public void setLogins(ArrayList<Login> logins) {
+//        this.logins = logins;
+//    }
 
     public AES256TextEncryptor getUserEncryptor() {
         return userEncryptor;
@@ -1004,7 +1234,13 @@ public class Mercado {
                 map.put("direccion",aux.getDireccion());
                 map.put("telefono",aux.getTelefono());
                 map.put("compania",aux.getNombreCompania());
-                map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
+                if (aux.getMunicipio() != null && aux.getPais()== null){
+                    map.put("ciudadPais",aux.getMunicipio());
+                }else if (aux.getMunicipio() == null && aux.getPais()!= null){
+                    map.put("ciudadPais",aux.getPais());
+                }else{
+                    map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
+                }
                 break;
             case "Vendedor":
                 se = user;

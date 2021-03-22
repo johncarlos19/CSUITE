@@ -169,7 +169,7 @@ function addImpuestoInInvoice(impuestoFactura){
                 '            </td>\n' +
                 '\n' +
                 '            <td style="text-align: right;">\n' +
-                '                '+currentyMoney(impuestoFactura[key].impuesto)+'\n' +
+                '                '+currentyMoney(impuestoFactura[key].valorSumandoExtra)+'\n' +
                 '            </td>\n' +
                 '        </tr>\n'
             string +=(stingIMP);

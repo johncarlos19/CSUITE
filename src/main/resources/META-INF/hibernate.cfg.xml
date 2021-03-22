@@ -11,9 +11,9 @@
         <!-- Database connection settings -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.username">johncarlos1943</property>
-        <property name="hibernate.connection.password">castillo30</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://csuite.cpaiyaspohoi.us-east-1.rds.amazonaws.com:5432/csuite</property>
+        <property name="hibernate.connection.username">doadmin</property>
+        <property name="hibernate.connection.password">tqgdztx0bkf726m8</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://csuite-do-user-8614748-0.b.db.ondigitalocean.com:25060/csuite?sslmode=require</property>
 
 
         <property name="hibernate.archive.autodetection">class,hbm</property>

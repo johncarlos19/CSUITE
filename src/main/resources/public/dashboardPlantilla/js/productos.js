@@ -152,8 +152,20 @@ var renovo = false;
 var preciono = false;
 
 
+function loadAvailableIMP(){
+	startResponsible()
+	var name = document.getElementById("idProducto").value;
+	worker.postMessage({'cmd': 'searchImpuestoProductoAvailable', 'id': name});
 
-
+}
+function loadProductoIMP(){
+	var name = document.getElementById("idProducto").value;
+	worker.postMessage({'cmd': 'searchImpuestoProducto', 'id': name});
+}
+function loadProductoALMACEN(){
+	var name = document.getElementById("idProducto").value;
+	worker.postMessage({'cmd': 'searchAlmacenProducto', 'id': name});
+}
 
 
 
@@ -246,6 +258,175 @@ $("#nuevaCategoria").change(function(){
   	})
 
 })
+
+
+
+function actionRelation(actionJson){
+	switch (actionJson.typeClass) {
+		case "Producto":
+			worker.postMessage({'cmd': 'productoRelation', 'ActionJson': actionJson});
+			break;
+		default:
+			break;
+
+
+	}
+}
+
+function reloadShowProducto(obj){
+
+	document.getElementById("nombre").innerText = obj.nombre;
+	document.getElementById("descripcion").innerText = obj.descripcion;
+	document.getElementById("codigo").innerText = obj.codigo_local;
+	document.getElementById("categoria").innerText = obj.categorias;
+
+
+	document.getElementById("codigoLocal").value =obj.codigo_local
+	document.getElementById("nombreProductoEditar").value = obj.nombre
+	document.getElementById("editarDescripcion").value = obj.descripcion
+	document.getElementById("nuevoPrecioCompra").value = obj.precioCompra
+
+	document.getElementById("precioVenta").innerText = (Math.round(obj.precioVenta * 100) / 100).toFixed(2);
+	document.getElementById("precioLista").innerText = (Math.round(obj.precioLista * 100) / 100).toFixed(2);
+	if(obj.stock  == 0){
+		document.getElementById("stockActual").innerHTML =  "<span style='font-size: large;' class=' label label-default'>"+obj.stock +"</span>";
+	}else if(obj.stock <=10){
+		document.getElementById("stockActual").innerHTML =  "<span style='font-size: large;' class=' label label-danger'>"+obj.stock +"</span>";
+	}else if(obj.stock <=15){
+		document.getElementById("stockActual").innerHTML =  "<span style='font-size: large;' class=' label label-warning'>"+obj.stock +"</span>";
+	}else{
+		document.getElementById("stockActual").innerHTML =  "<span style='font-size: large;' class=' label label-success'>"+obj.stock +"</span>";
+	}
+}
+
+function addAlmacen(){
+	var employee = {
+		idAlmacen: "0",
+		fechaRegistro: "0",
+		proveedor: document.getElementById("suplidor").value,
+		productoAgregado: document.getElementById("stock").value,
+		productoVendido: "0",
+		productoDescartado: "0",
+		costo: document.getElementById("nuevoPrecioCompraALM").value,
+		precioVentaFutura: "0"
+	}
+
+	document.getElementById("suplidor").value = ""
+	document.getElementById("stock").value = ""
+	document.getElementById("nuevoPrecioCompraALM").value = ""
+	var actionJson ={
+		id: parseInt(document.getElementById("idProducto").value),
+		typeClass: "Producto",
+		action: "addAlmacen",
+		detail: JSON.stringify(employee),
+		anotherID: -1
+	}
+	actionRelation(actionJson);
+}
+
+function editarInfo(){
+	var employee = {
+		codigo: document.getElementById("codigoLocal").value,
+		nombre: document.getElementById("nombreProductoEditar").value,
+		descripcion: document.getElementById("editarDescripcion").value,
+		categoria: document.getElementById("categoriaEditar").value
+	}
+	if (employee.categoria === null || employee.categoria === ""){
+
+	}else{
+		var actionJson ={
+			id: parseInt(document.getElementById("idProducto").value),
+			typeClass: "Producto",
+			action: "editarInfoProducto",
+			detail: JSON.stringify(employee),
+			anotherID: -1
+		}
+		actionRelation(actionJson);
+	}
+
+}function editarFotoInfo(){
+	var reader = new FileReader();
+	var file1 = document.getElementById("imagenSave").files[0]
+
+	if (document.getElementById("imagenSave").files.length == 0){
+		let temp = {
+			base64: null,
+			mimetype: null,
+			nombreImg: null
+		}
+		console.log(temp)
+		document.getElementById("previsual").src = "../dashboardPlantilla/img/productos/default/anonymous.png";
+		document.getElementById("imgActual").src = "../dashboardPlantilla/img/productos/default/anonymous.png";
+		var actionJson ={
+			id: parseInt(document.getElementById("idProducto").value),
+			typeClass: "Producto",
+			action: "editarFotoProducto",
+			detail: JSON.stringify(temp),
+			anotherID: parseInt(document.getElementById("idImagenSave").value)
+		}
+		actionRelation(actionJson);
+
+	}else{
+		var mimetype = file1.type
+		var nombreImg = file1.name
+
+
+		reader.readAsDataURL(file1);
+		reader.onload = function () {
+
+			var base6412;
+			console.log("Esto es lo prim" + reader.result)
+			resizeBase64Img(reader.result, 150, 150).then(resized=>{
+
+				base6412 = resized;
+				console.log("sale esto"+base6412)
+				let temp = {
+					base64: base6412,
+					mimetype: mimetype,
+					nombreImg: nombreImg
+				}
+				document.getElementById("previsual").src = base6412;
+				document.getElementById("imgActual").src = base6412;
+				console.log(temp)
+				var actionJson ={
+					id: parseInt(document.getElementById("idProducto").value),
+					typeClass: "Producto",
+					action: "editarFotoProducto",
+					detail: JSON.stringify(temp),
+					anotherID: parseInt(document.getElementById("idImagenSave").value)
+				}
+				actionRelation(actionJson);
+
+			});
+
+
+
+		};
+		reader.onerror = function (error) {
+			console.log('Error: ', error);
+		};
+
+	}
+
+
+}
+
+function editarPrecioProducto(){
+	var employee = {
+		venta: document.getElementById("nuevoPrecioVenta").value
+	}
+
+		var actionJson ={
+			id: parseInt(document.getElementById("idProducto").value),
+			typeClass: "Producto",
+			action: "editarPrecioProducto",
+			detail: JSON.stringify(employee),
+			anotherID: -1
+		}
+		actionRelation(actionJson);
+
+
+}
 
 /*=============================================
 AGREGANDO PRECIO DE VENTA
@@ -357,71 +538,206 @@ $(".nuevaImagen").change(function(){
   	}
 })
 
+// add impuesto
+$("#tablaIMPADD tbody").on("click", "button.btnAddIMP", function(){
+
+
+	var idImp = $(this).attr("idIMP");
+	console.log("Impuesto "+idImp)
+
+	var actionJson ={
+		id: parseInt(idImp),
+		typeClass: "Producto",
+		action: "addImpuesto",
+		detail: "",
+		anotherID: parseInt(document.getElementById("idProducto").value)
+	}
+
+	actionRelation(actionJson);
+	//
+	// var idProducto = document.getElementById("idProducto").value;
+	// var idIMP = $(this).attr("idIMP");
+	//
+	// var form = document.createElement("form");
+	// var element1 = document.createElement("input");
+	// // var element2 = document.createElement("input");
+	//
+	//
+	// let producto = {
+	// 	idProducto: parseInt(idProducto),
+	// 	idImpuesto: parseInt(idIMP)
+	// }
+	// form.method = "POST";
+	// form.action = "/dashboard/showProducto";
+	//
+	// element1.value= idIMP;
+	// element1.name="idIMP";
+	// form.appendChild(element1);
+	// //
+	// // element2.value="eliminar";
+	// // element2.name="action";
+	// // form.appendChild(element2);
+	//
+	// document.body.appendChild(form);
+	//
+	// form.submit();
+
+
+})
+
+
+
+//delete impuesto
+$("#tablaImpuesto tbody").on("click", "button.btnEliminar", function(){
+	var idImp = $(this).attr("idIMP");
+	console.log("Impuesto "+idImp)
+	console.log("ImpuestoInt "+parseInt(idImp))
+	swal({
+
+		title: '¿Está seguro de borrar este Tributo?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, borrar producto!'
+	}).then(function(result) {
+		if (result.value) {
+
+
+
+			var actionJson ={
+				id: parseInt(idImp),
+				typeClass: "Producto",
+				action: "deleteImpuesto",
+				detail: "",
+				anotherID: parseInt(document.getElementById("idProducto").value)
+			}
+
+			actionRelation(actionJson);
+		}
+
+
+	})
+
+
+	//
+	// var idProducto = document.getElementById("idProducto").value;
+	// var idIMP = $(this).attr("idIMP");
+	//
+	// var form = document.createElement("form");
+	// var element1 = document.createElement("input");
+	// // var element2 = document.createElement("input");
+	//
+	//
+	// let producto = {
+	// 	idProducto: parseInt(idProducto),
+	// 	idImpuesto: parseInt(idIMP)
+	// }
+	// form.method = "POST";
+	// form.action = "/dashboard/showProducto";
+	//
+	// element1.value= idIMP;
+	// element1.name="idIMP";
+	// form.appendChild(element1);
+	// //
+	// // element2.value="eliminar";
+	// // element2.name="action";
+	// // form.appendChild(element2);
+	//
+	// document.body.appendChild(form);
+	//
+	// form.submit();
+
+
+})
 /*=============================================
 EDITAR PRODUCTO
 =============================================*/
 
 
+
+
 $(".tablaProductos tbody").on("click", "button.btnEditarProducto", function(){
 
 	var idProducto = $(this).attr("idProducto");
-	
-	var datos = new FormData();
-    datos.append("idProducto", idProducto);
 
-     $.ajax({
+	var form = document.createElement("form");
+	var element1 = document.createElement("input");
+	// var element2 = document.createElement("input");
 
-      url:"ajax/productos.ajax.php",
-      method: "POST",
-      data: datos,
-      cache: false,
-      contentType: false,
-      processData: false,
-      dataType:"json",
-      success:function(respuesta){
-          
-          var datosCategoria = new FormData();
-          datosCategoria.append("idCategoria",respuesta["id_categoria"]);
+	form.method = "POST";
+	form.action = "/dashboard/showProducto";
 
-           $.ajax({
+	element1.value= idProducto;
+	element1.name="idProducto";
+	form.appendChild(element1);
+	//
+	// element2.value="eliminar";
+	// element2.name="action";
+	// form.appendChild(element2);
 
-              url:"ajax/categorias.ajax.php",
-              method: "POST",
-              data: datosCategoria,
-              cache: false,
-              contentType: false,
-              processData: false,
-              dataType:"json",
-              success:function(respuesta){
-                  
-                  $("#editarCategoria").val(respuesta["id"]);
-                  $("#editarCategoria").html(respuesta["categoria"]);
+	document.body.appendChild(form);
 
-              }
-
-          })
-
-           $("#editarCodigo").val(respuesta["codigo"]);
-
-           $("#editarDescripcion").val(respuesta["descripcion"]);
-
-           $("#editarStock").val(respuesta["stock"]);
-
-           $("#editarPrecioCompra").val(respuesta["precio_compra"]);
-
-           $("#editarPrecioVenta").val(respuesta["precio_venta"]);
-
-           if(respuesta["imagen"] != ""){
-
-           	$("#imagenActual").val(respuesta["imagen"]);
-
-           	$(".previsualizar").attr("src",  respuesta["imagen"]);
-
-           }
-
-      }
-
-  })
+	form.submit();
+	//
+	// var datos = new FormData();
+  //   datos.append("idProducto", idProducto);
+  //
+  //    $.ajax({
+  //
+  //     url:"ajax/productos.ajax.php",
+  //     method: "POST",
+  //     data: datos,
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //     dataType:"json",
+  //     success:function(respuesta){
+  //
+  //         var datosCategoria = new FormData();
+  //         datosCategoria.append("idCategoria",respuesta["id_categoria"]);
+  //
+  //          $.ajax({
+  //
+  //             url:"ajax/categorias.ajax.php",
+  //             method: "POST",
+  //             data: datosCategoria,
+  //             cache: false,
+  //             contentType: false,
+  //             processData: false,
+  //             dataType:"json",
+  //             success:function(respuesta){
+  //
+  //                 $("#editarCategoria").val(respuesta["id"]);
+  //                 $("#editarCategoria").html(respuesta["categoria"]);
+  //
+  //             }
+  //
+  //         })
+  //
+  //          $("#editarCodigo").val(respuesta["codigo"]);
+  //
+  //          $("#editarDescripcion").val(respuesta["descripcion"]);
+  //
+  //          $("#editarStock").val(respuesta["stock"]);
+  //
+  //          $("#editarPrecioCompra").val(respuesta["precio_compra"]);
+  //
+  //          $("#editarPrecioVenta").val(respuesta["precio_venta"]);
+  //
+  //          if(respuesta["imagen"] != ""){
+  //
+  //          	$("#imagenActual").val(respuesta["imagen"]);
+  //
+  //          	$(".previsualizar").attr("src",  respuesta["imagen"]);
+  //
+  //          }
+  //
+  //     }
+  //
+  // })
 
 })
 
@@ -456,4 +772,7 @@ $(".tablaProductos tbody").on("click", "button.btnEliminarProducto", function(){
 	})
 
 })
+
+
+
 	

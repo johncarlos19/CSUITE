@@ -1,5 +1,6 @@
 package csuite.mvc.entidades;
 
+import csuite.mvc.jsonObject.AlmacenJson;
 import csuite.mvc.jsonObject.ProductoJSON;
 import csuite.mvc.servicios.AlmacenServicios;
 import csuite.mvc.servicios.ProductoCompradoServicios;
@@ -10,10 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.NumberFormat;
+import java.util.*;
 
 @Entity
 public class Producto implements Serializable {
@@ -105,6 +104,27 @@ public class Producto implements Serializable {
         this.nombre = nombre;
 //        this.precio = precio;
     }
+    public String getPrecioLista(){
+        float descuentoPorciento = 0;
+        float impu = 0;
+        float precioneto = productoEnVenta.getPrecioVenta();
+        for (ImpuestoProductoEnVenta impuesto : productoEnVenta.getImpuestoProductoEnVentas()
+        ){
+            System.out.println("\n\n\nImpuesto "+impuesto.getIdImpuesto().getNombre());
+            descuentoPorciento += impuesto.getIdImpuesto().getDescuento((double) productoEnVenta.getPrecioVenta());
+            impu += impuesto.getIdImpuesto().getImpuesto((double) productoEnVenta.getPrecioVenta());
+            precioneto += impuesto.getIdImpuesto().getPrecioNeto((double) productoEnVenta.getPrecioVenta());
+
+        }
+        double tot = 0;
+
+        BigDecimal total = BigDecimal.valueOf(productoEnVenta.getPrecioVenta() + impu).setScale(2,BigDecimal.ROUND_HALF_UP);
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
+        return numberFormat.format(total);
+    }
+
+
+
 
     public ProductoJSON getProductoJSON(int posi){
         float descuentoPorciento = 0;
@@ -264,6 +284,20 @@ return null;
         }else{
             return foto.getFotoBase64();
         }
+
+
+    }
+    public String getStock() {
+        if(productoEnVenta.getStock()  == 0){
+            return  "<span style='font-size: large;' class=' label label-default'>"+productoEnVenta.getStock() +"</span>";
+        }else if(productoEnVenta.getStock() <=10){
+            return  "<span style='font-size: large;' class=' label label-danger'>"+productoEnVenta.getStock() +"</span>";
+        }else if(productoEnVenta.getStock() <=15){
+            return  "<span style='font-size: large;' class=' label label-warning'>"+productoEnVenta.getStock() +"</span>";
+        }else{
+            return  "<span style='font-size: large;' class=' label label-success'>"+productoEnVenta.getStock() +"</span>";
+        }
+
 
 
     }

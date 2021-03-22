@@ -1,5 +1,6 @@
 package csuite.mvc.entidades;
 
+import csuite.mvc.jsonObject.AlmacenJson;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -34,6 +35,9 @@ public class Almacen implements Serializable{
         this.costo = costo;
         this.precioVentaFutura = precioVentaFutura;
     }
+    public AlmacenJson getAlmacenJson(){
+        return new AlmacenJson(idAlmacen,fechaRegistro,proveedor,productoAgregado,productoVendido,productoDescartado,costo,precioVentaFutura);
+    }
 
     public long getDisponible(){
         return productoAgregado-productoDescartado-productoVendido;
@@ -50,8 +54,15 @@ public class Almacen implements Serializable{
         }
 
     }
-    public void agregarProductoDescartado(long cantidad){
-        this.productoDescartado+=cantidad;
+    public long agregarProductoDescartado(long cantidad){
+        if(getDisponible()>=cantidad){
+            this.productoDescartado+=cantidad;
+            return 0;
+        }else{
+            long value = cantidad-getDisponible();
+            this.productoDescartado+=getDisponible();
+            return value;
+        }
     }
 
 

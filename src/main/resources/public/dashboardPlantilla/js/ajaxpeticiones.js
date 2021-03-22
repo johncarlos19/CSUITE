@@ -38,7 +38,10 @@ worker.onmessage = function (e) { //recuperando la información
                 "Precio de lista":     (Math.round(obj[key].precioLista * 100) / 100).toFixed(2),
                 "Stock":     sto,
                 "Disponible":     obj[key].disponible,
-                "Acciones":     "<div class='btn-group' style = ' "+document.getElementById("inventa").value+"'><button class='btn btn-warning btnEditarProducto' idproducto='"+obj[key].id+"'  data-toggle='modal' data-target=''#modalEditarProducto'><i  class='fa fa-eye'></i></button> <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
+                "Acciones":     "<div class='btn-group' style = ' "+document.getElementById("inventa").value+"'> " +
+                    // " <form method='post' action='/dashboard/showProducto'><input type='hidden' name='idProducto' value='"+obj[key].id+"'><button class='btn btn-warning btnEditarProducto' type='button' ><i  class='fa fa-eye'></i></button></form>" +
+                    " <button class='btn btn-warning btnEditarProducto' type='button' idProducto='"+obj[key].id+"' ><i  class='fa fa-eye'></i></button>" +
+                    "   <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
             }
 
             // c = [];
@@ -55,6 +58,17 @@ worker.onmessage = function (e) { //recuperando la información
         console.log("valorr"+JSON.stringify(kk))
 
         $('.tablaProductos').DataTable().clear().destroy();
+        // $('.tablaProductos tfoot th').each( function () {
+        //     var title = $(this).text();
+        //     if (title === "Imagen" || title === "Acciones"){
+        //
+        //     }else{
+        //         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        //     }
+        // } );
+
+
+
         $('.tablaProductos').DataTable( {
             // "ajax": "ajax/datatable-productos.ajax.php?perfilOculto="+perfilOculto,
 
@@ -104,8 +118,64 @@ worker.onmessage = function (e) { //recuperando la información
                 {"data": "Disponible"},
                 {"data": "Acciones"}
             ]
+            // ,initComplete: function () {
+            //     this.api().columns().every( function () {
+            //         var column = this;
+            //         // $(column.hea)
+            //
+            //         var select = $('<select><option value=""></option></select>')
+            //             .appendTo(  $(".tablaProductos thead tr:eq(1) th").eq(column.index()).empty()  )
+            //             .on( 'change', function () {
+            //                 var val = $.fn.dataTable.util.escapeRegex(
+            //                     $(this).val()
+            //                 );
+            //
+            //                 column
+            //                     .search( val ? '^'+val+'$' : '', true, false )
+            //                     .draw();
+            //             } );
+            //
+            //         column.data().unique().sort().each( function ( d, j ) {
+            //             select.append( '<option value="'+d+'">'+d+'</option>' )
+            //         } );
+            //         try {
+            //             console.log("titulo"+column().title())
+            //         }catch (e){
+            //
+            //         }
+            //     } );
+            // }
+            // , "initComplete": function () {
+            //     // Apply the search
+            //     this.api().columns().every( function () {
+            //         var that = this;
+            //
+            //         $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            //             if ( that.search() !== this.value ) {
+            //                 that
+            //                     .search( this.value )
+            //                     .draw();
+            //             }
+            //         } );
+            //     } );
+            // },"searchPanes": {
+            //     "viewTotal": true,
+            //     "columns": [2,3,4,5]
+            // }, "dom": 'Plfrtip'
 
         } );
+        //     .columns().every( function() {
+        //     var that = this;
+        //
+        //     $('input', this.footer()).on('keyup change', function() {
+        //         if (that.search() !== this.value) {
+        //             that
+        //                 .search(this.value)
+        //                 .draw();
+        //         }
+        //     });
+        // });
+        // dataFilter();
 
 
 
@@ -113,6 +183,20 @@ worker.onmessage = function (e) { //recuperando la información
 
 
 
+    }
+
+    if(e.data.cmd === 'searchImpuestoProducto'){
+        reloadIMPTABLA(e.data.data,"show");
+        dataFilter()
+    }
+    if(e.data.cmd === 'searchImpuestoProductoAvailable'){
+        reloadIMPTABLA(e.data.data,"add");
+        reloadResponsibleTable()
+        dataFilter()
+    }
+
+    if(e.data.cmd === 'searchAlmacenProducto'){
+        reloadAlmacenTabla(e.data.data,"show");
     }
 
     if(e.data.cmd === 'save'){
@@ -347,26 +431,26 @@ worker.onmessage = function (e) { //recuperando la información
                 }
 
             },
-            "data": kk
-            ,"responsive": {
-                "details": {
-                    "type": 'column',
-                    "target": 'tr'
-                }
-            },
-            "columnDefs": [ {
-                "className": 'control',
-                "orderable": "false",
-                "targets": "1"
-            } ],
+            "data": kk,
+            // ,"responsive": {
+            //     "details": {
+            //         "type": 'column',
+            //         "target": 'tr'
+            //     }
+            // },
+            // "columnDefs": [ {
+            //     "className": 'control',
+            //     "orderable": "false",
+            //     "targets": "1"
+            // } ],
             "columns":[
-                {"data": "#", "width": "10%"},
-                {"data": "Imagen", "width": "10%"},
-                {"data": "Codigo", "width": "15%"},
-                {"data": "Descripcion", "width": "20%"},
-                {"data": "Stock", "width": "10%"},
-                {"data": "Precio de lista", "width": "20%"},
-                {"data": "Acciones", "width": "15%"}
+                {"data": "#"},
+                {"data": "Imagen"},
+                {"data": "Codigo"},
+                {"data": "Descripcion"},
+                {"data": "Stock"},
+                {"data": "Precio de lista"},
+                {"data": "Acciones"}
             ],
 
         } );
@@ -405,6 +489,43 @@ worker.onmessage = function (e) { //recuperando la información
         $('#guardarFactura').prop('disabled', false);
         $("#guardarFactura").html('Guardar venta');
         createInvoice(e.data.data)
+    }
+    if(e.data.cmd === 'productoRelation'){
+        switch (e.data.action) {
+            case "addAlmacen":
+                reloadShowProducto(e.data.data)
+                console.log("\n\nVan lo que es el load Producto")
+                loadProductoALMACEN();
+                dataFilter()
+                break;
+            case "addImpuesto":
+                reloadShowProducto(e.data.data)
+                loadProductoIMP();
+                dataFilter()
+                break;
+            case "deleteImpuesto":
+                reloadShowProducto(e.data.data)
+                loadProductoIMP();
+                dataFilter()
+                break;
+            case "editarInfoProducto":
+                reloadShowProducto(e.data.data)
+                // loadProductoIMP();
+                // dataFilter()
+                break;
+            case "editarPrecioProducto":
+                reloadShowProducto(e.data.data)
+                loadProductoIMP();
+                // dataFilter()
+                break;
+            case "editarFotoProducto":
+                reloadShowProducto(e.data.data)
+                // loadProductoIMP();
+                // dataFilter()
+                break;
+            default:
+                break;
+        }
     }
 
     if(e.data.cmd === 'verifyUser'){

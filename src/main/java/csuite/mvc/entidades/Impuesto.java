@@ -1,6 +1,7 @@
 package csuite.mvc.entidades;
 
 import com.sun.istack.Nullable;
+import csuite.mvc.jsonObject.ImpuestoJson;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,6 +32,14 @@ public class Impuesto implements Serializable {
     public Impuesto() {
     }
 
+    public ImpuestoJson damImpuestoJson(Double aux1, long union){
+        ImpuestoJson aux = new ImpuestoJson(id,nombre,operacion,valorSumandoExtra);
+        if (union!= -1){
+            aux.setIdUnion(union);
+        }
+        aux.setAux(aux1);
+        return aux;
+    }
     public Impuesto(String nombre, String operacion, double valorSumandoExtra) {
         this.nombre = nombre;
         this.operacion = operacion;

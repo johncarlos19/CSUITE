@@ -45,6 +45,7 @@ public class ImpuestoProductoEnVenta implements Serializable {
 //    }
 
 
+
     public long getId() {
         return id;
     }

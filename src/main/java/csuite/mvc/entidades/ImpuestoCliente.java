@@ -1,6 +1,8 @@
 package csuite.mvc.entidades;
 
 
+import csuite.mvc.jsonObject.ImpuestoJson;
+
 import javax.persistence.*;
 import javax.persistence.GenerationType;
 
@@ -28,6 +30,7 @@ public class ImpuestoCliente implements Serializable {
     public ImpuestoCliente() {
 
     }
+
     public ImpuestoCliente dameImpuestoSinDeoendy(){
         ImpuestoCliente aux = new ImpuestoCliente();
         aux.setId(id);

@@ -695,7 +695,7 @@ function facturaLoadNow(factura){
 
 	for(var key1 in obj.impuestoFacturas){
 
-		var valu = new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round((obj.impuestoFacturas[key1].impuesto) * 100) / 100).toFixed(2))
+		var valu = new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round((obj.impuestoFacturas[key1].valorSumandoExtra) * 100) / 100).toFixed(2))
 		var imp = '                                                <tr>\n' +
 			'\n' +
 			'                                                    <td >\n' +
@@ -721,6 +721,7 @@ function facturaLoadNow(factura){
 
 	document.getElementById("nuevoSubTotalVenta").value = currentyMoney(obj.total)
 	document.getElementById("subtotalVenta").value = obj.total
+	document.getElementById("nuevoTotalVenta").value= currentyMoney(obj.precioNeto)
 	document.getElementById("nuevoTotalVenta").value= currentyMoney(obj.precioNeto)
 	document.getElementById("totalVenta").value = obj.precioNeto
 }
@@ -1125,7 +1126,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 		}else if (newValue < 0){
 
 			let producto = {
-				cantidad: newValue,
+				cantidad: newValue*-1,
 				idProducto : parseInt(id),
 				idFactura : document.getElementById("nuevaVenta").value
 			}

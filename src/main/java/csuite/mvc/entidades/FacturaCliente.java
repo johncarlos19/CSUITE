@@ -199,7 +199,8 @@ public class FacturaCliente implements Identifiable<String> {
                     listafacturaClienteProductoVendido.remove(eli);
                     vaEliminar = false;
                 }
-                totalImpuesto+=impuestoClienteFacturaCliente.getInteres();
+                System.out.println("\n\nEsto es lo que hay"+impuestoClienteFacturaCliente.getValorSumandoExtra());
+                totalImpuesto+=impuestoClienteFacturaCliente.getValorSumandoExtra();
 
             }
         }catch (LazyInitializationException D){
@@ -213,7 +214,7 @@ public class FacturaCliente implements Identifiable<String> {
             aux.setValorSumandoExtra(impuestoCliente.getValorSumandoExtra()* facturaClienteProductoVendido.getCantidad());
             aux.setIdFacturaCliente(this);
             ImpuestoClienteServicios.getInstancia().crear(aux);
-            totalImpuesto+=aux.getInteres();
+            totalImpuesto+=aux.getValorSumandoExtra();
         }
         this.precioNeto= total+totalImpuesto;
         facturaClienteProductoVendido.setIdFacturaCliente(this);
@@ -272,7 +273,7 @@ public class FacturaCliente implements Identifiable<String> {
                 listafacturaClienteProductoVendido.remove(eli);
                 vaEliminar = false;
             }
-            totalImpuesto+=impuestoCliente.getInteres();
+            totalImpuesto+=impuestoCliente.getValorSumandoExtra();
 
 
         }
@@ -316,7 +317,7 @@ public class FacturaCliente implements Identifiable<String> {
                 listafacturaClienteProductoVendido.remove(eli);
                 vaEliminar = false;
             }
-            totalImpuesto+=impuestoCliente.getInteres();
+            totalImpuesto+=impuestoCliente.getValorSumandoExtra();
         }
         this.precioNeto= total+totalImpuesto;
         for (long integer : posiList) {

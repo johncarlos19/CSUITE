@@ -449,7 +449,7 @@ CUERPO DOCUMENTO
 
                 <div class="box-header with-border" th:style="${impuestoAdd}">
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCategoria">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarIMP">
 
                         Agregar Impuesto
 
@@ -469,7 +469,7 @@ CUERPO DOCUMENTO
                             <th>Nombre</th>
                             <th>Tipo de Tributo</th>
                             <th>Valor</th>
-                            <th>Estado</th>
+                            <th>Aplica A Todos Los Productos</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -491,12 +491,12 @@ CUERPO DOCUMENTO
                                 <th>
 
 
-                                    <div th:if="${aux.isUtilizar}">
-                                        <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.id}">Activado</button>
+                                    <div th:if="${aux.isAplicarATodos}">
+                                        <button class="btn btn-success btn-xs btnActivar" type="button" th:id="${aux.id}"><i class="fa fa-check"></i></button>
                                     </div>
                                     <!-- ELSE -->
-                                    <div th:unless="${aux.isUtilizar}">
-                                        <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.id}">Desactivado</button>
+                                    <div th:unless="${aux.isAplicarATodos}">
+                                        <button class="btn btn-danger btn-xs btnActivar" type="button" th:id="${aux.id}"><i class="fa fa-times"></i></button>
                                     </div>
                                 </th>
                                 <td>
@@ -504,7 +504,7 @@ CUERPO DOCUMENTO
                                     <div class="btn-group" th:style="${impuestoEdit}">
 
                                         <button  class="btn btn-warning btnEditarCategoria" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button>
-                                        <button th:id="${aux.id}" class="btn btn-danger btnEliminarCategoria" type="button" value="eliminar"><i class="fa fa-times"></i></button>
+                                        <button th:id="${aux.id}" class="btn btn-danger btnEliminarIMP" type="button" value="eliminar"><i class="fa fa-times"></i></button>
 
                                     </div>
 
@@ -624,7 +624,7 @@ CUERPO DOCUMENTO
     MODAL AGREGAR CATEGORÍA
     ======================================-->
 
-    <div id="modalAgregarCategoria" class="modal fade" role="dialog" style="display: none;">
+    <div id="modalAgregarIMP" class="modal fade" role="dialog" style="display: none;">
 
         <div class="modal-dialog">
 
@@ -665,7 +665,7 @@ CUERPO DOCUMENTO
 
 
                                     <input type="text" class="form-control input-lg" name="nombre" placeholder="Ingresar nombre del Impuesto" for="addImpuesto" required="">
-
+                                    <input type="hidden" class="" name="action" for="addImpuesto" value="add">
 
 
                                 </div>
@@ -948,6 +948,8 @@ CUERPO DOCUMENTO
 
     $(document).ready(function(){
         setTimeout(alertaTime,timeSession)
+        // setTimeout(dataFilter,1500)
+
     });
     function extendTime(){
         preciono = true;

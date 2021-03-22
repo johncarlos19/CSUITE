@@ -387,15 +387,18 @@ public class RecibirDatosControlador extends JavalinControlador {
                 get(ctx -> {
                     String idSession = ctx.req.getSession().getId();
 
-                    for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
-                        if (Mercado.getInstance().getLogins().get(i).getSession().getId().equalsIgnoreCase(idSession)){
-                            Mercado.getInstance().borrarSessionSSe(idSession);
-                            Mercado.getInstance().getLogins().remove(i);
-                            break;
-                        }
+//                    for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+//                        if (Mercado.getInstance().getLogins().get(i).getSession().getId().equalsIgnoreCase(idSession)){
+//
+//                        }
+//                    }
+                    try {
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        Mercado.getInstance().borrarSessionSSe(idSession);
+                        Mercado.getInstance().getLogins().remove(user.getId());
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-
-
                     ctx.removeCookie("User");
                     ctx.req.removeAttribute("User");
                     ctx.redirect("/login");
@@ -421,42 +424,48 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                         if (UsuarioServicios.getInstancia().existe(ctx.formParam("ingresoEmail"))){
                             String perfil = Mercado.getInstance().verificar_user(ctx.formParam("ingresoEmail"),ctx.formParam("ingresoPassword"));
-                            if (isSessionAvailable(ctx.formParam("ingresoEmail"),ctx.req.getSession().getId())){
-                                String user = ctx.formParam("ingresoEmail");
-                                Map<String, Object> map = null;
-                                String header = "Authorization";
-                                String dueno = user;
-                                String direccion;
-                                String compania;
-                                String telefono;
-                                String ciudadPais;
-                                if (perfil.equalsIgnoreCase("Admin") == false||perfil.equalsIgnoreCase("Vendedor"  ) == false){
+                            if (perfil != null) {
+                                if (isSessionAvailable(ctx.formParam("ingresoEmail"), ctx.req.getSession().getId())) {
+                                    String user = ctx.formParam("ingresoEmail");
+                                    Map<String, Object> map = null;
+                                    String header = "Authorization";
+                                    String dueno = user;
+                                    String direccion;
+                                    String compania;
+                                    String telefono;
+                                    String ciudadPais;
+                                    if (perfil.equalsIgnoreCase("Admin") == false || perfil.equalsIgnoreCase("Vendedor") == false) {
 
-                                    map = Mercado.getInstance().getUserJefe(user);
-                                    dueno = (String) map.get("user");
-                                    direccion = (String) map.get("direccion");
-                                    compania = (String) map.get("compania");
-                                    telefono = (String) map.get("telefono");
-                                    ciudadPais = (String) map.get("ciudadPais");
-                                }else{
-                                    map = Mercado.getInstance().getUserJefe(user);
-                                    direccion = (String) map.get("direccion");
-                                    compania = (String) map.get("compania");
-                                    telefono = (String) map.get("telefono");
-                                    ciudadPais = (String) map.get("ciudadPais");
+                                        map = Mercado.getInstance().getUserJefe(user);
+                                        dueno = (String) map.get("user");
+                                        direccion = (String) map.get("direccion");
+                                        compania = (String) map.get("compania");
+                                        telefono = (String) map.get("telefono");
+                                        ciudadPais = (String) map.get("ciudadPais");
+                                    } else {
+                                        map = Mercado.getInstance().getUserJefe(user);
+                                        direccion = (String) map.get("direccion");
+                                        compania = (String) map.get("compania");
+                                        telefono = (String) map.get("telefono");
+                                        ciudadPais = (String) map.get("ciudadPais");
+                                    }
+                                    String jwt = createJWT(user, perfil, map);
+                                    Login login = new Login(user, decodeJWT(jwt));
+                                    login.setSession(ctx.req.getSession());
+                                    Mercado.getInstance().getLogins().put(user,login);
+
+                                    ctx.sessionAttribute("User", jwt);
+                                    ctx.cookie("User", Mercado.getInstance().getUserEncryptor().encrypt(jwt), 2147483647);
+                                    ctx.redirect("/dashboard/home");
+                                } else {
+                                    Map<String, Object> contexto1 = new HashMap<>();
+                                    contexto1.put("texto1", "¡Esta cuenta ha iniciado sesión, debe salir de la sesión para poder entrar!");
+                                    ctx.render("/public/webPage/login_error.html", contexto1);
                                 }
-                                String jwt = createJWT(user,perfil,map);
-                                Login login = new Login(user,decodeJWT(jwt));
-                                login.setSession(ctx.req.getSession());
-                                Mercado.getInstance().getLogins().add(login);
-
-                                ctx.sessionAttribute("User",jwt);
-                                ctx.cookie("User",Mercado.getInstance().getUserEncryptor().encrypt(jwt),2147483647);
-                                ctx.redirect("/dashboard/home");
-                            }else {
-                                Map<String, Object> contexto1 = new HashMap<>();
-                                contexto1.put("texto1",  "¡Esta cuenta ha iniciado sesión, debe salir de la sesión para poder entrar!");
-                                ctx.render("/public/webPage/login_error.html",contexto1);
+                            }else{
+                                Map<String, Object> contexto2 = new HashMap<>();
+                                contexto2.put("texto1", "¡Usuario o contraseña no coinciden!");
+                                ctx.render("/public/webPage/login_error.html",contexto2 );
                             }
 
 
@@ -501,7 +510,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                             || ctx.path().contains("/empleado")==true
                             || ctx.path().contains("/crearVentas")==true
                             || ctx.path().contains("/ventasActivas")==true
-                            || ctx.path().contains("//administrarVentas")==true
+                            || ctx.path().contains("/administrarVentas")==true
+                            || ctx.path().contains("/showProducto")==true
                     ){
                         if (user==null || session == null){
 
@@ -523,6 +533,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                         map.put("telefono",claims.get("telefono"));
                                         map.put("compania",claims.get("compania"));
                                         map.put("ciudadPais",claims.get("ciudadPais"));
+
                                         String jwt = createJWT(use,claims.getAudience(), map);
                                         ctx.header(header,jwt);
                                         ctx.sessionAttribute("User",jwt);
@@ -533,31 +544,31 @@ public class RecibirDatosControlador extends JavalinControlador {
                                                 ctx.req.getMethod());
                                         //
                                         System.out.println(mensaje);
-
-                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
-                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
-                                                Mercado.getInstance().getLogins().get(i).setJwt(claims);
-                                                Mercado.getInstance().getLogins().get(i).setSession(ctx.req.getSession());
-                                            }
-                                        }
+                                        Mercado.getInstance().getLogins().get(use).setJwt(claims);
+                                        Mercado.getInstance().getLogins().get(use).setSession(ctx.req.getSession());
+//                                        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+//                                            if (Mercado.getInstance().getLogins().get(i).getId().equalsIgnoreCase(use)){
+//
+//                                            }
+//                                        }
 
 
 
 
                                     }else{
-                                        ctx.req.getSession().invalidate();
-                                        ctx.redirect("/login");
+
+                                        ctx.redirect("/logout");
                                     }
 
                                 }catch (ExpiredJwtException e){
-                                    ctx.req.getSession().invalidate();
-                                    ctx.redirect("/login");
+
+                                    ctx.redirect("/logout");
                                 }catch (NullPointerException e){
-                                    ctx.req.getSession().invalidate();
+
                                     ctx.redirect("/login");
                                 }
                             }else{
-                                ctx.req.getSession().invalidate();
+
                                 ctx.redirect("/login");
                             }
 
@@ -619,6 +630,29 @@ public class RecibirDatosControlador extends JavalinControlador {
                         }
                         contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         ctx.render("/public/dashboardPlantilla/inventario.html",contexto);
+
+
+
+
+                    });
+                });
+                path("/showProducto", () -> {
+
+                    post(ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        String idProducto = ctx.formParam("idProducto");
+                        Producto producto = ProductoServicios.getInstancia().getProductoConFoto(Long.parseLong(idProducto));
+                        System.out.println("\n\n\nusuario"+user);
+                        ctx.res.addHeader("Authorization",ctx.cookie("User"));
+                        Map<String, Object> contexto = new HashMap<>();
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                        ) {
+                            contexto.put(politica.getKey(), politica.getValue());
+                        }
+                        contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
+                        contexto.put("producto", producto);
+                        ctx.render("/public/dashboardPlantilla/showProducto.html",contexto);
 
 
 
@@ -732,8 +766,17 @@ public class RecibirDatosControlador extends JavalinControlador {
                         String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
-                        String categoria = ctx.formParam("nuevaCategoria");
-                        Mercado.getInstance().addCategoria(user,categoria);
+                        switch (ctx.formParam("action")){
+                            case "add":
+                                String categoria = ctx.formParam("nuevaCategoria");
+                                Mercado.getInstance().addCategoria(user,categoria);
+                                break;
+                            case "eliminar":
+                                long id = Long.parseLong(ctx.formParam("categoria"));
+                                CategoriaServicios.getInstancia().delete(id);
+                                break;
+                        }
+
 
 
                         ctx.redirect("/dashboard/categoria");
@@ -813,16 +856,33 @@ public class RecibirDatosControlador extends JavalinControlador {
                         String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
-                        Impuesto impuesto = new Impuesto(ctx.formParam("nombre"),ctx.formParam("nuevoTributo"),Double.parseDouble(ctx.formParam("valor")));
-                        if (ctx.formParam("aplicarTodos").equalsIgnoreCase("true")){
-                            impuesto.setAplicarATodos(true);
-                            impuesto = Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))), impuesto);
-                            Mercado.getInstance().addImpuestoToAllProducto(impuesto.getId(),Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
+                        switch (ctx.formParam("action")){
+                            case "add":
+                                Impuesto impuesto = new Impuesto(ctx.formParam("nombre"),ctx.formParam("nuevoTributo"),Double.parseDouble(ctx.formParam("valor")));
+                                try {
+                                    if (ctx.formParam("aplicarTodos").equalsIgnoreCase("true")){
+                                        impuesto.setAplicarATodos(true);
+                                        impuesto = Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))), impuesto);
+                                        Mercado.getInstance().addImpuestoToAllProducto(impuesto.getId(),Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))));
 
-                        }else{
-                            impuesto.setAplicarATodos(false);
-                            Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))),impuesto);
+                                    }else{
+                                        impuesto.setAplicarATodos(false);
+                                        Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))),impuesto);
+
+                                    }
+                                }catch (NullPointerException E){
+                                    impuesto.setAplicarATodos(false);
+                                    Mercado.getInstance().addImpuesto(Mercado.getInstance().getUserJefeWithToken(decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")))),impuesto);
+
+                                }
+                                break;
+                            case "eliminar":
+                                long id = Long.parseLong(ctx.formParam("impuesto"));
+                                ImpuestoServicios.getInstancia().delete(id);
+                                break;
                         }
+
+
 
 
 
@@ -1112,22 +1172,30 @@ public class RecibirDatosControlador extends JavalinControlador {
 
     public static boolean isSessionAvailable(String user, String sessionID){
         boolean available = true;
-        long posi = -1;
-        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
-            if (Mercado.getInstance().getLogins().get(i).getId().equals(user)){
-                System.out.println("\n\n ididid"+Mercado.getInstance().getLogins().get(i).getId());
-                if (isExpirate(Mercado.getInstance().getLogins().get(i).getJwt())==true || Mercado.getInstance().getLogins().get(i).getSession().getId().equals(sessionID)){
-                    posi = i;
+        String posi = "ocupado";
+//        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+        try {
+            if (Mercado.getInstance().getLogins().get(user).getId().equals(user)){
+                System.out.println("\n\n ididid"+Mercado.getInstance().getLogins().get(user).getId()+"\notro: "+sessionID+"\notro1: "+Mercado.getInstance().getLogins().get(user).getSession().getId());
+                if (isExpirate(Mercado.getInstance().getLogins().get(user).getJwt())==true ){
+                    posi = "disponible";
 
+                }else if(Mercado.getInstance().getLogins().get(user).getSession().getId().equals(sessionID)){
+                    posi = "disponible";
                 }
-                if (posi!=-1){
-                    Mercado.getInstance().getLogins().remove(posi);
+                if (posi.equalsIgnoreCase("disponible")){
+                    Mercado.getInstance().getLogins().remove(user);
                     return true;
                 }else{
                     return false;
                 }
             }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return true;
         }
+
+//        }
         return available;
 
     }
