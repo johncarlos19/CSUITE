@@ -1375,15 +1375,28 @@ public class Mercado {
 
     public boolean send_correo_online(String correo, String mensaje, String asunto) {
         Properties propiedad = new Properties();
-        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
-        propiedad.setProperty("mail.smtp.starttls.enable", "true");
-        propiedad.setProperty("mail.smtp.port", "587");
-        propiedad.setProperty("mail.smtp.auth", "true");
+//        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+//        propiedad.setProperty("mail.smtp.starttls.enable", "true");
+//        propiedad.setProperty("mail.smtp.port", "587");
+//        propiedad.setProperty("mail.smtp.auth", "true");
 
+
+        propiedad.setProperty("mail.smtp.host", "smtp.zoho.com");
+        propiedad.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        propiedad.setProperty("mail.smtp.socketFactory.fallback", "false");
+        propiedad.setProperty("mail.smtp.port", "465");
+        propiedad.setProperty("mail.smtp.socketFactory.port", "465");
+        propiedad.put("mail.smtp.starttls.enable", "true");
+        propiedad.put("mail.smtp.auth", "true");
+        propiedad.put("mail.debug", "true");
+        propiedad.put("mail.store.protocol", "pop3");
+        propiedad.put("mail.transport.protocol", "smtp");
+        propiedad.put("mail.debug.auth", "true");
+        propiedad.setProperty( "mail.pop3.socketFactory.fallback", "false");
 
         Session sesion = Session.getDefaultInstance(propiedad);
-        String correoEnvia = "csuite.prueba@gmail.com";
-        String contrasena = "castillo30";
+        String correoEnvia = "administrator@cashsuite.net";
+        String contrasena = "lz8rQ9@K%7x7";
         String receptor = correo;
 
 
