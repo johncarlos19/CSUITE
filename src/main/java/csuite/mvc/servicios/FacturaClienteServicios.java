@@ -92,6 +92,34 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
 
     }
 
+
+    public List<FacturaCliente> graficaParaVenta(String user,int plazo){
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(calendar.MONTH,-1*plazo);
+            Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+
+            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact  and fc.fechaCompra >= :fecha" );
+            query.setParameter("idFacturaCliente",user);
+            query.setParameter("fact",true);
+            query.setParameter("fecha",timestamp);
+
+
+            //query.setParameter("nombre", apellido+"%");
+            List<FacturaCliente> lista = (List<FacturaCliente>)query.getResultList() ;
+            return lista;
+        }catch (NullPointerException e){
+            return null;
+        }finally {
+            session.close();
+        }
+
+    }
+
+
     public List<FacturaCliente> ListFacturaClienteActivaVendedor(String idFacturaCliente){
         final Session session = getHibernateSession();
         try {

@@ -1,10 +1,12 @@
 package csuite.mvc.servicios;
 
+import csuite.mvc.entidades.Almacen;
 import csuite.mvc.entidades.Producto;
 import csuite.mvc.entidades.ProductoComprado;
 import csuite.mvc.entidades.ProductoEnVenta;
 import csuite.mvc.jsonObject.ProductoJSON;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -20,6 +22,24 @@ public class ProductoEnVentaServicios extends GestionadDB<ProductoEnVenta> {
             instancia = new ProductoEnVentaServicios();
         }
         return instancia;
+    }
+
+    public void updateIDalmacen(Almacen idAlmacen, long idProducto){
+        final Session session = getHibernateSession();
+        Transaction txn = session.beginTransaction();
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("update ProductoEnVenta pv set pv.idAlmacen = :idAlmacen where pv.idProducto.id = :id ").setParameter("id",idProducto).setParameter("idAlmacen",idAlmacen);
+
+            query.executeUpdate();
+            txn.commit();
+
+
+//            return true;
+        }finally {
+            session.close();
+        }
     }
 
     public ProductoEnVenta getVentaProducto(long id, String user) {

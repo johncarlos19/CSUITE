@@ -57,7 +57,7 @@ CACHE:
 ../dashboardPlantilla/bower_components/raphael/raphael.min.js
 ../dashboardPlantilla/bower_components/morris.js/morris.min.js
 
-../dashboardPlantilla/bower_components/Chart.js/Chart.js
+../dashboardPlantilla/bower_components/chart.js/Chart.js
 
 
 

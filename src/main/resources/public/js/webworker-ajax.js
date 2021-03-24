@@ -52,6 +52,83 @@ this.addEventListener('message', function (e) {
                     // always executed
                 });
             break;
+        case 'loadGraphicVenta':
+            switch (data.tiempo){
+                case "mes":
+                    console.log("Buscando la fecha desde el servidor...");
+                    axios.get('/api/Inicio/graphicVentasMes')
+                        .then(function (response) {
+                            // handle success
+                            console.log("Respuesta:");
+                            console.log(response);
+                            //enviando la información a la venta principal
+                            try {
+                                if (response.data === -1) {
+                                    postMessage({'cmd': 'timeout', 'data': response.data});
+                                    return response.data;
+                                } else {
+                                    postMessage({'cmd': 'loadGraphicVenta', 'data': response.data});
+                                    return response.data;
+                                }
+                            } catch (error) {
+                                postMessage({'cmd': 'timeout'});
+                                return response.data;
+                                // expected output: ReferenceError: nonExistentFunction is not defined
+                                // Note - error messages will vary depending on browser
+                            }
+
+
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log("Error:");
+                            console.log(error);
+                            postMessage({'cmd': 'timeout'});
+
+                        })
+                        .then(function () {
+                            // always executed
+                        });
+                    break;
+                case "dia":
+                    console.log("Buscando la fecha desde el servidor...");
+                    axios.get('/api/Inicio/graphicVentasDia')
+                        .then(function (response) {
+                            // handle success
+                            console.log("Respuesta:");
+                            console.log(response);
+                            //enviando la información a la venta principal
+                            try {
+                                if (response.data === -1) {
+                                    postMessage({'cmd': 'timeout', 'data': response.data});
+                                    return response.data;
+                                } else {
+                                    postMessage({'cmd': 'loadGraphicVenta', 'data': response.data});
+                                    return response.data;
+                                }
+                            } catch (error) {
+                                postMessage({'cmd': 'timeout'});
+                                return response.data;
+                                // expected output: ReferenceError: nonExistentFunction is not defined
+                                // Note - error messages will vary depending on browser
+                            }
+
+
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log("Error:");
+                            console.log(error);
+                            postMessage({'cmd': 'timeout'});
+
+                        })
+                        .then(function () {
+                            // always executed
+                        });
+                    break;
+            }
+
+            break;
         case 'uploadProducto':
             console.log("Buscando la fecha desde el servidor...");
 

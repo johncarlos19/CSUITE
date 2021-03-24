@@ -183,6 +183,47 @@ public class ApiControlador extends JavalinControlador {
 
                     });
                 });
+                path("/Inicio", () -> {
+                    after(ctx -> {
+                        ctx.header("Content-Type", "application/json");
+                    });
+
+
+                    get("/graphicVentasMes", ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+//                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                        ;
+                        ctx.json(Mercado.getInstance().returnFechaMesJson(Mercado.getInstance().getUserJefeWithToken(user)));
+//                        String tmp =  ctx.body().toString();
+//                        System.out.println("Esto llego:"+tmp);
+//                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
+//                        Usuario clienteJson = ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp);
+//                        if (clienteJson != null){
+//                            ctx.json(clienteJson.getUsuarioJson());
+//                        }else {
+//                            ctx.json("no found");
+//                        }
+
+                    });
+                    get("/graphicVentasDia", ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+//                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                        ;
+                        ctx.json(Mercado.getInstance().returnFechaDiaJson(Mercado.getInstance().getUserJefeWithToken(user)));
+//                        String tmp =  ctx.body().toString();
+//                        System.out.println("Esto llego:"+tmp);
+//                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
+//                        Usuario clienteJson = ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp);
+//                        if (clienteJson != null){
+//                            ctx.json(clienteJson.getUsuarioJson());
+//                        }else {
+//                            ctx.json("no found");
+//                        }
+
+                    });
+                });
 
                 path("/Factura", () -> {
                     after(ctx -> {

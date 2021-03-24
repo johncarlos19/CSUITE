@@ -184,7 +184,48 @@ worker.onmessage = function (e) { //recuperando la información
 
 
     }
+    if(e.data.cmd === 'loadGraphicVenta'){
 
+
+        $("#line-chart-ventas").empty();
+
+        var obj = e.data.data;
+        var lis = []
+
+
+        for(var key in obj) {
+            var emplo = {
+                y: obj[key].key,
+                ventas: obj[key].value
+            }
+            lis.push(emplo)
+            }
+
+
+
+
+         var line = new Morris.Line({
+            element: 'line-chart-ventas',
+            resize: true,
+            data: lis,
+            xkey: 'y',
+            ykeys: ['ventas'],
+            labels: ['ventas'],
+            lineColors: ['#efefef'],
+            lineWidth: 2,
+            hideHover: 'auto',
+            gridTextColor: '#fff',
+            gridStrokeWidth: 0.4,
+            pointSize: 4,
+            pointStrokeColors: ['#efefef'],
+            gridLineColor: '#efefef',
+            gridTextFamily: 'Open Sans',
+            preUnits: '$',
+            gridTextSize: 10
+        });
+
+
+    }
     if(e.data.cmd === 'searchImpuestoProducto'){
         reloadIMPTABLA(e.data.data,"show");
         dataFilter()

@@ -1,10 +1,7 @@
 package csuite.mvc.entidades;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import csuite.mvc.jsonObject.ActionJson;
-import csuite.mvc.jsonObject.FacturaJson;
-import csuite.mvc.jsonObject.GuardarFacturaJson;
-import csuite.mvc.jsonObject.ProductoJSON;
+import csuite.mvc.jsonObject.*;
 import csuite.mvc.servicios.*;
 import io.jsonwebtoken.Claims;
 import org.jasypt.util.text.AES256TextEncryptor;
@@ -22,6 +19,9 @@ import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
+
 
 public class Mercado {
     //    private static ProductoServicios productoServicios = new ProductoServicios();
@@ -439,6 +439,90 @@ public class Mercado {
         return aux;
     }
 
+    public List<GraphJson> returnFechaMesJson(String id){
+        List<FacturaCliente> list = FacturaClienteServicios.getInstancia().graficaParaVenta(id,12);
+        List<GraphJson> graphJsons = new ArrayList<GraphJson>();
+        int month =-1;
+        int count=0;
+        int year = -1;
+        float mount = 0;
+        if (list != null){
+            for (int i = 0; i < list.size(); i++) {
+//                graphJsons.add(new GraphJson(Integer.toString(list.get(i).getFechaModificacion().getYear()+1900)+"-"+Integer.toString(list.get(i).getFechaModificacion().getMonth()+1),list.get(i).getPrecioNeto()));
+                if (i==0){
+                    month = list.get(i).getFechaModificacion().getMonth()+1;
+                    year = list.get(i).getFechaModificacion().getYear()+1900;
+                    mount += list.get(i).getPrecioNeto();
+                    count+=1;
+                }else {
+                    if (list.get(i).getFechaModificacion().getMonth() +1!= month || year != list.get(i).getFechaModificacion().getYear()+1900){
+                        graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month),(float) mount));
+
+                        mount =0;
+                        count=0;
+                        month = list.get(i).getFechaModificacion().getMonth()+1;
+                        year = list.get(i).getFechaModificacion().getYear()+1900;
+                        mount += list.get(i).getPrecioNeto();
+                        count+=1;
+                    }else{
+                        mount += list.get(i).getPrecioNeto();
+                        count+=1;
+                    }
+                }
+            }
+            graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month),(float) mount));
+        }else{
+            Calendar calendar = Calendar.getInstance();
+            Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+            graphJsons.add(new GraphJson(Integer.toString(timestamp.getYear()+1900)+"-"+Integer.toString(timestamp.getMonth()+1),0));
+        }
+        return graphJsons;
+    }
+
+    public List<GraphJson> returnFechaDiaJson(String id){
+        List<FacturaCliente> list = FacturaClienteServicios.getInstancia().graficaParaVenta(id,1);
+        List<GraphJson> graphJsons = new ArrayList<GraphJson>();
+        int month =-1;
+        int count=0;
+        int date = -1;
+        int year = -1;
+        float mount = 0;
+        if (list != null){
+            for (int i = 0; i < list.size(); i++) {
+//                graphJsons.add(new GraphJson(Integer.toString(list.get(i).getFechaModificacion().getYear()+1900)+"-"+Integer.toString(list.get(i).getFechaModificacion().getMonth()+1)+"-"+Integer.toString(list.get(i).getFechaModificacion().getDate()+1),list.get(i).getPrecioNeto()));
+                if (i==0){
+                    month = list.get(i).getFechaModificacion().getMonth()+1;
+                    year = list.get(i).getFechaModificacion().getYear()+1900;
+                    date = list.get(i).getFechaModificacion().getDate();
+                    mount += list.get(i).getPrecioNeto();
+                    count+=1;
+                }else {
+                    if (list.get(i).getFechaModificacion().getMonth() +1!= month || year != list.get(i).getFechaModificacion().getYear()+1900 || year != list.get(i).getFechaModificacion().getDate()){
+                        graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(date),(float) mount));
+
+                        mount =0;
+                        count=0;
+                        month = list.get(i).getFechaModificacion().getMonth()+1;
+                        year = list.get(i).getFechaModificacion().getYear()+1900;
+                        date = list.get(i).getFechaModificacion().getDate();
+                        mount += list.get(i).getPrecioNeto();
+                        count+=1;
+                    }else{
+                        mount += list.get(i).getPrecioNeto();
+                        count+=1;
+                    }
+                }
+            }
+            graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(date),(float) mount));
+        }else{
+            Calendar calendar = Calendar.getInstance();
+            Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+            graphJsons.add(new GraphJson(Integer.toString(timestamp.getYear()+1900)+"-"+Integer.toString(timestamp.getMonth()+1)+"-"+Integer.toString(timestamp.getDate()),0));
+        }
+        return graphJsons;
+    }
+
+
     public Object selectActionProducto(ActionJson actionJson,Claims user){
 
         Object aux = null;
@@ -704,66 +788,68 @@ public class Mercado {
     }
 
 
-    public void DescartarOnlyProducto(Producto producto, long cantidad) {
-        long cantidadRemove = cantidad;
-        boolean encontro = false;
-        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().buscar(producto.getProductoEnVenta().getId());
-//        productoEnVenta.discountProductoStock(cantidad);
-        List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, producto.getId());
-        for (int i = lista.size() - 1; i > -1; i--) {
-            if (productoEnVenta.getIdAlmacen().getIdAlmacen() == lista.get(i).getIdAlmacen() || encontro == true) {
-                System.out.println("\n\nentro para cobrar" + i);
-                encontro = true;
-                if (i == 0) {
-                    cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
-                    AlmacenServicios.getInstancia().editar(lista.get(i));
-                } else {
-                    while (cantidadRemove != 0) {
-                        if (i == -1) {
-                            break;
-                        }
-                        System.out.println("\n\nentro para 2" + lista.get(i).getDisponible());
-                        if (lista.get(i).getDisponible() >= cantidadRemove) {
-                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
-                            if (cantidadRemove == 0) {
-
-                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
-                                lista.set(i, almacen);
-                                if (i > 0 && lista.get(i).getDisponible() == 0) {
-                                    productoEnVenta.setIdAlmacen(lista.get(i - 1));
-                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
-                                } else {
-                                    productoEnVenta.setIdAlmacen(lista.get(i));
-                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
-                                }
-                                break;
-                            } else {
-                                cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
-                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
-                                lista.set(i, almacen);
-                            }
-                            i--;
-                        } else {
-                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
-                            Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
-                            lista.set(i, almacen);
-                        }
-                        i--;
-
-                    }
-
-
-                }
-            }
-        }
-    }
+//    public void DescartarOnlyProducto(Producto producto, long cantidad) {
+//        long cantidadRemove = cantidad;
+//        boolean encontro = false;
+//        ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().buscar(producto.getProductoEnVenta().getId());
+////        productoEnVenta.discountProductoStock(cantidad);
+//        List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, producto.getId());
+//        for (int i = lista.size() - 1; i > -1; i--) {
+//            if (productoEnVenta.getIdAlmacen().getIdAlmacen() == lista.get(i).getIdAlmacen() || encontro == true) {
+//                System.out.println("\n\nentro para cobrar" + i);
+//                encontro = true;
+//                if (i == 0) {
+//                    cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+//                    AlmacenServicios.getInstancia().editar(lista.get(i));
+//                } else {
+//                    while (cantidadRemove != 0) {
+//                        if (i == -1) {
+//                            break;
+//                        }
+//                        System.out.println("\n\nentro para 2" + lista.get(i).getDisponible());
+//                        if (lista.get(i).getDisponible() >= cantidadRemove) {
+//                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+//                            if (cantidadRemove == 0) {
+//
+//                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+//                                lista.set(i, almacen);
+//                                if (i > 0 && lista.get(i).getDisponible() == 0) {
+//                                    productoEnVenta.setIdAlmacen(lista.get(i - 1));
+//                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                                } else {
+//                                    productoEnVenta.setIdAlmacen(lista.get(i));
+//                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                                }
+//                                break;
+//                            } else {
+//                                cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+//                                Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+//                                lista.set(i, almacen);
+//                            }
+//                            i--;
+//                        } else {
+//                            cantidadRemove = lista.get(i).agregarProductoDescartado(cantidadRemove);
+//                            Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
+//                            lista.set(i, almacen);
+//                        }
+//                        i--;
+//
+//                    }
+//
+//
+//                }
+//            }
+//        }
+//    }
 
 
     public void facturarOnlyProducto(Producto producto, long cantidad) {
         long cantidadRemove = cantidad;
         boolean encontro = false;
+
         ProductoEnVenta productoEnVenta = ProductoEnVentaServicios.getInstancia().buscar(producto.getProductoEnVenta().getId());
 //        productoEnVenta.discountProductoStock(cantidad);
+        System.out.println("\n\n\nInicio el sigte producto"+productoEnVenta.getIdProducto().getNombre());
         List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, producto.getId());
         for (int i = lista.size() - 1; i > -1; i--) {
             if (productoEnVenta.getIdAlmacen().getIdAlmacen() == lista.get(i).getIdAlmacen() || encontro == true) {
@@ -785,11 +871,15 @@ public class Mercado {
                                 Almacen almacen = (Almacen) AlmacenServicios.getInstancia().editar(lista.get(i));
                                 lista.set(i, almacen);
                                 if (i > 0 && lista.get(i).getDisponible() == 0) {
-                                    productoEnVenta.setIdAlmacen(lista.get(i - 1));
-                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                                    almacen = AlmacenServicios.getInstancia().find(lista.get(i - 1).getIdAlmacen());
+//                                    productoEnVenta.setIdAlmacen(almacen);
+                                    ProductoEnVentaServicios.getInstancia().updateIDalmacen(lista.get(i - 1),productoEnVenta.getIdProducto().getId());
+
                                 } else {
-                                    productoEnVenta.setIdAlmacen(lista.get(i));
-                                    ProductoEnVentaServicios.getInstancia().editar(productoEnVenta);
+//                                    almacen = AlmacenServicios.getInstancia().find(lista.get(i).getIdAlmacen());
+//                                    productoEnVenta.setIdAlmacen(almacen);
+//                                    ProductoEnVentaServicios.getInstancia().updateIDalmacen(productoEnVenta);
+                                    ProductoEnVentaServicios.getInstancia().updateIDalmacen(lista.get(i),productoEnVenta.getIdProducto().getId());
                                 }
                                 break;
                             } else {
