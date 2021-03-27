@@ -112,47 +112,126 @@ public class ApiControlador extends JavalinControlador {
                     });
 
                 });
+                ws("/mensajeServidor", ws -> {
 
-                sse("/evento-servidor", sseClient -> {
+                    ws.onConnect(ctx -> {
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        if (user!= null){
+                            VentasSession ventasSession = new VentasSession(ctx.session,Mercado.getInstance().getUserJefeWithToken(user), user.getId());
+                            ventasSession.setIdSession(ctx.getSessionId());
+                            Mercado.getInstance().addListaSseUsuario(ventasSession);
 
-                    System.out.println("Agregando cliente para evento del servidor: ");
-                    sseClient.sendEvent("conectado","ready");
+                        }else{
 
-                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(sseClient.ctx.cookie("User")));
-                    if (user!= null){
-                        VentasSession ventasSession = new VentasSession(sseClient,Mercado.getInstance().getUserJefeWithToken(user), user.getId());
+//                            sseClient.sendEvent("statuServer", "error");
+                        }
 
-                        Mercado.getInstance().addListaSseUsuario(ventasSession);
-                        sseClient.onClose(() -> {
-                            System.out.println("\n\neliminar");
-                            int borra = -1;
-                            for (int i = 0; i < Mercado.getInstance().listaSseUsuario.size(); i++) {
-                                try {
-                                    if (Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId().equalsIgnoreCase(sseClient.ctx.req.getSession().getId())){
-                                        System.out.println("\n\neste es el id"+Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId()+" el otro "+sseClient.ctx.req.getSession().getId());
-                                        borra = i;
+
+
+                        System.out.println("Conexion Iniciada - "+ctx.getSessionId());
+//                        usuariosConectados.add(ctx.session);
+                    });
+
+                    ws.onMessage(ctx -> {
+                        //Puedo leer los header, parametros entre otros.
+//                        ctx.headerMap();
+//                        ctx.pathParamMap();
+//                        ctx.queryParamMap();
+//                        //
+//                        System.out.println("Mensaje Recibido de "+ctx.getSessionId()+" ====== ");
+//                        System.out.println("Mensaje: "+ctx.message());
+//                        System.out.println("================================");
+                        //
+//                        enviarMensajeAClientesConectados(ctx.message(), "azul");
+                    });
+
+                    ws.onBinaryMessage(ctx -> {
+//                        System.out.println("Mensaje Recibido Binario "+ctx.getSessionId()+" ====== ");
+//                        System.out.println("Mensaje: "+ctx.data().length);
+//                        System.out.println("================================");
+                    });
+
+                    ws.onClose(ctx -> {
+                        System.out.println("Conexion Cerrada - "+ctx.getSessionId());
+                        int borra = -1;
+                        for (int i = 0; i < Mercado.getInstance().listaSseUsuario.size(); i++) {
+                            try {
+                                if (Mercado.getInstance().listaSseUsuario.get(i).getIdSession().equalsIgnoreCase(ctx.getSessionId())){
+                                    System.out.println("\n\neste es el id"+Mercado.getInstance().listaSseUsuario.get(i).getIdSession()+" el otro "+ctx.getSessionId());
+                                    borra = i;
 //                                    Mercado.getInstance().listaSseUsuario.remove(Mercado.getInstance().listaSseUsuario.get(i));
-                                        System.out.println("\n\neliminar12");
-                                        break;
-                                    }
-                                }catch (IllegalStateException e){
-
+                                    System.out.println("\n\neliminar12");
+                                    break;
                                 }
-                            }
-                            System.out.println("\n\neliminar12");
-                            if (borra!=-1){
-                                Mercado.getInstance().listaSseUsuario.remove(borra);
+                            }catch (IllegalStateException e){
 
                             }
+                        }
+                        System.out.println("\n\neliminar12");
+                        if (borra!=-1){
+                            Mercado.getInstance().listaSseUsuario.remove(borra);
 
-//                        listaSseUsuario.remove(sseClient);
-                        });
-                    }else{
+                        }
 
-                        sseClient.sendEvent("statuServer", "error");
-                    }
+//                        usuariosConectados.remove(ctx.session);
+                    });
 
+                    ws.onError(ctx -> {
+                        System.out.println("Ocurrio un error en el WS");
+                    });
                 });
+
+                /**
+                 * Filtro para activarse despues de la llamadas al contexto.
+                 */
+                app.wsAfter("/mensajeServidor", wsHandler -> {
+                    System.out.println("Filtro para WS despues de la llamada al WS");
+                    //ejecutar cualquier evento antes...
+                });
+
+//                sse("/evento-servidor", sseClient -> {
+//
+//                    System.out.println("Agregando cliente para evento del servidor: ");
+//                    sseClient.sendEvent("conectado","ready");
+//
+//                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(sseClient.ctx.cookie("User")));
+//                    if (user!= null){
+//                        VentasSession ventasSession = new VentasSession(sseClient,Mercado.getInstance().getUserJefeWithToken(user), user.getId());
+//
+//                        Mercado.getInstance().addListaSseUsuario(ventasSession);
+//                        sseClient.onClose(() -> {
+//                            System.out.println("\n\neliminar");
+//                            int borra = -1;
+//                            for (int i = 0; i < Mercado.getInstance().listaSseUsuario.size(); i++) {
+//                                try {
+//                                    if (Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId().equalsIgnoreCase(sseClient.ctx.req.getSession().getId())){
+//                                        System.out.println("\n\neste es el id"+Mercado.getInstance().listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId()+" el otro "+sseClient.ctx.req.getSession().getId());
+//                                        borra = i;
+////                                    Mercado.getInstance().listaSseUsuario.remove(Mercado.getInstance().listaSseUsuario.get(i));
+//                                        System.out.println("\n\neliminar12");
+//                                        break;
+//                                    }
+//                                }catch (IllegalStateException e){
+//
+//                                }
+//                            }
+//                            System.out.println("\n\neliminar12");
+//                            if (borra!=-1){
+//                                Mercado.getInstance().listaSseUsuario.remove(borra);
+//
+//                            }
+//
+////                        listaSseUsuario.remove(sseClient);
+//                        });
+//                    }else{
+//
+//                        sseClient.sendEvent("statuServer", "error");
+//                    }
+//
+//                });
+
+
+
                 path("/Cliente", () -> {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");
@@ -682,7 +761,11 @@ public class ApiControlador extends JavalinControlador {
         listaTmp.forEach(sseClient -> {
             System.out.println("Enviando informacion...");
             if (idJefe.equalsIgnoreCase(sseClient.getIdJefe())){
-                sseClient.getSseClient().sendEvent("productoload", finalJsonStr);
+                try {
+                    sseClient.getSseClient().getRemote().sendString( finalJsonStr);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         });

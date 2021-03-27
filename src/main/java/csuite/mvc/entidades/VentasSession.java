@@ -1,15 +1,17 @@
 package csuite.mvc.entidades;
 
 import io.javalin.http.sse.SseClient;
+import org.eclipse.jetty.websocket.api.Session;
 
 public class VentasSession {
-    private SseClient sseClient;
+    private Session sseClient;
     private String idJefe;
     private String user;
+    private String idSession;
     private boolean vaEnviar = false;
     private long producoAEnviar = -1;
 
-    public VentasSession(SseClient sseClient, String idJefe, String user) {
+    public VentasSession(Session sseClient, String idJefe, String user) {
         this.sseClient = sseClient;
         this.idJefe = idJefe;
         this.user = user;
@@ -27,6 +29,14 @@ public class VentasSession {
         this.vaEnviar = false;
     }
 
+    public String getIdSession() {
+        return idSession;
+    }
+
+    public void setIdSession(String idSession) {
+        this.idSession = idSession;
+    }
+
     public void setVaEnviar(boolean vaEnviar) {
         this.vaEnviar = vaEnviar;
     }
@@ -39,11 +49,11 @@ public class VentasSession {
         this.producoAEnviar = producoAEnviar;
     }
 
-    public SseClient getSseClient() {
+    public Session getSseClient() {
         return sseClient;
     }
 
-    public void setSseClient(SseClient sseClient) {
+    public void setSseClient(Session sseClient) {
         this.sseClient = sseClient;
     }
 

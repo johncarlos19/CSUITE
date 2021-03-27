@@ -1,3 +1,6 @@
+var webSocket;
+var tiempoReconectar = 5000;
+
 /*=============================================
 CARGAR LA TABLA DINÁMICA DE VENTAS
 =============================================*/
@@ -69,161 +72,195 @@ function reloadFacturaAjax(value){
 function startServerSent1(){
 
 
-	console.info("Iniciando Jquery -  Ejemplo Polling");
-	var evtSource = new EventSource("/api/evento-servidor");
-	evtSource.onerror = function(e) {
-		// const formatConfig = {
-		// 	// style: "currency",
-		// 	// currency: "DOP", // CNY for Chinese Yen, EUR for Euro
-		// 	minimumFractionDigits: 2,
-		// 	currencyDisplay: "symbol",
-		// };
-		// // const britishNumberFormatter = new Intl.NumberFormat("en-GB", formatConfig);
-		// console.log(new Intl.NumberFormat("en-GB", formatConfig).format((500000).toFixed(2)));
-		console.log("EventSource failed."+e);
-		console.log(e);
-		console.log(e.toString());
-
-
-		// console.log("Fecha "+returnDate(1609046757407))
-		// console.log("Fecha1 "+returnTime(1609046757407))
-		// console.log("Fecha2 "+returnOnlyDate(1609046757407))
-		// setTimeout(startServerSent(), 30000);
-	};
-	evtSource.onopen = function() {
-		reloadtabladeInevntario();
-		console.log("Connection to server opened.");
-	};
-	evtSource.addEventListener("conectado", function(e) {
-		console.log("esto llego"+e.data)
-	}, false);
-
-	evtSource.addEventListener("productoload", function(e) {
-		var formatConfig1 = {
-			// style: "currency",
-			// currency: "DOP", // CNY for Chinese Yen, EUR for Euro
-			minimumFractionDigits: 2,
-			currencyDisplay: "symbol",
-		};
-		console.log("esto llego"+e.data);
-		var obj = JSON.parse(e.data);
-		console.log(obj)
-		var sto;
-		var accion = '                                                    <div class="btn-group">\n' +
-			'                                                        <button class="btn btn-primary agregarProducto recuperarBoton"\n' +
-			'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'">Agregar\n' +
-			'                                                        </button>\n' +
-			'                                                    </div>'
-		var onlyFaPro = document.getElementById("productoFactura"+obj.id)
-		if( onlyFaPro != null){
-			accion = '                                                    <div class="btn-group">\n' +
-				'                                                        <button class="btn btn-default recuperarBoton"\n' +
-				'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
-				'                                                        </button>\n' +
-				'                                                    </div>';
-		}else{
-
-		}
-		if(obj.stock === 0){
-			accion = '                                                    <div class="btn-group">\n' +
-				'                                                        <button class="btn btn-default recuperarBoton"\n' +
-				'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
-				'                                                        </button>\n' +
-				'                                                    </div>';
-			sto = "<button class='btn btn-default' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
-				"                                                   value='"+obj.stock+"' >\n"
-		}else if(obj.stock<=10){
-			sto = "<button class='btn btn-danger' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
-				"                                                   value='"+obj.stock+"' >\n"
-		}else if(obj.stock<=15){
-			sto = "<button class='btn btn-warning' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
-				"                                                   value='"+obj.stock+"' >\n"
-		}else{
-			sto = "<button class='btn btn-success' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
-				"                                                   value='"+obj.stock+"' >\n"
-		}
-
-		var img = obj.fotoBase64
-		if (img == null){
-			img = "<img src='"+"../dashboardPlantilla/img/productos/default/anonymous.png"+"' width='40px' >"
-		}else{
-			img = "<img src='"+obj.fotoBase64+"' width='40px' >"
-		}
-		if (row!== null){
-
-			$.fn.dataTable.ext.errMode = 'none';
-
-			$('.tablaVentas1').on( 'error.dt', function ( e, settings, techNote, message ) {
-				console.log( 'An error has been reported by DataTables: ', message );
-			} ) ;
-
-			var table = $('.tablaVentas1').DataTable();
-			// Remove a row by Id:
-			var index1 = table.row("#row_"+ obj.id).index()
-
-			img = table
-				.cell( index1, 1)
-				.data();
-
-
-
-		}
-
-
-
-		var employee = {
-			"DT_RowId": "row_"+ obj.id,
-			"#":    obj.id,
-			"Imagen":   img,
-			"Codigo": obj.codigo_local,
-			"Descripcion":   obj.nombre + "-"+ obj.descripcion,
-			"Stock":     sto,
-			"Precio de lista":    new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round(obj.precioLista * 100) / 100).toFixed(2)) ,
-			"Disponible":     obj.disponible,
-			"Acciones":     accion
-		}
-
-
-		var row = document.getElementById("row_"+ obj.id)
-		if (row!== null){
-			var table = $('#tablaInventario').DataTable();
-			// Remove a row by Id:
-			table.row("#row_"+ obj.id).remove().draw();
-			// Likewise to add a new row:
-			table.row.add(employee).draw();
-			var table = $('#tablaInventario1').DataTable();
-			// Remove a row by Id:
-			table.row("#row_"+ obj.id).remove().draw();
-			// Likewise to add a new row:
-			table.row.add(employee).draw();
-			var onlyFaPro = document.getElementById("productoFactura"+obj.id)
-			if( onlyFaPro != null){
-				var stock = obj.stock + Number(document.getElementById("nuevaCantidadProducto"+obj.id).value)
-				var Nuevostock = obj.stock
-				document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("max",stock); // set a new val
-				document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("stock",stock); // set a new val
-				document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("nuevoStock",Nuevostock); // set a new val
-				document.getElementById("nuevaCantidadProducto"+obj.id).removeAttribute('readonly');
-			}
-
-			// row.innerHTML = '<td class="sorting_1" tabindex="0" style="">'+obj.id+'</td>' +
-			// 	'<td>'+employee.Imagen+'</td>' +
-			// 	'<td>'+employee.Codigo+'</td>' +
-			// 	'<td>'+employee.Descripcion+'</td>' +
-			// 	'<td>'+employee.Stock+'</td>' +
-			// 	'<td>'+new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round(obj.precioLista * 100) / 100).toFixed(2))+'</td' +
-			// 	'><td>'+accion+'</td>'
-		}else{
-			console.log("es null")
-		}
-
-
-
-
-	}, false);
-
+	// console.info("Iniciando Jquery -  Ejemplo Polling");
+	// var evtSource = new EventSource("/api/evento-servidor");
+	// evtSource.onerror = function(e) {
+	// 	console.log("EventSource failed."+e);
+	// 	console.log(e);
+	// 	console.log(e.toString());
+	//
+	// 	// const formatConfig = {
+	// 	// 	// style: "currency",
+	// 	// 	// currency: "DOP", // CNY for Chinese Yen, EUR for Euro
+	// 	// 	minimumFractionDigits: 2,
+	// 	// 	currencyDisplay: "symbol",
+	// 	// };
+	// 	// // const britishNumberFormatter = new Intl.NumberFormat("en-GB", formatConfig);
+	// 	// console.log(new Intl.NumberFormat("en-GB", formatConfig).format((500000).toFixed(2)));
+	//
+	//
+	//
+	//
+	//
+	// 	// console.log("Fecha "+returnDate(1609046757407))
+	// 	// console.log("Fecha1 "+returnTime(1609046757407))
+	// 	// console.log("Fecha2 "+returnOnlyDate(1609046757407))
+	// 	// setTimeout(startServerSent(), 30000);
+	// };
+	// evtSource.onopen = function() {
+	// 	reloadtabladeInevntario();
+	// 	console.log("Connection to server opened.");
+	// };
+	// evtSource.addEventListener("conectado", function(e) {
+	// 	console.log("esto llego"+e.data)
+	// }, false);
+	//
+	// evtSource.addEventListener("productoload", function(e) {
+	// 	reloadProductServerSent(e);
+	// }, false);
+	conectar();
+	setInterval(verificarConexion, tiempoReconectar);
 }
 
+
+function conectar() {
+	webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/api/mensajeServidor");
+
+	//indicando los eventos:
+	webSocket.onmessage = function(data){recibirInformacionServidor(data);};
+	webSocket.onopen  = function(e){
+
+
+		console.log("Conectado - status "+this.readyState);
+		reloadtabladeInevntario();
+		console.log("tabla reloaded")
+	};
+	webSocket.onclose = function(e){
+		console.log("Desconectado - status "+this.readyState);
+	};
+}
+
+function recibirInformacionServidor(mensaje){
+	reloadProductServerSent(mensaje)
+}
+function verificarConexion(){
+	if(!webSocket || webSocket.readyState == 3){
+		conectar();
+	}
+}
+function reloadProductServerSent(e){
+	var formatConfig1 = {
+		// style: "currency",
+		// currency: "DOP", // CNY for Chinese Yen, EUR for Euro
+		minimumFractionDigits: 2,
+		currencyDisplay: "symbol",
+	};
+	console.log("esto llego"+e.data);
+	var obj = JSON.parse(e.data);
+	console.log(obj)
+	var sto;
+	var accion = '                                                    <div class="btn-group">\n' +
+		'                                                        <button class="btn btn-primary agregarProducto recuperarBoton"\n' +
+		'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'">Agregar\n' +
+		'                                                        </button>\n' +
+		'                                                    </div>'
+	var onlyFaPro = document.getElementById("productoFactura"+obj.id)
+	if( onlyFaPro != null){
+		accion = '                                                    <div class="btn-group">\n' +
+			'                                                        <button class="btn btn-default recuperarBoton"\n' +
+			'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
+			'                                                        </button>\n' +
+			'                                                    </div>';
+	}else{
+
+	}
+	if(obj.stock === 0){
+		accion = '                                                    <div class="btn-group">\n' +
+			'                                                        <button class="btn btn-default recuperarBoton"\n' +
+			'                                                                idproducto="'+obj.id+'" data-dismiss="modal" id="productoINV'+obj.id+'" >Agregar\n' +
+			'                                                        </button>\n' +
+			'                                                    </div>';
+		sto = "<button class='btn btn-default' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
+			"                                                   value='"+obj.stock+"' >\n"
+	}else if(obj.stock<=10){
+		sto = "<button class='btn btn-danger' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
+			"                                                   value='"+obj.stock+"' >\n"
+	}else if(obj.stock<=15){
+		sto = "<button class='btn btn-warning' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
+			"                                                   value='"+obj.stock+"' >\n"
+	}else{
+		sto = "<button class='btn btn-success' id='stock"+obj.id+"'>"+obj.stock+"</button>"+"                                            <input type='hidden'  id='stock"+obj.id+"'\n" +
+			"                                                   value='"+obj.stock+"' >\n"
+	}
+
+	var img = obj.fotoBase64
+	if (img == null){
+		img = "<img src='"+"../dashboardPlantilla/img/productos/default/anonymous.png"+"' width='40px' >"
+	}else{
+		img = "<img src='"+obj.fotoBase64+"' width='40px' >"
+	}
+	if (row!== null){
+
+		$.fn.dataTable.ext.errMode = 'none';
+
+		$('.tablaVentas1').on( 'error.dt', function ( e, settings, techNote, message ) {
+			console.log( 'An error has been reported by DataTables: ', message );
+		} ) ;
+
+		var table = $('.tablaVentas1').DataTable();
+		// Remove a row by Id:
+		var index1 = table.row("#row_"+ obj.id).index()
+
+		img = table
+			.cell( index1, 1)
+			.data();
+
+
+
+	}
+
+
+
+	var employee = {
+		"DT_RowId": "row_"+ obj.id,
+		"#":    obj.id,
+		"Imagen":   img,
+		"Codigo": obj.codigo_local,
+		"Descripcion":   obj.nombre + "-"+ obj.descripcion,
+		"Stock":     sto,
+		"Precio de lista":    new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round(obj.precioLista * 100) / 100).toFixed(2)) ,
+		"Disponible":     obj.disponible,
+		"Acciones":     accion
+	}
+
+
+	var row = document.getElementById("row_"+ obj.id)
+	if (row!== null){
+		var table = $('#tablaInventario').DataTable();
+		// Remove a row by Id:
+		table.row("#row_"+ obj.id).remove().draw();
+		// Likewise to add a new row:
+		table.row.add(employee).draw();
+		var table = $('#tablaInventario1').DataTable();
+		// Remove a row by Id:
+		table.row("#row_"+ obj.id).remove().draw();
+		// Likewise to add a new row:
+		table.row.add(employee).draw();
+		var onlyFaPro = document.getElementById("productoFactura"+obj.id)
+		if( onlyFaPro != null){
+			var stock = obj.stock + Number(document.getElementById("nuevaCantidadProducto"+obj.id).value)
+			var Nuevostock = obj.stock
+			document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("max",stock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("stock",stock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.id).setAttribute("nuevoStock",Nuevostock); // set a new val
+			document.getElementById("nuevaCantidadProducto"+obj.id).removeAttribute('readonly');
+		}
+
+		// row.innerHTML = '<td class="sorting_1" tabindex="0" style="">'+obj.id+'</td>' +
+		// 	'<td>'+employee.Imagen+'</td>' +
+		// 	'<td>'+employee.Codigo+'</td>' +
+		// 	'<td>'+employee.Descripcion+'</td>' +
+		// 	'<td>'+employee.Stock+'</td>' +
+		// 	'<td>'+new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round(obj.precioLista * 100) / 100).toFixed(2))+'</td' +
+		// 	'><td>'+accion+'</td>'
+	}else{
+		console.log("es null")
+	}
+
+
+
+
+}
 function returnDate(val){
 
 	var milliseconds = val  // 1575909015000

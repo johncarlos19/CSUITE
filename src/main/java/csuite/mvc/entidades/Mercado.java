@@ -150,7 +150,7 @@ public class Mercado {
         int borrar = -1;
         for (int i = 0; i < listaSseUsuario.size(); i++) {
             try {
-                if (id.equalsIgnoreCase(listaSseUsuario.get(i).getSseClient().ctx.req.getSession().getId())){
+                if (id.equalsIgnoreCase(listaSseUsuario.get(i).getIdSession())){
                     borrar = i;
                     break;
                 }
