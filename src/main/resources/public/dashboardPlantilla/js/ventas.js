@@ -81,9 +81,13 @@ function startServerSent1(){
 		// // const britishNumberFormatter = new Intl.NumberFormat("en-GB", formatConfig);
 		// console.log(new Intl.NumberFormat("en-GB", formatConfig).format((500000).toFixed(2)));
 		console.log("EventSource failed."+e);
-		console.log("Fecha "+returnDate(1609046757407))
-		console.log("Fecha1 "+returnTime(1609046757407))
-		console.log("Fecha2 "+returnOnlyDate(1609046757407))
+		console.log(e);
+		console.log(e.toString());
+
+
+		// console.log("Fecha "+returnDate(1609046757407))
+		// console.log("Fecha1 "+returnTime(1609046757407))
+		// console.log("Fecha2 "+returnOnlyDate(1609046757407))
 		// setTimeout(startServerSent(), 30000);
 	};
 	evtSource.onopen = function() {

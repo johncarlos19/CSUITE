@@ -497,7 +497,7 @@ public class Mercado {
                     mount += list.get(i).getPrecioNeto();
                     count+=1;
                 }else {
-                    if (list.get(i).getFechaModificacion().getMonth() +1!= month || year != list.get(i).getFechaModificacion().getYear()+1900 || year != list.get(i).getFechaModificacion().getDate()){
+                    if (list.get(i).getFechaModificacion().getMonth() +1!= month || year != list.get(i).getFechaModificacion().getYear()+1900 || date != list.get(i).getFechaModificacion().getDate()){
                         graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(date),(float) mount));
 
                         mount =0;
