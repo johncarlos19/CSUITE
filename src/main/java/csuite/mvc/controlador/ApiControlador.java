@@ -270,10 +270,17 @@ public class ApiControlador extends JavalinControlador {
 
                     get("/graphicVentasMes", ctx -> {
 
+
+
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
 //                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
                         ;
-                        ctx.json(Mercado.getInstance().returnFechaMesJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                        if (user!=null){
+                            ctx.json(Mercado.getInstance().returnFechaMesJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                        }else {
+                            ctx.json("no found");
+                        }
+
 //                        String tmp =  ctx.body().toString();
 //                        System.out.println("Esto llego:"+tmp);
 //                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());
@@ -290,7 +297,12 @@ public class ApiControlador extends JavalinControlador {
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
 //                        System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
                         ;
-                        ctx.json(Mercado.getInstance().returnFechaDiaJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                        if (user!=null){
+                            ctx.json(Mercado.getInstance().returnFechaDiaJson(Mercado.getInstance().getUserJefeWithToken(user)));
+                        }else {
+                            ctx.json("no found");
+                        }
+
 //                        String tmp =  ctx.body().toString();
 //                        System.out.println("Esto llego:"+tmp);
 //                        ctx.json(ClienteServicios.getInstancia().getClienteUsuario(Mercado.getInstance().getUserJefeWithToken(user),tmp).getUsuarioJson());

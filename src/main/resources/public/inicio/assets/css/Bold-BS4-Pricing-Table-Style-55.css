@@ -1,0 +1,234 @@
+.pricingTable {
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  padding: 50px 15px;
+  text-align: center;
+  margin-top: 30px;
+  color: #292929;
+  perspective: 700px;
+  z-index: 1;
+  position: relative;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.pricingTable:hover {
+  color: #fff;
+}
+
+.pricingTable:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: rgb(29,128,159);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+  transform: rotateY(70deg);
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.pricingTable:hover:after {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+
+.pricingTable .icon {
+  width: 69px;
+  height: 69px;
+  line-height: 69px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  font-size: 25px;
+  color: #3485ef;
+  position: absolute;
+  top: -34px;
+  left: 0;
+  right: 0;
+}
+
+.pricingTable .pricingTable-header {
+  margin-bottom: 30px;
+}
+
+.pricingTable .title {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+}
+
+.pricingTable .price-value {
+  display: inline-block;
+  border-bottom: 5px solid #3485ef;
+  font-size: 30px;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.pricingTable:hover .price-value {
+  border-bottom-color: #fff;
+}
+
+.pricingTable .pricing-content {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.pricingTable .pricing-content li {
+  font-size: 14px;
+  line-height: 40px;
+}
+
+.pricingTable .pricingTable-signup {
+  display: inline-block;
+  padding: 9px 23px;
+  background: #3485ef;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.25s ease-in-out 0s;
+}
+
+.pricingTable:hover .pricingTable-signup {
+  background: #fff;
+  color: #3485ef;
+}
+
+.pricingTable .pricingTable-signup:before, .pricingTable .pricingTable-signup:after {
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  transition: all 0.25s ease-in-out 0s;
+}
+
+.pricingTable .pricingTable-signup:before {
+  left: -12px;
+  border-right: 12px solid #3485ef;
+}
+
+.pricingTable .pricingTable-signup:after {
+  right: -12px;
+  border-left: 12px solid #3485ef;
+}
+
+.pricingTable:hover .pricingTable-signup:before {
+  border-right-color: #fff;
+}
+
+.pricingTable:hover .pricingTable-signup:after {
+  border-left-color: #fff;
+}
+
+@media only screen and (max-width: 990px) {
+  .pricingTable {
+    margin-bottom: 30px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .pricingTable {
+    margin-bottom: 50px;
+  }
+}
+
+.service-icon:hover {
+  background-color: #ff8bc5;
+  color: #fff;
+}
+
+.hovertext:hover {
+  color: #ff8bc5;
+}
+
+.social-icons i:hover {
+  background-color: rgb(29,128,159);
+  color: #fff;
+}
+
+#email {
+  color: var(--bs-white);
+  background-image: -webkit-linear-gradient( 0deg , #06c6f9 0%, #38eaf9 100%);
+}
+
+#hero {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin: 0px;
+  margin-top: 20px;
+}
+
+#descripcion_empresa {
+  margin-top: -30px;
+  margin-bottom: 30px;
+}
+
+#boton1 {
+  color: var(--bs-white);
+  background-image: -webkit-linear-gradient( 0deg , #06c6f9 0%, #38eaf9 100%);
+  width: 353.6px;
+}
+
+#funciones {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+#funciones_software {
+  width: 120px;
+  margin-left: 0px;
+  border-radius: 30px;
+  padding: 5px;
+  margin-top: 20px;
+  color: #ffffff;
+  font-size: 18px;
+  background: rgb(29, 128, 159);
+}
+
+#h2_funciones {
+  color: #75aadb;
+}
+
+#div_nosotros {
+  padding-bottom: 12px;
+}
+
+#services {
+  background: rgb(29, 128, 159);
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+#servicios_iconos {
+  padding-bottom: 60px;
+}
+
+#anuncio {
+  background: rgb(29, 128, 159);
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+#portfolio {
+  padding-bottom: 60px;
+}
+
+#boton_nvar {
+  background-image: -webkit-linear-gradient( 0deg , #06c6f9 0%, #38eaf9 100%);
+  color: #ffffff;
+  width: 175px;
+}
+
+#boton2_nvar {
+  width: 175px;
+}
+

@@ -138,6 +138,28 @@ function verificarConexion(){
 		conectar();
 	}
 }
+//limpia la plantilla de venta
+function limpiarFactura(){
+	document.getElementById("searchClientebtn").disabled = false;
+	document.getElementById("clienteAlContado").disabled = false;
+	document.getElementById("cliente").readOnly  = false;
+	document.getElementById("cliente").value = "";
+	document.getElementById("nameCliente").innerHTML = ""
+	$(".nuevoProducto").empty()
+	$("#impuestodescuento").empty()
+
+
+
+	document.getElementById("nuevaVenta").value = ""
+	document.getElementById("nuevoSubTotalVenta").value = currentyMoney(0)
+	document.getElementById("subtotalVenta").value = 0
+	document.getElementById("nuevoTotalVenta").value= currentyMoney(0)
+	document.getElementById("nuevoTotalVenta").value= currentyMoney(0)
+	document.getElementById("totalVenta").value = 0
+
+}
+
+
 function reloadProductServerSent(e){
 	var formatConfig1 = {
 		// style: "currency",
@@ -292,15 +314,15 @@ function returnOnlyDate(val){
 }
 
 function imprimirFact(){
-	if (document.getElementById("nuevaVenta").value === "" || document.getElementById("nuevaVenta").value === null) {
+	if (document.getElementById("retenidaVenta").value === "" || document.getElementById("retenidaVenta").value === null) {
 		swal({
 			title: "Error al Imprimir la factura",
-			text: "¡Debe crear la factura para poder imprimirla!",
+			text: "¡Debe crear la factura para poder imprimirla o haber realizado una venta anteriormente!",
 			type: "error",
 			confirmButtonText: "¡Cerrar!"
 		});
 	} else {
-		worker.postMessage({'cmd': 'facturaLoadIMP', 'id': document.getElementById("nuevaVenta").value});
+		worker.postMessage({'cmd': 'facturaLoadIMP', 'id': document.getElementById("retenidaVenta").value});
 	}
 
 
@@ -621,6 +643,7 @@ function facturaLoadNow(factura){
 
 	var obj = getFactura(factura);
 	document.getElementById("nuevaVenta").value = obj.idFactura;
+	document.getElementById("retenidaVenta").value = obj.idFactura;
 	document.getElementById("searchClientebtn").disabled = true;
 	document.getElementById("clienteAlContado").disabled = true;
 	document.getElementById("cliente").readOnly  = true;

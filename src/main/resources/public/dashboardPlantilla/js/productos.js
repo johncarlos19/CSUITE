@@ -153,16 +153,19 @@ var preciono = false;
 
 
 function loadAvailableIMP(){
+	startLoading();
 	startResponsible()
 	var name = document.getElementById("idProducto").value;
 	worker.postMessage({'cmd': 'searchImpuestoProductoAvailable', 'id': name});
 
 }
 function loadProductoIMP(){
+	startLoading();
 	var name = document.getElementById("idProducto").value;
 	worker.postMessage({'cmd': 'searchImpuestoProducto', 'id': name});
 }
 function loadProductoALMACEN(){
+	startLoading();
 	var name = document.getElementById("idProducto").value;
 	worker.postMessage({'cmd': 'searchAlmacenProducto', 'id': name});
 }
@@ -264,6 +267,7 @@ $("#nuevaCategoria").change(function(){
 function actionRelation(actionJson){
 	switch (actionJson.typeClass) {
 		case "Producto":
+			startLoading();
 			worker.postMessage({'cmd': 'productoRelation', 'ActionJson': actionJson});
 			break;
 		default:

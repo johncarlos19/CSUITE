@@ -26,6 +26,16 @@ worker.onmessage = function (e) { //recuperando la información
             if (img == null){
                 img = "../dashboardPlantilla/img/productos/default/anonymous.png"
             }
+            var accionn = "<div class='btn-group' style = ' "+document.getElementById("inventa").value+"'> " +
+                // " <form method='post' action='/dashboard/showProducto'><input type='hidden' name='idProducto' value='"+obj[key].id+"'><button class='btn btn-warning btnEditarProducto' type='button' ><i  class='fa fa-eye'></i></button></form>" +
+                " <button class='btn btn-warning btnEditarProducto' type='button' idProducto='"+obj[key].id+"' ><i  class='fa fa-eye'></i></button>"
+
+            if (obj[key].cantProductoVendido ===0){
+                accionn += "   <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
+            }else{
+                accionn +="   </div>"
+            }
+
             var employee = {
                 "#":    obj[key].id,
                 "Imagen":   "<img src='"+img+"' width='64' height='64' >",
@@ -38,10 +48,7 @@ worker.onmessage = function (e) { //recuperando la información
                 "Precio de lista":     (Math.round(obj[key].precioLista * 100) / 100).toFixed(2),
                 "Stock":     sto,
                 "Disponible":     obj[key].disponible,
-                "Acciones":     "<div class='btn-group' style = ' "+document.getElementById("inventa").value+"'> " +
-                    // " <form method='post' action='/dashboard/showProducto'><input type='hidden' name='idProducto' value='"+obj[key].id+"'><button class='btn btn-warning btnEditarProducto' type='button' ><i  class='fa fa-eye'></i></button></form>" +
-                    " <button class='btn btn-warning btnEditarProducto' type='button' idProducto='"+obj[key].id+"' ><i  class='fa fa-eye'></i></button>" +
-                    "   <button class='btn btn-danger btnEliminarProducto' idproducto='"+obj[key].id+"'  codigo='118'  imagen='vistas/img/productos/default/anonymous.png'><i  class='fa fa-times'></i></button> </div>"
+                "Acciones":     accionn
             }
 
             // c = [];
@@ -229,15 +236,18 @@ worker.onmessage = function (e) { //recuperando la información
     if(e.data.cmd === 'searchImpuestoProducto'){
         reloadIMPTABLA(e.data.data,"show");
         dataFilter()
+        stopLoading()
     }
     if(e.data.cmd === 'searchImpuestoProductoAvailable'){
         reloadIMPTABLA(e.data.data,"add");
         reloadResponsibleTable()
         dataFilter()
+        stopLoading()
     }
 
     if(e.data.cmd === 'searchAlmacenProducto'){
         reloadAlmacenTabla(e.data.data,"show");
+        stopLoading()
     }
 
     if(e.data.cmd === 'save'){
@@ -530,6 +540,16 @@ worker.onmessage = function (e) { //recuperando la información
         $('#guardarFactura').prop('disabled', false);
         $("#guardarFactura").html('Guardar venta');
         createInvoice(e.data.data)
+
+
+        for (var key in e.data.data.productos){
+
+            $("button.recuperarBoton[idProducto='"+e.data.data.productos[key].id+"']").removeClass('btn-default');
+            $("button.recuperarBoton[idProducto='"+e.data.data.productos[key].id+"']").addClass(' btn-primary agregarProducto');
+        }
+
+
+        limpiarFactura()
     }
     if(e.data.cmd === 'productoRelation'){
         switch (e.data.action) {
@@ -538,29 +558,35 @@ worker.onmessage = function (e) { //recuperando la información
                 console.log("\n\nVan lo que es el load Producto")
                 loadProductoALMACEN();
                 dataFilter()
+                stopLoading()
                 break;
             case "addImpuesto":
                 reloadShowProducto(e.data.data)
                 loadProductoIMP();
                 dataFilter()
+                stopLoading()
                 break;
             case "deleteImpuesto":
                 reloadShowProducto(e.data.data)
                 loadProductoIMP();
                 dataFilter()
+                stopLoading()
                 break;
             case "editarInfoProducto":
                 reloadShowProducto(e.data.data)
+                stopLoading()
                 // loadProductoIMP();
                 // dataFilter()
                 break;
             case "editarPrecioProducto":
                 reloadShowProducto(e.data.data)
                 loadProductoIMP();
+                stopLoading()
                 // dataFilter()
                 break;
             case "editarFotoProducto":
                 reloadShowProducto(e.data.data)
+                stopLoading()
                 // loadProductoIMP();
                 // dataFilter()
                 break;

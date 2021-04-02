@@ -372,7 +372,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                 get(ctx -> {
                     Map<String, Object> contexto = new HashMap<>();
                     contexto.put("listaPaqueteProducto", "");
-                    ctx.render("/public/webPage/CashSuite.html", contexto);
+                    ctx.render("/public/inicio/index.html", contexto);
 
 
 

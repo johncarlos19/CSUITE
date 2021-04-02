@@ -522,6 +522,8 @@ CUERPO DOCUMENTO
 
                                             <input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta"
                                                    th:value="${idFactura}" readonly>
+                                            <input type="hidden" class="" id="retenidaVenta"
+                                                   th:value="${idFactura}" readonly>
 
                                         </div>
 
@@ -798,6 +800,7 @@ CUERPO DOCUMENTO
 
                                 <button type="button" class="btn btn-primary pull-right" id="guardarFactura" style="margin-left: 10px; margin-right: 10px;" onclick="saveFacturaNow()">Guardar venta</button>
                                 <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="imprimirFact()">Imprimir</button>
+
 
                             </div>
 
