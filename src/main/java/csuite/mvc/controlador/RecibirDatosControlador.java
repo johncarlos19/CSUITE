@@ -533,6 +533,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                         map.put("telefono",claims.get("telefono"));
                                         map.put("compania",claims.get("compania"));
                                         map.put("ciudadPais",claims.get("ciudadPais"));
+                                        map.put("nombreCompleto",claims.get("nombreCompleto"));
 
                                         String jwt = createJWT(use,claims.getAudience(), map);
                                         ctx.header(header,jwt);
@@ -600,6 +601,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                              ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         contexto.put("listaProducto", ProductoServicios.getInstancia().listaProducto(1,Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("categoria", CategoriaServicios.getInstancia().cantidadCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         contexto.put("producto", ProductoServicios.getInstancia().cantidadProductos(Mercado.getInstance().getUserJefeWithToken(user)));
@@ -971,6 +974,36 @@ public class RecibirDatosControlador extends JavalinControlador {
                     });
                 });
 
+
+                path("/perfil", () -> {
+
+                    get(ctx -> {
+
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nusuario"+user);
+                        ctx.res.addHeader("Authorization",ctx.cookie("User"));
+                        Map<String, Object> contexto = new HashMap<>();
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
+                        ) {
+                            contexto.put(politica.getKey(), politica.getValue());
+                        }
+
+//                    for (Cliente aux : ClienteServicios.getInstancia().listaCliente("admin")
+//                         ) {
+//                        list.add(UsuarioServicios.getInstancia().find(aux.getIdCliente().getUsuario()));
+//
+//                    }
+
+                        contexto.put("usuario",UsuarioServicios.getInstancia().getUsuario(user.getId()));
+
+                        ctx.render("/public/dashboardPlantilla/perfil.html",contexto);
+
+
+
+
+                    });
+
+                });
 
 
 

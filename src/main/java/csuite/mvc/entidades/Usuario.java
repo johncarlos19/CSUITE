@@ -29,6 +29,7 @@ public class Usuario implements Identifiable<String> {
     private String telefono;
     @CreationTimestamp
     private Timestamp fecha_registro;
+    private Timestamp fechaNacimiento;
     private String email;
     private String documento;
     private String tipoDocumento;
@@ -61,6 +62,14 @@ public class Usuario implements Identifiable<String> {
         documento,
         tipoDocumento);
         return clienteJson;
+    }
+
+    public Timestamp getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Timestamp fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getNombreCompania() {

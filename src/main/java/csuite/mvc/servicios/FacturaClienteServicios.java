@@ -102,7 +102,7 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
             calendar.add(calendar.MONTH,-1*plazo);
             Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
 
-            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact  and fc.fechaCompra >= :fecha" );
+            Query query = session.createQuery("select fc from FacturaCliente fc  where fc.idVendedor = :idFacturaCliente and fc.facturaGuardada = :fact  and fc.fechaCompra >= :fecha order by fc.fechaModificacion asc " );
             query.setParameter("idFacturaCliente",user);
             query.setParameter("fact",true);
             query.setParameter("fecha",timestamp);

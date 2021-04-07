@@ -442,6 +442,7 @@ public class Mercado {
     public List<GraphJson> returnFechaMesJson(String id){
         List<FacturaCliente> list = FacturaClienteServicios.getInstancia().graficaParaVenta(id,12);
         List<GraphJson> graphJsons = new ArrayList<GraphJson>();
+
         int month =-1;
         int count=0;
         int year = -1;
@@ -455,7 +456,7 @@ public class Mercado {
                     mount += list.get(i).getPrecioNeto();
                     count+=1;
                 }else {
-                    if (list.get(i).getFechaModificacion().getMonth() +1!= month || year != list.get(i).getFechaModificacion().getYear()+1900){
+                    if ((list.get(i).getFechaModificacion().getMonth() +1!= month) || year != (list.get(i).getFechaModificacion().getYear()+1900)){
                         graphJsons.add(new GraphJson(Integer.toString(year)+"-"+Integer.toString(month),(float) mount));
 
                         mount =0;
@@ -1303,6 +1304,7 @@ public class Mercado {
             case "Admin":
                 se = user;
                 map.put("user",se);
+                map.put("nombreCompleto",aux.getNombre()+" "+aux.getApellido());
                 map.put("direccion",aux.getDireccion());
                 map.put("telefono",aux.getTelefono());
                 map.put("compania",aux.getNombreCompania());
@@ -1320,25 +1322,36 @@ public class Mercado {
             case "Empleado":
 
                 se = EmpleadoServicios.getInstancia().getJefe(aux.getUsuario());
+                Usuario aux1 = UsuarioServicios.getInstancia().getUsuario(se);
                 map.put("user",se);
+                map.put("nombreCompleto",aux.getNombre()+" "+aux.getApellido());
+                map.put("direccion",aux1.getDireccion());
+                map.put("telefono",aux1.getTelefono());
+                map.put("compania",aux1.getNombreCompania());
+                if (aux1.getMunicipio() != null && aux1.getPais()== null){
+                    map.put("ciudadPais",aux1.getMunicipio());
+                }else if (aux.getMunicipio() == null && aux.getPais()!= null){
+                    map.put("ciudadPais",aux1.getPais());
+                }else{
+                    map.put("ciudadPais",aux1.getMunicipio() + ", "+aux1.getPais());
+                }
+                break;
+            case "Vendedor":
+                se = user;
+                map.put("user",se);
+                map.put("nombreCompleto",aux.getNombre()+" "+aux.getApellido());
                 map.put("direccion",aux.getDireccion());
                 map.put("telefono",aux.getTelefono());
                 map.put("compania",aux.getNombreCompania());
+
                 if (aux.getMunicipio() != null && aux.getPais()== null){
+
                     map.put("ciudadPais",aux.getMunicipio());
                 }else if (aux.getMunicipio() == null && aux.getPais()!= null){
                     map.put("ciudadPais",aux.getPais());
                 }else{
                     map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
                 }
-                break;
-            case "Vendedor":
-                se = user;
-                map.put("user",se);
-                map.put("direccion",aux.getDireccion());
-                map.put("telefono",aux.getTelefono());
-                map.put("compania",aux.getNombreCompania());
-                map.put("ciudadPais",aux.getMunicipio() + ", "+aux.getPais());
                 break;
             default:
                 se = user;

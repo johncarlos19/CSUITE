@@ -220,14 +220,14 @@ CUERPO DOCUMENTO
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="user-image"><i class="fa fa-user"></i></span>
 
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs" th:text="${user}">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <span class="img-circle"><i class="fa fa-user"></i></span>
 
-                                <p>
+                                <p th:text="${nameComplete}">
                                     Alexander Pierce - Web Developer
                                 </p>
                             </li>
@@ -235,10 +235,10 @@ CUERPO DOCUMENTO
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                    <a href="/dashboard/perfil" class="btn btn-default btn-flat">Perfil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Log Out</a>
+                                    <a href="/logout" class="btn btn-default btn-flat">Log Out</a>
                                 </div>
                             </li>
                         </ul>
@@ -283,7 +283,7 @@ CUERPO DOCUMENTO
 
 
                 <li>
-                    <a href="http://localhost/csuite.mvc/pos1/perfil">
+                    <a href="/dashboard/perfil">
 
                         <i class="fa fa-user"></i>
                         <span>Perfil</span>
