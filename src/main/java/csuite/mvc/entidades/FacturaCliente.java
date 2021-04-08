@@ -280,8 +280,9 @@ public class FacturaCliente implements Identifiable<String> {
             }
         }catch (Exception e){
             e.printStackTrace();
-            this.precioNeto= total+totalImpuesto;
+
         }
+        this.precioNeto= total+totalImpuesto;
 
 
     }
