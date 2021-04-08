@@ -266,11 +266,14 @@ public class GestionadDB<T> {
 
     public T find(Object id) throws PersistenceException {
 //        final Session session = getHibernateSession();
+
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
 
         try {
-            return em.find(claseEntidad, id);
+            T o = em.find(claseEntidad, id);
+            em.close();
+            return o;
         } finally {
             em.close();
         }

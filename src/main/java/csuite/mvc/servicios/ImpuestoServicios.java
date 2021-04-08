@@ -81,6 +81,7 @@ public class ImpuestoServicios extends GestionadDB<Impuesto>{
     }
 
     public ArrayList<Impuesto> listaImpuestoAplicableATodos(String user) {
+        System.out.println("\n\n\n\nUsuario"+user);
 
 
         final Session session = getHibernateSession();

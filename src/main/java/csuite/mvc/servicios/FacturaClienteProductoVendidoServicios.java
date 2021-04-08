@@ -44,11 +44,21 @@ public class FacturaClienteProductoVendidoServicios extends GestionadDB<FacturaC
 
             //query.setParameter("nombre", apellido+"%");
             try {
-                FacturaClienteProductoVendido facturaClienteProductoVendido = (FacturaClienteProductoVendido) query.getSingleResult();
-                System.out.println("\n"+facturaClienteProductoVendido.getImpuestoProducto().size());
-                session.close();
-                return  facturaClienteProductoVendido;
-            }catch (javax.persistence.NoResultException D){
+                try {
+                    FacturaClienteProductoVendido facturaClienteProductoVendido = (FacturaClienteProductoVendido) query.getSingleResult();
+                    System.out.println("\n\n\n"+facturaClienteProductoVendido.getImpuestoProducto().size());
+                    session.close();
+                    return  facturaClienteProductoVendido;
+                }catch (javax.persistence.NoResultException e){
+                    query = session.createQuery("select fcp from FacturaClienteProductoVendido fcp  where fcp.idFacturaCliente.idFactura = :idFactura and fcp.idProducto.id = :idProducto" );
+                    query.setParameter("idFactura",idFactura);
+                    query.setParameter("idProducto",idProducto);
+                    FacturaClienteProductoVendido facturaClienteProductoVendido = (FacturaClienteProductoVendido) query.getSingleResult();
+                    session.close();
+                    return  facturaClienteProductoVendido;
+
+                }
+            } catch (javax.persistence.NoResultException e){
                 return null;
             }
 

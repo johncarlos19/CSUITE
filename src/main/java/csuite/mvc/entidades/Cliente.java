@@ -30,6 +30,11 @@ public class Cliente implements Serializable {
         this.facturaTotal+=1;
         this.facturaClientes.add(facturaCliente);
     }
+    public void discountFacturaCliente(){
+
+        this.facturaTotal-=1;
+
+    }
 
     public Long getFacturaTotal() {
         return facturaTotal;

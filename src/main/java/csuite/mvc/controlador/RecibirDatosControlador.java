@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static csuite.mvc.controlador.ApiControlador.decodeJWT;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class RecibirDatosControlador extends JavalinControlador {
@@ -617,6 +618,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
                     });
+
                 });
 
 
@@ -627,6 +629,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
@@ -649,6 +653,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
@@ -676,6 +682,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario" + user);
                         ctx.res.addHeader("Authorization", ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
 //                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
@@ -708,6 +716,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 System.out.println("\n\n\nusuario" + user);
                                 ctx.res.addHeader("Authorization", ctx.cookie("User"));
                                 Map<String, Object> contexto = new HashMap<>();
+                                contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
 //                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                                 for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                                 ) {
@@ -729,14 +739,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 String idFac = ctx.formParam("idFactura");
                                 if (idFac != null){
                                     ctx.sessionAttribute("idFactura",idFac);
-//                                    System.out.println("\n\n\nusuario" + user);
-//                                    ctx.res.addHeader("Authorization", ctx.cookie("User"));
-//                                    Map<String, Object> contexto = new HashMap<>();
-////                            contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
-//                                    for (Politica politica : UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
-//                                    ) {
-//                                        contexto.put(politica.getKey(), politica.getValue());
-//                                    }
+
 
                                     ctx.redirect("/dashboard/crearVentas");
                                 }
@@ -753,6 +756,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         contexto.put("categoria", CategoriaServicios.getInstancia().ListaCategoria(Mercado.getInstance().getUserJefeWithToken(user)));
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
@@ -798,6 +803,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         contexto.put("factura", FacturaClienteServicios.getInstancia().ListFacturaClienteCerradaVendedor(Mercado.getInstance().getUserJefeWithToken(user)));
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
@@ -843,6 +850,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         contexto.put("impuesto", ImpuestoServicios.getInstancia().listaImpuesto(Mercado.getInstance().getUserJefeWithToken(user)));
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
@@ -905,6 +914,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
@@ -979,10 +990,13 @@ public class RecibirDatosControlador extends JavalinControlador {
 
                     get(ctx -> {
 
+
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
@@ -995,6 +1009,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 //                    }
 
                         contexto.put("usuario",UsuarioServicios.getInstancia().getUsuario(user.getId()));
+                        contexto.put("dirigir","/dashboard/perfil");
 
                         ctx.render("/public/dashboardPlantilla/perfil.html",contexto);
 
@@ -1002,10 +1017,42 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
                     });
+                    post(ctx -> {
+
+
+                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
+                        System.out.println("\n\n\nusuario"+user);
+                        ctx.res.addHeader("Authorization",ctx.cookie("User"));
+                        Usuario usuario = UsuarioServicios.getInstancia().getUsuario(ctx.formParam("user"));
+                        switch (ctx.formParam("action")){
+                            case "editDireccion":
+
+                                usuario.setPais(ctx.formParam("pais"));
+                                usuario.setMunicipio(ctx.formParam("municipio"));
+                                usuario.setDireccion(ctx.formParam("direccion"));
+                                UsuarioServicios.getInstancia().editar(usuario);
+                                break;
+                            case "EditInfo":
+                                usuario = UsuarioServicios.getInstancia().getUsuario(ctx.formParam("user"));
+                                usuario.setNombre(ctx.formParam("nombre"));
+                                usuario.setApellido(ctx.formParam("apellido"));
+                                usuario.setNombreCompania(ctx.formParam("nombreCompania"));
+                                usuario.setEmail(ctx.formParam("email"));
+                                usuario.setTelefono(ctx.formParam("telefono"));
+                                UsuarioServicios.getInstancia().editar(usuario);
+                                break;
+                        }
+
+
+
+
+
+                        ctx.redirect("/dashboard/perfil");
+
+
+                    });
 
                 });
-
-
 
 
 
@@ -1019,6 +1066,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                         System.out.println("\n\n\nusuario"+user);
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
+                        contexto.put("user", user.getId());
+                        contexto.put("nameComplete", (String) user.get("nombreCompleto")+"-"+user.getAudience());
                         List<Usuario> list = new ArrayList<Usuario>();
 //                    for (Cliente aux : ClienteServicios.getInstancia().listaCliente("admin")
 //                         ) {
@@ -1181,6 +1230,7 @@ public class RecibirDatosControlador extends JavalinControlador {
 //
 //
 //                    Map<String, Object> contexto = new HashMap<>();
+
 //                    contexto.put("aux", aux);
 //                    ctx.render("/publico/checkout.html", contexto);
 //                });

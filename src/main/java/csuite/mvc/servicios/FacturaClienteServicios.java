@@ -1,6 +1,7 @@
 package csuite.mvc.servicios;
 
 import csuite.mvc.entidades.*;
+import io.jsonwebtoken.Claims;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
@@ -172,7 +173,7 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
 
     }
 
-    public FacturaCliente crearFacturaCliente(FacturaCliente facturaCliente, String user, String idCliente) {
+    public FacturaCliente crearFacturaCliente(FacturaCliente facturaCliente, Claims user, String idCliente) {
         boolean subio = false;
 /*
         Connection con = null;
@@ -205,7 +206,7 @@ public class FacturaClienteServicios extends GestionadDB<FacturaCliente>{
         FacturaCliente facturaClienteAux = (FacturaCliente) crear(facturaCliente);
          facturaClienteAux.getId();
         facturaClienteAux = (FacturaCliente) buscar(facturaClienteAux.getId());
-        List<Impuesto> impuestos = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos((String) Mercado.getInstance().getUserJefe(user).get("user"));
+        List<Impuesto> impuestos = ImpuestoServicios.getInstancia().listaImpuestoAplicableATodos(Mercado.getInstance().getUserJefeWithToken(user));
         List<ImpuestoCliente> impuestoClientes = new ArrayList<ImpuestoCliente>();
         for (Impuesto impuesto : impuestos) {
             ImpuestoCliente aux = new ImpuestoCliente();

@@ -174,6 +174,8 @@ public class Mercado {
         usuario.setMunicipio("Moca");
         usuario.setDireccion("Paso de moca");
         usuario.setTelefono("5454454");
+        usuario.setNombreCompania("CashSuite");
+        usuario.setDocumento("125562");
 //            Usuario aux = new UsuarioServicios().crearUsuario(usuario);
         Usuario aux = RegistrarVendedor(usuario, "admin@cashsuite.com", "admin");
         Vendedor otro = VendedorServicios.getInstancia().getVendedor(aux.getUsuario());
@@ -212,7 +214,8 @@ public class Mercado {
 
         Producto va = ((Vendedor) VendedorServicios.getInstancia().editar(otro)).getProductoList().get(0);
 
-        Almacen almacen = new Almacen("Don Lindo", 10, 10, 200, 500);
+        Almacen almacen = new Almacen("Don Lindo", 10, 0, 200, 500);
+        almacen.setProductoDescartado(10);
         va.addAlmacen(almacen);
         va = (Producto) new ProductoServicios().editar(va);
 
@@ -279,17 +282,25 @@ public class Mercado {
 //            ImpuestoServicios.getInstancia().editar(impuesto);
 
 
-        Usuario usuario1 = new Usuario("johncarlos1943", "John");
+        Usuario usuario1 = new Usuario("johncarlos1943", "John Carlos");
         usuario1.setEmail("johncarlos1943@cashsuite.com");
-        usuario1.setPerfil("Admin");
-        Usuario aux1 = new UsuarioServicios().crearUsuario(usuario1);
+        usuario1.setApellido("Lopez Castillo");
 
-        Vendedor vendedor1 = new Vendedor();
-        vendedor1.setEmail("johncarlos1943@cashsuite.com");
-        vendedor1.setPassword(passwordEncryptor.encrypt("admin"));
-        Vendedor otro1 = aux1.addVendedor(vendedor1);
-        VendedorServicios.getInstancia().crear(otro1);
-        aux1 = (Usuario) UsuarioServicios.getInstancia().editar(aux1);
+        usuario1.setPerfil("Admin");
+        usuario1.setMunicipio("Moca");
+        usuario1.setDireccion("Paso de moca");
+        usuario1.setTelefono("8092648543");
+        usuario1.setNombreCompania("CashSuite");
+        usuario1.setDocumento("125562");
+        Usuario aux1  = RegistrarVendedor(usuario1, "johncarlos1943@cashsuite.com", "admin");
+//        = new UsuarioServicios().crearUsuario(usuario1);
+
+//        Vendedor vendedor1 = new Vendedor();
+//        vendedor1.setEmail("johncarlos1943@cashsuite.com");
+//        vendedor1.setPassword(passwordEncryptor.encrypt("admin"));
+        Vendedor otro1 = VendedorServicios.getInstancia().find(aux1.getUsuario());
+//        VendedorServicios.getInstancia().crear(otro1);
+//        aux1 = (Usuario) UsuarioServicios.getInstancia().editar(aux1);
 
 
         Usuario usuarioCliente1 = new Usuario();
@@ -301,6 +312,7 @@ public class Mercado {
         usuarioCliente1.setMunicipio("Moca");
         usuarioCliente1.setDireccion("Paso 11De Moca");
         usuarioCliente1.setTelefono("809525456");
+
         usuarioCliente1 = (Usuario) new UsuarioServicios().crear(usuarioCliente1);
         System.out.println("\n\n\nusua" + usuarioCliente1.getUsuario());
         usuarioCliente1 = UsuarioServicios.getInstancia().find(usuarioCliente1.getUsuario());
@@ -316,6 +328,7 @@ public class Mercado {
         Usuario empleado = new Usuario();
         empleado.setNombre("Pepe");
         empleado.setApellido("Puraz");
+        empleado.setDocumento("545121");
         empleado.setPerfil("Empleado");
         empleado.setPais("Republica Dominicana");
         empleado.setMunicipio("Santiago");
@@ -333,6 +346,7 @@ public class Mercado {
         empleadoLectura.setPais("Republica Dominicana");
         empleadoLectura.setMunicipio("La vega");
         empleadoLectura.setDireccion("vegano");
+        empleadoLectura.setDocumento("4851521");
         empleadoLectura.setTelefono("80955401221");
         empleadoLectura.setUsuario("empleadoLectura");
         empleadoLectura.setEmail("pepe.puraz@cashsuite.com");
@@ -346,16 +360,23 @@ public class Mercado {
 
         Usuario usuario10 = new Usuario("eliasmarte", "Elias");
         usuario10.setApellido("Marte");
+        usuario10.setMunicipio("Santiago");
+        usuario10.setDireccion("Pucmm");
         usuario10.setEmail("eliasMarte@cashsuite.com");
         usuario10.setPerfil("Admin");
-        Usuario aux123 = new UsuarioServicios().crearUsuario(usuario10);
+        usuario10.setDocumento("4525114");
+        usuario10.setTipoDocumento("Documento Electoral");
+        Usuario aux123 = RegistrarVendedor(usuario10, "eliasmarte@cashsuite.com", "admin");
 
-        Vendedor vendedor123 = new Vendedor();
-        vendedor123.setEmail("eliasmarte@cashsuite.com");
-        vendedor123.setPassword(passwordEncryptor.encrypt("admin"));
-        Vendedor otro123 = aux123.addVendedor(vendedor123);
-        VendedorServicios.getInstancia().crear(otro123);
-        aux123 = (Usuario) UsuarioServicios.getInstancia().editar(aux123);
+
+
+//        vendedor123.setEmail("eliasmarte@cashsuite.com");
+//        vendedor123.setPassword(passwordEncryptor.encrypt("admin"));
+//        Vendedor otro123 = aux123.addVendedor(vendedor123);
+//        VendedorServicios.getInstancia().crear(otro123);
+        Vendedor otro123 = VendedorServicios.getInstancia().find(usuario10.getUsuario());
+
+//        aux123 = (Usuario) UsuarioServicios.getInstancia().editar(aux123);
 
            /* Producto pp = new Producto("Pan", BigDecimal.valueOf(50.00).setScale(2));
             pp.setDescripcion("Bueno");
@@ -665,6 +686,9 @@ public class Mercado {
 
                 }
                 FacturaClienteServicios.getInstancia().delete(idFactura);
+                Cliente cliente = ClienteServicios.getInstancia().find(facturaCliente.getIdCliente());
+                cliente.discountFacturaCliente();
+                ClienteServicios.getInstancia().editar(cliente);
                 return true;
             }else{
                 return false;
@@ -726,7 +750,12 @@ public class Mercado {
         FacturaClienteProductoVendido facturaClienteProductoVendido = FacturaClienteProductoVendidoServicios.getInstancia().verifyProducto(idFactura, idProducro);
         Producto producto = ProductoServicios.getInstancia().buscar(idProducro);
         if (facturaClienteProductoVendido != null) {
-            System.out.println("\n\nproducto"+facturaCliente.getFacturaClienteProductoVendidos().get(0).getImpuestoProducto().get(0).getNombre());
+            try {
+                System.out.println("\n\nproducto"+facturaCliente.getFacturaClienteProductoVendidos().get(0).getImpuestoProducto().get(0).getNombre());
+            }catch (Exception e){
+                System.out.println("\n\nEncontro pero sin impuesto");
+            }
+
 
 
 //            facturaClienteProductoVendido.addProducto(cantidad);
@@ -735,7 +764,9 @@ public class Mercado {
 //            FacturaClienteProductoVendidoServicios.getInstancia().editar(facturaClienteProductoVendido);
             for (int i = 0; i < facturaCliente.getFacturaClienteProductoVendidos().size(); i++) {
                 if(facturaCliente.getFacturaClienteProductoVendidos().get(i).getId() == facturaClienteProductoVendido.getId()){
+                    System.out.println("\n\n\nEntro, before"+facturaCliente.getFacturaClienteProductoVendidos().get(i).getCantidad());
                     facturaCliente.getFacturaClienteProductoVendidos().get(i).addProducto(cantidad);
+                    System.out.println("\nEntro, after"+facturaCliente.getFacturaClienteProductoVendidos().get(i).getCantidad());
                     break;
                 }
 
@@ -1011,7 +1042,7 @@ public class Mercado {
         usuarioCliente.setTelefono(usuario.getTelefono());
         usuarioCliente.setDocumento("001");
         usuarioCliente = (Usuario) new UsuarioServicios().crear(usuarioCliente);
-        usuarioCliente = UsuarioServicios.getInstancia().find(usuarioCliente.getUsuario());
+        usuarioCliente = UsuarioServicios.getInstancia().buscar(usuarioCliente.getUsuario());
         Cliente cliente = new Cliente();
         cliente.setIdClienteLocal("001");
         cliente = usuarioCliente.addCliente(cliente);
@@ -1303,7 +1334,7 @@ public class Mercado {
         switch (aux.getPerfil()) {
             case "Admin":
                 se = user;
-                map.put("user",se);
+                map.put("user",user);
                 map.put("nombreCompleto",aux.getNombre()+" "+aux.getApellido());
                 map.put("direccion",aux.getDireccion());
                 map.put("telefono",aux.getTelefono());

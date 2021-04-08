@@ -18,7 +18,7 @@
 
         <property name="hibernate.archive.autodetection">class,hbm</property>
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">20</property>
+        <property name="connection.pool_size">11</property>
 <!--        <property name="hibernate.format_sql">true</property> &lt;!&ndash; Show SQL formatted &ndash;&gt;-->
 
         <!-- Disable the second-level cache  -->

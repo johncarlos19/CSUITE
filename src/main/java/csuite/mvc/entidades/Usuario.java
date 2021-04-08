@@ -76,8 +76,8 @@ public class Usuario implements Identifiable<String> {
         return nombreCompania;
     }
 
-    public void setNombreCompania(String nombreCompania) {
-        this.nombreCompania = nombreCompania;
+    public void setNombreCompania(String nombreCompania) throws UnsupportedEncodingException {
+        this.nombreCompania = new String(nombreCompania.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public List<Politica> getPoliticaList() {
@@ -119,8 +119,8 @@ public class Usuario implements Identifiable<String> {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellido(String apellido) throws UnsupportedEncodingException {
+        this.apellido = new String(apellido.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public String getPerfil() {
@@ -143,16 +143,16 @@ public class Usuario implements Identifiable<String> {
         return municipio;
     }
 
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
+    public void setMunicipio(String municipio) throws UnsupportedEncodingException {
+        this.municipio = new String(municipio.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDireccion(String direccion) throws UnsupportedEncodingException  {
+        this.direccion = new String(direccion.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public String getTelefono() {
@@ -178,7 +178,7 @@ public class Usuario implements Identifiable<String> {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws UnsupportedEncodingException  {
         this.email = email;
     }
 
@@ -186,7 +186,7 @@ public class Usuario implements Identifiable<String> {
         return documento;
     }
 
-    public void setDocumento(String documento) {
+    public void setDocumento(String documento) throws UnsupportedEncodingException {
         this.documento = documento;
     }
 
@@ -226,8 +226,8 @@ public class Usuario implements Identifiable<String> {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) throws UnsupportedEncodingException  {
+        this.nombre = new String(nombre.getBytes("UTF-8"), "ISO-8859-1");;
     }
 
     public String getTipoDocumento() {

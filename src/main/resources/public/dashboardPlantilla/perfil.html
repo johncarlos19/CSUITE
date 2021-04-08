@@ -157,6 +157,7 @@ CUERPO DOCUMENTO
 
         </a>
 
+
         <!--=====================================
         BARRA DE NAVEGACIÓN
         ======================================-->
@@ -170,7 +171,86 @@ CUERPO DOCUMENTO
                 <span class="sr-only">Toggle navigation</span>
 
             </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
 
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <!--                    <li class="dropdown notifications-menu">-->
+                    <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--                            <i class="fa fa-bell-o"></i>-->
+                    <!--                            <span class="label label-warning">10</span>-->
+                    <!--                        </a>-->
+                    <!--                        <ul class="dropdown-menu">-->
+                    <!--                            <li class="header">You have 10 notifications</li>-->
+                    <!--                            <li>-->
+                    <!--                                &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;-->
+                    <!--                                <ul class="menu">-->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <i class="fa fa-warning text-yellow"></i> Very long description here that-->
+                    <!--                                            may not fit into the-->
+                    <!--                                            page and may cause design problems-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <i class="fa fa-users text-red"></i> 5 new members joined-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li>-->
+                    <!--                                        <a href="#">-->
+                    <!--                                            <i class="fa fa-user text-red"></i> You changed your username-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="footer"><a href="#">View all</a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="user-image"><i class="fa fa-user"></i></span>
+
+                            <span class="hidden-xs" th:text="${user}">Alexander Pierce</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <span class="img-circle"><i class="fa fa-user"></i></span>
+
+                                <p th:text="${nameComplete}">
+                                    Alexander Pierce - Web Developer
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="/dashboard/perfil" class="btn btn-default btn-flat">Perfil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="/logout" class="btn btn-default btn-flat">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+
+                </ul>
+            </div>
 
         </nav>
 
@@ -631,7 +711,7 @@ CUERPO DOCUMENTO
 
                                     <div class="modal-content">
 
-                                        <form role="form" method="post" id="editInfo" enctype="multipart/form-data">
+                                        <form role="form" method="post" id="editInfo" th:action="${dirigir}" enctype="multipart/form-data">
 
                                             <!--=====================================
                                             CABEZA DEL MODAL
@@ -952,9 +1032,12 @@ CUERPO DOCUMENTO
 
                                             <div class="modal-footer">
 
+                                                <input type="hidden" name="action" value="editDireccion" for="editInfo">
+                                                <input type="hidden" name="user" th:value="${usuario.usuario}" for="editInformacion">
+
                                                 <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Salir</button>
 
-                                                <button type="submit" class="btn btn-primary"  data-dismiss="modal" for="editInfo">Guardar producto</button>
+                                                <button type="submit" class="btn btn-primary"  onclick="startLoading()" for="editInfo">Guardar Información</button>
 
                                             </div>
 
@@ -974,7 +1057,7 @@ CUERPO DOCUMENTO
 
                                         <div class="modal-content">
 
-                                            <form role="form" method="post" id="editInformacion" enctype="multipart/form-data">
+                                            <form role="form" method="post" id="editInformacion" th:action="${dirigir}" enctype="multipart/form-data">
 
                                                 <!--=====================================
                                                 CABEZA DEL MODAL
@@ -1048,10 +1131,22 @@ CUERPO DOCUMENTO
 
                                                             <div class="input-group">
 
-                                                                <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span>
+                                                                <span class="input-group-addon"><i class="fa fa-at"></i></span>
 
                                                                 <input type="email" class="form-control input-lg" for="editInformacion" id="email" name="email"
                                                                        placeholder="Ingresar el correo" th:value="${usuario.email}" required>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                                                <input type="number" class="form-control input-lg" for="editInformacion" id="telefonoEdit" name="telefono"
+                                                                       placeholder="Ingresar el Teléfono" th:value="${usuario.telefono}" required>
 
                                                             </div>
 
@@ -1069,8 +1164,10 @@ CUERPO DOCUMENTO
                                                 <div class="modal-footer">
 
                                                     <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Salir</button>
+                                                    <input type="hidden" name="action" value="EditInfo" for="editInformacion">
+                                                    <input type="hidden" name="user" th:value="${usuario.usuario}" for="editInformacion">
 
-                                                    <button type="submit" class="btn btn-primary"  data-dismiss="modal" for="editInformacion">Guardar producto</button>
+                                                    <button type="submit" class="btn btn-primary"  onclick="startLoading()" for="editInformacion">Guardar Información</button>
 
                                                 </div>
 
@@ -1083,9 +1180,87 @@ CUERPO DOCUMENTO
 
                                 </div>
 
-                            <!--=====================================
-                           MODAL CAMBIAR FOTO DE USUARIO
-                           ======================================-->
+                                <!--=====================================
+         MODAL CAMBIAR PASSWORD
+ ======================================-->
+
+                                <div class="modal fade" id="cambiarPassword" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <form method="post">
+
+                                                <!--Modal Header-->
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Cambiar contraseña</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+
+                                                <!--Modal Body-->
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+
+                                                        <div class="input-group">
+
+                                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+
+                                                            <input type="password" class="form-control input-lg" id="passwordOld" name="passwordOld" placeholder="Ingresar la Vieja Contraseña" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <div class="input-group">
+
+                                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+
+                                                            <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Ingresar la nueva Contraseña" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <div class="input-group">
+
+                                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+
+                                                            <input type="password" class="form-control input-lg" id="passwordRetry" placeholder="Confirme La Contraseña" required>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div id="alertPassword"></div>
+
+                                                </div>
+
+                                                <!--Modal Footer-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                        Cerrar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!--=====================================
+                               MODAL CAMBIAR FOTO DE USUARIO
+                               ======================================-->
 
 
 
@@ -1299,52 +1474,6 @@ CUERPO DOCUMENTO
 
                         </div>
 
-                        <!--=====================================
-                                 MODAL CAMBIAR PASSWORD
-                         ======================================-->
-
-                        <div class="modal fade" id="cambiarPassword" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <form method="post">
-
-                                        <!--Modal Header-->
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Cambiar contraseña</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-
-                                        <!--Modal Body-->
-                                        <div class="modal-body">
-
-                                            <input type="hidden" name="idUsuarioPassword" value="1">
-
-                                            <div class="form-group">
-
-                                                <input type="password" class="form-control"
-                                                       placeholder="Nueva contraseña" name="editarPassword"
-                                                       required="">
-
-                                            </div>
-                                        </div>
-
-                                        <!--Modal Footer-->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Cerrar
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
 
 

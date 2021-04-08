@@ -374,7 +374,7 @@ public class ApiControlador extends JavalinControlador {
 
                         facturaCliente.setIdVendedor(Mercado.getInstance().getUserJefeWithToken(user));
 
-                        facturaCliente = FacturaClienteServicios.getInstancia().crearFacturaCliente(facturaCliente,"admin",tmp);
+                        facturaCliente = FacturaClienteServicios.getInstancia().crearFacturaCliente(facturaCliente,user,tmp);
                         ctx.json(facturaCliente.getFacturaJson());
 //                        if (clienteJson != null){
 //
