@@ -1062,8 +1062,8 @@ public class RecibirDatosControlador extends JavalinControlador {
                 path("/empleado", () -> {
 
                     get(ctx -> {
-                        String user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId();
-                        System.out.println("\n\n\nusuario"+user);
+                        Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                        System.out.println("\n\n\nusuario"+user.getId());
                         ctx.res.addHeader("Authorization",ctx.cookie("User"));
                         Map<String, Object> contexto = new HashMap<>();
                         contexto.put("user", user.getId());
@@ -1074,8 +1074,8 @@ public class RecibirDatosControlador extends JavalinControlador {
 //                        list.add(UsuarioServicios.getInstancia().find(aux.getIdCliente().getUsuario()));
 //
 //                    }
-                        contexto.put("empleado", EmpleadoServicios.getInstancia().listaEmpleado(user));
-                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user).getPoliticaList()
+                        contexto.put("empleado", EmpleadoServicios.getInstancia().listaEmpleado(user.getId()));
+                        for (Politica politica: UsuarioServicios.getInstancia().getUsuario(user.getId()).getPoliticaList()
                         ) {
                             contexto.put(politica.getKey(), politica.getValue());
                         }
