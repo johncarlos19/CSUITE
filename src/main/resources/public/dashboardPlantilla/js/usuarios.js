@@ -26,6 +26,12 @@ function saveEmpleado(){
 }
 
 
+function changePassword(){
+	var user = document.getElementById("passwordOld").value;
+
+	worker.postMessage({'cmd': 'passwordCorrect', 'user': user});
+}
+
 
 
 

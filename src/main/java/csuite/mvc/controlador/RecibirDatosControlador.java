@@ -244,7 +244,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                     "\n" +
                     "<div class='navbar navbar-expand-md navbar-dark fixed-top ' style='background-color: #97ddee !important;box-sizing: border-box;'>\n" +
                     "  <span class='navbar-brand' style='box-sizing: border-box;'>\n" +
-                    "    <img class='sp-default-logo' src='https://app1.goniometer-exoglove.me/img/Xtreme%20Sport%20Channel%20Logo.gif' alt='Televiaducto' width='160' style='box-sizing: border-box;vertical-align: middle;border-style: none;'>\n" +
+                    "    <img class='sp-default-logo' src='http://cashsuite.net/inicio/assets/img/logo.png' alt='CashSuite' width='160' style='box-sizing: border-box;vertical-align: middle;border-style: none;'>\n" +
                     "  </span>\n" +
                     "\n" +
                     "    <div class='collapse navbar-collapse' id='navbarCollapse' style='box-sizing: border-box;'>\n" +
@@ -414,7 +414,7 @@ public class RecibirDatosControlador extends JavalinControlador {
                     get(ctx -> {
                         Map<String, Object> contexto = new HashMap<>();
                         contexto.put("listaPaqueteProducto", "");
-                        ctx.render("/public/webPage/login.html", contexto);
+                        ctx.render("/public/inicio/login.html", contexto);
 
                     });
                     post(ctx -> {
@@ -1017,6 +1017,8 @@ public class RecibirDatosControlador extends JavalinControlador {
 
 
                     });
+
+
                     post(ctx -> {
 
 
@@ -1041,6 +1043,19 @@ public class RecibirDatosControlador extends JavalinControlador {
                                 usuario.setTelefono(ctx.formParam("telefono"));
                                 UsuarioServicios.getInstancia().editar(usuario);
                                 break;
+
+                            case "changePassword":
+                                usuario = UsuarioServicios.getInstancia().getUsuario(user);
+                                String perfil = Mercado.getInstance().verificar_user(user,ctx.formParam("passwordOld"));
+                                if (perfil!=null){
+                                    if (ctx.formParam("password").equalsIgnoreCase(ctx.formParam("passwordRetry"))){
+                                        usuario.getVendedor().setPassword(Mercado.getInstance().getPasswordEncryptor().encrypt(ctx.formParam("password")));
+                                        UsuarioServicios.getInstancia().editar(usuario);
+                                    }
+                                }else {
+
+                                }
+
                         }
 
 

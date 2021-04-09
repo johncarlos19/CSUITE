@@ -44,6 +44,72 @@ public class ApiControlador extends JavalinControlador {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");
                     });
+                    post("/", ctx -> {
+
+                        String tmp = ctx.body();
+                        Map<String, String> map1 = Mercado.getInstance().JsonStringToMap(tmp);
+
+
+                        if (UsuarioServicios.getInstancia().existe(map1.get("user"))){
+                            String perfil = Mercado.getInstance().verificar_user(map1.get("user"),map1.get("password"));
+                            if (perfil != null) {
+                                if (isSessionAvailable(map1.get("user"), ctx.req.getSession().getId())) {
+                                    String user = map1.get("user");
+                                    Map<String, Object> map = null;
+                                    String header = "Authorization";
+                                    String dueno = user;
+                                    String direccion;
+                                    String compania;
+                                    String telefono;
+                                    String ciudadPais;
+                                    if (perfil.equalsIgnoreCase("Admin") == false || perfil.equalsIgnoreCase("Vendedor") == false) {
+
+                                        map = Mercado.getInstance().getUserJefe(user);
+                                        dueno = (String) map.get("user");
+                                        direccion = (String) map.get("direccion");
+                                        compania = (String) map.get("compania");
+                                        telefono = (String) map.get("telefono");
+                                        ciudadPais = (String) map.get("ciudadPais");
+                                    } else {
+                                        map = Mercado.getInstance().getUserJefe(user);
+                                        direccion = (String) map.get("direccion");
+                                        compania = (String) map.get("compania");
+                                        telefono = (String) map.get("telefono");
+                                        ciudadPais = (String) map.get("ciudadPais");
+                                    }
+                                    String jwt = createJWT(user, perfil, map);
+                                    Login login = new Login(user, decodeJWT(jwt));
+                                    login.setSession(ctx.req.getSession());
+                                    Mercado.getInstance().getLogins().put(user,login);
+
+                                    ctx.sessionAttribute("User", jwt);
+                                    ctx.cookie("User", Mercado.getInstance().getUserEncryptor().encrypt(jwt), 2147483647);
+                                    ctx.json(200);
+                                } else {
+                                    ctx.json(420);
+
+                                }
+                            }else{
+                                ctx.json(430);
+
+                            }
+
+
+                        }else{
+                            ctx.json(440);
+
+                        }
+
+
+
+
+
+
+
+
+
+                    });
+
                     get("/Extend", ctx -> {
                         String headerAuth = ctx.req.getHeader("Authorization");
                         System.out.println(headerAuth);
@@ -498,6 +564,20 @@ public class ApiControlador extends JavalinControlador {
                                 String tmp = ctx.body();
                                 ctx.json(UsuarioServicios.getInstancia().existe(tmp));
                             });
+                            post("/password", ctx -> {
+
+                                Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                System.out.println("\n\n\nEste es el headerr ne" + decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+
+                                String tmp = ctx.body();
+                                String perfil = Mercado.getInstance().verificar_user(user.getId(),tmp);
+                                if (perfil!=null){
+                                    ctx.json(true);
+                                }else {
+                                    ctx.json(false);
+                                }
+
+                            });
                         });
 
                 path("/Producto", () -> {
@@ -804,6 +884,35 @@ public class ApiControlador extends JavalinControlador {
                 }
             }
         }).start();
+    }
+    public static boolean isSessionAvailable(String user, String sessionID){
+        boolean available = true;
+        String posi = "ocupado";
+//        for (int i = 0; i < Mercado.getInstance().getLogins().size(); i++) {
+        try {
+            if (Mercado.getInstance().getLogins().get(user).getId().equals(user)){
+                System.out.println("\n\n ididid"+Mercado.getInstance().getLogins().get(user).getId()+"\notro: "+sessionID+"\notro1: "+Mercado.getInstance().getLogins().get(user).getSession().getId());
+                if (isExpirate(Mercado.getInstance().getLogins().get(user).getJwt())==true ){
+                    posi = "disponible";
+
+                }else if(Mercado.getInstance().getLogins().get(user).getSession().getId().equals(sessionID)){
+                    posi = "disponible";
+                }
+                if (posi.equalsIgnoreCase("disponible")){
+                    Mercado.getInstance().getLogins().remove(user);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return true;
+        }
+
+//        }
+        return available;
+
     }
 
 

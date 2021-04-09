@@ -320,8 +320,15 @@ worker.onmessage = function (e) { //recuperando la información
     }
 
     if(e.data.cmd === 'timeout'){
+
         preciono = false;
         alertLogout();
+        try {
+            stopLoading()
+        }catch (e){
+
+        }
+
     }
 
     if(e.data.cmd === 'ventaProducto'){
@@ -595,11 +602,102 @@ worker.onmessage = function (e) { //recuperando la información
         }
     }
 
-    if(e.data.cmd === 'verifyUser'){
+    if(e.data.cmd === 'error'){
+        stopLoading()
+        swal({
+            type:"error",
+            title: "¡ERROR!",
+            text: "¡Ha ocurrido un error, vuelva a intentarlo mas tarde!",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+
+        }).then(function(result){
+
+            if(result.value){
+
+                history.back();
+            }
+
+        });
+
+
+    }
+
+    if(e.data.cmd === 'login'){
+        stopLoading()
+
+        switch (e.data.data) {
+            case 200:
+                var form = document.createElement("form");
+
+
+                form.method = "GET";
+                form.action = "/dashboard/home";
+
+                document.body.appendChild(form);
+
+                form.submit();
+                break;
+            case 420:
+                swal({
+                    type:"error",
+                    title: "¡ERROR!",
+                    text: "¡Esta cuenta ha iniciado sesión, debe salir de la sesión para poder entrar!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+
+                        history.back();
+                    }
+
+                });
+                break;
+            case 430:
+                swal({
+                    type:"error",
+                    title: "¡ERROR!",
+                    text: "¡Usuario o contraseña no coinciden!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+
+                        history.back();
+                    }
+
+                });
+                break;
+            case 440:
+                swal({
+                    type:"error",
+                    title: "¡ERROR!",
+                    text: "¡Usuario o contraseña no coinciden!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+
+                        history.back();
+                    }
+
+                });
+                break;
+
+        }
+    }
+
+    if(e.data.cmd === 'verifyPassword'){
         console.log("entro")
         var pw1 = document.getElementById("password").value;
         var pw2 = document.getElementById("passwordRetry").value;
-        if (e.data.data === false){
+        if (e.data.data === true){
             if(pw1 !==pw2)
             {
 
@@ -610,21 +708,21 @@ worker.onmessage = function (e) { //recuperando la información
                     '\t\t\t\t\t\t  </div>'
 
             } else {
-                document.getElementById("RegisterEmpleado").submit()
+                document.getElementById("cambiarPassowrd").submit()
 
             }
         }else{
-            document.getElementById("alertID").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
+            document.getElementById("alertPassword").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
                 '\t\t\t\t\t\t\t  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
                 '\t\t\t\t\t\t\t  <h4><i class="icon fa fa-ban"></i> Alerta!</h4>\n' +
-                '\t\t\t\t\t\t\t  El usuario escrito ha sido registrado\n' +
+                '\t\t\t\t\t\t\t  La contraseña vieja no es correcta\n' +
                 '\t\t\t\t\t\t  </div>'
             if(pw1 !== pw2)
             {
                 document.getElementById("alertPassword").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' +
                     '\t\t\t\t\t\t\t  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
                     '\t\t\t\t\t\t\t  <h4><i class="icon fa fa-ban"></i> Alerta!</h4>\n' +
-                    '\t\t\t\t\t\t\t  La contraseña no coincide\n' +
+                    '\t\t\t\t\t\t\t  La contraseña vieja no es correcta y La contraseña nueva no coincide\n' +
                     '\t\t\t\t\t\t  </div>'
 
             }
@@ -648,6 +746,14 @@ function stopLoading(){
 
 }
 
+function verifyUser(){
+    var employee = {
+        user: document.getElementById("user").value,
+        password: document.getElementById("password").value
+    }
+    startLoading()
+    worker.postMessage({'cmd': 'login', 'user': JSON.stringify(employee)});
+}
 function stopNowLoading(){
     $('#modalLoading').modal('hide');
     $("#modalLoading").css("display", "none");

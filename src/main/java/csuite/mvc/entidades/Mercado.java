@@ -1501,7 +1501,7 @@ public class Mercado {
             case "Vendedor":
 
                 System.out.println("Esto sale" + aux.getVendedor().getPassword());
-                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equals(password)) {
                     return "Vendedor";
                 }
 
@@ -1510,7 +1510,7 @@ public class Mercado {
             case "Admin":
 
                 System.out.println("Esto sale" + aux.getVendedor().getPassword());
-                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equalsIgnoreCase(password)) {
+                if (passwordEncryptor.decrypt(aux.getVendedor().getPassword()).equals(password)) {
                     return "Admin";
                 }
 

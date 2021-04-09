@@ -202,6 +202,80 @@ this.addEventListener('message', function (e) {
                     // always executed
                 });
             break;
+
+        case 'passwordCorrect':
+            console.log("Buscando la fecha desde el servidor...");
+
+            axios.post('/api/Usuario/password', data.user)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1) {
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        } else {
+
+                            postMessage({'cmd': 'verifyPassword', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'timeout'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'login':
+
+            axios.post('/api/Login/', data.user)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        if (response.data === -1) {
+                            postMessage({'cmd': 'timeout'});
+                            return response.data;
+                        } else {
+
+                            postMessage({'cmd': 'login', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'error'});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'error'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
         case 'deleteFactura':
 
             axios.post('/api/Factura/deleteFacturaActiva', data.id)

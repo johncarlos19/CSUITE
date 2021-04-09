@@ -589,6 +589,10 @@ CUERPO DOCUMENTO
                                                     data-target="#modalEditarDireccion">
                                                 Editar Dirección
                                             </button>
+                                            <button class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#modalCambiarPassword">
+                                                Cambiar Contraseña
+                                            </button>
 
                                         </div>
 
@@ -1165,6 +1169,7 @@ CUERPO DOCUMENTO
 
                                                     <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Salir</button>
                                                     <input type="hidden" name="action" value="EditInfo" for="editInformacion">
+
                                                     <input type="hidden" name="user" th:value="${usuario.usuario}" for="editInformacion">
 
                                                     <button type="submit" class="btn btn-primary"  onclick="startLoading()" for="editInformacion">Guardar Información</button>
@@ -1184,12 +1189,12 @@ CUERPO DOCUMENTO
          MODAL CAMBIAR PASSWORD
  ======================================-->
 
-                                <div class="modal fade" id="cambiarPassword" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="modalCambiarPassword" tabindex="-1" role="dialog"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
 
-                                            <form method="post">
+                                            <form role="form"  method="post"  id="cambiarPassowrd" th:action="${dirigir}" >
 
                                                 <!--Modal Header-->
                                                 <div class="modal-header">
@@ -1209,7 +1214,7 @@ CUERPO DOCUMENTO
 
                                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
 
-                                                            <input type="password" class="form-control input-lg" id="passwordOld" name="passwordOld" placeholder="Ingresar la Vieja Contraseña" required>
+                                                            <input type="password" class="form-control input-lg"  for="cambiarPassowrd" id="passwordOld" name="passwordOld" placeholder="Ingresar la Vieja Contraseña" required>
 
                                                         </div>
 
@@ -1221,7 +1226,7 @@ CUERPO DOCUMENTO
 
                                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
 
-                                                            <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Ingresar la nueva Contraseña" required>
+                                                            <input type="password" class="form-control input-lg" for="cambiarPassowrd" id="password" name="password" placeholder="Ingresar la nueva Contraseña" required>
 
                                                         </div>
 
@@ -1233,7 +1238,7 @@ CUERPO DOCUMENTO
 
                                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
 
-                                                            <input type="password" class="form-control input-lg" id="passwordRetry" placeholder="Confirme La Contraseña" required>
+                                                            <input type="password" class="form-control input-lg" for="cambiarPassowrd" id="passwordRetry" name="passwordRetry" placeholder="Confirme La Contraseña" required>
 
                                                         </div>
 
@@ -1244,10 +1249,12 @@ CUERPO DOCUMENTO
 
                                                 <!--Modal Footer-->
                                                 <div class="modal-footer">
+                                                    <input type="hidden" name="action" value="changePassword" for="cambiarPassowrd">
+                                                    <input type="hidden" name="user" th:value="${usuario.usuario}" for="cambiarPassowrd">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                         Cerrar
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    <button type="button" class="btn btn-primary" onclick="changePassword()">Guardar</button>
                                                 </div>
 
                                             </form>
