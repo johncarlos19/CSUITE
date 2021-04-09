@@ -615,7 +615,7 @@ worker.onmessage = function (e) { //recuperando la información
 
             if(result.value){
 
-                history.back();
+
             }
 
         });
@@ -650,7 +650,7 @@ worker.onmessage = function (e) { //recuperando la información
 
                     if(result.value){
 
-                        history.back();
+
                     }
 
                 });
@@ -667,7 +667,7 @@ worker.onmessage = function (e) { //recuperando la información
 
                     if(result.value){
 
-                        history.back();
+
                     }
 
                 });
@@ -677,14 +677,13 @@ worker.onmessage = function (e) { //recuperando la información
                     type:"error",
                     title: "¡ERROR!",
                     text: "¡Usuario o contraseña no coinciden!",
-                    showConfirmButton: true,
                     confirmButtonText: "Cerrar"
 
                 }).then(function(result){
 
                     if(result.value){
 
-                        history.back();
+
                     }
 
                 });

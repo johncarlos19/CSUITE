@@ -191,6 +191,23 @@ PLUGINS DE JAVASCRIPT
     <script src="../inicio/assets/js/Cool-Navbar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="../inicio/assets/js/OwlCarousel2-Full-Screen.js"></script>
+<script>
+
+    swal({
+        type:"error",
+        title: "¡ERROR!",
+        text: "¡Usuario o contraseña no coinciden!",
+        confirmButtonText: "Cerrar"
+
+    }).then(function(result){
+
+        if(result.value){
+
+            history.back();
+        }
+
+    });
+</script>
 
 </body>
 
