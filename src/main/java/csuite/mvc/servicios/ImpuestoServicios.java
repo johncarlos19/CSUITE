@@ -1,8 +1,7 @@
 package csuite.mvc.servicios;
 
-import csuite.mvc.entidades.Almacen;
-import csuite.mvc.entidades.Impuesto;
-import csuite.mvc.entidades.Usuario;
+import csuite.mvc.entidades.*;
+import csuite.mvc.jsonObject.ImpuestoJson;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
@@ -126,6 +125,48 @@ public class ImpuestoServicios extends GestionadDB<Impuesto>{
             //query.setParameter("nombre", apellido+"%");
             List<Impuesto> lista = query.getResultList();
             return (ArrayList<Impuesto>) lista;
+        }finally {
+            session.close();
+        }
+
+
+
+    }
+    public ArrayList<ImpuestoJson> impuestoFacturaNotAdded(String user, FacturaCliente factura) {
+
+
+        final Session session = getHibernateSession();
+
+//        EntityManager em = getEntityManager();
+        try {
+
+            Query query = session.createQuery("select i from Vendedor v inner join v.impuestos i where v.idVendedor.usuario = :user and i.aplicarATodos = false order by i.id desc ");
+            query.setParameter("user",user);
+//            if (page != 0) {
+//                query.setFirstResult(0 + 10 * (page - 1));
+//                query.setMaxResults(10);
+//            }
+
+            //query.setParameter("nombre", apellido+"%");
+            List<Impuesto> lista = query.getResultList();
+            List<ImpuestoJson> listaAdd = new ArrayList<ImpuestoJson>();
+            boolean deboAdd = true;
+
+            for (int i = 0; i < lista.size(); i++) {
+                for (ImpuestoCliente impuestoCliente : factura.getImpuestoClientes()) {
+                    if (lista.get(i).getNombre().equalsIgnoreCase(impuestoCliente.getNombre()) && lista.get(i).getOperacion().equalsIgnoreCase(impuestoCliente.getOperacion())){
+                        deboAdd = false;
+                    }
+                }
+                if (deboAdd==true){
+                    listaAdd.add(lista.get(i).damImpuestoJson((double) factura.getTotal(),-1,true));
+                    deboAdd = true;
+                }else {
+                    deboAdd = true;
+                }
+            }
+
+            return (ArrayList<ImpuestoJson>) listaAdd;
         }finally {
             session.close();
         }

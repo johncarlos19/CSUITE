@@ -244,6 +244,12 @@ worker.onmessage = function (e) { //recuperando la información
         dataFilter()
         stopLoading()
     }
+    if(e.data.cmd === 'searchImpuestoFacturaAvailable'){
+        reloadIMPTABLAFactura(e.data.data,"add");
+        reloadResponsibleTable()
+        dataFilter()
+        stopLoading()
+    }
 
     if(e.data.cmd === 'searchAlmacenProducto'){
         reloadAlmacenTabla(e.data.data,"show");
@@ -744,7 +750,22 @@ function stopLoading(){
     setTimeout(stopNowLoading,1000);
 
 }
+function actionRelation(actionJson){
+    switch (actionJson.typeClass) {
+        case "Producto":
+            startLoading();
+            worker.postMessage({'cmd': 'productoRelation', 'ActionJson': actionJson});
+            break;
+        case "Venta":
+            startLoading();
+            worker.postMessage({'cmd': 'ventaRelation', 'ActionJson': actionJson});
+            break;
+        default:
+            break;
 
+
+    }
+}
 function verifyUser(){
     var employee = {
         user: document.getElementById("user").value,

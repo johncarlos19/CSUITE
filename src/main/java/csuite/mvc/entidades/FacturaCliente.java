@@ -97,6 +97,24 @@ public class FacturaCliente implements Identifiable<String> {
 
     }
 
+    public void addTributoALaFactura(Impuesto impuesto){
+
+
+        double totalImpuesto = 0;
+        ImpuestoCliente aux = new ImpuestoCliente();
+        aux.setNombre(impuesto.getNombre());
+        aux.setOperacion(impuesto.getOperacion());
+        aux.setValorOperacion(impuesto.getValorSumandoExtra());
+        aux.setValorSumandoExtra(aux.damPrecioNeto((double) total));
+        aux.setEsParaFactura(true);
+        aux.setIdFacturaCliente(this);
+        ImpuestoClienteServicios.getInstancia().crear(aux);
+        totalImpuesto+=aux.getValorSumandoExtra();
+        this.precioNeto+=totalImpuesto;
+
+
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -176,31 +194,39 @@ public class FacturaCliente implements Identifiable<String> {
         boolean vaEliminar = false;
         int eli = -1;
         float totalImpuesto = 0;
+        List<Long> idImpuestoAgregado = new ArrayList<Long>();
         try {
             for (ImpuestoCliente impuestoClienteFacturaCliente : impuestoClientes) {
+                if (impuestoClienteFacturaCliente.isEsParaFactura()==false){
+                    for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
+                        if (impuestoClienteFacturaCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoClienteFacturaCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
+                            System.out.println("\n\nSe va a guardar uno solo");
+                            impuestoClienteFacturaCliente.addImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* facturaClienteProductoVendido.getCantidad());
+                            ImpuestoClienteServicios.getInstancia().editar(impuestoClienteFacturaCliente);
 
-                for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
-                    if (impuestoClienteFacturaCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoClienteFacturaCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
-                        System.out.println("\n\nSe va a guardar uno solo");
-                        impuestoClienteFacturaCliente.addImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* facturaClienteProductoVendido.getCantidad());
-                        ImpuestoClienteServicios.getInstancia().editar(impuestoClienteFacturaCliente);
+                            eli = i;
+                            vaEliminar = true;
+                        }else if(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra() == 0){
+                            eli = i;
+                            vaEliminar = true;
 
-                        eli = i;
-                        vaEliminar = true;
-                    }else if(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra() == 0){
-                        eli = i;
-                        vaEliminar = true;
-
+                        }
                     }
+
+
+                    if (vaEliminar == true){
+                        listafacturaClienteProductoVendido.remove(eli);
+                        vaEliminar = false;
+                    }
+                    System.out.println("\n\nEsto es lo que hay"+impuestoClienteFacturaCliente.getValorSumandoExtra());
+                    totalImpuesto+=impuestoClienteFacturaCliente.getValorSumandoExtra();
+                }else {
+                    impuestoClienteFacturaCliente.setValorSumandoExtra(impuestoClienteFacturaCliente.damPrecioNeto((double) total));
+                    ImpuestoClienteServicios.getInstancia().editar(impuestoClienteFacturaCliente);
+                    totalImpuesto+=impuestoClienteFacturaCliente.getValorSumandoExtra();
                 }
 
 
-                if (vaEliminar == true){
-                    listafacturaClienteProductoVendido.remove(eli);
-                    vaEliminar = false;
-                }
-                System.out.println("\n\nEsto es lo que hay"+impuestoClienteFacturaCliente.getValorSumandoExtra());
-                totalImpuesto+=impuestoClienteFacturaCliente.getValorSumandoExtra();
 
             }
         }catch (LazyInitializationException D){
@@ -217,6 +243,9 @@ public class FacturaCliente implements Identifiable<String> {
             totalImpuesto+=aux.getValorSumandoExtra();
         }
         this.precioNeto= total+totalImpuesto;
+
+
+
         facturaClienteProductoVendido.setIdFacturaCliente(this);
         facturaClienteProductoVendidos.add(facturaClienteProductoVendido);
 
@@ -255,26 +284,34 @@ public class FacturaCliente implements Identifiable<String> {
         boolean vaEliminar = false;
         int eli = -1;
         float totalImpuesto = 0;
+        List<Long> idImpuestoAgregado = new ArrayList<Long>();
         try {
             for (ImpuestoCliente impuestoCliente : impuestoClientes) {
-                for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
-                    if (impuestoCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
-                        impuestoCliente.addImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* cant);
-                        ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
+                if (impuestoCliente.isEsParaFactura() == false){
+                    for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
+                        if (impuestoCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
+                            impuestoCliente.addImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* cant);
+                            ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
 
-                        eli = i;
-                        vaEliminar = true;
-                    }else if(facturaClienteProductoVendido.getImpuestoProducto().get(i).getValorSumandoExtra() == 0){
-                        eli = i;
-                        vaEliminar = true;
+                            eli = i;
+                            vaEliminar = true;
+                        }else if(facturaClienteProductoVendido.getImpuestoProducto().get(i).getValorSumandoExtra() == 0){
+                            eli = i;
+                            vaEliminar = true;
 
+                        }
                     }
+                    if (vaEliminar == true){
+                        listafacturaClienteProductoVendido.remove(eli);
+                        vaEliminar = false;
+                    }
+                    totalImpuesto+=impuestoCliente.getValorSumandoExtra();
+                }else {
+                    impuestoCliente.setValorSumandoExtra(impuestoCliente.damPrecioNeto((double) total));
+                    ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
+                    totalImpuesto+=impuestoCliente.getValorSumandoExtra();
                 }
-                if (vaEliminar == true){
-                    listafacturaClienteProductoVendido.remove(eli);
-                    vaEliminar = false;
-                }
-                totalImpuesto+=impuestoCliente.getValorSumandoExtra();
+
 
 
             }
@@ -300,32 +337,39 @@ public class FacturaCliente implements Identifiable<String> {
         boolean vaEliminar = false;
         int eli = -1;
         float totalImpuesto = 0;
-
+        List<Long> idImpuestoAgregado = new ArrayList<Long>();
         try {
             for (ImpuestoCliente impuestoCliente : impuestoClientes) {
-                for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
-                    if (impuestoCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
-                        impuestoCliente.discountImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* cant);
-                        if (impuestoCliente.getValorSumandoExtra()==0){
-                            posiList.add(impuestoCliente.getId());
-                        }else{
-                            ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
+                if(impuestoCliente.isEsParaFactura() ==false){
+                    for (int i = 0; i < listafacturaClienteProductoVendido.size(); i++) {
+                        if (impuestoCliente.getNombre().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getNombre()) && impuestoCliente.getOperacion().equalsIgnoreCase(listafacturaClienteProductoVendido.get(i).getOperacion())){
+                            impuestoCliente.discountImpuestoValue(listafacturaClienteProductoVendido.get(i).getValorSumandoExtra()* cant);
+                            if (impuestoCliente.getValorSumandoExtra()==0){
+                                posiList.add(impuestoCliente.getId());
+                            }else{
+                                ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
+                            }
+
+
+                            eli = i;
+                            vaEliminar = true;
+                        }else if(facturaClienteProductoVendido.getImpuestoProducto().get(i).getValorSumandoExtra() == 0){
+                            eli = i;
+                            vaEliminar = true;
+
                         }
-
-
-                        eli = i;
-                        vaEliminar = true;
-                    }else if(facturaClienteProductoVendido.getImpuestoProducto().get(i).getValorSumandoExtra() == 0){
-                        eli = i;
-                        vaEliminar = true;
-
                     }
+                    if (vaEliminar == true){
+                        listafacturaClienteProductoVendido.remove(eli);
+                        vaEliminar = false;
+                    }
+                    totalImpuesto+=impuestoCliente.getValorSumandoExtra();
+                }else{
+                    impuestoCliente.setValorSumandoExtra(impuestoCliente.damPrecioNeto((double) total));
+                    ImpuestoClienteServicios.getInstancia().editar(impuestoCliente);
+                    totalImpuesto+=impuestoCliente.getValorSumandoExtra();
                 }
-                if (vaEliminar == true){
-                    listafacturaClienteProductoVendido.remove(eli);
-                    vaEliminar = false;
-                }
-                totalImpuesto+=impuestoCliente.getValorSumandoExtra();
+
             }
         }catch (Exception e ){
             e.printStackTrace();
@@ -339,13 +383,21 @@ public class FacturaCliente implements Identifiable<String> {
 
         }
     }
-    private void deleteImpuestoCliente(long integer){
+    public double deleteImpuestoCliente(long integer){
+        System.out.println("\n\n\nEntro a borrar impuesto ya"+integer);
         for (int i = 0; i < impuestoClientes.size(); i++) {
             if (impuestoClientes.get(i).getId()==integer){
+                double va = impuestoClientes.get(i).getValorSumandoExtra();
                 impuestoClientes.remove(i);
-                break;
+                System.out.println("\n\n\nBorro impuesto ya");
+                return va;
             }
         }
+        return 0;
+    }
+
+    public void removeTributoAlValorNeto(float aux){
+        precioNeto = precioNeto +(-1*(aux));
     }
 
     public Timestamp getFechaCompra() {

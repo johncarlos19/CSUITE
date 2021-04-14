@@ -146,7 +146,9 @@ function limpiarFactura(){
 	document.getElementById("cliente").value = "";
 	document.getElementById("nameCliente").innerHTML = ""
 	$(".nuevoProducto").empty()
+	$(".cajasMetodoPago").empty()
 	$("#impuestodescuento").empty()
+	$("#nuevoMetodoPago").prop("selectedIndex", 0);
 
 
 
@@ -283,6 +285,9 @@ function reloadProductServerSent(e){
 
 
 }
+
+
+
 function returnDate(val){
 
 	var milliseconds = val  // 1575909015000
@@ -564,7 +569,8 @@ function getFactura(factura){
 			"idFacturaClienteProductoVendido": factura.impuestoFacturas[key].idFacturaClienteProductoVendido,
 			"impuesto": factura.impuestoFacturas[key].impuesto,
 			"descuento": factura.impuestoFacturas[key].descuento,
-			"interes": factura.impuestoFacturas[key].interes
+			"interes": factura.impuestoFacturas[key].interes,
+			"esParaFactura": factura.impuestoFacturas[key].esParaFactura
 		}
 		impuestoFactura.push(imp);
 
@@ -584,7 +590,8 @@ function getFactura(factura){
 				"idFacturaClienteProductoVendido": factura.productos[key].impuestoClientes[key12].idFacturaClienteProductoVendido,
 				"impuesto": factura.productos[key].impuestoClientes[key12].impuesto,
 				"descuento": factura.productos[key].impuestoClientes[key12].descuento,
-				"interes": factura.productos[key].impuestoClientes[key12].interes
+				"interes": factura.productos[key].impuestoClientes[key12].interes,
+				"esParaFactura": factura.productos[key].impuestoClientes[key12].esParaFactura
 			}
 			impuestoProducto.push(imp);
 		};
@@ -758,28 +765,56 @@ function facturaLoadNow(factura){
 
 
 	for(var key1 in obj.impuestoFacturas){
+		if (obj.impuestoFacturas[key1].esParaFactura === false){
+			var valu = new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round((obj.impuestoFacturas[key1].valorSumandoExtra) * 100) / 100).toFixed(2))
+			var imp = '                                                <tr>\n' +
+				'\n' +
+				'                                                    <td >\n' +
+				'\n' +
+				'                                                        <div class="input-group">\n' +
+				'                                                            <span class="input-group-addon"><a>'+obj.impuestoFacturas[key1].nombre+'</a></span>\n' +
+				'                                                            <input type="text" class="form-control input-lg" min="0"\n' +
+				'                                                                   id="nuevoImpuestoVenta'+obj.impuestoFacturas[key1].id+'" name="nuevoImpuestoVenta"\n' +
+				'                                                                   placeholder="0" readonly value="'+valu+'">\n' +
+				'\n' +
 
-		var valu = new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round((obj.impuestoFacturas[key1].valorSumandoExtra) * 100) / 100).toFixed(2))
-		var imp = '                                                <tr>\n' +
-			'\n' +
-			'                                                    <td >\n' +
-			'\n' +
-			'                                                        <div class="input-group">\n' +
-			'                                                            <span class="input-group-addon"><a>'+obj.impuestoFacturas[key1].nombre+'</a></span>\n' +
-			'                                                            <input type="text" class="form-control input-lg" min="0"\n' +
-			'                                                                   id="nuevoImpuestoVenta'+obj.impuestoFacturas[key1].id+'" name="nuevoImpuestoVenta"\n' +
-			'                                                                   placeholder="0" readonly value="'+valu+'">\n' +
-			'\n' +
+				'\n' +
+				'\n' +
+				'\n' +
+				'                                                        </div>\n' +
+				'\n' +
+				'                                                    </td>\n' +
+				'\n' +
+				'                                                </tr>'
+			$("#impuestodescuento").prepend(imp);
+		}else {
+			var valu = new Intl.NumberFormat("en-GB",formatConfig1).format((Math.round((obj.impuestoFacturas[key1].valorSumandoExtra) * 100) / 100).toFixed(2))
+			var imp = '                                                <tr>\n' +
+				'\n' +
+				'                                                    <td >\n' +
+				'\n' +
+				'                                                        <div class="input-group">\n' +
+				'                                                            <span class="input-group-addon"><a>'+obj.impuestoFacturas[key1].nombre+'</a></span>\n' +
+				'                                                            <input type="text" class="form-control input-lg" min="0"\n' +
+				'                                                                   id="nuevoImpuestoVenta'+obj.impuestoFacturas[key1].id+'" name="nuevoImpuestoVenta"\n' +
+				'                                                                   placeholder="0" readonly value="'+valu+'">\n' +
+				'<span class="input-group-addon"><button type="button"\n' +
+				'											class="btn btn-danger btn-xs  quitarImpuesto" \n' +
+				'											idimp="'+obj.impuestoFacturas[key1].id+'"><i \n' +
+				'	class="fa fa-times"></i></button></span>\n' +
+				'\n' +
 
-			'\n' +
-			'\n' +
-			'\n' +
-			'                                                        </div>\n' +
-			'\n' +
-			'                                                    </td>\n' +
-			'\n' +
-			'                                                </tr>'
-		$("#impuestodescuento").prepend(imp);
+				'\n' +
+				'\n' +
+				'\n' +
+				'                                                        </div>\n' +
+				'\n' +
+				'                                                    </td>\n' +
+				'\n' +
+				'                                                </tr>'
+			$("#impuestodescuento").prepend(imp);
+		}
+
 	}
 
 
@@ -979,6 +1014,154 @@ var idQuitarProducto = [];
 
 localStorage.removeItem("quitarProducto");
 
+function loadAvailableIMPVenta(){
+	startLoading();
+	startResponsible()
+	var name = document.getElementById("nuevaVenta").value;
+	worker.postMessage({'cmd': 'searchImpuestoVentaAvailable', 'id': name});
+
+}
+
+function reloadIMPTABLAFactura(obj, posi){
+	var lis = [];
+	while(lis.length > 0) {
+		lis.pop();
+	}
+	switch (posi) {
+		case "add":
+			console.log("ca a imprimir")
+			// var obj = e.data.data;
+			for(var key in obj) {
+				var sto;
+				var accion = ' <button  class="btn btn-success btnAddIMPFactura"  data-dismiss="modal" idIMP="'+obj[key].id+'" >Agregar <i class="fa fa-plus"></i></button>'
+
+
+
+
+
+				var employee = {
+					"DT_RowId": "IMPADD_"+ obj[key].id,
+					"#":    obj[key].id,
+					"Nombre":   obj[key].nombre,
+					"Tipo de Tributo": obj[key].operacion,
+					"Valor":   obj[key].valorSumandoExtra,
+					"Total":   currentyMoney(obj[key].precioNeto),
+					"Acción":     accion
+				}
+
+				// c = [];
+				// c.push(obj[key].id);
+				// c.push(obj[key].nombre);
+				// c.push(obj[key].descripcion);
+				// c.push(obj[key].disponible);
+				// c.push(obj[key].stock);
+				// c.push(obj[key].precioVenta);
+				// c.push(obj[key].precioCompra);
+				lis.push(employee);
+			};
+			$('#tablaIMPADD').DataTable().clear().destroy();
+			$('#tablaIMPADD').DataTable({
+				// "ajax": "ajax/datatable-productos.ajax.php?perfilOculto="+perfilOculto,
+				"deferRender": true,
+				"retrieve": true,
+				"processing": true,
+
+				"language": {
+
+					"sProcessing":     "Procesando...",
+					"sLengthMenu":     "Mostrar _MENU_ registros",
+					"sZeroRecords":    "No se encontraron resultados",
+					"sEmptyTable":     "Ningún dato disponible en esta tabla",
+					"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+					"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+					"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+					"sInfoPostFix":    "",
+					"sSearch":         "Buscar:",
+					"sUrl":            "",
+					"sInfoThousands":  ",",
+					"sLoadingRecords": "Cargando...",
+					"oPaginate": {
+						"sFirst":    "Primero",
+						"sLast":     "Último",
+						"sNext":     "Siguiente",
+						"sPrevious": "Anterior"
+					},
+					"oAria": {
+						"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+						"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+					}
+
+				},
+				"data": lis
+				,
+				"columns":[
+					{"data": "#", "width": "10%"},
+					{"data": "Nombre", "width": "10%"},
+					{"data": "Tipo de Tributo", "width": "20%"},
+					{"data": "Valor", "width": "20%"},
+					{"data": "Total", "width": "20%"},
+					{"data": "Acción", "width": "15%"}
+				],
+
+			} );
+			break;
+
+		default:
+			break;
+
+	}
+
+
+}
+
+// add impuesto
+$("#tablaIMPADD tbody").on("click", "button.btnAddIMPFactura", function(){
+
+
+	var idImp = $(this).attr("idIMP");
+	console.log("Impuesto "+idImp)
+
+	var actionJson ={
+		id: parseInt(idImp),
+		typeClass: "Venta",
+		action: "addImpuesto",
+		detail: document.getElementById("nuevaVenta").value,
+		anotherID: 0
+	}
+
+	actionRelation(actionJson);
+	//
+	// var idProducto = document.getElementById("idProducto").value;
+	// var idIMP = $(this).attr("idIMP");
+	//
+	// var form = document.createElement("form");
+	// var element1 = document.createElement("input");
+	// // var element2 = document.createElement("input");
+	//
+	//
+	// let producto = {
+	// 	idProducto: parseInt(idProducto),
+	// 	idImpuesto: parseInt(idIMP)
+	// }
+	// form.method = "POST";
+	// form.action = "/dashboard/showProducto";
+	//
+	// element1.value= idIMP;
+	// element1.name="idIMP";
+	// form.appendChild(element1);
+	// //
+	// // element2.value="eliminar";
+	// // element2.name="action";
+	// // form.appendChild(element2);
+	//
+	// document.body.appendChild(form);
+	//
+	// form.submit();
+
+
+})
+
+
 $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
 	var idProducto = $(this).attr("idProducto");
@@ -1049,6 +1232,44 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 	// }
 
 })
+
+
+
+$(".table tbody").on("click", "button.quitarImpuesto", function(){
+	var idImp = $(this).attr("idimp");
+	console.log("Impuesto "+idImp)
+
+	swal({
+		title: '¿Está seguro que desea eliminar el Tributo?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, Eliminar Tributo!'
+	}).then(function(result){
+		if (result.value) {
+
+
+
+			var actionJson ={
+				id: parseInt(idImp),
+				typeClass: "Venta",
+				action: "deleteImpuesto",
+				detail: document.getElementById("nuevaVenta").value,
+				anotherID: 0
+			}
+
+			actionRelation(actionJson);
+		}
+
+	})
+
+
+
+})
+
 
 $(".tablas tbody").on("click", "button.btnImprimirFacturaNow", function(){
 	console.log("Imprimir")

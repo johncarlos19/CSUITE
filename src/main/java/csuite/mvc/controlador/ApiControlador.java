@@ -386,6 +386,68 @@ public class ApiControlador extends JavalinControlador {
                     after(ctx -> {
                         ctx.header("Content-Type", "application/json");
                     });
+                    post("/VentaRelation", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    ActionJson actionJson =  ctx.bodyAsClass(ActionJson.class);
+                                    String idFactura = (String) Mercado.getInstance().selectActionClass(actionJson,user);
+//                                    List<Almacen> lista = AlmacenServicios.getInstancia().listAlmacen(0, Long.parseLong(idProducto));
+//                                    List<AlmacenJson> listaJson = new ArrayList<AlmacenJson>();
+//                                    for (int i = 0; i < lista.size(); i++) {
+//                                        listaJson.add(lista.get(i).getAlmacenJson());
+//                                    }
+//                                    Producto producto = ProductoServicios.getInstancia().getProductoSinFoto();
+                                    FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(facturaCliente.getFacturaJson());
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
+                    post("/ImpuestoNoAdded", ctx -> {
+                        String session = ctx.sessionAttribute("User");
+                        if (session == null){
+                            ctx.json(-1);
+
+                        }else{
+
+
+
+                            try {
+                                if(isExpirate(decodeJWT(session))==false){
+
+                                    Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
+                                    String idFactura =  ctx.body().toString();
+                                    FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+                                    List<ImpuestoJson> listaJson = ImpuestoServicios.getInstancia().impuestoFacturaNotAdded(Mercado.getInstance().getUserJefeWithToken(user), facturaCliente);
+
+//
+
+                                    System.out.println("\n\n\nEste es el headerr ne"+decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User"))).getId());
+                                    ctx.json(listaJson);
+                                }else{
+                                    ctx.json(null);
+                                }
+                            }catch (ExpiredJwtException e){
+                                ctx.json(null);
+                            }
+                        }
+
+                    });
                     get("/ventasActivas", ctx -> {
                         List<FacturaJson> facturaJsonList = new ArrayList<FacturaJson>();
                         Claims user = decodeJWT(Mercado.getInstance().getUserEncryptor().decrypt(ctx.cookie("User")));
@@ -602,7 +664,7 @@ public class ApiControlador extends JavalinControlador {
 
                                     List<ImpuestoJson> listaJson = new ArrayList<ImpuestoJson>();
                                     for (int i = 0; i < producto.getProductoEnVenta().getImpuestoProductoEnVentas().size(); i++) {
-                                        listaJson.add(producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getIdImpuesto().damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getId()));
+                                        listaJson.add(producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getIdImpuesto().damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),producto.getProductoEnVenta().getImpuestoProductoEnVentas().get(i).getId(),false));
                                     }
 //
 
@@ -642,7 +704,7 @@ public class ApiControlador extends JavalinControlador {
                                     if (cant != imp.size()){
 
                                         for (int i = 0; i < imp.size(); i++) {
-                                            listaJson.add(imp.get(i).damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),-1));
+                                            listaJson.add(imp.get(i).damImpuestoJson((double) producto.getProductoEnVenta().getPrecioVenta(),-1,false));
                                         }
                                     }
 //

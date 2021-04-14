@@ -448,7 +448,9 @@ public class Mercado {
                 aux = selectActionProducto(actionJson,user);
 
 
-            case "Impuesto":
+            case "Venta":
+                System.out.println("\n\nentro a producto");
+                aux = selectActionVenta(actionJson,user);
                 break;
             default:
                 break;
@@ -544,6 +546,39 @@ public class Mercado {
         return graphJsons;
     }
 
+    public Object selectActionVenta(ActionJson actionJson,Claims user){
+
+        Object aux = null;
+        Map<String, String> map = null;
+        Producto producto = null;
+        switch (actionJson.getAction()){
+            case "addImpuesto":
+
+                addTributoALaFactura(actionJson.getId(),actionJson.getDetail());
+                aux = actionJson.getDetail();
+                break;
+
+
+            case "deleteImpuesto":
+
+                removeTributoALaFactura(actionJson.getId(),actionJson.getDetail());
+                aux = actionJson.getDetail();
+
+                break;
+
+
+
+
+
+            default:
+                break;
+
+
+        }
+
+
+        return aux;
+    }
 
     public Object selectActionProducto(ActionJson actionJson,Claims user){
 
@@ -874,6 +909,21 @@ public class Mercado {
 //        }
 //    }
 
+
+    public void addTributoALaFactura(long idIMP, String idFactura){
+        FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+        Impuesto impuesto = ImpuestoServicios.getInstancia().getImpuesto(idIMP);
+        facturaCliente.addTributoALaFactura(impuesto);
+        FacturaClienteServicios.getInstancia().editar(facturaCliente);
+
+    }
+    public void removeTributoALaFactura(long idIMP, String idFactura){
+        FacturaCliente facturaCliente = FacturaClienteServicios.getInstancia().getFacturaCliente(idFactura);
+        double impvalue = facturaCliente.deleteImpuestoCliente(idIMP);
+        facturaCliente.removeTributoAlValorNeto((float) impvalue);
+        FacturaClienteServicios.getInstancia().editar(facturaCliente);
+
+    }
 
     public void facturarOnlyProducto(Producto producto, long cantidad) {
         long cantidadRemove = cantidad;

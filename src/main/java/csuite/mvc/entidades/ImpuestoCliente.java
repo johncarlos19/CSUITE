@@ -1,6 +1,7 @@
 package csuite.mvc.entidades;
 
 
+import com.sun.istack.Nullable;
 import csuite.mvc.jsonObject.ImpuestoJson;
 
 import javax.persistence.*;
@@ -16,6 +17,10 @@ public class ImpuestoCliente implements Serializable {
     private String nombre;
     private String operacion;
     private double valorSumandoExtra;
+    @Column(nullable = true)
+    private double valorOperacion  = 0;
+    @Column(nullable = true)
+    private boolean esParaFactura = false;
     @ManyToOne()
     private FacturaCliente idFacturaCliente = null;
     @ManyToOne()
@@ -37,6 +42,7 @@ public class ImpuestoCliente implements Serializable {
         aux.setNombre(nombre);
         aux.setOperacion(operacion);
         aux.setValorSumandoExtra(valorSumandoExtra);
+        aux.setEsParaFactura(esParaFactura);
         return aux;
     }
 
@@ -77,6 +83,37 @@ public class ImpuestoCliente implements Serializable {
             neto = 0;
         }
         return neto;
+    }
+    public double damPrecioNeto(Double aux){
+        double neto = 0;
+        if (operacion.equalsIgnoreCase("Porciento")){
+            neto = aux*((double)valorOperacion/100);
+        }else if (operacion.equalsIgnoreCase("Suma de Cantidad")){
+            neto = valorOperacion;
+        }else if (operacion.equalsIgnoreCase("Descuento Absoluto")){
+            neto = -1*valorOperacion;
+        }else if (operacion.equalsIgnoreCase("Descuento Porcentual")){
+            neto = -1*aux*((double)valorOperacion/100);
+        }else{
+            neto = 0;
+        }
+        return neto;
+    }
+
+    public double getValorOperacion() {
+        return valorOperacion;
+    }
+
+    public void setValorOperacion(double valorOperacion) {
+        this.valorOperacion = valorOperacion;
+    }
+
+    public boolean isEsParaFactura() {
+        return esParaFactura;
+    }
+
+    public void setEsParaFactura(boolean esParaFactura) {
+        this.esParaFactura = esParaFactura;
     }
 
     public void addImpuestoValue(double prod){

@@ -264,18 +264,7 @@ $("#nuevaCategoria").change(function(){
 
 
 
-function actionRelation(actionJson){
-	switch (actionJson.typeClass) {
-		case "Producto":
-			startLoading();
-			worker.postMessage({'cmd': 'productoRelation', 'ActionJson': actionJson});
-			break;
-		default:
-			break;
 
-
-	}
-}
 
 function reloadShowProducto(obj){
 

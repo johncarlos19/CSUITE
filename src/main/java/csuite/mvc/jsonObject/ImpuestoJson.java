@@ -7,6 +7,7 @@ public class ImpuestoJson {
     private String operacion;
     private double valorSumandoExtra;
     private double aux;
+    private boolean esFactura;
 
     public ImpuestoJson(long id, String nombre, String operacion, double valorSumandoExtra) {
         this.id = id;
@@ -28,6 +29,14 @@ public class ImpuestoJson {
             neto = 0;
         }
         return neto;
+    }
+
+    public boolean isEsFactura() {
+        return esFactura;
+    }
+
+    public void setEsFactura(boolean esFactura) {
+        this.esFactura = esFactura;
     }
 
     public double getAux() {

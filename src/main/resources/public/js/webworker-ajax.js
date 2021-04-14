@@ -581,6 +581,43 @@ this.addEventListener('message', function (e) {
                     // always executed
                 });
             break;
+        case 'searchImpuestoVentaAvailable':
+
+            axios.post('/api/Factura/ImpuestoNoAdded', data.id)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found") {
+                            console.log("Respuesta:" + response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+                        } else {
+                            postMessage({'cmd': 'searchImpuestoFacturaAvailable', 'data': response.data});
+                            return response.data;
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'searchImpuestoFacturaAvailable', 'data': response.data});
+                        return response.data;
+                        // expected output: ReferenceError: nonExistentFunction is not defined
+                        // Note - error messages will vary depending on browser
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
         case 'searchAlmacenProducto':
 
             axios.post('/api/Producto/Almacen', data.id)
@@ -643,6 +680,48 @@ this.addEventListener('message', function (e) {
                         }
                     } catch (error) {
                         postMessage({'cmd': 'productoRelation','action': data.ActionJson.action, 'data': response.data});
+                        return response.data;
+
+
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("Error:");
+                    console.log(error);
+                    postMessage({'cmd': 'timeout'});
+
+                })
+                .then(function () {
+                    // always executed
+                });
+            break;
+        case 'ventaRelation':
+
+            axios.post('/api/Factura/VentaRelation', data.ActionJson)
+                .then(function (response) {
+                    // handle success
+                    console.log("Respuesta:");
+                    console.log(response);
+                    //enviando la información a la venta principal
+                    try {
+                        console.log(response.data)
+                        if (response.data === "no found") {
+                            console.log("Respuesta:" + response.data.data);
+                            postMessage({'cmd': 'noFound', 'data': response.data});
+                            return response.data;
+
+                        } else {
+
+                            postMessage({'cmd': 'facturaLoad', 'data': response.data});
+                            return response.data;
+
+
+
+                        }
+                    } catch (error) {
+                        postMessage({'cmd': 'facturaLoad', 'data': response.data});
                         return response.data;
 
 

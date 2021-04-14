@@ -20,6 +20,7 @@ public class Impuesto implements Serializable {
     private double valorSumandoExtra;
 
     private boolean aplicarATodos = false;
+
     private boolean utilizar = true;
 
 //    @ManyToMany(cascade =  CascadeType.ALL , mappedBy = "impuestos",fetch = FetchType.LAZY)
@@ -32,12 +33,13 @@ public class Impuesto implements Serializable {
     public Impuesto() {
     }
 
-    public ImpuestoJson damImpuestoJson(Double aux1, long union){
+    public ImpuestoJson damImpuestoJson(Double aux1, long union, boolean esFactura){
         ImpuestoJson aux = new ImpuestoJson(id,nombre,operacion,valorSumandoExtra);
         if (union!= -1){
             aux.setIdUnion(union);
         }
         aux.setAux(aux1);
+        aux.setEsFactura(esFactura);
         return aux;
     }
     public Impuesto(String nombre, String operacion, double valorSumandoExtra) {
